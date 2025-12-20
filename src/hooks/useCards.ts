@@ -41,11 +41,24 @@ export function useCards() {
 
   // Filter and search cards
   const filteredCards = useMemo(() => {
-    // First, filter to only show base (white) side cards, or cards without sides
+    // First, filter to only show base side cards
+    // Base side is the first element of upgradeChain
+    // Cards without upgrade chains are standalone and all shown
     let result = cards.filter((card) => {
-      if (!card.side) return true; // Cards without sides (contracts, crew, etc.)
+      // Cards without sides are always shown
+      if (!card.side) return true;
+
       const side = card.side.toLowerCase();
-      return side === 'white'; // Only show white (non-upgraded) side
+
+      // If card has an upgrade chain, check if this is the base (first) side
+      if (card.upgradeChain && card.upgradeChain.length > 0) {
+        const baseSide = card.upgradeChain[0].toLowerCase();
+        return side === baseSide;
+      }
+
+      // Cards without upgrade chain are standalone - show all of them
+      // (e.g., Crew cards which are faction-specific)
+      return true;
     });
 
     // Apply search query

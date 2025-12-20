@@ -3,12 +3,31 @@ import { useCards } from '../hooks/useCards';
 import { CARD_TYPE_LABELS } from '../types/card';
 import type { CardType, SpectralType } from '../types/card';
 
+// Ordered list of card types for the filter
+const TYPE_ORDER: CardType[] = [
+  'thruster',
+  'robonaut',
+  'refinery',
+  'reactor',
+  'generator',
+  'radiator',
+  'gw-thruster',
+  'freighter',
+  'bernal',
+  'colonist',
+  'crew',
+  'contract',
+  'spaceborn',
+  'unknown',
+  'exodus',
+];
+
 export function FilterBar() {
   const {
     cardTypes,
     spectralTypes,
     showFlipped,
-    toggleCardType,
+    setCardTypes,
     toggleSpectralType,
     toggleFlipped,
     clearFilters,
@@ -18,14 +37,36 @@ export function FilterBar() {
 
   const hasFilters = cardTypes.length > 0 || spectralTypes.length > 0;
 
+  // Sort types according to our preferred order
+  const orderedTypes = filterOptions.types.sort((a, b) => {
+    const aIndex = TYPE_ORDER.indexOf(a as CardType);
+    const bIndex = TYPE_ORDER.indexOf(b as CardType);
+    // Put unknown types at the end
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
+  // Handle single-select type toggle
+  const handleTypeSelect = (type: string) => {
+    const cardType = type as CardType;
+    if (cardTypes.includes(cardType)) {
+      // Already selected - clear the filter
+      setCardTypes([]);
+    } else {
+      // Select this one only
+      setCardTypes([cardType]);
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-3">
-      {/* Card Type Filter */}
-      <FilterDropdown
+      {/* Card Type Filter - Single Select */}
+      <SingleSelectFilter
         label="Type"
-        options={filterOptions.types}
-        selected={cardTypes}
-        onToggle={(type) => toggleCardType(type as CardType)}
+        options={orderedTypes}
+        selected={cardTypes[0] || null}
+        onSelect={handleTypeSelect}
         getLabel={(type) => CARD_TYPE_LABELS[type as CardType] || type}
       />
 
@@ -56,7 +97,7 @@ export function FilterBar() {
             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           />
         </svg>
-        {showFlipped ? 'Upgraded' : 'Base'}
+        {showFlipped ? 'Promoted' : 'Base'}
       </button>
 
       {/* Clear All */}
@@ -68,6 +109,67 @@ export function FilterBar() {
           Clear
         </button>
       )}
+    </div>
+  );
+}
+
+interface SingleSelectFilterProps {
+  label: string;
+  options: string[];
+  selected: string | null;
+  onSelect: (value: string) => void;
+  getLabel: (value: string) => string;
+}
+
+function SingleSelectFilter({
+  label,
+  options,
+  selected,
+  onSelect,
+  getLabel,
+}: SingleSelectFilterProps) {
+  return (
+    <div className="relative group">
+      <button
+        className={`chip ${selected ? 'chip-active' : ''}`}
+      >
+        {selected ? getLabel(selected) : label}
+        <svg
+          className="ml-1 w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      {/* Dropdown - opens upward since we're at the bottom */}
+      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[160px] max-h-64 overflow-y-auto">
+        {options.map((option) => (
+          <button
+            key={option}
+            onClick={() => onSelect(option)}
+            className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center gap-2 ${
+              selected === option ? 'bg-space-600 text-white' : 'text-gray-300'
+            }`}
+          >
+            <span
+              className={`w-3 h-3 rounded-full ${
+                selected === option
+                  ? 'bg-blue-500'
+                  : 'border border-gray-500'
+              }`}
+            />
+            {getLabel(option)}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
