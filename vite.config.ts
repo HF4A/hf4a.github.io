@@ -2,8 +2,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Deploy URL: https://hf4a.github.io/
 export default defineConfig({
-  base: '/hf4a-cards/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({
