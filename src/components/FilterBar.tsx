@@ -243,8 +243,8 @@ export function FilterBar() {
         getCounts={(type) => spectralCounts[type] || 0}
       />
 
-      {/* Specialty Filter - show when colonist/robonaut cards may be visible */}
-      {specialtyOptions.length > 0 && (
+      {/* Specialty Filter - show only when colonist or robonaut type selected */}
+      {(cardTypes.includes('colonist') || cardTypes.includes('robonaut')) && specialtyOptions.length > 0 && (
         <FilterDropdown
           label="Specialty"
           options={specialtyOptions}
@@ -255,8 +255,8 @@ export function FilterBar() {
         />
       )}
 
-      {/* Reactor Type Filter - show when reactors may be visible */}
-      {reactorTypeOptions.length > 0 && (
+      {/* Reactor Type Filter - show only when reactor type selected */}
+      {cardTypes.includes('reactor') && reactorTypeOptions.length > 0 && (
         <FilterDropdown
           label="Reactor"
           options={reactorTypeOptions}
@@ -267,8 +267,8 @@ export function FilterBar() {
         />
       )}
 
-      {/* Generator Type Filter - show when generators may be visible */}
-      {generatorTypeOptions.length > 0 && (
+      {/* Generator Type Filter - show only when generator type selected */}
+      {cardTypes.includes('generator') && generatorTypeOptions.length > 0 && (
         <FilterDropdown
           label="Generator"
           options={generatorTypeOptions}
