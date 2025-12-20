@@ -2,10 +2,9 @@
 
 ## Deployment
 - **Production URL**: https://hf4a.github.io/
-- **Production remote**: `hf4a` → HF4A/hf4a.github.io.git (PUSH HERE FOR DEPLOYMENT)
-- **Backup remote**: `origin` → oneross/hf4a-cards.git
+- **GitHub Repo**: HF4A/hf4a.github.io
 - **Base URL**: `/` (root of domain, NOT a subdirectory)
-- **To deploy**: `git push hf4a main`
+- **To deploy**: `git push origin main`
 
 ## Key Files
 - `vite.config.ts` - Build config, base URL must stay `/`
