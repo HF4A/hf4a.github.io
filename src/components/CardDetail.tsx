@@ -10,6 +10,14 @@ import type { Card, CardStats } from '../types/card';
 const SWIPE_THRESHOLD = 50; // Minimum distance to trigger swipe
 const SWIPE_VELOCITY_THRESHOLD = 0.3; // Minimum velocity for fast swipes
 
+interface TouchState {
+  startX: number;
+  startY: number;
+  startTime: number;
+  isTracking: boolean;
+  direction: 'horizontal' | 'vertical' | null;
+}
+
 // Stat display labels
 const STAT_LABELS: Record<string, string> = {
   mass: 'Mass',
@@ -60,7 +68,7 @@ export function CardDetail() {
   const [showDetails, setShowDetails] = useState(true);
 
   // Touch gesture state
-  const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const touchRef = useRef<TouchState | null>(null);
   const detailsPanelRef = useRef<HTMLDivElement>(null);
 
   // Find all cards with this ID (both sides have the same ID)
@@ -133,35 +141,54 @@ export function CardDetail() {
     [navigate, upgradedSide, isFlipped]
   );
 
-  // Touch gesture handlers
+  // Touch gesture handlers for card image area
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const touch = e.touches[0];
-    touchStartRef.current = {
-      x: touch.clientX,
-      y: touch.clientY,
-      time: Date.now(),
+    touchRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startTime: Date.now(),
+      isTracking: true,
+      direction: null,
     };
   }, []);
 
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchRef.current?.isTracking) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchRef.current.startX;
+    const deltaY = touch.clientY - touchRef.current.startY;
+
+    // Determine direction on first significant movement
+    if (!touchRef.current.direction && (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10)) {
+      touchRef.current.direction = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical';
+    }
+
+    // Prevent scrolling if swiping horizontally on card
+    if (touchRef.current.direction === 'horizontal') {
+      e.preventDefault();
+    }
+  }, []);
+
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartRef.current) return;
+    if (!touchRef.current?.isTracking) return;
 
     const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStartRef.current.x;
-    const deltaY = touch.clientY - touchStartRef.current.y;
-    const deltaTime = Date.now() - touchStartRef.current.time;
+    const deltaX = touch.clientX - touchRef.current.startX;
+    const deltaY = touch.clientY - touchRef.current.startY;
+    const deltaTime = Date.now() - touchRef.current.startTime;
     const velocityX = Math.abs(deltaX) / deltaTime;
     const velocityY = Math.abs(deltaY) / deltaTime;
 
-    // Determine if horizontal or vertical swipe
-    const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+    const direction = touchRef.current.direction;
 
-    if (isHorizontal) {
+    if (direction === 'horizontal') {
       // Swipe left or right to close
       if (Math.abs(deltaX) > SWIPE_THRESHOLD || velocityX > SWIPE_VELOCITY_THRESHOLD) {
         navigate('/');
       }
-    } else {
+    } else if (direction === 'vertical') {
       // Swipe up to show details, down to hide
       if (Math.abs(deltaY) > SWIPE_THRESHOLD || velocityY > SWIPE_VELOCITY_THRESHOLD) {
         if (deltaY < 0) {
@@ -178,7 +205,7 @@ export function CardDetail() {
       }
     }
 
-    touchStartRef.current = null;
+    touchRef.current = null;
   }, [navigate, showDetails]);
 
   useEffect(() => {
@@ -219,8 +246,6 @@ export function CardDetail() {
     <div
       className="fixed inset-0 z-50 overflow-y-auto bg-black/90 backdrop-blur-sm"
       onClick={() => navigate('/')}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
       <div className="min-h-screen px-4 py-8 flex items-center justify-center">
         <div
@@ -238,7 +263,12 @@ export function CardDetail() {
           </button>
 
           {/* Card Image with Flip Animation */}
-          <div className="flex-shrink-0 w-full lg:w-auto">
+          <div
+            className="flex-shrink-0 w-full lg:w-auto touch-manipulation"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className="relative mx-auto perspective-1000"
               style={{ width: 'min(100%, 400px)', aspectRatio: '2/3' }}
