@@ -18,12 +18,12 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/icon-192.png',
+            src: 'icon-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icon-512.png',
+            src: 'icon-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
@@ -35,7 +35,7 @@ export default defineConfig({
         globIgnores: ['**/cards/**'],
         runtimeCaching: [
           {
-            urlPattern: /\/cards\/thumbs\//,
+            urlPattern: /\/hf4a-cards\/cards\/thumbs\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'card-thumbnails',
@@ -43,7 +43,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /\/cards\/full\//,
+            urlPattern: /\/hf4a-cards\/cards\/full\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'card-full-images',

@@ -36,7 +36,7 @@ export function CardThumbnail({ card }: CardThumbnailProps) {
   const typeLabel = CARD_TYPE_LABELS[card.type] || card.type;
 
   // Build thumbnail path
-  const thumbPath = `/cards/thumbs/${card.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
+  const thumbPath = `${import.meta.env.BASE_URL}cards/thumbs/${card.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
 
   return (
     <Link

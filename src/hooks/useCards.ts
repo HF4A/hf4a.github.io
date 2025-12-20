@@ -25,7 +25,7 @@ export function useCards() {
   useEffect(() => {
     async function loadCards() {
       try {
-        const response = await fetch('/data/cards.json');
+        const response = await fetch(`${import.meta.env.BASE_URL}data/cards.json`);
         if (!response.ok) throw new Error('Failed to load cards');
         const data = await response.json();
         setCards(data);

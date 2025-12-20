@@ -83,7 +83,7 @@ export function CardDetail() {
 
   const displayCard = isFlipped && otherSide ? otherSide : card;
   const displayName = displayCard.ocr?.name || displayCard.name || 'Unknown Card';
-  const imagePath = `/cards/full/${displayCard.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
+  const imagePath = `${import.meta.env.BASE_URL}cards/full/${displayCard.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
 
   return (
     <div
