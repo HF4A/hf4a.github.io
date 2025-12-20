@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/hf4a-cards/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({
@@ -35,7 +35,7 @@ export default defineConfig({
         globIgnores: ['**/cards/**'],
         runtimeCaching: [
           {
-            urlPattern: /\/hf4a-cards\/cards\/thumbs\//,
+            urlPattern: /\/cards\/thumbs\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'card-thumbnails',
@@ -43,7 +43,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /\/hf4a-cards\/cards\/full\//,
+            urlPattern: /\/cards\/full\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'card-full-images',
