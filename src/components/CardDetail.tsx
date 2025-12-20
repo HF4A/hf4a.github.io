@@ -14,23 +14,50 @@ export function CardDetail() {
   const [isFlipped, setIsFlipped] = useState(showFlipped);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const card = cards.find((c) => c.id === cardId);
+  // Find all cards with this ID (both sides have the same ID)
+  const cardVariants = useMemo(() => {
+    return cards.filter((c) => c.id === cardId);
+  }, [cards, cardId]);
 
-  // Find related cards (other side, upgrade chain, etc.)
+  // Find the white (base) side and upgraded side
+  const { whiteSide, upgradedSide } = useMemo(() => {
+    let white: Card | undefined;
+    let upgraded: Card | undefined;
+
+    for (const c of cardVariants) {
+      if (c.side?.toLowerCase() === 'white') {
+        white = c;
+      } else if (c.side) {
+        upgraded = c;
+      }
+    }
+
+    // If we only found one card and it has relatedCards, look those up too
+    if (cardVariants.length === 1 && cardVariants[0].relatedCards) {
+      const relatedFilenames = Object.values(cardVariants[0].relatedCards);
+      for (const filename of relatedFilenames) {
+        const related = cards.find((c) => c.filename === filename);
+        if (related?.side?.toLowerCase() === 'white') {
+          white = related;
+        } else if (related?.side) {
+          upgraded = related;
+        }
+      }
+    }
+
+    return { whiteSide: white, upgradedSide: upgraded };
+  }, [cardVariants, cards]);
+
+  // The base card to use (prefer white side, fallback to first variant)
+  const card = whiteSide || cardVariants[0];
+
+  // Find all related cards for display
   const relatedCards = useMemo(() => {
     if (!card?.relatedCards) return undefined;
     return Object.values(card.relatedCards)
       .map((filename) => cards.find((c) => c.filename === filename))
       .filter((c): c is Card => c !== undefined);
   }, [card, cards]);
-
-  // Find the upgraded (non-white) side of this card
-  const upgradedSide = useMemo(() => {
-    if (!relatedCards) return undefined;
-    return relatedCards.find(
-      (c) => c.side && c.side.toLowerCase() !== 'white'
-    );
-  }, [relatedCards]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
@@ -119,7 +146,7 @@ export function CardDetail() {
             >
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={displayCard.id}
+                  key={displayCard.filename}
                   initial={{ rotateY: isFlipped ? -180 : 0, opacity: 0 }}
                   animate={{ rotateY: 0, opacity: 1 }}
                   exit={{ rotateY: isFlipped ? 180 : -180, opacity: 0 }}
