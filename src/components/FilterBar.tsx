@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { useFilterStore } from '../store/filterStore';
 import { useCardStore } from '../store/cardStore';
 import { CARD_TYPE_LABELS, SPECIALTY_LABELS, REACTOR_TYPE_LABELS } from '../types/card';
@@ -400,14 +400,31 @@ function SingleSelectFilter({
   getLabel,
   getCounts,
 }: SingleSelectFilterProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
   return (
-    <div className="relative group">
+    <div className="relative" ref={dropdownRef}>
       <button
         className={`chip ${selected ? 'chip-active' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
       >
         {selected ? getLabel(selected) : label}
         <svg
-          className="ml-1 w-4 h-4"
+          className={`ml-1 w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -422,36 +439,41 @@ function SingleSelectFilter({
       </button>
 
       {/* Dropdown - opens upward since we're at the bottom */}
-      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[180px] max-h-64 overflow-y-auto">
-        {options.map((option) => {
-          const count = getCounts(option);
-          const isSelected = selected === option;
-          return (
-            <button
-              key={option}
-              onClick={() => onSelect(option)}
-              className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2 ${
-                isSelected ? 'bg-space-600 text-white' : 'text-gray-300'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                {/* Radio button style - outer ring with inner dot when selected */}
-                <span
-                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    isSelected ? 'border-blue-500' : 'border-gray-500'
-                  }`}
-                >
-                  {isSelected && (
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
-                  )}
-                </span>
-                {getLabel(option)}
-              </div>
-              <span className="text-xs text-gray-500">{count}</span>
-            </button>
-          );
-        })}
-      </div>
+      {isOpen && (
+        <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg z-50 min-w-[180px] max-h-64 overflow-y-auto">
+          {options.map((option) => {
+            const count = getCounts(option);
+            const isSelected = selected === option;
+            return (
+              <button
+                key={option}
+                onClick={() => {
+                  onSelect(option);
+                  setIsOpen(false);
+                }}
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2 ${
+                  isSelected ? 'bg-space-600 text-white' : 'text-gray-300'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {/* Radio button style - outer ring with inner dot when selected */}
+                  <span
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      isSelected ? 'border-blue-500' : 'border-gray-500'
+                    }`}
+                  >
+                    {isSelected && (
+                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    )}
+                  </span>
+                  {getLabel(option)}
+                </div>
+                <span className="text-xs text-gray-500">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -473,10 +495,27 @@ function FilterDropdown({
   getLabel,
   getCounts,
 }: FilterDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
   return (
-    <div className="relative group">
+    <div className="relative" ref={dropdownRef}>
       <button
         className={`chip ${selected.length > 0 ? 'chip-active' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
       >
         {label}
         {selected.length > 0 && (
@@ -485,7 +524,7 @@ function FilterDropdown({
           </span>
         )}
         <svg
-          className="ml-1 w-4 h-4"
+          className={`ml-1 w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -500,40 +539,42 @@ function FilterDropdown({
       </button>
 
       {/* Dropdown - opens upward since we're at the bottom */}
-      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[120px] max-h-64 overflow-y-auto">
-        {options.map((option) => {
-          const count = getCounts(option);
-          return (
-            <button
-              key={option}
-              onClick={() => onToggle(option)}
-              className="w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2"
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className={`w-4 h-4 rounded border ${
-                    selected.includes(option)
-                      ? 'bg-blue-600 border-blue-600'
-                      : 'border-gray-500'
-                  } flex items-center justify-center`}
-                >
-                  {selected.includes(option) && (
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </span>
-                {getLabel(option)}
-              </div>
-              <span className="text-xs text-gray-500">{count}</span>
-            </button>
-          );
-        })}
-      </div>
+      {isOpen && (
+        <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg z-50 min-w-[120px] max-h-64 overflow-y-auto">
+          {options.map((option) => {
+            const count = getCounts(option);
+            return (
+              <button
+                key={option}
+                onClick={() => onToggle(option)}
+                className="w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2"
+              >
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`w-4 h-4 rounded border ${
+                      selected.includes(option)
+                        ? 'bg-blue-600 border-blue-600'
+                        : 'border-gray-500'
+                    } flex items-center justify-center`}
+                  >
+                    {selected.includes(option) && (
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                  {getLabel(option)}
+                </div>
+                <span className="text-xs text-gray-500">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
