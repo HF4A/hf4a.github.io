@@ -1,0 +1,1 @@
+- [ ] after making sure basic app works, create a series of crew cards inspired by the TV show "The Expanse", complete with images.

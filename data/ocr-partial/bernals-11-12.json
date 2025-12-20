@@ -1,0 +1,58 @@
+[
+  {
+    "filename": "Bernal11-Purple-ForceFieldLab.png",
+    "parsedId": "bernal-11",
+    "success": true,
+    "data": {
+      "name": "Force Field Lab",
+      "cardId": "M2B175R",
+      "description": "Military grade active shielding to protect ionized particles from solar wind using superconducting magnets forming a Langevin field.",
+      "stats": {"mass": 10, "radHard": 10},
+      "spectralType": "S",
+      "supportIcons": ["crew"],
+      "rawText": "Bernal 10 MASS 10 Rad-Hard S HOME: Gain the Powersat refuel priv. Military grade active shielding Force Field Lab"
+    }
+  },
+  {
+    "filename": "Bernal11-White-L2ForceFieldBernal.png",
+    "parsedId": "bernal-11",
+    "success": true,
+    "data": {
+      "name": "L2 Force Field Bernal",
+      "cardId": "M2B175F",
+      "description": "Intended for protection against low-energy ions on either side of the solar wind behind charged plasma windows.",
+      "stats": {"mass": 10, "radHard": 10},
+      "spectralType": "S",
+      "supportIcons": ["crew"],
+      "rawText": "Bernal 10 MASS 10 Rad-Hard S HOME: Gain the Powersat refuel priv. L2 Force Field Bernal"
+    }
+  },
+  {
+    "filename": "Bernal12-Purple-CatchersMittLab.png",
+    "parsedId": "bernal-12",
+    "success": true,
+    "data": {
+      "name": "Catcher's Mitt Lab",
+      "cardId": "M2B180R",
+      "description": "CATCHER'S MITT - High per-word cost to repurpose orbital node for chemical or rail launch from LEO to cislunar sites.",
+      "stats": {"mass": 10, "radHard": 6},
+      "spectralType": "E",
+      "supportIcons": ["crew"],
+      "rawText": "Bernal 10 MASS 6 Rad-Hard E HOME: Gain the Powersat refuel priv. Catcher's Mitt Lab"
+    }
+  },
+  {
+    "filename": "Bernal12-White-CatchersMittBernal.png",
+    "parsedId": "bernal-12",
+    "success": true,
+    "data": {
+      "name": "Catcher's Mitt Bernal",
+      "cardId": "M2B180F",
+      "description": "CATCHER'S MITT - Clean Space One concept for orbital debris removal and recycling. Mass: 420 tonnes, Length: 40m, Inhabitants: 4",
+      "stats": {"mass": 10, "radHard": 6},
+      "spectralType": "E",
+      "supportIcons": ["crew"],
+      "rawText": "Bernal 10 MASS 6 Rad-Hard E HOME: Gain the Powersat refuel priv. Catcher's Mitt Bernal"
+    }
+  }
+]

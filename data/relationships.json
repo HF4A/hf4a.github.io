@@ -1,0 +1,4226 @@
+[
+  {
+    "cardId": "bernal-01",
+    "type": "bernal",
+    "number": "01",
+    "sides": {
+      "purple": {
+        "name": "Space Elevator Lab",
+        "filename": "Bernal01-Purple-SpaceElevatorLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal01-Purple-SpaceElevatorLab.png",
+        "checksum": "7cc80852"
+      },
+      "white": {
+        "name": "GEOElevator Bernal",
+        "filename": "Bernal01-White-GEOElevatorBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal01-White-GEOElevatorBernal.png",
+        "checksum": "0cf27ae5"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-02",
+    "type": "bernal",
+    "number": "02",
+    "sides": {
+      "purple": {
+        "name": "Climate Control Lab",
+        "filename": "Bernal02-Purple-ClimateControlLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal02-Purple-ClimateControlLab.png",
+        "checksum": "1f4bdf0c"
+      },
+      "white": {
+        "name": "L1Climate Control Bernal",
+        "filename": "Bernal02-White-L1ClimateControlBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal02-White-L1ClimateControlBernal.png",
+        "checksum": "d142854c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-03",
+    "type": "bernal",
+    "number": "03",
+    "sides": {
+      "purple": {
+        "name": "Collimator Lab",
+        "filename": "Bernal03-Purple-CollimatorLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal03-Purple-CollimatorLab.png",
+        "checksum": "f507b03c"
+      },
+      "white": {
+        "name": "L2Collimator Bernal",
+        "filename": "Bernal03-White-L2CollimatorBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal03-White-L2CollimatorBernal.png",
+        "checksum": "e8426014"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-04",
+    "type": "bernal",
+    "number": "04",
+    "sides": {
+      "purple": {
+        "name": "Lofstrom Loop Microgravity Lab",
+        "filename": "Bernal04-Purple-LofstromLoopMicrogravityLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal04-Purple-LofstromLoopMicrogravityLab.png",
+        "checksum": "06d42af4"
+      },
+      "white": {
+        "name": "L3Lofstrom Loop Microgravity",
+        "filename": "Bernal04-White-L3LofstromLoopMicrogravity.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal04-White-L3LofstromLoopMicrogravity.png",
+        "checksum": "92fd3a13"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-05",
+    "type": "bernal",
+    "number": "05",
+    "sides": {
+      "purple": {
+        "name": "Antimatter Lab",
+        "filename": "Bernal05-Purple-AntimatterLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal05-Purple-AntimatterLab.png",
+        "checksum": "d2224365"
+      },
+      "white": {
+        "name": "L4Antimatter Factory",
+        "filename": "Bernal05-White-L4AntimatterFactory.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal05-White-L4AntimatterFactory.png",
+        "checksum": "0e90f2b1"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-06",
+    "type": "bernal",
+    "number": "06",
+    "sides": {
+      "purple": {
+        "name": "Pharmaceutics Lab",
+        "filename": "Bernal06-Purple-PharmaceuticsLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal06-Purple-PharmaceuticsLab.png",
+        "checksum": "a6a4a6c4"
+      },
+      "white": {
+        "name": "L4s Pharmaceutics Bernal",
+        "filename": "Bernal06-White-L4sPharmaceuticsBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal06-White-L4sPharmaceuticsBernal.png",
+        "checksum": "d2efa9ce"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-07",
+    "type": "bernal",
+    "number": "07",
+    "sides": {
+      "purple": {
+        "name": "Solar Cell Lab",
+        "filename": "Bernal07-Purple-SolarCellLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal07-Purple-SolarCellLab.png",
+        "checksum": "15df2f11"
+      },
+      "white": {
+        "name": "L5Solar Cell Factory",
+        "filename": "Bernal07-White-L5SolarCellFactory.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal07-White-L5SolarCellFactory.png",
+        "checksum": "556719a9"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-08",
+    "type": "bernal",
+    "number": "08",
+    "sides": {
+      "purple": {
+        "name": "Cancer Lab",
+        "filename": "Bernal08-Purple-CancerLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal08-Purple-CancerLab.png",
+        "checksum": "a6f0397c"
+      },
+      "white": {
+        "name": "L5s Cancer Hospital",
+        "filename": "Bernal08-White-L5sCancerHospital.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal08-White-L5sCancerHospital.png",
+        "checksum": "8e8a627f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-09",
+    "type": "bernal",
+    "number": "09",
+    "sides": {
+      "purple": {
+        "name": "Diplomatic Lab",
+        "filename": "Bernal09-Purple-DiplomaticLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal09-Purple-DiplomaticLab.png",
+        "checksum": "44cc6961"
+      },
+      "white": {
+        "name": "SSODiplomatic",
+        "filename": "Bernal09-White-SSODiplomatic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal09-White-SSODiplomatic.png",
+        "checksum": "5b389a77"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-10",
+    "type": "bernal",
+    "number": "10",
+    "sides": {
+      "purple": {
+        "name": "Tourism Hotel",
+        "filename": "Bernal10-Purple-TourismHotel.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal10-Purple-TourismHotel.png",
+        "checksum": "350ffec6"
+      },
+      "white": {
+        "name": "Tourism Cycler",
+        "filename": "Bernal10-White-TourismCycler.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal10-White-TourismCycler.png",
+        "checksum": "75a3fc85"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-11",
+    "type": "bernal",
+    "number": "11",
+    "sides": {
+      "purple": {
+        "name": "Force Field Lab",
+        "filename": "Bernal11-Purple-ForceFieldLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal11-Purple-ForceFieldLab.png",
+        "checksum": "38f4a244"
+      },
+      "white": {
+        "name": "L2Force Field Bernal",
+        "filename": "Bernal11-White-L2ForceFieldBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal11-White-L2ForceFieldBernal.png",
+        "checksum": "99767c7d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "bernal-12",
+    "type": "bernal",
+    "number": "12",
+    "sides": {
+      "purple": {
+        "name": "Catchers Mitt Lab",
+        "filename": "Bernal12-Purple-CatchersMittLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal12-Purple-CatchersMittLab.png",
+        "checksum": "2cd93a88"
+      },
+      "white": {
+        "name": "Catchers Mitt Bernal",
+        "filename": "Bernal12-White-CatchersMittBernal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/bernals/Bernal12-White-CatchersMittBernal.png",
+        "checksum": "0db2bd74"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-01",
+    "type": "colonist",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Babbage Halbonauts",
+        "filename": "Colonist01-Black-BabbageHalbonauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist01-Black-BabbageHalbonauts.png",
+        "checksum": "ff2f53ef"
+      },
+      "purple": {
+        "name": "Utility Fog Halbonaut",
+        "filename": "Colonist01-Purple-UtilityFogHalbonaut.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist01-Purple-UtilityFogHalbonaut.png",
+        "checksum": "2944a8de"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-02",
+    "type": "colonist",
+    "number": "02",
+    "sides": {
+      "purple": {
+        "name": "Group Mind Immortalists",
+        "filename": "Colonist02-Purple-GroupMindImmortalists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist02-Purple-GroupMindImmortalists.png",
+        "checksum": "c0c504ed"
+      },
+      "white": {
+        "name": "Biomechs",
+        "filename": "Colonist02-White-Biomechs.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist02-White-Biomechs.png",
+        "checksum": "b1640582"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-03",
+    "type": "colonist",
+    "number": "03",
+    "sides": {
+      "purple": {
+        "name": "Soldier Caste",
+        "filename": "Colonist03-Purple-SoldierCaste.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist03-Purple-SoldierCaste.png",
+        "checksum": "d755b99c"
+      },
+      "white": {
+        "name": "Botany Bay Convicts",
+        "filename": "Colonist03-White-BotanyBayConvicts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist03-White-BotanyBayConvicts.png",
+        "checksum": "ebb704b3"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-04",
+    "type": "colonist",
+    "number": "04",
+    "sides": {
+      "purple": {
+        "name": "Martian Assembly",
+        "filename": "Colonist04-Purple-MartianAssembly.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist04-Purple-MartianAssembly.png",
+        "checksum": "e76a7e3a"
+      },
+      "white": {
+        "name": "Boyle Engineering Collective",
+        "filename": "Colonist04-White-BoyleEngineeringCollective.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist04-White-BoyleEngineeringCollective.png",
+        "checksum": "44edd522"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-05",
+    "type": "colonist",
+    "number": "05",
+    "sides": {
+      "purple": {
+        "name": "Wet Nano Seed Sail",
+        "filename": "Colonist05-Purple-Wet-NanoSeedSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist05-Purple-Wet-NanoSeedSail.png",
+        "checksum": "1f38ea9a"
+      },
+      "white": {
+        "name": "Calypso2Seed Sail",
+        "filename": "Colonist05-White-Calypso2SeedSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist05-White-Calypso2SeedSail.png",
+        "checksum": "2b05a1f5"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-06",
+    "type": "colonist",
+    "number": "06",
+    "sides": {
+      "purple": {
+        "name": "New Attica Secessionists",
+        "filename": "Colonist06-Purple-NewAtticaSecessionists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist06-Purple-NewAtticaSecessionists.png",
+        "checksum": "13d70915"
+      },
+      "white": {
+        "name": "Heavy Water Survivalists",
+        "filename": "Colonist06-White-HeavyWaterSurvivalists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist06-White-HeavyWaterSurvivalists.png",
+        "checksum": "649a5be9"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-07",
+    "type": "colonist",
+    "number": "07",
+    "sides": {
+      "purple": {
+        "name": "Iceworms",
+        "filename": "Colonist07-Purple-Iceworms.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist07-Purple-Iceworms.png",
+        "checksum": "bffdc866"
+      },
+      "white": {
+        "name": "Houseof Saud",
+        "filename": "Colonist07-White-HouseofSaud.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist07-White-HouseofSaud.png",
+        "checksum": "cbd4dec5"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-08",
+    "type": "colonist",
+    "number": "08",
+    "sides": {
+      "purple": {
+        "name": "Rental Body Guild",
+        "filename": "Colonist08-Purple-RentalBodyGuild.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist08-Purple-RentalBodyGuild.png",
+        "checksum": "334fbe75"
+      },
+      "white": {
+        "name": "Juiced Cosmonauts",
+        "filename": "Colonist08-White-JuicedCosmonauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist08-White-JuicedCosmonauts.png",
+        "checksum": "3002d763"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-09",
+    "type": "colonist",
+    "number": "09",
+    "sides": {
+      "purple": {
+        "name": "Svalbard Caretakers",
+        "filename": "Colonist09-Purple-SvalbardCaretakers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist09-Purple-SvalbardCaretakers.png",
+        "checksum": "c43e22e4"
+      },
+      "white": {
+        "name": "Lloyd's Salvage Co.",
+        "filename": "Colonist09-White-Lloyd'sSalvageCo..png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist09-White-Lloyd'sSalvageCo..png",
+        "checksum": "62b02f81"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-10",
+    "type": "colonist",
+    "number": "10",
+    "sides": {
+      "purple": {
+        "name": "Renaissance Man",
+        "filename": "Colonist10-Purple-RenaissanceMan.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist10-Purple-RenaissanceMan.png",
+        "checksum": "c2d4b32e"
+      },
+      "white": {
+        "name": "Malcolm",
+        "filename": "Colonist10-White-Malcolm.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist10-White-Malcolm.png",
+        "checksum": "daf264e2"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-11",
+    "type": "colonist",
+    "number": "11",
+    "sides": {
+      "purple": {
+        "name": "Blue Goo Sybonts",
+        "filename": "Colonist11-Purple-BlueGooSybonts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist11-Purple-BlueGooSybonts.png",
+        "checksum": "2964aa47"
+      },
+      "white": {
+        "name": "Microgravity Pantrophists",
+        "filename": "Colonist11-White-MicrogravityPantrophists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist11-White-MicrogravityPantrophists.png",
+        "checksum": "8fa35c11"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-12",
+    "type": "colonist",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "Programmable Matter",
+        "filename": "Colonist12-Black-ProgrammableMatter.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist12-Black-ProgrammableMatter.png",
+        "checksum": "b4ecf458"
+      },
+      "purple": {
+        "name": "Neumann Matter",
+        "filename": "Colonist12-Purple-NeumannMatter.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist12-Purple-NeumannMatter.png",
+        "checksum": "0f8e48e0"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-13",
+    "type": "colonist",
+    "number": "13",
+    "sides": {
+      "purple": {
+        "name": "Alchemist Aviatrices",
+        "filename": "Colonist13-Purple-AlchemistAviatrices.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist13-Purple-AlchemistAviatrices.png",
+        "checksum": "ffadb713"
+      },
+      "white": {
+        "name": "Rock Rats Miners'Union",
+        "filename": "Colonist13-White-RockRatsMiners'Union.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist13-White-RockRatsMiners'Union.png",
+        "checksum": "5b6ccf4c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-14",
+    "type": "colonist",
+    "number": "14",
+    "sides": {
+      "black": {
+        "name": "Security System",
+        "filename": "Colonist14-Black-SecuritySystem.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist14-Black-SecuritySystem.png",
+        "checksum": "d13d6242"
+      },
+      "purple": {
+        "name": "Frankenstein Navigator",
+        "filename": "Colonist14-Purple-FrankensteinNavigator.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist14-Purple-FrankensteinNavigator.png",
+        "checksum": "d41e5532"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-15",
+    "type": "colonist",
+    "number": "15",
+    "sides": {
+      "purple": {
+        "name": "Josephson Implants",
+        "filename": "Colonist15-Purple-JosephsonImplants.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist15-Purple-JosephsonImplants.png",
+        "checksum": "8102c304"
+      },
+      "white": {
+        "name": "Siren Cybernautics Inc.",
+        "filename": "Colonist15-White-SirenCybernauticsInc..png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist15-White-SirenCybernauticsInc..png",
+        "checksum": "0b89b9a2"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-16",
+    "type": "colonist",
+    "number": "16",
+    "sides": {
+      "black": {
+        "name": "Smart Pets",
+        "filename": "Colonist16-Black-SmartPets.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist16-Black-SmartPets.png",
+        "checksum": "5805f3bd"
+      },
+      "purple": {
+        "name": "Creeper Neogen",
+        "filename": "Colonist16-Purple-CreeperNeogen.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist16-Purple-CreeperNeogen.png",
+        "checksum": "64d566ab"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-17",
+    "type": "colonist",
+    "number": "17",
+    "sides": {
+      "purple": {
+        "name": "Kaluga Naniteers",
+        "filename": "Colonist17-Purple-KalugaNaniteers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist17-Purple-KalugaNaniteers.png",
+        "checksum": "334efae1"
+      },
+      "white": {
+        "name": "Transorbital Railworkers",
+        "filename": "Colonist17-White-TransorbitalRailworkers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist17-White-TransorbitalRailworkers.png",
+        "checksum": "b5374027"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-18",
+    "type": "colonist",
+    "number": "18",
+    "sides": {
+      "purple": {
+        "name": "Eugenic Pilgrims",
+        "filename": "Colonist18-Purple-EugenicPilgrims.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist18-Purple-EugenicPilgrims.png",
+        "checksum": "ee3787ab"
+      },
+      "white": {
+        "name": "Vatican Observers",
+        "filename": "Colonist18-White-VaticanObservers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist18-White-VaticanObservers.png",
+        "checksum": "0d079e89"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-91",
+    "type": "colonist",
+    "number": "91",
+    "sides": {
+      "black": {
+        "name": "Beowulf Internet",
+        "filename": "Colonist91-Black-BeowulfInternet.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist91-Black-BeowulfInternet.png",
+        "checksum": "5f24a255"
+      },
+      "purple": {
+        "name": "Grendel",
+        "filename": "Colonist91-Purple-Grendel.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist91-Purple-Grendel.png",
+        "checksum": "2112d352"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-92",
+    "type": "colonist",
+    "number": "92",
+    "sides": {
+      "black": {
+        "name": "Combat Quadrupeds",
+        "filename": "Colonist92-Black-CombatQuadrupeds.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist92-Black-CombatQuadrupeds.png",
+        "checksum": "689defae"
+      },
+      "purple": {
+        "name": "Lernaean Warbots",
+        "filename": "Colonist92-Purple-LernaeanWarbots.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist92-Purple-LernaeanWarbots.png",
+        "checksum": "9ae115f4"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-93",
+    "type": "colonist",
+    "number": "93",
+    "sides": {
+      "black": {
+        "name": "Nano3DPrinters",
+        "filename": "Colonist93-Black-Nano3DPrinters.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist93-Black-Nano3DPrinters.png",
+        "checksum": "f5c55dd5"
+      },
+      "purple": {
+        "name": "Offworld Replicators",
+        "filename": "Colonist93-Purple-OffworldReplicators.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist93-Purple-OffworldReplicators.png",
+        "checksum": "43319f81"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-94",
+    "type": "colonist",
+    "number": "94",
+    "sides": {
+      "purple": {
+        "name": "Apex Algorithms",
+        "filename": "Colonist94-Purple-ApexAlgorithms.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist94-Purple-ApexAlgorithms.png",
+        "checksum": "060fde49"
+      }
+    },
+    "upgradeChain": [
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-95",
+    "type": "colonist",
+    "number": "95",
+    "sides": {
+      "black": {
+        "name": "Cobots",
+        "filename": "Colonist95-Black-Cobots.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist95-Black-Cobots.png",
+        "checksum": "c295eb74"
+      },
+      "purple": {
+        "name": "Singularity",
+        "filename": "Colonist95-Purple-Singularity.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist95-Purple-Singularity.png",
+        "checksum": "15ae552c"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "colonist-96",
+    "type": "colonist",
+    "number": "96",
+    "sides": {
+      "black": {
+        "name": "Sensor Web Sail",
+        "filename": "Colonist96-Black-SensorWebSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist96-Black-SensorWebSail.png",
+        "checksum": "f803fafa"
+      },
+      "purple": {
+        "name": "Wisp",
+        "filename": "Colonist96-Purple-Wisp.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Colonist96-Purple-Wisp.png",
+        "checksum": "42c9c2f3"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "contract-01",
+    "type": "contract",
+    "number": "01",
+    "sides": {
+      "blue": {
+        "name": "Avatar Tourists Inner Tour",
+        "filename": "Contract01-Blue-AvatarTourists-InnerTour.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract01-Blue-AvatarTourists-InnerTour.png",
+        "checksum": "d83cfe2d"
+      },
+      "yellow": {
+        "name": "Avatar Tourists Grand Tour",
+        "filename": "Contract01-Yellow-AvatarTourists-GrandTour.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract01-Yellow-AvatarTourists-GrandTour.png",
+        "checksum": "519f7608"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-02",
+    "type": "contract",
+    "number": "02",
+    "sides": {
+      "blue": {
+        "name": "Trillionaire Vanity Project",
+        "filename": "Contract02-Blue-Trillionaire-VanityProject.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract02-Blue-Trillionaire-VanityProject.png",
+        "checksum": "2910ad26"
+      },
+      "yellow": {
+        "name": "Trillionaire Extreme Sports",
+        "filename": "Contract02-Yellow-Trillionaire-ExtremeSports.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract02-Yellow-Trillionaire-ExtremeSports.png",
+        "checksum": "e6fd403f"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-03",
+    "type": "contract",
+    "number": "03",
+    "sides": {
+      "blue": {
+        "name": "Avatar Tourists Fugitive",
+        "filename": "Contract03-Blue-AvatarTourists-Fugitive.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract03-Blue-AvatarTourists-Fugitive.png",
+        "checksum": "f4672e52"
+      },
+      "yellow": {
+        "name": "Avatar Tourists Refugees",
+        "filename": "Contract03-Yellow-AvatarTourists-Refugees.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract03-Yellow-AvatarTourists-Refugees.png",
+        "checksum": "78d00309"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-04",
+    "type": "contract",
+    "number": "04",
+    "sides": {
+      "blue": {
+        "name": "Trillionaire Chiron Quest",
+        "filename": "Contract04-Blue-Trillionaire-ChironQuest.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract04-Blue-Trillionaire-ChironQuest.png",
+        "checksum": "75516bad"
+      },
+      "yellow": {
+        "name": "Trillionaire Cen Tour",
+        "filename": "Contract04-Yellow-Trillionaire-CenTour.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract04-Yellow-Trillionaire-CenTour.png",
+        "checksum": "0855087e"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-05",
+    "type": "contract",
+    "number": "05",
+    "sides": {
+      "blue": {
+        "name": "Avatar Trillionaire Hubris",
+        "filename": "Contract05-Blue-AvatarTrillionaire-Hubris.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract05-Blue-AvatarTrillionaire-Hubris.png",
+        "checksum": "e29d9394"
+      },
+      "yellow": {
+        "name": "Trillionaire Fulgurite Hunt",
+        "filename": "Contract05-Yellow-Trillionaire-FulguriteHunt.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract05-Yellow-Trillionaire-FulguriteHunt.png",
+        "checksum": "8bd4d5d0"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-06",
+    "type": "contract",
+    "number": "06",
+    "sides": {
+      "blue": {
+        "name": "Avatar Tourists Comet Adventure",
+        "filename": "Contract06-Blue-AvatarTourists-CometAdventure.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract06-Blue-AvatarTourists-CometAdventure.png",
+        "checksum": "f7d6dd9f"
+      },
+      "yellow": {
+        "name": "Avatar Tourists Pleasure Garden",
+        "filename": "Contract06-Yellow-AvatarTourists-PleasureGarden.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract06-Yellow-AvatarTourists-PleasureGarden.png",
+        "checksum": "1660c08c"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-07",
+    "type": "contract",
+    "number": "07",
+    "sides": {
+      "blue": {
+        "name": "Robotic Robotic Facility",
+        "filename": "Contract07-Blue-Robotic-RoboticFacility.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract07-Blue-Robotic-RoboticFacility.png",
+        "checksum": "809a6436"
+      },
+      "yellow": {
+        "name": "Robotic Goo Spores",
+        "filename": "Contract07-Yellow-Robotic-GooSpores.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract07-Yellow-Robotic-GooSpores.png",
+        "checksum": "f9edeaf9"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-08",
+    "type": "contract",
+    "number": "08",
+    "sides": {
+      "blue": {
+        "name": "Tourist Artemis",
+        "filename": "Contract08-Blue-Tourist-Artemis.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract08-Blue-Tourist-Artemis.png",
+        "checksum": "30f1921e"
+      },
+      "yellow": {
+        "name": "Tourist HAVOC",
+        "filename": "Contract08-Yellow-Tourist-HAVOC.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract08-Yellow-Tourist-HAVOC.png",
+        "checksum": "162cfa58"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-09",
+    "type": "contract",
+    "number": "09",
+    "sides": {
+      "blue": {
+        "name": "Tourist New Horizons",
+        "filename": "Contract09-Blue-Tourist-NewHorizons.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract09-Blue-Tourist-NewHorizons.png",
+        "checksum": "9cdf204b"
+      },
+      "yellow": {
+        "name": "Tourist Home On Lagrange",
+        "filename": "Contract09-Yellow-Tourist-HomeOnLagrange.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract09-Yellow-Tourist-HomeOnLagrange.png",
+        "checksum": "9d9fb333"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-10",
+    "type": "contract",
+    "number": "10",
+    "sides": {
+      "blue": {
+        "name": "Trillionaire Mars Polar Walk",
+        "filename": "Contract10-Blue-Trillionaire-MarsPolarWalk.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract10-Blue-Trillionaire-MarsPolarWalk.png",
+        "checksum": "d07d21bf"
+      },
+      "yellow": {
+        "name": "Avatar Trillionaire ETHoly Grail",
+        "filename": "Contract10-Yellow-AvatarTrillionaire-ETHolyGrail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract10-Yellow-AvatarTrillionaire-ETHolyGrail.png",
+        "checksum": "d9181ef1"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-11",
+    "type": "contract",
+    "number": "11",
+    "sides": {
+      "blue": {
+        "name": "Avatar Tourists Closest Planet",
+        "filename": "Contract11-Blue-AvatarTourists-ClosestPlanet.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract11-Blue-AvatarTourists-ClosestPlanet.png",
+        "checksum": "20483e07"
+      },
+      "yellow": {
+        "name": "Avatar Tourists Highest Cliff",
+        "filename": "Contract11-Yellow-AvatarTourists-HighestCliff.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract11-Yellow-AvatarTourists-HighestCliff.png",
+        "checksum": "83a868a4"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-12",
+    "type": "contract",
+    "number": "12",
+    "sides": {
+      "blue": {
+        "name": "Trillionaire Fools Gold",
+        "filename": "Contract12-Blue-Trillionaire-FoolsGold.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract12-Blue-Trillionaire-FoolsGold.png",
+        "checksum": "39e5dab2"
+      },
+      "yellow": {
+        "name": "Trillionaire Rivalry",
+        "filename": "Contract12-Yellow-Trillionaire-Rivalry.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/1-IndividualityFreedom/Contract12-Yellow-Trillionaire-Rivalry.png",
+        "checksum": "029228ff"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-21",
+    "type": "contract",
+    "number": "21",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Mercury Forge",
+        "filename": "Contract21-Blue-Megaproject-MercuryForge.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract21-Blue-Megaproject-MercuryForge.png",
+        "checksum": "6f440d95"
+      },
+      "yellow": {
+        "name": "Megaproject Topographic Ocean",
+        "filename": "Contract21-Yellow-Megaproject-TopographicOcean.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract21-Yellow-Megaproject-TopographicOcean.png",
+        "checksum": "c4cf76c0"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-22",
+    "type": "contract",
+    "number": "22",
+    "sides": {
+      "blue": {
+        "name": "Science Plasma Intrusion Laboratory",
+        "filename": "Contract22-Blue-Science-PlasmaIntrusionLaboratory.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract22-Blue-Science-PlasmaIntrusionLaboratory.png",
+        "checksum": "0b5c18e8"
+      },
+      "yellow": {
+        "name": "Science Triggered Decay Positrons",
+        "filename": "Contract22-Yellow-Science-TriggeredDecayPositrons.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract22-Yellow-Science-TriggeredDecayPositrons.png",
+        "checksum": "2838c6a6"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-23",
+    "type": "contract",
+    "number": "23",
+    "sides": {
+      "blue": {
+        "name": "Science Hexapod Explorer",
+        "filename": "Contract23-Blue-Science-HexapodExplorer.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract23-Blue-Science-HexapodExplorer.png",
+        "checksum": "32dc6a0b"
+      },
+      "yellow": {
+        "name": "Science Amaithea Halbonaut",
+        "filename": "Contract23-Yellow-Science-AmaitheaHalbonaut.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract23-Yellow-Science-AmaitheaHalbonaut.png",
+        "checksum": "7a909ec6"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-24",
+    "type": "contract",
+    "number": "24",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Equatorial Launch Railway",
+        "filename": "Contract24-Blue-Megaproject-EquatorialLaunchRailway.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract24-Blue-Megaproject-EquatorialLaunchRailway.png",
+        "checksum": "5ab7a242"
+      },
+      "yellow": {
+        "name": "Megaproject Fullerene Cable Spinner",
+        "filename": "Contract24-Yellow-Megaproject-FullereneCableSpinner.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract24-Yellow-Megaproject-FullereneCableSpinner.png",
+        "checksum": "0b4551c0"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-25",
+    "type": "contract",
+    "number": "25",
+    "sides": {
+      "blue": {
+        "name": "Science Solar Observatory",
+        "filename": "Contract25-Blue-Science-SolarObservatory.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract25-Blue-Science-SolarObservatory.png",
+        "checksum": "09abbcb7"
+      },
+      "yellow": {
+        "name": "Science Golden Apples Of The Sun",
+        "filename": "Contract25-Yellow-Science-GoldenApplesOfTheSun.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract25-Yellow-Science-GoldenApplesOfTheSun.png",
+        "checksum": "e8fc4e31"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-26",
+    "type": "contract",
+    "number": "26",
+    "sides": {
+      "blue": {
+        "name": "Robotic Largest Object",
+        "filename": "Contract26-Blue-Robotic-LargestObject.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract26-Blue-Robotic-LargestObject.png",
+        "checksum": "3e9c1cab"
+      },
+      "yellow": {
+        "name": "Robotic Cyborg Transhumans",
+        "filename": "Contract26-Yellow-Robotic-CyborgTranshumans.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract26-Yellow-Robotic-CyborgTranshumans.png",
+        "checksum": "a34ad39b"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-27",
+    "type": "contract",
+    "number": "27",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Submersible Prospector",
+        "filename": "Contract27-Blue-Megaproject-SubmersibleProspector.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract27-Blue-Megaproject-SubmersibleProspector.png",
+        "checksum": "6eeea6d9"
+      },
+      "yellow": {
+        "name": "Megaproject Goldilocks Luna Terraform",
+        "filename": "Contract27-Yellow-Megaproject-GoldilocksLunaTerraform.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract27-Yellow-Megaproject-GoldilocksLunaTerraform.png",
+        "checksum": "d957cc5a"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-28",
+    "type": "contract",
+    "number": "28",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Beehive",
+        "filename": "Contract28-Blue-Megaproject-Beehive.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract28-Blue-Megaproject-Beehive.png",
+        "checksum": "c020523a"
+      },
+      "yellow": {
+        "name": "Megaproject Ring Industrialization",
+        "filename": "Contract28-Yellow-Megaproject-RingIndustrialization.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract28-Yellow-Megaproject-RingIndustrialization.png",
+        "checksum": "adade2a5"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-29",
+    "type": "contract",
+    "number": "29",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Sun Fired Laser",
+        "filename": "Contract29-Blue-Megaproject-SunFiredLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract29-Blue-Megaproject-SunFiredLaser.png",
+        "checksum": "3672b30b"
+      },
+      "yellow": {
+        "name": "Megaproject Daedalus Starship Research",
+        "filename": "Contract29-Yellow-Megaproject-DaedalusStarshipResearch.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract29-Yellow-Megaproject-DaedalusStarshipResearch.png",
+        "checksum": "f809cb6c"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-30",
+    "type": "contract",
+    "number": "30",
+    "sides": {
+      "blue": {
+        "name": "Megaproject Green Magnetosphere",
+        "filename": "Contract30-Blue-Megaproject-GreenMagnetosphere.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract30-Blue-Megaproject-GreenMagnetosphere.png",
+        "checksum": "987b5179"
+      },
+      "yellow": {
+        "name": "Robotic Ice Phase Research",
+        "filename": "Contract30-Yellow-Robotic-IcePhaseResearch.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract30-Yellow-Robotic-IcePhaseResearch.png",
+        "checksum": "403badd0"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-31",
+    "type": "contract",
+    "number": "31",
+    "sides": {
+      "blue": {
+        "name": "Science Aerover Blimp Explorer",
+        "filename": "Contract31-Blue-Science-AeroverBlimpExplorer.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract31-Blue-Science-AeroverBlimpExplorer.png",
+        "checksum": "59eb1d05"
+      },
+      "yellow": {
+        "name": "Science Nuclear Electric Airship",
+        "filename": "Contract31-Yellow-Science-NuclearElectricAirship.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract31-Yellow-Science-NuclearElectricAirship.png",
+        "checksum": "ab0e67b0"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-32",
+    "type": "contract",
+    "number": "32",
+    "sides": {
+      "blue": {
+        "name": "Science Mosquito",
+        "filename": "Contract32-Blue-Science-Mosquito.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract32-Blue-Science-Mosquito.png",
+        "checksum": "299ba64a"
+      },
+      "yellow": {
+        "name": "Science Solar Nebula Mafics",
+        "filename": "Contract32-Yellow-Science-SolarNebulaMafics.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/2-HonorUnity/Contract32-Yellow-Science-SolarNebulaMafics.png",
+        "checksum": "e5d4ecdc"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-51",
+    "type": "contract",
+    "number": "51",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Planetary Protection",
+        "filename": "Contract51-Blue-GovernmentGrant-PlanetaryProtection.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract51-Blue-GovernmentGrant-PlanetaryProtection.png",
+        "checksum": "92630d07"
+      },
+      "yellow": {
+        "name": "Government Grant Planetary Rail Network",
+        "filename": "Contract51-Yellow-GovernmentGrant-PlanetaryRailNetwork.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract51-Yellow-GovernmentGrant-PlanetaryRailNetwork.png",
+        "checksum": "f6369106"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-52",
+    "type": "contract",
+    "number": "52",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Bio Inspired Rover",
+        "filename": "Contract52-Blue-GovernmentGrant-BioInspiredRover.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract52-Blue-GovernmentGrant-BioInspiredRover.png",
+        "checksum": "1bc9334d"
+      },
+      "yellow": {
+        "name": "Government Grant Subnubilar Zeppelin",
+        "filename": "Contract52-Yellow-GovernmentGrant-SubnubilarZeppelin.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract52-Yellow-GovernmentGrant-SubnubilarZeppelin.png",
+        "checksum": "3b7e9339"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-53",
+    "type": "contract",
+    "number": "53",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Junket",
+        "filename": "Contract53-Blue-GovernmentGrant-Junket.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract53-Blue-GovernmentGrant-Junket.png",
+        "checksum": "bad058ac"
+      },
+      "yellow": {
+        "name": "Government Grant Spaceborn Political Rally",
+        "filename": "Contract53-Yellow-GovernmentGrant-SpacebornPoliticalRally.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract53-Yellow-GovernmentGrant-SpacebornPoliticalRally.png",
+        "checksum": "bdb03ed6"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-54",
+    "type": "contract",
+    "number": "54",
+    "sides": {
+      "blue": {
+        "name": "Military Drug Smuggling",
+        "filename": "Contract54-Blue-Military-DrugSmuggling.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract54-Blue-Military-DrugSmuggling.png",
+        "checksum": "715f666f"
+      },
+      "yellow": {
+        "name": "Military Chipjack",
+        "filename": "Contract54-Yellow-Military-Chipjack.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract54-Yellow-Military-Chipjack.png",
+        "checksum": "78176c00"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-55",
+    "type": "contract",
+    "number": "55",
+    "sides": {
+      "blue": {
+        "name": "Military Cancer Research Mission",
+        "filename": "Contract55-Blue-Military-CancerResearchMission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract55-Blue-Military-CancerResearchMission.png",
+        "checksum": "7d24f207"
+      },
+      "yellow": {
+        "name": "Military Trojan Listening Posts",
+        "filename": "Contract55-Yellow-Military-TrojanListeningPosts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract55-Yellow-Military-TrojanListeningPosts.png",
+        "checksum": "e26f24ec"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-56",
+    "type": "contract",
+    "number": "56",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Rescue Team",
+        "filename": "Contract56-Blue-GovernmentGrant-RescueTeam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract56-Blue-GovernmentGrant-RescueTeam.png",
+        "checksum": "b5c6f24c"
+      },
+      "yellow": {
+        "name": "Government Grant Mercury Sunset Convoy",
+        "filename": "Contract56-Yellow-GovernmentGrant-MercurySunsetConvoy.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract56-Yellow-GovernmentGrant-MercurySunsetConvoy.png",
+        "checksum": "3ca9112f"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-57",
+    "type": "contract",
+    "number": "57",
+    "sides": {
+      "blue": {
+        "name": "Military SWIVMiner",
+        "filename": "Contract57-Blue-Military-SWIVMiner.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract57-Blue-Military-SWIVMiner.png",
+        "checksum": "7ac1fbc3"
+      },
+      "yellow": {
+        "name": "Military Refueling Trawler",
+        "filename": "Contract57-Yellow-Military-RefuelingTrawler.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract57-Yellow-Military-RefuelingTrawler.png",
+        "checksum": "485f0bd3"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-58",
+    "type": "contract",
+    "number": "58",
+    "sides": {
+      "blue": {
+        "name": "Military Tsiolkovsky Elevator Lab",
+        "filename": "Contract58-Blue-Military-TsiolkovskyElevatorLab.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract58-Blue-Military-TsiolkovskyElevatorLab.png",
+        "checksum": "699d4e62"
+      },
+      "yellow": {
+        "name": "Military Skyhook",
+        "filename": "Contract58-Yellow-Military-Skyhook.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract58-Yellow-Military-Skyhook.png",
+        "checksum": "57bbe42f"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-59",
+    "type": "contract",
+    "number": "59",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Spin Control",
+        "filename": "Contract59-Blue-GovernmentGrant-SpinControl.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract59-Blue-GovernmentGrant-SpinControl.png",
+        "checksum": "1288a3f3"
+      },
+      "yellow": {
+        "name": "Government Grant Ring Rain",
+        "filename": "Contract59-Yellow-GovernmentGrant-RingRain.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract59-Yellow-GovernmentGrant-RingRain.png",
+        "checksum": "4317804c"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-60",
+    "type": "contract",
+    "number": "60",
+    "sides": {
+      "blue": {
+        "name": "Government Grant Search For Life Center",
+        "filename": "Contract60-Blue-GovernmentGrant-SearchForLifeCenter.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract60-Blue-GovernmentGrant-SearchForLifeCenter.png",
+        "checksum": "d20fcc9c"
+      },
+      "yellow": {
+        "name": "Government Grant Sunrise Project",
+        "filename": "Contract60-Yellow-GovernmentGrant-SunriseProject.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract60-Yellow-GovernmentGrant-SunriseProject.png",
+        "checksum": "4f7a6cac"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-61",
+    "type": "contract",
+    "number": "61",
+    "sides": {
+      "blue": {
+        "name": "Military Yarkovsky Research",
+        "filename": "Contract61-Blue-Military-YarkovskyResearch.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract61-Blue-Military-YarkovskyResearch.png",
+        "checksum": "8a55e997"
+      },
+      "yellow": {
+        "name": "Military Deep Space One",
+        "filename": "Contract61-Yellow-Military-DeepSpaceOne.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract61-Yellow-Military-DeepSpaceOne.png",
+        "checksum": "d72ad3f2"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "contract-62",
+    "type": "contract",
+    "number": "62",
+    "sides": {
+      "blue": {
+        "name": "Military Hardened Base",
+        "filename": "Contract62-Blue-Military-HardenedBase.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract62-Blue-Military-HardenedBase.png",
+        "checksum": "9b37cc76"
+      },
+      "yellow": {
+        "name": "Military Classified Security Payload",
+        "filename": "Contract62-Yellow-Military-ClassifiedSecurityPayload.png",
+        "relativePath": "hf4a-cards/hf4a-cards/contracts/3-AuthorityEquality/Contract62-Yellow-Military-ClassifiedSecurityPayload.png",
+        "checksum": "e2a320d8"
+      }
+    },
+    "upgradeChain": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "cardId": "crew-A",
+    "type": "crew",
+    "number": "A",
+    "sides": {
+      "yellow": {
+        "name": "United Nations Cosmonauts",
+        "filename": "CrewA-Yellow-UnitedNationsCosmonauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewA-Yellow-UnitedNationsCosmonauts.png",
+        "checksum": "faaf34ff"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-B",
+    "type": "crew",
+    "number": "B",
+    "sides": {
+      "purple": {
+        "name": "ROSCOSMOS",
+        "filename": "CrewB-Purple-ROSCOSMOS.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewB-Purple-ROSCOSMOS.png",
+        "checksum": "c1de0a2e"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-C",
+    "type": "crew",
+    "number": "C",
+    "sides": {
+      "purple": {
+        "name": "Taikonauts",
+        "filename": "CrewC-Purple-Taikonauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewC-Purple-Taikonauts.png",
+        "checksum": "e4287ee5"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-D",
+    "type": "crew",
+    "number": "D",
+    "sides": {
+      "white": {
+        "name": "Nasa",
+        "filename": "CrewD-White-Nasa.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewD-White-Nasa.png",
+        "checksum": "3818b865"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-E",
+    "type": "crew",
+    "number": "E",
+    "sides": {
+      "green": {
+        "name": "Anonymous P2P",
+        "filename": "CrewE-Green-AnonymousP2P.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewE-Green-AnonymousP2P.png",
+        "checksum": "32410a37"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-F",
+    "type": "crew",
+    "number": "F",
+    "sides": {
+      "green": {
+        "name": "ESASpace Unionists",
+        "filename": "CrewF-Green-ESASpaceUnionists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewF-Green-ESASpaceUnionists.png",
+        "checksum": "11ccb2a0"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-G",
+    "type": "crew",
+    "number": "G",
+    "sides": {
+      "white": {
+        "name": "ISRO Glavcosmonauts",
+        "filename": "CrewG-White-ISRO-Glavcosmonauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewG-White-ISRO-Glavcosmonauts.png",
+        "checksum": "ebffd351"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-H",
+    "type": "crew",
+    "number": "H",
+    "sides": {
+      "yellow": {
+        "name": "B612Foundation",
+        "filename": "CrewH-Yellow-B612Foundation.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewH-Yellow-B612Foundation.png",
+        "checksum": "74efad15"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-J",
+    "type": "crew",
+    "number": "J",
+    "sides": {
+      "grey": {
+        "name": "Space X",
+        "filename": "CrewJ-Grey-SpaceX.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewJ-Grey-SpaceX.png",
+        "checksum": "a5cb48dd"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-K",
+    "type": "crew",
+    "number": "K",
+    "sides": {
+      "grey": {
+        "name": "Norse Astronauts",
+        "filename": "CrewK-Grey-NorseAstronauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewK-Grey-NorseAstronauts.png",
+        "checksum": "85498fe7"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-L",
+    "type": "crew",
+    "number": "L",
+    "sides": {
+      "red": {
+        "name": "NASRDA Astronauts",
+        "filename": "CrewL-Red-NASRDA Astronauts.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewL-Red-NASRDA Astronauts.png",
+        "checksum": "b352567b"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "crew-M",
+    "type": "crew",
+    "number": "M",
+    "sides": {
+      "red": {
+        "name": "Shimizu Corp Entrepreneurs",
+        "filename": "CrewM-Red-ShimizuCorpEntrepreneurs.png",
+        "relativePath": "hf4a-cards/hf4a-cards/crew/CrewM-Red-ShimizuCorpEntrepreneurs.png",
+        "checksum": "50df0d2b"
+      }
+    },
+    "upgradeChain": []
+  },
+  {
+    "cardId": "freighter-01",
+    "type": "freighter",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Fission Heated Steam",
+        "filename": "Freighter01-Black-Fission-HeatedSteam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter01-Black-Fission-HeatedSteam.png",
+        "checksum": "998282c3"
+      },
+      "purple": {
+        "name": "Fission GCR",
+        "filename": "Freighter01-Purple-FissionGCR.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter01-Purple-FissionGCR.png",
+        "checksum": "7a5b4f5c"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-02",
+    "type": "freighter",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "Fusion Fragment Sail",
+        "filename": "Freighter02-Black-FusionFragmentSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter02-Black-FusionFragmentSail.png",
+        "checksum": "4912e077"
+      },
+      "purple": {
+        "name": "Antiproton Sailand Harvester",
+        "filename": "Freighter02-Purple-AntiprotonSailandHarvester.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter02-Purple-AntiprotonSailandHarvester.png",
+        "checksum": "e4b65682"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-03",
+    "type": "freighter",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "HIIPERBeam Rider",
+        "filename": "Freighter03-Black-HIIPERBeamRider.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter03-Black-HIIPERBeamRider.png",
+        "checksum": "216665dc"
+      },
+      "purple": {
+        "name": "Magnetic Mirror Beam Rider",
+        "filename": "Freighter03-Purple-MagneticMirrorBeamRider.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter03-Purple-MagneticMirrorBeamRider.png",
+        "checksum": "3bb37ca0"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-04",
+    "type": "freighter",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Inflatable Solar Heated",
+        "filename": "Freighter04-Black-InflatableSolar-Heated.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter04-Black-InflatableSolar-Heated.png",
+        "checksum": "10fa376a"
+      },
+      "purple": {
+        "name": "Archimedes Palmer Lens",
+        "filename": "Freighter04-Purple-ArchimedesPalmerLens.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter04-Purple-ArchimedesPalmerLens.png",
+        "checksum": "0516f745"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-05",
+    "type": "freighter",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Poodle Steam",
+        "filename": "Freighter05-Black-PoodleSteam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter05-Black-PoodleSteam.png",
+        "checksum": "43179d75"
+      },
+      "purple": {
+        "name": "D Nanotube Dirt Launcher",
+        "filename": "Freighter05-Purple-D-NanotubeDirtLauncher.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter05-Purple-D-NanotubeDirtLauncher.png",
+        "checksum": "7b55887b"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-06",
+    "type": "freighter",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Rotary Dirt Launcher",
+        "filename": "Freighter06-Black-RotaryDirtLauncher.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter06-Black-RotaryDirtLauncher.png",
+        "checksum": "ca1a113c"
+      },
+      "purple": {
+        "name": "KESTSHoop Dirt Launcher",
+        "filename": "Freighter06-Purple-KESTSHoopDirtLauncher.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter06-Purple-KESTSHoopDirtLauncher.png",
+        "checksum": "03d6f240"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "freighter-07",
+    "type": "freighter",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Z Pinch D T:6Li Fusion",
+        "filename": "Freighter07-Black-Z-PinchD-T:6LiFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter07-Black-Z-PinchD-T:6LiFusion.png",
+        "checksum": "fef995d5"
+      },
+      "purple": {
+        "name": "Z Pinch3He DTarget Fusion",
+        "filename": "Freighter07-Purple-Z-Pinch3He-DTargetFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/freighters/Freighter07-Purple-Z-Pinch3He-DTargetFusion.png",
+        "checksum": "b637c1a8"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "generator-01",
+    "type": "generator",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "JTECH2Thermoelectric",
+        "filename": "Generator01-Black-JTECH2Thermoelectric.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator01-Black-JTECH2Thermoelectric.png",
+        "checksum": "ed492518"
+      },
+      "white": {
+        "name": "AMTECThermoelectric",
+        "filename": "Generator01-White-AMTECThermoelectric.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator01-White-AMTECThermoelectric.png",
+        "checksum": "e9be4631"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-02",
+    "type": "generator",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "OMeara LSPParalens",
+        "filename": "Generator02-Black-OMearaLSPParalens.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator02-Black-OMearaLSPParalens.png",
+        "checksum": "5122cf51"
+      },
+      "white": {
+        "name": "Brayton Turbine",
+        "filename": "Generator02-White-BraytonTurbine.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator02-White-BraytonTurbine.png",
+        "checksum": "3e47cccd"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-03",
+    "type": "generator",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Buckyball C60Photovoltaic",
+        "filename": "Generator03-Black-BuckyballC60Photovoltaic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator03-Black-BuckyballC60Photovoltaic.png",
+        "checksum": "65427a12"
+      },
+      "white": {
+        "name": "Cascade Photovoltaic",
+        "filename": "Generator03-White-CascadePhotovoltaic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator03-White-CascadePhotovoltaic.png",
+        "checksum": "c06ddb8b"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-04",
+    "type": "generator",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Dusty Plasma MHD",
+        "filename": "Generator04-Black-DustyPlasmaMHD.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator04-Black-DustyPlasmaMHD.png",
+        "checksum": "c609c900"
+      },
+      "white": {
+        "name": "Cascade Thermoacoustic",
+        "filename": "Generator04-White-CascadeThermoacoustic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator04-White-CascadeThermoacoustic.png",
+        "checksum": "a0e5401f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-05",
+    "type": "generator",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Diamonoid Electro Dynamic Tether",
+        "filename": "Generator05-Black-DiamonoidElectro-DynamicTether.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator05-Black-DiamonoidElectro-DynamicTether.png",
+        "checksum": "02102710"
+      },
+      "white": {
+        "name": "Catalyzed Fission Scintillator",
+        "filename": "Generator05-White-CatalyzedFissionScintillator.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator05-White-CatalyzedFissionScintillator.png",
+        "checksum": "a4658afb"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-06",
+    "type": "generator",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Nanocomposite Thermoelectric",
+        "filename": "Generator06-Black-NanocompositeThermoelectric.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator06-Black-NanocompositeThermoelectric.png",
+        "checksum": "fc0eedc0"
+      },
+      "white": {
+        "name": "Ericsson Engine",
+        "filename": "Generator06-White-EricssonEngine.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator06-White-EricssonEngine.png",
+        "checksum": "47d2dd3c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-07",
+    "type": "generator",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Superconducting Adductor",
+        "filename": "Generator07-Black-SuperconductingAdductor.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator07-Black-SuperconductingAdductor.png",
+        "checksum": "c9c00cc3"
+      },
+      "white": {
+        "name": "Flywheel Compulsator",
+        "filename": "Generator07-White-FlywheelCompulsator.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator07-White-FlywheelCompulsator.png",
+        "checksum": "1216cb74"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-08",
+    "type": "generator",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "Microbial Fuel Cell",
+        "filename": "Generator08-Black-MicrobialFuelCell.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator08-Black-MicrobialFuelCell.png",
+        "checksum": "195ec772"
+      },
+      "white": {
+        "name": "H2 O2Fuel Cell",
+        "filename": "Generator08-White-H2-O2FuelCell.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator08-White-H2-O2FuelCell.png",
+        "checksum": "d1c4e502"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-09",
+    "type": "generator",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "Z Pinch Microfission",
+        "filename": "Generator09-Black-Z-PinchMicrofission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator09-Black-Z-PinchMicrofission.png",
+        "checksum": "d4e0cab6"
+      },
+      "white": {
+        "name": "In Core Thermionic",
+        "filename": "Generator09-White-In-CoreThermionic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator09-White-In-CoreThermionic.png",
+        "checksum": "b2e40857"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-10",
+    "type": "generator",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Granular Rainbow Corral",
+        "filename": "Generator10-Black-GranularRainbowCorral.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator10-Black-GranularRainbowCorral.png",
+        "checksum": "3ad34c3c"
+      },
+      "white": {
+        "name": "Magnetoshell Plasma Parachute",
+        "filename": "Generator10-White-MagnetoshellPlasmaParachute.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator10-White-MagnetoshellPlasmaParachute.png",
+        "checksum": "64741b68"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-11",
+    "type": "generator",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Casimir Battery",
+        "filename": "Generator11-Black-CasimirBattery.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator11-Black-CasimirBattery.png",
+        "checksum": "f1a11d9f"
+      },
+      "white": {
+        "name": "Marx Capacitor Bank",
+        "filename": "Generator11-White-MarxCapacitorBank.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator11-White-MarxCapacitorBank.png",
+        "checksum": "0c26fc2f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-12",
+    "type": "generator",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "Nuclear Pumped Excimer Flashlamp",
+        "filename": "Generator12-Black-Nuclear-PumpedExcimerFlashlamp.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator12-Black-Nuclear-PumpedExcimerFlashlamp.png",
+        "checksum": "ebae0ddc"
+      },
+      "white": {
+        "name": "Optoelectric Nuclear Battery",
+        "filename": "Generator12-White-OptoelectricNuclearBattery.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator12-White-OptoelectricNuclearBattery.png",
+        "checksum": "363705a8"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-13",
+    "type": "generator",
+    "number": "13",
+    "sides": {
+      "black": {
+        "name": "Palmer LSPAerosol Lens",
+        "filename": "Generator13-Black-PalmerLSPAerosolLens.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator13-Black-PalmerLSPAerosolLens.png",
+        "checksum": "39adbb99"
+      },
+      "white": {
+        "name": "Photon Tether Rectenna",
+        "filename": "Generator13-White-PhotonTetherRectenna.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator13-White-PhotonTetherRectenna.png",
+        "checksum": "02ab3c45"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-14",
+    "type": "generator",
+    "number": "14",
+    "sides": {
+      "black": {
+        "name": "Triggered Decay Nuclear Battery",
+        "filename": "Generator14-Black-TriggeredDecayNuclearBattery.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator14-Black-TriggeredDecayNuclearBattery.png",
+        "checksum": "448b8741"
+      },
+      "white": {
+        "name": "Radioisotope Stirling",
+        "filename": "Generator14-White-RadioisotopeStirling.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator14-White-RadioisotopeStirling.png",
+        "checksum": "5d6b8704"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-15",
+    "type": "generator",
+    "number": "15",
+    "sides": {
+      "black": {
+        "name": "MHDOpen Cycle",
+        "filename": "Generator15-Black-MHDOpen-Cycle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator15-Black-MHDOpen-Cycle.png",
+        "checksum": "94e27afb"
+      },
+      "white": {
+        "name": "Rankine MHD",
+        "filename": "Generator15-White-RankineMHD.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator15-White-RankineMHD.png",
+        "checksum": "96e9b984"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-16",
+    "type": "generator",
+    "number": "16",
+    "sides": {
+      "black": {
+        "name": "Rankine Multiphase",
+        "filename": "Generator16-Black-RankineMultiphase.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator16-Black-RankineMultiphase.png",
+        "checksum": "820b4e06"
+      },
+      "white": {
+        "name": "Rankine Solar Dynamic",
+        "filename": "Generator16-White-RankineSolarDynamic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator16-White-RankineSolarDynamic.png",
+        "checksum": "f25d7504"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "generator-17",
+    "type": "generator",
+    "number": "17",
+    "sides": {
+      "black": {
+        "name": "Thermo Photovoltaic",
+        "filename": "Generator17-Black-Thermo-Photovoltaic.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator17-Black-Thermo-Photovoltaic.png",
+        "checksum": "aaa92ef2"
+      },
+      "white": {
+        "name": "Solar Stirling",
+        "filename": "Generator17-White-SolarStirling.png",
+        "relativePath": "hf4a-cards/hf4a-cards/generators/Generator17-White-SolarStirling.png",
+        "checksum": "6e13f826"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-01",
+    "type": "gw-thruster",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Amat Catalyzed Fission Fusion",
+        "filename": "GWThruster01-Black-Amat-CatalyzedFission-Fusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster01-Black-Amat-CatalyzedFission-Fusion.png",
+        "checksum": "e6c3823a"
+      },
+      "purple": {
+        "name": "Amat Initiated H BMagnetic Inertial",
+        "filename": "GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.png",
+        "checksum": "dcc839dd"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-02",
+    "type": "gw-thruster",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "Dense Plasma H BFocus Fusion",
+        "filename": "GWThruster02-Black-DensePlasmaH-BFocusFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster02-Black-DensePlasmaH-BFocusFusion.png",
+        "checksum": "0039637d"
+      },
+      "purple": {
+        "name": "Crossfire H BFocus Fusion",
+        "filename": "GWThruster02-Purple-CrossfireH-BFocusFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster02-Purple-CrossfireH-BFocusFusion.png",
+        "checksum": "35ff249c"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-03",
+    "type": "gw-thruster",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Levitated Dipole6Li HFusion",
+        "filename": "GWThruster03-Black-LevitatedDipole6Li-HFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster03-Black-LevitatedDipole6Li-HFusion.png",
+        "checksum": "64cb5e5d"
+      },
+      "purple": {
+        "name": "Dusty Plasma",
+        "filename": "GWThruster03-Purple-DustyPlasma.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster03-Purple-DustyPlasma.png",
+        "checksum": "8399a880"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-04",
+    "type": "gw-thruster",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Mini Mag Orion Z Pinch Fission",
+        "filename": "GWThruster04-Black-Mini-MagOrionZ-PinchFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster04-Black-Mini-MagOrionZ-PinchFission.png",
+        "checksum": "c9c39a90"
+      },
+      "purple": {
+        "name": "Solem Medusa Tugged Orion",
+        "filename": "GWThruster04-Purple-SolemMedusaTuggedOrion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster04-Purple-SolemMedusaTuggedOrion.png",
+        "checksum": "e30f06df"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-05",
+    "type": "gw-thruster",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Salt Water Zubrin",
+        "filename": "GWThruster05-Black-Salt-WaterZubrin.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster05-Black-Salt-WaterZubrin.png",
+        "checksum": "9aa3e7da"
+      },
+      "purple": {
+        "name": "Zubrin GDM",
+        "filename": "GWThruster05-Purple-Zubrin-GDM.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster05-Purple-Zubrin-GDM.png",
+        "checksum": "dfca5786"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-06",
+    "type": "gw-thruster",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Spheromak3He DMagnetic Fusion",
+        "filename": "GWThruster06-Black-Spheromak3He-DMagneticFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster06-Black-Spheromak3He-DMagneticFusion.png",
+        "checksum": "7193342b"
+      },
+      "purple": {
+        "name": "Colliding FRC3He DFusion",
+        "filename": "GWThruster06-Purple-CollidingFRC3He-DFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster06-Purple-CollidingFRC3He-DFusion.png",
+        "checksum": "456c9b63"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "gw-thruster-07",
+    "type": "gw-thruster",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "VISTAD TInertial Fusion",
+        "filename": "GWThruster07-Black-VISTAD-TInertialFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster07-Black-VISTAD-TInertialFusion.png",
+        "checksum": "d09bf171"
+      },
+      "purple": {
+        "name": "Daedalus3He DInertial Fusion",
+        "filename": "GWThruster07-Purple-Daedalus3He-DInertialFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/gw-thrusters/GWThruster07-Purple-Daedalus3He-DInertialFusion.png",
+        "checksum": "907ac3b6"
+      }
+    },
+    "upgradeChain": [
+      "black",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "radiator-01",
+    "type": "radiator",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Electrostatic Membrane",
+        "filename": "Radiator01-Black-ElectrostaticMembrane.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator01-Black-ElectrostaticMembrane.png",
+        "checksum": "07d1f11b"
+      },
+      "white": {
+        "name": "Bubble Membrane",
+        "filename": "Radiator01-White-BubbleMembrane.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator01-White-BubbleMembrane.png",
+        "checksum": "1b28c099"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-02",
+    "type": "radiator",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "Graphene Crystal X Ray Mirror",
+        "filename": "Radiator02-Black-GrapheneCrystalX-RayMirror.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator02-Black-GrapheneCrystalX-RayMirror.png",
+        "checksum": "e2a3315c"
+      },
+      "white": {
+        "name": "Dielectric X Ray Window",
+        "filename": "Radiator02-White-DielectricX-RayWindow.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator02-White-DielectricX-RayWindow.png",
+        "checksum": "7fed3ef0"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-03",
+    "type": "radiator",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Curie Point",
+        "filename": "Radiator03-Black-CuriePoint.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator03-Black-CuriePoint.png",
+        "checksum": "bf47c2f8"
+      },
+      "white": {
+        "name": "ETHERCharged Dust",
+        "filename": "Radiator03-White-ETHERChargedDust.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator03-White-ETHERChargedDust.png",
+        "checksum": "e75407e6"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-04",
+    "type": "radiator",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Thermochemical Heatsink Fountain",
+        "filename": "Radiator04-Black-ThermochemicalHeatsinkFountain.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator04-Black-ThermochemicalHeatsinkFountain.png",
+        "checksum": "21eda502"
+      },
+      "white": {
+        "name": "Li Heatsink Fountain",
+        "filename": "Radiator04-White-LiHeatsinkFountain.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator04-White-LiHeatsinkFountain.png",
+        "checksum": "8dad3235"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-05",
+    "type": "radiator",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Nuclear Fuel Spin Polarizer",
+        "filename": "Radiator05-Black-NuclearFuelSpinPolarizer.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator05-Black-NuclearFuelSpinPolarizer.png",
+        "checksum": "74731e06"
+      },
+      "white": {
+        "name": "Magnetocaloric Refrigerator",
+        "filename": "Radiator05-White-MagnetocaloricRefrigerator.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator05-White-MagnetocaloricRefrigerator.png",
+        "checksum": "2625540d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-06",
+    "type": "radiator",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Marangoni Flow",
+        "filename": "Radiator06-Black-MarangoniFlow.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator06-Black-MarangoniFlow.png",
+        "checksum": "e0334d83"
+      },
+      "white": {
+        "name": "Microtube Array",
+        "filename": "Radiator06-White-MicrotubeArray.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator06-White-MicrotubeArray.png",
+        "checksum": "e4849f1c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-07",
+    "type": "radiator",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Tin Droplet",
+        "filename": "Radiator07-Black-TinDroplet.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator07-Black-TinDroplet.png",
+        "checksum": "ece35c9d"
+      },
+      "white": {
+        "name": "Mo:Li Heat Pipe",
+        "filename": "Radiator07-White-Mo:LiHeatPipe.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator07-White-Mo:LiHeatPipe.png",
+        "checksum": "87bb3719"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-08",
+    "type": "radiator",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "ANDR:In Dream Pipe",
+        "filename": "Radiator08-Black-ANDR:InDreamPipe.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator08-Black-ANDR:InDreamPipe.png",
+        "checksum": "ea14d60a"
+      },
+      "white": {
+        "name": "Qu Tube",
+        "filename": "Radiator08-White-QuTube.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator08-White-QuTube.png",
+        "checksum": "dff284fb"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-09",
+    "type": "radiator",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "Hula Hoop",
+        "filename": "Radiator09-Black-Hula-Hoop.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator09-Black-Hula-Hoop.png",
+        "checksum": "ec93c51f"
+      },
+      "white": {
+        "name": "SS:Na KPumped Loop",
+        "filename": "Radiator09-White-SS:NaKPumpedLoop.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator09-White-SS:NaKPumpedLoop.png",
+        "checksum": "96813f14"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-10",
+    "type": "radiator",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Buckytube Filament",
+        "filename": "Radiator10-Black-BuckytubeFilament.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator10-Black-BuckytubeFilament.png",
+        "checksum": "ee5cccea"
+      },
+      "white": {
+        "name": "Salt Cooled Reflux Tube",
+        "filename": "Radiator10-White-Salt-CooledRefluxTube.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator10-White-Salt-CooledRefluxTube.png",
+        "checksum": "36312d80"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-11",
+    "type": "radiator",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Pulsating Heat Pipe",
+        "filename": "Radiator11-Black-PulsatingHeatPipe.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator11-Black-PulsatingHeatPipe.png",
+        "checksum": "064d4685"
+      },
+      "white": {
+        "name": "Steel:Pb Bi Pumped Loop",
+        "filename": "Radiator11-White-Steel:Pb-BiPumpedLoop.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator11-White-Steel:Pb-BiPumpedLoop.png",
+        "checksum": "75cc6614"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "radiator-12",
+    "type": "radiator",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "Flux Pinned Superthermal",
+        "filename": "Radiator12-Black-Flux-PinnedSuperthermal.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator12-Black-Flux-PinnedSuperthermal.png",
+        "checksum": "1191e3b3"
+      },
+      "white": {
+        "name": "Ti:KHeat Pipe",
+        "filename": "Radiator12-White-Ti:KHeatPipe.png",
+        "relativePath": "hf4a-cards/hf4a-cards/radiators/Radiator12-White-Ti:KHeatPipe.png",
+        "checksum": "1160797e"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-01",
+    "type": "reactor",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Pulsed NTRFission",
+        "filename": "Reactor01-Black-PulsedNTRFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor01-Black-PulsedNTRFission.png",
+        "checksum": "5b19467c"
+      },
+      "white": {
+        "name": "Cermet NERVAFission",
+        "filename": "Reactor01-White-CermetNERVAFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor01-White-CermetNERVAFission.png",
+        "checksum": "37bc6318"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-02",
+    "type": "reactor",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "H BFusion Reciprocating Plasmoid",
+        "filename": "Reactor02-Black-H-BFusionReciprocatingPlasmoid.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor02-Black-H-BFusionReciprocatingPlasmoid.png",
+        "checksum": "c8c800ea"
+      },
+      "white": {
+        "name": "D DFusion Magneto Inertial",
+        "filename": "Reactor02-White-D-DFusionMagneto-Inertial.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor02-White-D-DFusionMagneto-Inertial.png",
+        "checksum": "e47b7e95"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-03",
+    "type": "reactor",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Antimatter GDM",
+        "filename": "Reactor03-Black-AntimatterGDM.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor03-Black-AntimatterGDM.png",
+        "checksum": "1483fc18"
+      },
+      "white": {
+        "name": "D TFusion Tokamak",
+        "filename": "Reactor03-White-D-TFusionTokamak.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor03-White-D-TFusionTokamak.png",
+        "checksum": "87d5afaf"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-04",
+    "type": "reactor",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Macron Blowpipe Fusion",
+        "filename": "Reactor04-Black-MacronBlowpipeFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor04-Black-MacronBlowpipeFusion.png",
+        "checksum": "99a7a7f5"
+      },
+      "white": {
+        "name": "D TGun Fusion",
+        "filename": "Reactor04-White-D-TGunFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor04-White-D-TGunFusion.png",
+        "checksum": "c8715e6e"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-05",
+    "type": "reactor",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Free Radical Hydrogen Trap",
+        "filename": "Reactor05-Black-FreeRadicalHydrogenTrap.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor05-Black-FreeRadicalHydrogenTrap.png",
+        "checksum": "a45c6af4"
+      },
+      "white": {
+        "name": "Lyman Alpha Trap",
+        "filename": "Reactor05-White-LymanAlphaTrap.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor05-White-LymanAlphaTrap.png",
+        "checksum": "b7d61496"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-06",
+    "type": "reactor",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Fission Augmented D TInertial Fusion",
+        "filename": "Reactor06-Black-Fission-AugmentedD-TInertialFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor06-Black-Fission-AugmentedD-TInertialFusion.png",
+        "checksum": "a536dae2"
+      },
+      "white": {
+        "name": "Metallic Hydrogen",
+        "filename": "Reactor06-White-MetallicHydrogen.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor06-White-MetallicHydrogen.png",
+        "checksum": "bc19743c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-07",
+    "type": "reactor",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Ultracold Neutrons",
+        "filename": "Reactor07-Black-UltracoldNeutrons.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor07-Black-UltracoldNeutrons.png",
+        "checksum": "e4abbc19"
+      },
+      "white": {
+        "name": "Mini Mag RFPaul Trap",
+        "filename": "Reactor07-White-Mini-MagRFPaulTrap.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor07-White-Mini-MagRFPaulTrap.png",
+        "checksum": "36856639"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-08",
+    "type": "reactor",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "VCRLight Bulb Fission",
+        "filename": "Reactor08-Black-VCRLightBulbFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor08-Black-VCRLightBulbFission.png",
+        "checksum": "fc6a1e22"
+      },
+      "white": {
+        "name": "Pebble Bed Fission",
+        "filename": "Reactor08-White-PebbleBedFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor08-White-PebbleBedFission.png",
+        "checksum": "86414f3c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-09",
+    "type": "reactor",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "3He DFusion Mirror Cell",
+        "filename": "Reactor09-Black-3He-DFusionMirrorCell.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor09-Black-3He-DFusionMirrorCell.png",
+        "checksum": "a8c96dfd"
+      },
+      "white": {
+        "name": "Penning Trap",
+        "filename": "Reactor09-White-PenningTrap.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor09-White-PenningTrap.png",
+        "checksum": "b0d088a1"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-10",
+    "type": "reactor",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Project Valkyrie",
+        "filename": "Reactor10-Black-ProjectValkyrie.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor10-Black-ProjectValkyrie.png",
+        "checksum": "8f648d75"
+      },
+      "white": {
+        "name": "Project Orion",
+        "filename": "Reactor10-White-ProjectOrion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor10-White-ProjectOrion.png",
+        "checksum": "435d98eb"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-11",
+    "type": "reactor",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Positronium Bottle",
+        "filename": "Reactor11-Black-PositroniumBottle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor11-Black-PositroniumBottle.png",
+        "checksum": "1d241e7c"
+      },
+      "white": {
+        "name": "Rubbia Thin Film Fission Hohlraum",
+        "filename": "Reactor11-White-RubbiaThinFilmFissionHohlraum.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor11-White-RubbiaThinFilmFissionHohlraum.png",
+        "checksum": "52992ad2"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "reactor-12",
+    "type": "reactor",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "H 6Li Fusor",
+        "filename": "Reactor12-Black-H-6LiFusor.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor12-Black-H-6LiFusor.png",
+        "checksum": "d69108ff"
+      },
+      "white": {
+        "name": "Supercritical Water Fission",
+        "filename": "Reactor12-White-SupercriticalWaterFission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/reactors/Reactor12-White-SupercriticalWaterFission.png",
+        "checksum": "df85b37b"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-01",
+    "type": "refinery",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Ilmenite Semiconductor Film",
+        "filename": "Refinery01-Black-IlmeniteSemiconductorFilm.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery01-Black-IlmeniteSemiconductorFilm.png",
+        "checksum": "eb8ee026"
+      },
+      "white": {
+        "name": "Atomic Layer Deposition",
+        "filename": "Refinery01-White-AtomicLayerDeposition.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery01-White-AtomicLayerDeposition.png",
+        "checksum": "74b4b7ff"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-02",
+    "type": "refinery",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "Von Neumann Santa Claus Machine",
+        "filename": "Refinery02-Black-VonNeumannSantaClausMachine.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery02-Black-VonNeumannSantaClausMachine.png",
+        "checksum": "06eefe11"
+      },
+      "white": {
+        "name": "Basalt Fiber Spinning",
+        "filename": "Refinery02-White-BasaltFiberSpinning.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery02-White-BasaltFiberSpinning.png",
+        "checksum": "8af47132"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-03",
+    "type": "refinery",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Carbonyl Volatilization",
+        "filename": "Refinery03-Black-CarbonylVolatilization.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery03-Black-CarbonylVolatilization.png",
+        "checksum": "4c29b102"
+      },
+      "white": {
+        "name": "CVDMolding",
+        "filename": "Refinery03-White-CVDMolding.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery03-White-CVDMolding.png",
+        "checksum": "f8fbdd71"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-04",
+    "type": "refinery",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Solar Carbotherm",
+        "filename": "Refinery04-Black-SolarCarbotherm.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery04-Black-SolarCarbotherm.png",
+        "checksum": "30a04e4e"
+      },
+      "white": {
+        "name": "Carbo Chlorination",
+        "filename": "Refinery04-White-Carbo-Chlorination.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery04-White-Carbo-Chlorination.png",
+        "checksum": "bd58dd41"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-05",
+    "type": "refinery",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Impact Mold Sinter",
+        "filename": "Refinery05-Black-ImpactMoldSinter.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery05-Black-ImpactMoldSinter.png",
+        "checksum": "a67015f9"
+      },
+      "white": {
+        "name": "Electroforming",
+        "filename": "Refinery05-White-Electroforming.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery05-White-Electroforming.png",
+        "checksum": "7d7261c7"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-06",
+    "type": "refinery",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Atmospheric Scoop",
+        "filename": "Refinery06-Black-AtmosphericScoop.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery06-Black-AtmosphericScoop.png",
+        "checksum": "6cbd99a9"
+      },
+      "white": {
+        "name": "Fluidized Bed",
+        "filename": "Refinery06-White-FluidizedBed.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery06-White-FluidizedBed.png",
+        "checksum": "7a45b39a"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-07",
+    "type": "refinery",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Laser Heated Pedestal Growth",
+        "filename": "Refinery07-Black-Laser-HeatedPedestalGrowth.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery07-Black-Laser-HeatedPedestalGrowth.png",
+        "checksum": "e7c4e7aa"
+      },
+      "white": {
+        "name": "Foamglass Sintering",
+        "filename": "Refinery07-White-FoamglassSintering.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery07-White-FoamglassSintering.png",
+        "checksum": "27db7602"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-08",
+    "type": "refinery",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "Femtochemistry",
+        "filename": "Refinery08-Black-Femtochemistry.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery08-Black-Femtochemistry.png",
+        "checksum": "77333266"
+      },
+      "white": {
+        "name": "Froth Flotation",
+        "filename": "Refinery08-White-FrothFlotation.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery08-White-FrothFlotation.png",
+        "checksum": "2e9da92d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-09",
+    "type": "refinery",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "Biophytolytic Algal Farm",
+        "filename": "Refinery09-Black-BiophytolyticAlgalFarm.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery09-Black-BiophytolyticAlgalFarm.png",
+        "checksum": "09339e8b"
+      },
+      "white": {
+        "name": "ISRUSabatier",
+        "filename": "Refinery09-White-ISRUSabatier.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery09-White-ISRUSabatier.png",
+        "checksum": "0aa15e66"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-10",
+    "type": "refinery",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Termite Nest",
+        "filename": "Refinery10-Black-TermiteNest.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery10-Black-TermiteNest.png",
+        "checksum": "5e4317db"
+      },
+      "white": {
+        "name": "In Situ Leaching",
+        "filename": "Refinery10-White-In-SituLeaching.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery10-White-In-SituLeaching.png",
+        "checksum": "b4236d7c"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-11",
+    "type": "refinery",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Ionosphere Lasing",
+        "filename": "Refinery11-Black-IonosphereLasing.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery11-Black-IonosphereLasing.png",
+        "checksum": "82daa861"
+      },
+      "white": {
+        "name": "Magma Electrolysis",
+        "filename": "Refinery11-White-MagmaElectrolysis.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery11-White-MagmaElectrolysis.png",
+        "checksum": "4160b6bf"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "refinery-12",
+    "type": "refinery",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "Solid Flame",
+        "filename": "Refinery12-Black-SolidFlame.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery12-Black-SolidFlame.png",
+        "checksum": "13a286d0"
+      },
+      "white": {
+        "name": "Supercritical Drying",
+        "filename": "Refinery12-White-SupercriticalDrying.png",
+        "relativePath": "hf4a-cards/hf4a-cards/refineries/Refinery12-White-SupercriticalDrying.png",
+        "checksum": "a3d6fc46"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-01",
+    "type": "robonaut",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Fissile Aerosol Laser",
+        "filename": "Robonaut01-Black-FissileAerosolLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut01-Black-FissileAerosolLaser.png",
+        "checksum": "f802a079"
+      },
+      "white": {
+        "name": "Blackbody Pumped Laser",
+        "filename": "Robonaut01-White-Blackbody-PumpedLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut01-White-Blackbody-PumpedLaser.png",
+        "checksum": "ed72290f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-02",
+    "type": "robonaut",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "H BCat Inertial",
+        "filename": "Robonaut02-Black-H-BCatInertial.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut02-Black-H-BCatInertial.png",
+        "checksum": "f316ac4c"
+      },
+      "white": {
+        "name": "Cat Fusion Z pinch Torch",
+        "filename": "Robonaut02-White-CatFusionZ-pinchTorch.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut02-White-CatFusionZ-pinchTorch.png",
+        "checksum": "51ce395b"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-03",
+    "type": "robonaut",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Electrophoretic Sandworm",
+        "filename": "Robonaut03-Black-ElectrophoreticSandworm.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut03-Black-ElectrophoreticSandworm.png",
+        "checksum": "8cf384ec"
+      },
+      "white": {
+        "name": "Flywheel Tractor",
+        "filename": "Robonaut03-White-FlywheelTractor.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut03-White-FlywheelTractor.png",
+        "checksum": "16ca6ecf"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-04",
+    "type": "robonaut",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Wakefielde Beam",
+        "filename": "Robonaut04-Black-Wakefielde-Beam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut04-Black-Wakefielde-Beam.png",
+        "checksum": "18ae48dd"
+      },
+      "white": {
+        "name": "Free Electron Laser",
+        "filename": "Robonaut04-White-FreeElectronLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut04-White-FreeElectronLaser.png",
+        "checksum": "4b135a07"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-05",
+    "type": "robonaut",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "Ablative Laser",
+        "filename": "Robonaut05-Black-AblativeLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut05-Black-AblativeLaser.png",
+        "checksum": "058636d4"
+      },
+      "white": {
+        "name": "Kuck Mosquito",
+        "filename": "Robonaut05-White-KuckMosquito.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut05-White-KuckMosquito.png",
+        "checksum": "dd9b8ca2"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-06",
+    "type": "robonaut",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "Nanobot",
+        "filename": "Robonaut06-Black-Nanobot.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut06-Black-Nanobot.png",
+        "checksum": "807fc852"
+      },
+      "white": {
+        "name": "METSteamer",
+        "filename": "Robonaut06-White-METSteamer.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut06-White-METSteamer.png",
+        "checksum": "0ed56a7f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-07",
+    "type": "robonaut",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "D DInertial Fusion",
+        "filename": "Robonaut07-Black-D-DInertialFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut07-Black-D-DInertialFusion.png",
+        "checksum": "2a73c459"
+      },
+      "white": {
+        "name": "Neutral Beam",
+        "filename": "Robonaut07-White-NeutralBeam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut07-White-NeutralBeam.png",
+        "checksum": "4cc14315"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-08",
+    "type": "robonaut",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "Helical Railgun",
+        "filename": "Robonaut08-Black-HelicalRailgun.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut08-Black-HelicalRailgun.png",
+        "checksum": "fda479ce"
+      },
+      "white": {
+        "name": "Nuclear Drill",
+        "filename": "Robonaut08-White-NuclearDrill.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut08-White-NuclearDrill.png",
+        "checksum": "41e7146d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-09",
+    "type": "robonaut",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "Lorentz Propelled Microprobe",
+        "filename": "Robonaut09-Black-Lorentz-PropelledMicroprobe.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut09-Black-Lorentz-PropelledMicroprobe.png",
+        "checksum": "59147468"
+      },
+      "white": {
+        "name": "Phase Locked Diode Laser",
+        "filename": "Robonaut09-White-Phase-LockedDiodeLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut09-White-Phase-LockedDiodeLaser.png",
+        "checksum": "99e70801"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-10",
+    "type": "robonaut",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Mag Beam",
+        "filename": "Robonaut10-Black-MagBeam.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut10-Black-MagBeam.png",
+        "checksum": "1c06cd4f"
+      },
+      "white": {
+        "name": "Rock Splitter",
+        "filename": "Robonaut10-White-RockSplitter.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut10-White-RockSplitter.png",
+        "checksum": "81e5293f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-11",
+    "type": "robonaut",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Quantum Cascade Laser",
+        "filename": "Robonaut11-Black-QuantumCascadeLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut11-Black-QuantumCascadeLaser.png",
+        "checksum": "93095365"
+      },
+      "white": {
+        "name": "Solar Pumped MHDExciplex Laser",
+        "filename": "Robonaut11-White-Solar-PumpedMHDExciplexLaser.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut11-White-Solar-PumpedMHDExciplexLaser.png",
+        "checksum": "4d9ea43d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "robonaut-12",
+    "type": "robonaut",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "MITEEArcjet",
+        "filename": "Robonaut12-Black-MITEEArcjet.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut12-Black-MITEEArcjet.png",
+        "checksum": "e08adedb"
+      },
+      "white": {
+        "name": "Tungsten Resistojet",
+        "filename": "Robonaut12-White-TungstenResistojet.png",
+        "relativePath": "hf4a-cards/hf4a-cards/robonauts/Robonaut12-White-TungstenResistojet.png",
+        "checksum": "9b351dc9"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "spaceborn-01",
+    "type": "spaceborn",
+    "number": "01",
+    "sides": {
+      "purple": {
+        "name": "The Presence",
+        "filename": "Spaceborn01-Purple-ThePresence.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn01-Purple-ThePresence.png",
+        "checksum": "082ce9f8"
+      },
+      "white": {
+        "name": "VRSimulcasters",
+        "filename": "Spaceborn01-White-VRSimulcasters.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn01-White-VRSimulcasters.png",
+        "checksum": "457d8ab1"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-02",
+    "type": "spaceborn",
+    "number": "02",
+    "sides": {
+      "purple": {
+        "name": "Shipbrain",
+        "filename": "Spaceborn02-Purple-Shipbrain.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn02-Purple-Shipbrain.png",
+        "checksum": "04d124e1"
+      },
+      "white": {
+        "name": "Neural Pilots",
+        "filename": "Spaceborn02-White-NeuralPilots.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn02-White-NeuralPilots.png",
+        "checksum": "3ef3d649"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-03",
+    "type": "spaceborn",
+    "number": "03",
+    "sides": {
+      "purple": {
+        "name": "Zombie Wanderers",
+        "filename": "Spaceborn03-Purple-ZombieWanderers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn03-Purple-ZombieWanderers.png",
+        "checksum": "2b309208"
+      },
+      "white": {
+        "name": "Boston Hexapods",
+        "filename": "Spaceborn03-White-BostonHexapods.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn03-White-BostonHexapods.png",
+        "checksum": "a77de16f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-04",
+    "type": "spaceborn",
+    "number": "04",
+    "sides": {
+      "purple": {
+        "name": "Sunburn League",
+        "filename": "Spaceborn04-Purple-SunburnLeague.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn04-Purple-SunburnLeague.png",
+        "checksum": "17664aa2"
+      },
+      "white": {
+        "name": "Lava Lamp Evangelists",
+        "filename": "Spaceborn04-White-LavaLampEvangelists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn04-White-LavaLampEvangelists.png",
+        "checksum": "077afc61"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-05",
+    "type": "spaceborn",
+    "number": "05",
+    "sides": {
+      "purple": {
+        "name": "Death Insurers",
+        "filename": "Spaceborn05-Purple-DeathInsurers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn05-Purple-DeathInsurers.png",
+        "checksum": "a9b6b8a9"
+      },
+      "white": {
+        "name": "Clone Entrepreneurs",
+        "filename": "Spaceborn05-White-CloneEntrepreneurs.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn05-White-CloneEntrepreneurs.png",
+        "checksum": "73e9fb25"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-06",
+    "type": "spaceborn",
+    "number": "06",
+    "sides": {
+      "purple": {
+        "name": "Transplaneteers",
+        "filename": "Spaceborn06-Purple-Transplaneteers.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn06-Purple-Transplaneteers.png",
+        "checksum": "a51e72b6"
+      },
+      "white": {
+        "name": "Prehensilists",
+        "filename": "Spaceborn06-White-Prehensilists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn06-White-Prehensilists.png",
+        "checksum": "553184e4"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-07",
+    "type": "spaceborn",
+    "number": "07",
+    "sides": {
+      "purple": {
+        "name": "Drone Queen",
+        "filename": "Spaceborn07-Purple-DroneQueen.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn07-Purple-DroneQueen.png",
+        "checksum": "d51f9c6a"
+      },
+      "white": {
+        "name": "Teleoperators",
+        "filename": "Spaceborn07-White-Teleoperators.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn07-White-Teleoperators.png",
+        "checksum": "7dd44208"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-08",
+    "type": "spaceborn",
+    "number": "08",
+    "sides": {
+      "purple": {
+        "name": "Jarhead Insurgents",
+        "filename": "Spaceborn08-Purple-JarheadInsurgents.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn08-Purple-JarheadInsurgents.png",
+        "checksum": "5c2fab3b"
+      },
+      "white": {
+        "name": "Transhuman Activists",
+        "filename": "Spaceborn08-White-TranshumanActivists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn08-White-TranshumanActivists.png",
+        "checksum": "1bf4fea3"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-09",
+    "type": "spaceborn",
+    "number": "09",
+    "sides": {
+      "purple": {
+        "name": "Space Jokeys",
+        "filename": "Spaceborn09-Purple-SpaceJokeys.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn09-Purple-SpaceJokeys.png",
+        "checksum": "9503ae9b"
+      },
+      "white": {
+        "name": "Exoskeletalists",
+        "filename": "Spaceborn09-White-Exoskeletalists.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn09-White-Exoskeletalists.png",
+        "checksum": "bd0e8f57"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "spaceborn-10",
+    "type": "spaceborn",
+    "number": "10",
+    "sides": {
+      "purple": {
+        "name": "Bubbleopolis",
+        "filename": "Spaceborn10-Purple-Bubbleopolis.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn10-Purple-Bubbleopolis.png",
+        "checksum": "075985e3"
+      },
+      "white": {
+        "name": "Gabonese Mining Consortium",
+        "filename": "Spaceborn10-White-GaboneseMiningConsortium.png",
+        "relativePath": "hf4a-cards/hf4a-cards/colonists/Spaceborn10-White-GaboneseMiningConsortium.png",
+        "checksum": "83dfb33f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "purple"
+    ]
+  },
+  {
+    "cardId": "thruster-01",
+    "type": "thruster",
+    "number": "01",
+    "sides": {
+      "black": {
+        "name": "Ablative Nozzle",
+        "filename": "Thruster01-Black-AblativeNozzle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster01-Black-AblativeNozzle.png",
+        "checksum": "a692d24a"
+      },
+      "white": {
+        "name": "Ablative Plate",
+        "filename": "Thruster01-White-AblativePlate.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster01-White-AblativePlate.png",
+        "checksum": "08aa8226"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-02",
+    "type": "thruster",
+    "number": "02",
+    "sides": {
+      "black": {
+        "name": "Magnetic Nozzle",
+        "filename": "Thruster02-Black-MagneticNozzle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster02-Black-MagneticNozzle.png",
+        "checksum": "952a442f"
+      },
+      "white": {
+        "name": "De Laval Nozzle",
+        "filename": "Thruster02-White-DeLavalNozzle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster02-White-DeLavalNozzle.png",
+        "checksum": "10f7811d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-03",
+    "type": "thruster",
+    "number": "03",
+    "sides": {
+      "black": {
+        "name": "Timberwind",
+        "filename": "Thruster03-Black-Timberwind.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster03-Black-Timberwind.png",
+        "checksum": "a61aca47"
+      },
+      "white": {
+        "name": "Dumbo",
+        "filename": "Thruster03-White-Dumbo.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster03-White-Dumbo.png",
+        "checksum": "d60e6866"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-04",
+    "type": "thruster",
+    "number": "04",
+    "sides": {
+      "black": {
+        "name": "Ion Drive",
+        "filename": "Thruster04-Black-IonDrive.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster04-Black-IonDrive.png",
+        "checksum": "98f18c97"
+      },
+      "white": {
+        "name": "Hall Effect",
+        "filename": "Thruster04-White-HallEffect.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster04-White-HallEffect.png",
+        "checksum": "f43f9a57"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-05",
+    "type": "thruster",
+    "number": "05",
+    "sides": {
+      "black": {
+        "name": "MPDT wave",
+        "filename": "Thruster05-Black-MPDT-wave.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster05-Black-MPDT-wave.png",
+        "checksum": "28480152"
+      },
+      "white": {
+        "name": "Mass Driver",
+        "filename": "Thruster05-White-MassDriver.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster05-White-MassDriver.png",
+        "checksum": "a6091bd0"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-06",
+    "type": "thruster",
+    "number": "06",
+    "sides": {
+      "black": {
+        "name": "n 6Li Microfission",
+        "filename": "Thruster06-Black-n-6LiMicrofission.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster06-Black-n-6LiMicrofission.png",
+        "checksum": "ad618831"
+      },
+      "white": {
+        "name": "Metastable Helium",
+        "filename": "Thruster06-White-MetastableHelium.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster06-White-MetastableHelium.png",
+        "checksum": "4c46e34d"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-07",
+    "type": "thruster",
+    "number": "07",
+    "sides": {
+      "black": {
+        "name": "Vortex Confined Nozzle",
+        "filename": "Thruster07-Black-VortexConfinedNozzle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster07-Black-VortexConfinedNozzle.png",
+        "checksum": "15316bf4"
+      },
+      "white": {
+        "name": "Monoatomic Plug Nozzle",
+        "filename": "Thruster07-White-MonoatomicPlugNozzle.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster07-White-MonoatomicPlugNozzle.png",
+        "checksum": "f18abc12"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-08",
+    "type": "thruster",
+    "number": "08",
+    "sides": {
+      "black": {
+        "name": "Electric Sail",
+        "filename": "Thruster08-Black-ElectricSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster08-Black-ElectricSail.png",
+        "checksum": "77202564"
+      },
+      "white": {
+        "name": "Photon Heliogyro",
+        "filename": "Thruster08-White-PhotonHeliogyro.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster08-White-PhotonHeliogyro.png",
+        "checksum": "83bc1e3e"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-09",
+    "type": "thruster",
+    "number": "09",
+    "sides": {
+      "black": {
+        "name": "Mag Sail",
+        "filename": "Thruster09-Black-MagSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster09-Black-MagSail.png",
+        "checksum": "9d98553c"
+      },
+      "white": {
+        "name": "Photon Kite Sail",
+        "filename": "Thruster09-White-PhotonKiteSail.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster09-White-PhotonKiteSail.png",
+        "checksum": "e1b83bf3"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-10",
+    "type": "thruster",
+    "number": "10",
+    "sides": {
+      "black": {
+        "name": "Pulsed Plasmoid",
+        "filename": "Thruster10-Black-PulsedPlasmoid.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster10-Black-PulsedPlasmoid.png",
+        "checksum": "64e982a6"
+      },
+      "white": {
+        "name": "Ponderomotive VASIMR",
+        "filename": "Thruster10-White-PonderomotiveVASIMR.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster10-White-PonderomotiveVASIMR.png",
+        "checksum": "2a3c178b"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-11",
+    "type": "thruster",
+    "number": "11",
+    "sides": {
+      "black": {
+        "name": "Dual Stage4 Grid",
+        "filename": "Thruster11-Black-Dual-Stage4-Grid.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster11-Black-Dual-Stage4-Grid.png",
+        "checksum": "8ce05629"
+      },
+      "white": {
+        "name": "Pulsed Inductive",
+        "filename": "Thruster11-White-PulsedInductive.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster11-White-PulsedInductive.png",
+        "checksum": "de2bc16f"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "thruster-12",
+    "type": "thruster",
+    "number": "12",
+    "sides": {
+      "black": {
+        "name": "Colliding Beam H BFusion",
+        "filename": "Thruster12-Black-CollidingBeamH-BFusion.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster12-Black-CollidingBeamH-BFusion.png",
+        "checksum": "0fd3a14c"
+      },
+      "white": {
+        "name": "Re Solar Moth",
+        "filename": "Thruster12-White-ReSolarMoth.png",
+        "relativePath": "hf4a-cards/hf4a-cards/thrusters/Thruster12-White-ReSolarMoth.png",
+        "checksum": "bd893f50"
+      }
+    },
+    "upgradeChain": [
+      "white",
+      "black"
+    ]
+  },
+  {
+    "cardId": "unknown-01",
+    "type": "unknown",
+    "number": "01",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-02",
+    "type": "unknown",
+    "number": "02",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-03",
+    "type": "unknown",
+    "number": "03",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-04",
+    "type": "unknown",
+    "number": "04",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-05",
+    "type": "unknown",
+    "number": "05",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-06",
+    "type": "unknown",
+    "number": "06",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-07",
+    "type": "unknown",
+    "number": "07",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-08",
+    "type": "unknown",
+    "number": "08",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-09",
+    "type": "unknown",
+    "number": "09",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-10",
+    "type": "unknown",
+    "number": "10",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-11",
+    "type": "unknown",
+    "number": "11",
+    "sides": {},
+    "upgradeChain": []
+  },
+  {
+    "cardId": "unknown-12",
+    "type": "unknown",
+    "number": "12",
+    "sides": {},
+    "upgradeChain": []
+  }
+]

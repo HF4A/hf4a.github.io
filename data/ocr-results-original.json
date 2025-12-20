@@ -1,0 +1,382 @@
+[
+  {
+    "filename": "Bernal01-White-GEOElevatorBernal.png",
+    "parsedId": "bernal-01",
+    "success": true,
+    "data": {
+      "name": "GEO Elevator Bernal",
+      "cardId": "M2B178F",
+      "description": "SPACE ELEVATOR - Centripedal force holds the elevator cable vertical over its anchorage.",
+      "stats": {
+        "mass": 10,
+        "radHard": 6
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Bernal SPACE ELEVATOR 10 MASS 6 Rad-Hard HOME: Boost direct to Home Bernal in GEO without doubling boost costs. Time to GEO: 7.5 days Power: 4 MW (beamed) Climber Mass: 20 Mtonne"
+    }
+  },
+  {
+    "filename": "Bernal01-Purple-SpaceElevatorLab.png",
+    "parsedId": "bernal-01",
+    "success": true,
+    "data": {
+      "name": "Space Elevator Lab",
+      "cardId": "M2B178R",
+      "description": "PLUTO-CHARON ELEVATOR - Pluto and its moon Charon are tidally locked. A tether between the two stretches 17,800 km.",
+      "stats": {
+        "mass": 10,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces."
+    }
+  },
+  {
+    "filename": "Bernal02-White-L1ClimateControlBernal.png",
+    "parsedId": "bernal-02",
+    "success": true,
+    "data": {
+      "name": "L1 Climate Control Bernal",
+      "cardId": "M2B172F",
+      "description": "L1 SPACE MIRROR SWARM - A swarm of sail-mirrors in the Sol-Earth L1 Lagrange to divert sunlight for climate engineering.",
+      "stats": {
+        "mass": 10,
+        "radHard": 8
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: You are always the 1st player, superseding all other claimants."
+    }
+  },
+  {
+    "filename": "Bernal02-Purple-ClimateControlLab.png",
+    "parsedId": "bernal-02",
+    "success": true,
+    "data": {
+      "name": "Climate Control Lab",
+      "cardId": "M0B172R",
+      "description": "L1 MOIRE LENS SUNSHADE - A concave rotating Fresnel lens diverts sunlight to or from a planet for climate engineering.",
+      "stats": {
+        "mass": 12,
+        "radHard": 8
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "+2 VP per Dirtside for this Bernal."
+    }
+  },
+  {
+    "filename": "Bernal03-White-L2CollimatorBernal.png",
+    "parsedId": "bernal-03",
+    "success": true,
+    "data": {
+      "name": "L2 Collimator Bernal",
+      "cardId": "M2B173F",
+      "description": "OPTICAL TELESCOPE - Shown is one of many in a precision formation located in the Earth-Luna L2 point.",
+      "stats": {
+        "mass": 10,
+        "radHard": 8
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: Gain the Powersat faction privilege."
+    }
+  },
+  {
+    "filename": "Bernal03-Purple-CollimatorLab.png",
+    "parsedId": "bernal-03",
+    "success": true,
+    "data": {
+      "name": "Collimator Lab",
+      "cardId": "M2B173R",
+      "description": "DYSON SWARM POWERSATS - A power-beaming swarm of thousands of sun-fired lasers in inclined orbits.",
+      "stats": {
+        "mass": 10,
+        "radHard": 9
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Gain the Powersat faction privilege. Powersat push includes a Bonus Pivot."
+    }
+  },
+  {
+    "filename": "Bernal04-White-L3LofstromLoopMicrogravity.png",
+    "parsedId": "bernal-04",
+    "success": true,
+    "data": {
+      "name": "L3 Lofstrom Loop Microgravity",
+      "cardId": "M2B170F",
+      "description": "LAUNCH LOOP - Accelerates humans & cargos to escape velocity.",
+      "stats": {
+        "mass": 10,
+        "radHard": 8
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: Boost direct to Home Bernal without doubling boost costs."
+    }
+  },
+  {
+    "filename": "Bernal04-Purple-LofstromLoopMicrogravityLab.png",
+    "parsedId": "bernal-04",
+    "success": true,
+    "data": {
+      "name": "Lofstrom Loop Microgravity Lab",
+      "cardId": "M2B170R",
+      "description": "MASS DRIVER PROPULSION - Equipped with an electromagnetic railgun, a Bernal sacrifices its own dirt shielding for thrust.",
+      "stats": {
+        "mass": 10,
+        "radHard": 9
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces."
+    }
+  },
+  {
+    "filename": "Bernal05-White-L4AntimatterFactory.png",
+    "parsedId": "bernal-05",
+    "success": true,
+    "data": {
+      "name": "L4 Antimatter Factory",
+      "cardId": "M2B179F",
+      "description": "LINAC Amat Factory - Cascading debris from a proton beam target are sorted to extract isotope fuels, then positrons and antiprotons.",
+      "stats": {
+        "mass": 10,
+        "radHard": 9
+      },
+      "spectralType": "M",
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: Your Crew has an On-Board Nuclear Any reactor."
+    }
+  },
+  {
+    "filename": "Bernal05-Purple-AntimatterLab.png",
+    "parsedId": "bernal-05",
+    "success": true,
+    "data": {
+      "name": "Antimatter Lab",
+      "cardId": "M2B179R",
+      "description": "BERNAL SPHERE - A sphere is optimal for air pressure maintenance and minimal radiation shielding.",
+      "stats": {
+        "mass": 10,
+        "radHard": 10
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Your Crew has an On-Board Nuclear Any reactor."
+    }
+  },
+  {
+    "filename": "Bernal06-White-L4sPharmaceuticsBernal.png",
+    "parsedId": "bernal-06",
+    "success": true,
+    "data": {
+      "name": "L4s Pharmaceutics Bernal",
+      "cardId": "M2B176F",
+      "description": "BOLO HABITAT - A dumbell geometry minimizes hull mass, although more shielding mass is needed. Mass: 17t (hull), 7t (air), Rotation: 3 rpm, Inhabitants: 15",
+      "stats": {
+        "mass": 10,
+        "radHard": 6
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: Gain the Skunkworks faction privilege."
+    }
+  },
+  {
+    "filename": "Bernal06-Purple-PharmaceuticsLab.png",
+    "parsedId": "bernal-06",
+    "success": true,
+    "data": {
+      "name": "Pharmaceutics Lab",
+      "cardId": "M2B176R",
+      "description": "PHARMING BEADED TORUS - Breeds neogenic organelles that function to reverse human disorders arising from radiation and weightlessness. Pharm Module Diameter: 100m, Inhabitants: 48",
+      "stats": {
+        "mass": 10,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Gain the Skunkworks faction privilege & impose academia hand limit on all opponents."
+    }
+  },
+  {
+    "filename": "Bernal07-White-L5SolarCellFactory.png",
+    "parsedId": "bernal-07",
+    "success": true,
+    "data": {
+      "name": "L5 Solar Cell Factory",
+      "cardId": "M2B177F",
+      "description": "SOLAR CELL FACTORY - Photovoltaic cells are conveyed through vapor deposition sections, then cut and integrated into panels and arrays. Length: 400m, Power: 240 MWe, Throughput: 14 ktons/yr, Inhabitants: 110",
+      "stats": {
+        "mass": 10,
+        "radHard": 6
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: +1 to the Net Thrust of your Spacecraft that use Solar-Power."
+    }
+  },
+  {
+    "filename": "Bernal07-Purple-SolarCellLab.png",
+    "parsedId": "bernal-07",
+    "success": true,
+    "data": {
+      "name": "Solar Cell Lab",
+      "cardId": "M2B177R",
+      "description": "SUN-FIRED WPT POWER BEAM - A bio-mimetic array of solar concentrators generating microwave power. WPT Frequency: 2.45 GHz, Power: 500 MWbeam, Efficiency: 34%, Mass: 12 ktonnes",
+      "stats": {
+        "mass": 10,
+        "radHard": 8
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "+2 to the Net Thrust of your Spacecraft that use Solar-Power."
+    }
+  },
+  {
+    "filename": "Bernal08-White-L5sCancerHospital.png",
+    "parsedId": "bernal-08",
+    "success": true,
+    "data": {
+      "name": "L5s Cancer Hospital",
+      "cardId": "M2B171F",
+      "description": "NAUTILUS-X - Parked in a Lagrange point for long duration missions. Uses a centrifuge for the investigation of microgravity on human health. Crew: 6",
+      "stats": {
+        "mass": 10,
+        "radHard": 6
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: You are immune to budget cuts."
+    }
+  },
+  {
+    "filename": "Bernal08-Purple-CancerLab.png",
+    "parsedId": "bernal-08",
+    "success": true,
+    "data": {
+      "name": "Cancer Lab",
+      "cardId": "M2B171R",
+      "description": "STANFORD TORUS - Primary and secondary mirrors direct sunlight into the interior. Radius: 56m (major), 7m (minor), Mass: 80t (hull), 60t (air), Rotation: 4 rpm, Inhabitants: 123",
+      "stats": {
+        "mass": 12,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "Gain +1 Token VP for each Colony Dome. Your Crew and Human Colonists have a rad-hard of at least 7."
+    }
+  },
+  {
+    "filename": "Bernal09-White-SSODiplomatic.png",
+    "parsedId": "bernal-09",
+    "success": true,
+    "data": {
+      "name": "SSO Diplomatic",
+      "cardId": "M2B174F",
+      "description": "INTERNATIONAL SPACE STATION - A habitat in LEO, launched 1998. Mass: 420 tonnes (Mass 10), Length: 51m, Inhabitants: 6",
+      "stats": {
+        "mass": 10,
+        "radHard": 6
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: (Module 0) Your delegates in the Ideology of your Faction color are +1 VP each."
+    }
+  },
+  {
+    "filename": "Bernal09-Purple-DiplomaticLab.png",
+    "parsedId": "bernal-09",
+    "success": true,
+    "data": {
+      "name": "Diplomatic Lab",
+      "cardId": "M2B174R",
+      "description": "O'NEIL SUNFLOWER - Twin cylinders rotate about their center of gravity. The mirrors admit sunlight without allowing cosmic rays to bypass the shielded area. Rotation: 2 rpm, Cylinder Diameter: 1 km",
+      "stats": {
+        "mass": 10,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "(Module 0) Your delegates in the assembly are +1 VP each."
+    }
+  },
+  {
+    "filename": "Bernal10-White-TourismCycler.png",
+    "parsedId": "bernal-10",
+    "success": true,
+    "data": {
+      "name": "Tourism Cycler",
+      "cardId": "M2B179F",
+      "description": "2:1 RESONANCE CYCLER - Kalpana cylinder passes monthly through the VAB as it cycles between Earth and Luna. Cylinder: 56m long, 56m dia, Unshielded Mass: 8.5 ktonnes, Hull Mass: 500 tonnes, Rotation: 4 rpm, Inhabitants: 490",
+      "stats": {
+        "mass": 10,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "HOME: Can designate any Spacecraft to forgo Belt Rolls in the Radiation Belts near Earth."
+    }
+  },
+  {
+    "filename": "Bernal10-Purple-TourismHotel.png",
+    "parsedId": "bernal-10",
+    "success": true,
+    "data": {
+      "name": "Tourism Hotel",
+      "cardId": "M2B179R",
+      "description": "MCKENDREE CYLINDER - Similar to an O'Neill Cylinder, but using carbon nanotube construction instead of steel. Cylinder: 70m long, 70m dia, Inhabitants: 700",
+      "stats": {
+        "mass": 10,
+        "radHard": 7
+      },
+      "spectralType": null,
+      "supportIcons": [
+        "crew"
+      ],
+      "rawText": "+2 VP per Dirtside for this Bernal."
+    }
+  }
+]
