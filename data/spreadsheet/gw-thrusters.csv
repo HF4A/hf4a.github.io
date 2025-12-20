@@ -1,0 +1,19 @@
+,,,,,,Thruster,,,Support Requirements,,,,,
+Name,Type,"Spectral
+Type","Promotion
+Colony",Mass,Rad-Hard,Thrust,"Fuel
+Consumption",Afterburn,⟛ Generator,e Generator,X Reactor,Any Reactor,Therms,Future
+Amat-Catalyzed Fission-Fusion,GW Thruster,S,D,3,9,10,1/3,2,FALSE,FALSE,TRUE,FALSE,2,
+Amat-Initiated H-B Magnetic-Inertial,TW Thruster,,,1,10,8,0,5,TRUE,FALSE,FALSE,FALSE,1,"MINI-BLACK HOLE FUTURE: Req = Industrialized centaur with 10 isotope FTs. Effects = double all isotope refuel, 10 VP."
+Dense Plasma H-B Focus Fusion,GW Thruster,D,D,1,8,2,1/10,5,TRUE,FALSE,FALSE,FALSE,,
+Crossfire H-B Focus Fusion,TW Thruster,,,1,9,3,0,9,TRUE,FALSE,FALSE,FALSE,,"PROTIUM FUSION FUTURE: Req = Promoted Bernal with H Dirtside. Effects = double all isotope refuel, 10 VP."
+Levitated Dipole 6Li-H Fusion,GW Thruster,V,S,4,5,2,0,4,FALSE,FALSE,FALSE,FALSE,1,
+Dusty Plasma,TW Thruster,,,2,8,2,0,9,FALSE,FALSE,FALSE,FALSE,3,"MASS BEAM FUTURE: Req = Promoted Bernal with Io or Triton Dirtside. Effects = your Powersat adds +2 thrust, 7 VP."
+Mini-Mag Orion Z-Pinch Fission,GW Thruster,M,D,1,9,12,1/3,,TRUE,FALSE,FALSE,FALSE,2,
+Solem Medusa Tugged Orion,TW Thruster,,,6,9,9,0,3,TRUE,FALSE,FALSE,FALSE,,LITHIATED AMMONIA ICE STARSHIP FUTURE: Req = Ad astra exit with 10 isotope fuel. Effect = 14 VP.
+Salt-Water Zubrin,GW Thruster,S,M,1,6,14,1/2,1,FALSE,FALSE,FALSE,FALSE,5,
+Zubrin-GDM,TW Thruster,,,3,8,6,0,8,TRUE,FALSE,FALSE,FALSE,4,"SPACEFARING FUTURE: Req = Bernal with 8+ dirtside hydration. Effects = Allowed 1 extra Colonist, 7 VP."
+Spheromak 3He-D Magnetic Fusion,GW Thruster,H,H,4,8,6,1/10,6,FALSE,TRUE,FALSE,FALSE,4,
+Colliding FRC 3He-D Fusion,TW Thruster,,,3,9,4,0,10,TRUE,FALSE,FALSE,TRUE,2,ENZMANN STARSHIP FUTURE: Req = Ad astra exit with 2 Promoted Colonists + Mobile Factory. Effect = 12 VP.
+VISTA D-T Inertial Fusion,GW Thruster,H,H,5,8,9,1/4,3,TRUE,FALSE,FALSE,FALSE,2,
+Daedalus 3He-D Inertial Fusion,TW Thruster,,,5,9,11,0,8,TRUE,FALSE,FALSE,FALSE,3,"FUSION CANDLE FUTURE: Req = Triton Colony & Promoted Bernal with Neptune Aerostat Dirtside. Effects = double all isotope refuel, 14 VP."

@@ -1,0 +1,28 @@
+,,,,,Support Requirements,,,,
+Name,"Spectral
+Type",Mass,Rad-Hard,"Air
+Eater",e Generator,X Reactor,∿ Reactor,💣 Reactor,Ability
+Atomic Layer Deposition,V,2,2,,TRUE,FALSE,FALSE,FALSE,
+Ilmenite Semiconductor Film,,2,6,,FALSE,FALSE,FALSE,FALSE,"POWER GIRDLE: If used to industrialize a non-atmospheric site of size 8+, you permanently gain the Powersat faction privilege."
+Basalt Fiber Spinning,S,3,5,,FALSE,TRUE,TRUE,TRUE,
+Von Neumann Santa Claus Machine,,2,5,,FALSE,FALSE,FALSE,FALSE,DIVINING NUBOTS: -1 ISRU for Colocated ISRU platform.
+CVD Molding,M,3,5,,FALSE,FALSE,FALSE,FALSE,
+Carbonyl Volatilization,,2,5,,FALSE,FALSE,FALSE,FALSE,THORIUM BREEDER: -3 to Colocated size rolls on S Sites.
+Carbo-Chlorination,V,2,4,,TRUE,FALSE,FALSE,FALSE,
+Solar Carbotherm,,2,5,,FALSE,FALSE,FALSE,FALSE,"ARCOLOGY: Decommissioning of a robonaut is not needed when this is used to industrialize in the zones Mercury, Venus, Earth"
+Electroforming,M,3,3,,TRUE,FALSE,FALSE,FALSE,
+Impact Mold Sinter,,3,5,,FALSE,FALSE,FALSE,FALSE,FOAMED NICKEL: -1 to Colocated size rolls.
+Fluidized Bed,V,3,4,,TRUE,FALSE,FALSE,FALSE,
+Atmospheric Scoop,,1,5,TRUE,TRUE,FALSE,FALSE,FALSE,"SCOOP: If operational, this card makes adjacent or colocated aerostat sites into [2 hydration]"
+Foamglass Sintering,D,3,4,,TRUE,FALSE,FALSE,FALSE,
+Laser-Heated Pedestal Growth,,1,5,,TRUE,FALSE,FALSE,FALSE,SUPERLENS: -1 to all Colocated raygun size rolls.
+Froth Flotation,D,3,5,,TRUE,FALSE,FALSE,FALSE,
+Femtochemistry,,2,8,,FALSE,FALSE,FALSE,FALSE,"SCAVENGING: If Colocated, doubles FTs during site refuel."
+ISRU Sabatier,V,3,4,,TRUE,FALSE,FALSE,FALSE,
+Biophytolytic Algal Farm,,3,5,,FALSE,FALSE,FALSE,FALSE,COMET LICHEN: -2 to Colocated size rolls on D Sites.
+In-Situ Leaching,D,3,3,,FALSE,TRUE,TRUE,TRUE,
+Termite Nest,,1,3,,FALSE,TRUE,TRUE,TRUE,"MINE REVIVAL: As an op, remove a busted disk and place Claim on a Colocated Site of Size 2+."
+Magma Electrolysis,V,3,3,,TRUE,FALSE,FALSE,FALSE,
+Ionosphere Lasing,,2,6,,FALSE,FALSE,FALSE,FALSE,"IONOSAT: If used to industrialize an Atmospheric Site, permanently gain the Powersat faction privilege."
+Supercritical Drying,H,1,5,,FALSE,TRUE,FALSE,FALSE,
+Solid Flame,,0,5,,FALSE,TRUE,FALSE,FALSE,JELLYBOTS: Colocated industrialization is a free action.

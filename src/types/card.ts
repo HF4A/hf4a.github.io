@@ -15,9 +15,19 @@ export type CardType =
   | 'exodus'
   | 'unknown';
 
-export type SpectralType = 'C' | 'D' | 'H' | 'M' | 'S' | 'V' | 'G' | 'K' | 'Y';
+export type SpectralType = 'C' | 'D' | 'H' | 'M' | 'S' | 'V' | 'G' | 'K' | 'Y' | 'Any';
 
 export type CardSide = 'white' | 'black' | 'purple' | 'blue' | 'yellow';
+
+export type FuelType = 'Water' | 'Isotope' | 'Any';
+
+export type ReactorType = 'X' | 'wave' | 'bomb'; // X = fission, ∿ = wave/fusion, 💣 = bomb/antimatter
+
+export type ColonistType = 'Robot' | 'Human';
+
+export type Specialty = 'Engineer' | 'Miner' | 'Prospector' | 'Scientist' | 'Pilot' | 'Commander';
+
+export type Ideology = 'Green' | 'Yellow' | 'Blue' | 'Red' | 'Purple';
 
 export type SupportIcon =
   | 'reactor'
@@ -29,16 +39,70 @@ export type SupportIcon =
   | 'gear'
   | 'snowflake'
   | 'buggy'
-  | 'smelter';
+  | 'smelter'
+  | 'fuel'
+  | 'missile'
+  | 'raygun';
 
+// Support requirements for a card
+export interface SupportRequirements {
+  generatorPush?: boolean;      // ⟛ Generator (push generator)
+  generatorElectric?: boolean;  // e Generator (electric generator)
+  reactorFission?: boolean;     // X Reactor
+  reactorFusion?: boolean;      // ∿ Reactor (wave/fusion)
+  reactorAntimatter?: boolean;  // 💣 Reactor (bomb/antimatter)
+  reactorAny?: boolean;         // Any Reactor
+  solar?: boolean;              // Solar powered
+}
+
+// Base stats common to most cards
 export interface CardStats {
   mass?: number;
   radHard?: number;
+  // Thruster/propulsion stats
   thrust?: number;
-  isru?: number;
-  powerOutput?: string;
-  efficiency?: string;
+  fuelConsumption?: string;     // e.g., "1/2", "1/3", "2"
+  fuelType?: FuelType;
+  afterburn?: number;           // Afterburn bonus
+  bonusPivots?: number;         // Extra pivots
+  push?: boolean;               // Can be used for push (solar sail style)
+  // Reactor stats
+  reactorType?: ReactorType;
+  thrustModifier?: number;      // Modifier to thrust when used
+  fuelConsumptionModifier?: string; // Modifier to fuel consumption
+  // Radiator stats (dual-sided)
+  therms?: number;              // Cooling capacity
+  lightSideMass?: number;
+  lightSideRadHard?: number;
+  lightSideTherms?: number;
+  heavySideMass?: number;
+  heavySideRadHard?: number;
+  heavySideTherms?: number;
+  // Generator stats
+  generatorType?: 'push' | 'electric'; // ⟛ or e
+  // Freighter stats
   loadLimit?: number;
+  factoryLoadingOnly?: boolean;
+  // Colonist/Robonaut stats
+  isru?: number;                // ISRU capability
+  missile?: boolean;            // Has missile weapon
+  raygun?: boolean;             // Has raygun weapon
+  buggy?: boolean;              // Has buggy capability
+  // Bernal stats
+  powersat?: boolean;           // Powersat capability
+  hasGenerator?: boolean;       // Has built-in generator
+  // General
+  airEater?: boolean;           // Can use atmosphere for thrust
+  solar?: boolean;              // Solar powered
+}
+
+// Extended card data from spreadsheet
+export interface SpreadsheetData {
+  promotionColony?: string;     // Colony type for promotion
+  future?: string;              // Future expansion indicator
+  colonistType?: ColonistType;  // Robot or Human
+  specialty?: Specialty;        // Engineer, Miner, etc.
+  ideology?: Ideology;          // Green, Yellow, etc.
 }
 
 export interface CardOCR {
@@ -48,8 +112,11 @@ export interface CardOCR {
   stats?: CardStats;
   spectralType?: SpectralType | string | null;
   supportIcons?: string[];
+  supportRequirements?: SupportRequirements;
   rawText?: string;
   type?: string;
+  ability?: string;             // Card special ability text
+  // Contract-specific
   contractType?: string;
   victoryPoints?: number;
   destination?: string;
@@ -72,6 +139,7 @@ export interface Card {
   size?: number;
   checksum?: string;
   ocr?: CardOCR;
+  spreadsheet?: SpreadsheetData;  // Data from spreadsheet
   cardGroupId?: string;
   upgradeChain?: CardSide[];
   relatedCards?: Record<string, string>;
@@ -116,4 +184,34 @@ export const SPECTRAL_TYPE_LABELS: Record<SpectralType, string> = {
   G: 'G',
   K: 'K',
   Y: 'Y',
+  Any: 'Any',
+};
+
+export const FUEL_TYPE_LABELS: Record<FuelType, string> = {
+  Water: 'Water',
+  Isotope: 'Isotope',
+  Any: 'Any',
+};
+
+export const REACTOR_TYPE_LABELS: Record<ReactorType, string> = {
+  X: 'Fission (X)',
+  wave: 'Fusion (∿)',
+  bomb: 'Antimatter (💣)',
+};
+
+export const SPECIALTY_LABELS: Record<Specialty, string> = {
+  Engineer: 'Engineer',
+  Miner: 'Miner',
+  Prospector: 'Prospector',
+  Scientist: 'Scientist',
+  Pilot: 'Pilot',
+  Commander: 'Commander',
+};
+
+export const IDEOLOGY_LABELS: Record<Ideology, string> = {
+  Green: 'Green',
+  Yellow: 'Yellow',
+  Blue: 'Blue',
+  Red: 'Red',
+  Purple: 'Purple',
 };

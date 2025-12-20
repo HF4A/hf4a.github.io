@@ -1,0 +1,24 @@
+,,,,,Thruster,,,Support Requirements,,
+Name,Type,"Promotion
+Colony",Mass,Rad-Hard,Thrust,"Fuel
+Consumption",Powersat,e Generator,Therms,Ability
+GEO Elevator Bernal,Bernal,Atmospheric,10,6,3,3,TRUE,TRUE,0,HOME: Boost direct to Home Bernal without doubling boost costs.
+Space Elevator Lab,Promoted Bernal,,10,7,3,3,TRUE,TRUE,0,Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces.
+L1 Climate Control Bernal,Bernal,Atmospheric,10,8,3,3,TRUE,TRUE,0,"HOME: You are always the 1st player, superseding all other claimants."
+Climate Control Lab,Promoted Bernal,,12,8,3,3,TRUE,TRUE,0,+2 VP per Dirtside for this Bernal.
+L2 Collimator Bernal,Bernal,Push,10,8,3,3,TRUE,TRUE,0,HOME: Gain the Powersat faction privilege.
+Collimator Lab,Promoted Bernal,,10,9,3,3,TRUE,TRUE,0,Gain the Powersat faction privilege. Powersat push includes a Bonus Pivot.
+L3 Lofstrom Loop Microgravity,Bernal,Submarine,10,8,3,3,TRUE,TRUE,0,HOME: Boost direct to Home Bernal without doubling boost costs.
+Lofstrom Loop Microgravity Lab,Promoted Bernal,,10,9,3,3,TRUE,TRUE,0,Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces.
+L4 Antimatter Factory,Bernal,M,10,9,3,3,TRUE,TRUE,2,HOME: Your Crew has an On-Board Nuclear X reactor.
+Antimatter Lab,Promoted Bernal,,10,10,3,3,TRUE,TRUE,2,"Your Crew has an On-Board Nuclear ""ANY"" reactor."
+L4s Pharmaceutics Bernal,Bernal,Astrobiology,10,6,3,3,TRUE,TRUE,0,HOME: Gain the Skunkworks faction privilege.
+Pharmaceutics Lab,Promoted Bernal,,10,7,3,3,TRUE,TRUE,0,Gain the Skunkworks faction privilege & impose academia hand limit on all opponents.
+L5 Solar Cell Factory,Bernal,Push,10,6,3,3,TRUE,TRUE,0,HOME: +1 to the Net Thrust of your Spacecraft that use Solar-Power.
+Solar Cell Lab,Promoted Bernal,,10,8,3,3,TRUE,TRUE,0,+2 to the Net Thrust of your Spacecraft that use Solar-Power.
+L5s Cancer Hospital,Bernal,Submarine,10,6,3,3,TRUE,TRUE,0,HOME: You are immune to budget cuts.
+Cancer Lab,Promoted Bernal,,12,7,3,3,TRUE,TRUE,0,Gain +1 Token VP for each Colony Dome. Your Crew and Human Colonists have a rad-hard of at least 7.
+SSO Diplomatic,Bernal,Astrobiology,10,6,3,3,TRUE,TRUE,0,HOME: (Module 0) Your delegates in the Ideology of your Faction color are +1 VP each.
+Diplomatic Lab,Promoted Bernal,,10,7,3,3,TRUE,TRUE,0,(Module 0) Your delegates in the assembly are +1 VP each.
+Tourism Cycler,Bernal,Atmospheric,10,7,3,3,TRUE,TRUE,0,HOME: Can designate any Spacecraft to forgo Belt Rolls in the Radiation Belts near Earth.
+Tourism Hotel,Promoted Bernal,,10,7,3,3,TRUE,TRUE,0,+2 VP per Dirtside for this Bernal.

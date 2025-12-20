@@ -1,0 +1,27 @@
+,,Light Side,,,Heavy Side,,,Support Requirements,
+Name,"Spectral
+Type",Mass,Rad-Hard,Therms,Mass,Rad-Hard,Therms,e Generator,Ability
+Bubble Membrane,C,0,1,1,1,0,2,FALSE,
+Electrostatic Membrane,,0,3,1,1,2,3,FALSE,
+Dielectric X-Ray Window,D,4,7,2,5,7,3,FALSE,
+Graphene Crystal X-Ray Mirror,,0,7,1,1,7,2,FALSE,
+ETHER Charged Dust,M,1,1,1,2,1,2,FALSE,
+Curie Point,,0,5,1,1,3,3,FALSE,
+Li Heatsink Fountain,S,2,6,1,3,6,5,FALSE,[Heavy] Switch to light side after 1st use.
+Thermochemical Heatsink Fountain,,1,6,1,2,6,6,FALSE,[Heavy] Switch to light side after 1st use.
+Magnetocaloric Refrigerator,S,2,6,3,3,6,4,TRUE,This card can cool its own supports.
+Nuclear Fuel Spin Polarizer,,0,5,1,1,4,2,FALSE,
+Microtube Array,C,2,1,2,3,0,3,FALSE,
+Marangoni Flow,,0,2,2,1,1,3,FALSE,
+Mo / Li Heat Pipe,M,1,2,2,2,1,3,FALSE,
+Tin Droplet,,0,3,2,1,2,3,FALSE,
+Qu Tube,M,1,4,1,4,2,2,FALSE,
+ANDR / In Dream Pipe,,0,3,2,1,2,3,FALSE,
+SS / NaK Pumped Loop,M,2,1,2,4,0,3,FALSE,
+Hula-Hoop,,1,6,2,2,6,3,FALSE,
+Salt-Cooled Reflux Tube,C,3,4,2,4,4,3,FALSE,
+Buckytube Filament,,0,4,2,1,3,3,FALSE,
+Steel / Pb-Bi Pumped Loop,M,2,3,1,4,2,2,FALSE,
+Pulsating Heat Pipe,,1,1,2,2,1,4,FALSE,
+Ti / K Heat Pipe,M,2,3,1,4,2,2,FALSE,
+Flux-Pinned Superthermal,,1,5,1,2,5,3,FALSE,

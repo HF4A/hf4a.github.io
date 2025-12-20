@@ -1,0 +1,21 @@
+,,,,,,,,,Support Provided,,,,,
+Name,Type,"Spectral
+Type","Promotion
+Colony",Mass,Rad-Hard,Load-Limit,"Factory
+Loading
+Only","Bonus
+Pivots",⟛ Generator,e Generator,X Reactor,∿ Reactor,Ability,Future
+Fission-Heated Steam,Freighter,Any,M,0,5,2,TRUE,0,FALSE,FALSE,FALSE,TRUE,,
+Fission GCR,Freighter Fleet,,,1,6,6,,0,FALSE,FALSE,FALSE,TRUE,Can liftoff/land on Sites that are less than size 6 without factory-assist.,EXOPLANET HUNT FUTURE: Req = Claim Sedna. Effect = (Endgame) 12 VP.
+Fusion Fragment Sail,Freighter,V,M,2,1,2,,1,FALSE,FALSE,FALSE,,Immune to flares & radiation belts.,
+Antiproton Sail and Harvester,Freighter Fleet,,,2,9,6,,4,FALSE,FALSE,FALSE,,+1 net thrust if starting its move on a radiation belt.,"ANTIMATTER FUTURE: Req = Promoted Bernal with S Dirtside. Effects = double isotope refuel, 10 VP."
+HIIPER Beam Rider,Freighter,V,Push,4,4,4,,1,FALSE,TRUE,FALSE,,,
+Magnetic Mirror Beam Rider,Freighter Fleet,,,3,6,5,,3,FALSE,TRUE,FALSE,,Can liftoff/land on Sites that are less than size 6 without factory-assist.,STAR WISP FUTURE: Req = Promoted Freighter (End game) at either neutrino sunlens (6 VP) or EM sunlens = 11 VP.
+Inflatable Solar-Heated,Freighter,Any,C,0,5,2,TRUE,0,FALSE,FALSE,FALSE,,"SOLAR HEATED: If not using Powersat, may move out only as far as the Ceres zone.",
+Archimedes Palmer Lens,Freighter Fleet,,,0,10,5,TRUE,0,FALSE,FALSE,FALSE,,"SOLAR HEATED: If not using Powersat, may move out only as far as the Jupiter zone.",TERRAFORM FUTURE: Req = Promoted Bernal at a non-Martian Atmospheric Dirtside. Effect = 8 VP.
+Poodle Steam,Freighter,Any,S,0,7,2,TRUE,0,FALSE,FALSE,FALSE,,RADIOISOTOPE: +2 thrust if its move starts on a Factory.,
+D-Nanotube Dirt Launcher,Freighter Fleet,,,0,9,3,,0,FALSE,FALSE,FALSE,,,BEANSTALK FUTURE: Req = 3+ Space Elevators built by any player. Effect (Endgame) = +3 VP for each Factory connected to a Space Elevator.
+Rotary Dirt Launcher,Freighter,Any,C,5,4,2,TRUE,0,FALSE,TRUE,FALSE,TRUE,,
+KESTS Hoop Dirt Launcher,Freighter Fleet,,,15,8,15,TRUE,0,FALSE,TRUE,FALSE,TRUE,,BEEHIVE ARK FUTURE: Req = Promoted Bernal anchored at a Synodic Comet. Effect = 7 VP.
+Z-Pinch D-T / 6Li Fusion,Freighter,V,H,5,3,3,,1,TRUE,FALSE,TRUE,,,
+Z-Pinch 3He-D Target Fusion,Freighter Fleet,,,2,6,6,,2,TRUE,FALSE,TRUE,,,"GOLDEN APPLES FUTURE: Req = Industrialize Kreutz Sungrazer. Effects = Ignore solar flares, 14 VP."

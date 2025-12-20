@@ -4,7 +4,47 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCardStore } from '../store/cardStore';
 import { useFilterStore } from '../store/filterStore';
 import { CARD_TYPE_LABELS, SPECTRAL_TYPE_LABELS } from '../types/card';
-import type { Card } from '../types/card';
+import type { Card, CardStats } from '../types/card';
+
+// Stat display labels
+const STAT_LABELS: Record<string, string> = {
+  mass: 'Mass',
+  radHard: 'Rad-Hard',
+  thrust: 'Thrust',
+  fuelConsumption: 'Fuel',
+  fuelType: 'Fuel Type',
+  afterburn: 'Afterburn',
+  bonusPivots: 'Pivots',
+  therms: 'Therms',
+  isru: 'ISRU',
+  loadLimit: 'Load Limit',
+  thrustModifier: 'Thrust Mod',
+  fuelConsumptionModifier: 'Fuel Mod',
+};
+
+// Stats to display as primary (in order)
+const PRIMARY_STATS = ['mass', 'radHard', 'thrust', 'fuelConsumption', 'therms', 'isru', 'loadLimit'];
+
+// Boolean stats that should be shown as badges
+const BOOLEAN_STATS = ['push', 'solar', 'airEater', 'missile', 'raygun', 'buggy', 'powersat', 'hasGenerator', 'factoryLoadingOnly'];
+
+// Format a stat value for display
+function formatStatValue(value: unknown): string {
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (value === null || value === undefined) return '—';
+  return String(value);
+}
+
+// Support requirement labels
+const SUPPORT_LABELS: Record<string, string> = {
+  generatorPush: '⟛ Gen',
+  generatorElectric: 'e Gen',
+  reactorFission: 'X Reactor',
+  reactorFusion: '∿ Reactor',
+  reactorAntimatter: '💣 Reactor',
+  reactorAny: 'Any Reactor',
+  solar: 'Solar',
+};
 
 export function CardDetail() {
   const { cardId } = useParams<{ cardId: string }>();
@@ -236,25 +276,96 @@ export function CardDetail() {
                 </div>
               )}
 
-              {/* Stats */}
-              {displayCard.ocr?.stats && Object.keys(displayCard.ocr.stats).length > 0 && (
+              {/* Primary Stats */}
+              {displayCard.ocr?.stats && (
                 <div className="mb-6">
                   <h2 className="text-sm font-medium text-gray-400 mb-2">Stats</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {Object.entries(displayCard.ocr.stats).map(([key, value]) => (
-                      <div key={key} className="bg-space-700 rounded-lg p-3">
-                        <div className="text-xs text-gray-400 uppercase">{key}</div>
-                        <div className="text-lg font-bold text-white">{String(value)}</div>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {PRIMARY_STATS.map((key) => {
+                      const value = (displayCard.ocr?.stats as CardStats)?.[key as keyof CardStats];
+                      if (value === undefined || value === null) return null;
+                      return (
+                        <div key={key} className="bg-space-700 rounded-lg p-3 text-center">
+                          <div className="text-xs text-gray-400">{STAT_LABELS[key] || key}</div>
+                          <div className="text-lg font-bold text-white">{formatStatValue(value)}</div>
+                        </div>
+                      );
+                    })}
+                    {/* Show afterburn and pivots as smaller stats */}
+                    {displayCard.ocr?.stats?.afterburn !== undefined && displayCard.ocr.stats.afterburn > 0 && (
+                      <div className="bg-space-700 rounded-lg p-3 text-center">
+                        <div className="text-xs text-gray-400">Afterburn</div>
+                        <div className="text-lg font-bold text-orange-400">+{displayCard.ocr.stats.afterburn}</div>
                       </div>
-                    ))}
+                    )}
+                    {displayCard.ocr?.stats?.bonusPivots !== undefined && displayCard.ocr.stats.bonusPivots > 0 && (
+                      <div className="bg-space-700 rounded-lg p-3 text-center">
+                        <div className="text-xs text-gray-400">Pivots</div>
+                        <div className="text-lg font-bold text-blue-400">+{displayCard.ocr.stats.bonusPivots}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Support Icons */}
+              {/* Boolean Capabilities */}
+              {displayCard.ocr?.stats && (
+                (() => {
+                  const capabilities = BOOLEAN_STATS
+                    .filter((key) => (displayCard.ocr?.stats as CardStats)?.[key as keyof CardStats] === true)
+                    .map((key) => key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase()));
+                  if (capabilities.length === 0) return null;
+                  return (
+                    <div className="mb-6">
+                      <h2 className="text-sm font-medium text-gray-400 mb-2">Capabilities</h2>
+                      <div className="flex flex-wrap gap-2">
+                        {capabilities.map((cap) => (
+                          <span key={cap} className="chip bg-green-900/50 text-green-300">
+                            {cap}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()
+              )}
+
+              {/* Support Requirements */}
+              {displayCard.ocr?.supportRequirements && (
+                (() => {
+                  const reqs = Object.entries(displayCard.ocr.supportRequirements)
+                    .filter(([, value]) => value === true)
+                    .map(([key]) => SUPPORT_LABELS[key] || key);
+                  if (reqs.length === 0) return null;
+                  return (
+                    <div className="mb-6">
+                      <h2 className="text-sm font-medium text-gray-400 mb-2">Requires</h2>
+                      <div className="flex flex-wrap gap-2">
+                        {reqs.map((req) => (
+                          <span key={req} className="chip bg-yellow-900/50 text-yellow-300">
+                            {req}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()
+              )}
+
+              {/* Ability */}
+              {displayCard.ocr?.ability && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Ability</h2>
+                  <p className="text-gray-200 leading-relaxed bg-space-700 rounded-lg p-3">
+                    {displayCard.ocr.ability}
+                  </p>
+                </div>
+              )}
+
+              {/* Support Icons (from OCR) */}
               {displayCard.ocr?.supportIcons && displayCard.ocr.supportIcons.length > 0 && (
                 <div className="mb-6">
-                  <h2 className="text-sm font-medium text-gray-400 mb-2">Support</h2>
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Support Icons</h2>
                   <div className="flex flex-wrap gap-2">
                     {displayCard.ocr.supportIcons.map((icon, i) => (
                       <span key={i} className="chip">
