@@ -362,6 +362,26 @@ export function CardDetail() {
                 </div>
               )}
 
+              {/* Promotion Colony */}
+              {displayCard.spreadsheet?.promotionColony && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Promotion</h2>
+                  <span className="chip bg-blue-900/50 text-blue-300">
+                    {displayCard.spreadsheet.promotionColony}
+                  </span>
+                </div>
+              )}
+
+              {/* Future (expansion content) */}
+              {displayCard.spreadsheet?.future && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Future</h2>
+                  <p className="text-gray-200 leading-relaxed bg-purple-900/30 border border-purple-700/50 rounded-lg p-3 text-sm">
+                    {displayCard.spreadsheet.future}
+                  </p>
+                </div>
+              )}
+
               {/* Support Icons (from OCR) */}
               {displayCard.ocr?.supportIcons && displayCard.ocr.supportIcons.length > 0 && (
                 <div className="mb-6">
