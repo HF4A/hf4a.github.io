@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
 import { useFilterStore } from '../store/filterStore';
-import { useCards } from '../hooks/useCards';
+import { useCardStore } from '../store/cardStore';
 import { CARD_TYPE_LABELS } from '../types/card';
-import type { CardType, SpectralType } from '../types/card';
+import type { CardType, SpectralType, Card } from '../types/card';
 
 // Ordered list of card types for the filter
 const TYPE_ORDER: CardType[] = [
@@ -22,6 +23,17 @@ const TYPE_ORDER: CardType[] = [
   'exodus',
 ];
 
+// Check if a card is a base-side card
+function isBaseSide(card: Card): boolean {
+  if (!card.side) return true;
+  const side = card.side.toLowerCase();
+  if (card.upgradeChain && card.upgradeChain.length > 0) {
+    const baseSide = card.upgradeChain[0].toLowerCase();
+    return side === baseSide;
+  }
+  return true;
+}
+
 export function FilterBar() {
   const {
     cardTypes,
@@ -33,28 +45,96 @@ export function FilterBar() {
     clearFilters,
   } = useFilterStore();
 
-  const { filterOptions } = useCards();
+  const { cards } = useCardStore();
 
   const hasFilters = cardTypes.length > 0 || spectralTypes.length > 0;
 
-  // Sort types according to our preferred order
-  const orderedTypes = filterOptions.types.sort((a, b) => {
-    const aIndex = TYPE_ORDER.indexOf(a as CardType);
-    const bIndex = TYPE_ORDER.indexOf(b as CardType);
-    // Put unknown types at the end
-    if (aIndex === -1) return 1;
-    if (bIndex === -1) return -1;
-    return aIndex - bIndex;
-  });
+  // Get base-side cards only for counting
+  const baseCards = useMemo(() => {
+    return cards.filter(isBaseSide);
+  }, [cards]);
+
+  // Calculate counts for type filter (affected by spectral filter)
+  const typeCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+
+    // Filter by spectral if needed
+    let filteredCards = baseCards;
+    if (spectralTypes.length > 0) {
+      filteredCards = baseCards.filter(c => {
+        const spectral = c.ocr?.spectralType;
+        return spectral && spectralTypes.includes(spectral as SpectralType);
+      });
+    }
+
+    // Count unique cards per type
+    const typeGroups: Record<string, Set<string>> = {};
+    filteredCards.forEach(c => {
+      if (!typeGroups[c.type]) typeGroups[c.type] = new Set();
+      typeGroups[c.type].add(c.cardGroupId || c.id);
+    });
+
+    Object.entries(typeGroups).forEach(([type, groups]) => {
+      counts[type] = groups.size;
+    });
+
+    return counts;
+  }, [baseCards, spectralTypes]);
+
+  // Calculate counts for spectral filter (affected by type filter)
+  const spectralCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+
+    // Filter by type if needed
+    let filteredCards = baseCards;
+    if (cardTypes.length > 0) {
+      filteredCards = baseCards.filter(c => cardTypes.includes(c.type));
+    }
+
+    // Count unique cards per spectral type
+    const spectralGroups: Record<string, Set<string>> = {};
+    filteredCards.forEach(c => {
+      const spectral = c.ocr?.spectralType;
+      if (spectral) {
+        if (!spectralGroups[spectral]) spectralGroups[spectral] = new Set();
+        spectralGroups[spectral].add(c.cardGroupId || c.id);
+      }
+    });
+
+    Object.entries(spectralGroups).forEach(([spectral, groups]) => {
+      counts[spectral] = groups.size;
+    });
+
+    return counts;
+  }, [baseCards, cardTypes]);
+
+  // Get available types and sort them
+  const orderedTypes = useMemo(() => {
+    const types = [...new Set(baseCards.map(c => c.type))];
+    return types.sort((a, b) => {
+      const aIndex = TYPE_ORDER.indexOf(a as CardType);
+      const bIndex = TYPE_ORDER.indexOf(b as CardType);
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    });
+  }, [baseCards]);
+
+  // Get available spectral types
+  const spectralOptions = useMemo(() => {
+    const types = new Set<string>();
+    baseCards.forEach(c => {
+      if (c.ocr?.spectralType) types.add(c.ocr.spectralType);
+    });
+    return Array.from(types).sort();
+  }, [baseCards]);
 
   // Handle single-select type toggle
   const handleTypeSelect = (type: string) => {
     const cardType = type as CardType;
     if (cardTypes.includes(cardType)) {
-      // Already selected - clear the filter
       setCardTypes([]);
     } else {
-      // Select this one only
       setCardTypes([cardType]);
     }
   };
@@ -68,15 +148,17 @@ export function FilterBar() {
         selected={cardTypes[0] || null}
         onSelect={handleTypeSelect}
         getLabel={(type) => CARD_TYPE_LABELS[type as CardType] || type}
+        getCounts={(type) => typeCounts[type] || 0}
       />
 
       {/* Spectral Type Filter */}
       <FilterDropdown
         label="Spectral"
-        options={filterOptions.spectralTypes}
+        options={spectralOptions}
         selected={spectralTypes}
         onToggle={(type) => toggleSpectralType(type as SpectralType)}
         getLabel={(type) => type}
+        getCounts={(type) => spectralCounts[type] || 0}
       />
 
       {/* Flip All Toggle */}
@@ -119,6 +201,7 @@ interface SingleSelectFilterProps {
   selected: string | null;
   onSelect: (value: string) => void;
   getLabel: (value: string) => string;
+  getCounts: (value: string) => number;
 }
 
 function SingleSelectFilter({
@@ -127,6 +210,7 @@ function SingleSelectFilter({
   selected,
   onSelect,
   getLabel,
+  getCounts,
 }: SingleSelectFilterProps) {
   return (
     <div className="relative group">
@@ -150,25 +234,31 @@ function SingleSelectFilter({
       </button>
 
       {/* Dropdown - opens upward since we're at the bottom */}
-      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[160px] max-h-64 overflow-y-auto">
-        {options.map((option) => (
-          <button
-            key={option}
-            onClick={() => onSelect(option)}
-            className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center gap-2 ${
-              selected === option ? 'bg-space-600 text-white' : 'text-gray-300'
-            }`}
-          >
-            <span
-              className={`w-3 h-3 rounded-full ${
-                selected === option
-                  ? 'bg-blue-500'
-                  : 'border border-gray-500'
+      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[180px] max-h-64 overflow-y-auto">
+        {options.map((option) => {
+          const count = getCounts(option);
+          return (
+            <button
+              key={option}
+              onClick={() => onSelect(option)}
+              className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2 ${
+                selected === option ? 'bg-space-600 text-white' : 'text-gray-300'
               }`}
-            />
-            {getLabel(option)}
-          </button>
-        ))}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className={`w-3 h-3 rounded-full ${
+                    selected === option
+                      ? 'bg-blue-500'
+                      : 'border border-gray-500'
+                  }`}
+                />
+                {getLabel(option)}
+              </div>
+              <span className="text-xs text-gray-500">{count}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -180,6 +270,7 @@ interface FilterDropdownProps {
   selected: string[];
   onToggle: (value: string) => void;
   getLabel: (value: string) => string;
+  getCounts: (value: string) => number;
 }
 
 function FilterDropdown({
@@ -188,6 +279,7 @@ function FilterDropdown({
   selected,
   onToggle,
   getLabel,
+  getCounts,
 }: FilterDropdownProps) {
   return (
     <div className="relative group">
@@ -216,33 +308,39 @@ function FilterDropdown({
       </button>
 
       {/* Dropdown - opens upward since we're at the bottom */}
-      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[160px] max-h-64 overflow-y-auto">
-        {options.map((option) => (
-          <button
-            key={option}
-            onClick={() => onToggle(option)}
-            className="w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center gap-2"
-          >
-            <span
-              className={`w-4 h-4 rounded border ${
-                selected.includes(option)
-                  ? 'bg-blue-600 border-blue-600'
-                  : 'border-gray-500'
-              } flex items-center justify-center`}
+      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[120px] max-h-64 overflow-y-auto">
+        {options.map((option) => {
+          const count = getCounts(option);
+          return (
+            <button
+              key={option}
+              onClick={() => onToggle(option)}
+              className="w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2"
             >
-              {selected.includes(option) && (
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              )}
-            </span>
-            {getLabel(option)}
-          </button>
-        ))}
+              <div className="flex items-center gap-2">
+                <span
+                  className={`w-4 h-4 rounded border ${
+                    selected.includes(option)
+                      ? 'bg-blue-600 border-blue-600'
+                      : 'border-gray-500'
+                  } flex items-center justify-center`}
+                >
+                  {selected.includes(option) && (
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </span>
+                {getLabel(option)}
+              </div>
+              <span className="text-xs text-gray-500">{count}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

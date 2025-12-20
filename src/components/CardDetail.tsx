@@ -1,10 +1,14 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCardStore } from '../store/cardStore';
 import { useFilterStore } from '../store/filterStore';
 import { CARD_TYPE_LABELS, SPECTRAL_TYPE_LABELS } from '../types/card';
 import type { Card, CardStats } from '../types/card';
+
+// Touch gesture configuration
+const SWIPE_THRESHOLD = 50; // Minimum distance to trigger swipe
+const SWIPE_VELOCITY_THRESHOLD = 0.3; // Minimum velocity for fast swipes
 
 // Stat display labels
 const STAT_LABELS: Record<string, string> = {
@@ -53,6 +57,11 @@ export function CardDetail() {
   const { showFlipped } = useFilterStore();
   const [isFlipped, setIsFlipped] = useState(showFlipped);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showDetails, setShowDetails] = useState(true);
+
+  // Touch gesture state
+  const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const detailsPanelRef = useRef<HTMLDivElement>(null);
 
   // Find all cards with this ID (both sides have the same ID)
   const cardVariants = useMemo(() => {
@@ -124,6 +133,54 @@ export function CardDetail() {
     [navigate, upgradedSide, isFlipped]
   );
 
+  // Touch gesture handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      time: Date.now(),
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStartRef.current.x;
+    const deltaY = touch.clientY - touchStartRef.current.y;
+    const deltaTime = Date.now() - touchStartRef.current.time;
+    const velocityX = Math.abs(deltaX) / deltaTime;
+    const velocityY = Math.abs(deltaY) / deltaTime;
+
+    // Determine if horizontal or vertical swipe
+    const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+
+    if (isHorizontal) {
+      // Swipe left or right to close
+      if (Math.abs(deltaX) > SWIPE_THRESHOLD || velocityX > SWIPE_VELOCITY_THRESHOLD) {
+        navigate('/');
+      }
+    } else {
+      // Swipe up to show details, down to hide
+      if (Math.abs(deltaY) > SWIPE_THRESHOLD || velocityY > SWIPE_VELOCITY_THRESHOLD) {
+        if (deltaY < 0) {
+          // Swipe up - show details
+          setShowDetails(true);
+        } else {
+          // Swipe down - hide details or close
+          if (!showDetails) {
+            navigate('/');
+          } else {
+            setShowDetails(false);
+          }
+        }
+      }
+    }
+
+    touchStartRef.current = null;
+  }, [navigate, showDetails]);
+
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -162,6 +219,8 @@ export function CardDetail() {
     <div
       className="fixed inset-0 z-50 overflow-y-auto bg-black/90 backdrop-blur-sm"
       onClick={() => navigate('/')}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="min-h-screen px-4 py-8 flex items-center justify-center">
         <div
@@ -242,7 +301,17 @@ export function CardDetail() {
           </div>
 
           {/* Card Details */}
-          <div className="flex-1 min-w-0">
+          <motion.div
+            ref={detailsPanelRef}
+            className="flex-1 min-w-0"
+            initial={{ opacity: 1, y: 0 }}
+            animate={{
+              opacity: showDetails ? 1 : 0,
+              y: showDetails ? 0 : 50,
+              height: showDetails ? 'auto' : 0,
+            }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          >
             <div className="bg-space-800 rounded-xl p-6">
               {/* Header */}
               <div className="mb-4">
@@ -421,7 +490,7 @@ export function CardDetail() {
                 </div>
               )}
 
-              {/* Keyboard hints */}
+              {/* Keyboard/gesture hints */}
               <div className="mt-6 pt-4 border-t border-space-700 text-xs text-gray-500">
                 <span className="mr-4">
                   <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Esc</kbd> Close
@@ -431,9 +500,12 @@ export function CardDetail() {
                     <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Space</kbd> Flip
                   </span>
                 )}
+                <span className="hidden sm:inline ml-4 text-gray-600">
+                  Swipe to navigate
+                </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
