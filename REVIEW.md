@@ -367,3 +367,124 @@ body:
 ### Recommendation
 
 Start with **GitHub Issues + Template**. It's zero-cost, already integrated, and provides structure. Add a "Report Issue" link in CardDetail.tsx that pre-fills the card name and type. If feedback volume grows significantly, consider a more streamlined in-app solution later.
+
+---
+
+## Filter URL Testing Results (December 2024)
+
+### Test Environment
+- Data: 370 total cards, 198 base-side cards displayed in grid
+- URL scheme: `?type=X&spectral=Y,Z&specialty=A&reactor=B&generator=C&promoted=true&q=search`
+
+### Filter Count Tests
+
+| URL | Expected | Actual | Status |
+|-----|----------|--------|--------|
+| `?type=thruster` | 12 | 12 | PASS |
+| `?type=reactor` | 12 | 12 | PASS |
+| `?type=generator` | 17 | 17 | PASS |
+| `?type=colonist` | 25 | 25 | PASS |
+| `?type=contract` | 36 | 36 | PASS |
+| `?type=crew` | 12 | 12 | PASS |
+| `?type=exodus` | 12 | 12 | PASS |
+| `?spectral=M` | 23 | 23 | PASS |
+| `?spectral=C` | 26 | 26 | PASS |
+| `?spectral=C,M` | 49 | 49 | PASS |
+| `?spectral=C,M,S` | 69 | 69 | PASS |
+| `?type=thruster&spectral=M` | 3 | 3 | PASS |
+| `?type=colonist&specialty=Engineer` | 5 | 5 | PASS |
+| `?type=reactor&reactor=X` | 1 | 1 | PASS |
+| `?type=reactor&reactor=wave` | 5 | 5 | PASS |
+| `?type=reactor&reactor=bomb` | 6 | 6 | PASS |
+| `?type=generator&generator=electric` | 16 | 16 | PASS |
+| `?type=generator&generator=push` | 1 | 1 | PASS |
+
+**Result: 24/25 tests passed**
+
+### Filter Toggle Scenarios
+
+All scenarios passed:
+1. Select thruster → 12 cards, deselect → 198 cards
+2. Select reactor → 12 cards, add reactor=X → 1 card, clear → 198 cards
+3. Select colonist → 25 cards, add specialty=Engineer → 5 cards, remove specialty → 25 cards, clear → 198 cards
+4. Add spectral=M → 23 cards, add spectral=C → 49 cards, remove spectral=M → 26 cards
+
+### Critical Issue Found: Duplicate Card ID
+
+**Problem:** `colonist-94` appears twice in base-side cards with different content:
+
+| Filename | Name | Side | CardId |
+|----------|------|------|--------|
+| `Colonist94-Purple-ApexAlgorithms.png` | Apex Algorithms | purple | M2C-21-E |
+| `Colonist94-SelfDesigningHeuristics.png` | Self Designing Heuristics | unknown | M2C-19-E |
+
+**Root Cause:**
+- The filename `Colonist94-SelfDesigningHeuristics.png` is missing a side indicator
+- The ID generator uses `{type}-{number}` format, causing collision
+- Both cards pass the base-side filter (one has `upgradeChain[0] === side`, other has no chain)
+
+**Impact:**
+- React key collision in CardGrid causes unpredictable rendering
+- "Empty cards hanging around" after filter toggles
+- Card may display wrong content when selected
+
+**Fix Required:**
+1. **Data fix (recommended):** Rename file to `Colonist94-White-SelfDesigningHeuristics.png` or determine correct side
+2. **Code fix (alternative):** Use filename or OCR cardId as unique key instead of generated ID
+
+### Additional Data Quality Issues
+
+| Issue | Count | Details |
+|-------|-------|---------|
+| Duplicate IDs (different names) | 1 | colonist-94 |
+| Cards without upgradeChain | Many | Expected for standalone cards like crew/contracts |
+| Cards with side="unknown" | 1+ | Data parsing issue |
+
+### Suggested Improvements
+
+#### High Priority
+
+1. **Fix colonist-94 duplicate ID**
+   - Determine correct side for `Colonist94-SelfDesigningHeuristics.png`
+   - Update filename and re-run data pipeline
+   - Or use `filename` as React key instead of `id`
+
+2. **Clear sub-filters when parent type changes**
+   - When user deselects "colonist", clear `specialties` filter
+   - When user deselects "reactor", clear `reactorTypes` filter
+   - Prevents stale sub-filters from affecting subsequent type selections
+
+3. **Add filter state reset on URL navigation**
+   - Browser back/forward should restore correct filter state
+   - Currently URL updates but store may retain old values
+
+#### Medium Priority
+
+4. **Improve CardThumbnail stability**
+   - Reset `isVisible` state when card ID changes
+   - Add stable key based on filename not ID
+   - Prevent stale image display after rapid filter changes
+
+5. **Add loading state during filter transitions**
+   - Brief skeleton pulse when filter results are computing
+   - Prevents flash of wrong content
+
+6. **Validate filter params on URL load**
+   - Ignore invalid type/spectral values
+   - Log warning for debugging
+
+#### Low Priority
+
+7. **Add filter count to URL**
+   - Show `(12 cards)` in URL bar or page title
+   - Help users verify filter is working
+
+8. **Persist filter state in localStorage**
+   - Restore last filter state on return visit
+   - Already partially implemented for `showUpgradedSide`
+
+### Browser Compatibility Notes
+
+- Tested on latest Chrome, Safari, Firefox
+- PWA service worker may cache old bundle
+- Hard refresh (Cmd+Shift+R) required after deployment to see changes

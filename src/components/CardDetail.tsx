@@ -627,19 +627,33 @@ export function CardDetail() {
                 </div>
               )}
 
-              {/* Keyboard/gesture hints */}
-              <div className="mt-6 pt-4 border-t border-space-700 text-xs text-gray-500">
-                <span className="mr-4">
-                  <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Esc</kbd> Close
-                </span>
-                {upgradedSide && (
-                  <span>
-                    <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Space</kbd> Flip
+              {/* Keyboard/gesture hints and Report Issue */}
+              <div className="mt-6 pt-4 border-t border-space-700 text-xs text-gray-500 flex items-center justify-between">
+                <div>
+                  <span className="mr-4">
+                    <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Esc</kbd> Close
                   </span>
-                )}
-                <span className="hidden sm:inline ml-4 text-gray-600">
-                  Swipe to navigate
-                </span>
+                  {upgradedSide && (
+                    <span>
+                      <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Space</kbd> Flip
+                    </span>
+                  )}
+                  <span className="hidden sm:inline ml-4 text-gray-600">
+                    Swipe to navigate
+                  </span>
+                </div>
+                <a
+                  href={`https://github.com/HF4A/hf4a.github.io/issues/new?template=card-feedback.yml&title=${encodeURIComponent(`[Card] ${displayName}`)}&card-name=${encodeURIComponent(displayName)}&card-url=${encodeURIComponent(window.location.href)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Report Issue
+                </a>
               </div>
             </div>
           </motion.div>

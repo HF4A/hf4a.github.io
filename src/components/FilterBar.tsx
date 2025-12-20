@@ -43,6 +43,7 @@ export function FilterBar() {
     generatorTypes,
     showFlipped,
     setCardTypes,
+    setFilters,
     toggleSpectralType,
     toggleSpecialty,
     toggleReactorType,
@@ -212,12 +213,30 @@ export function FilterBar() {
   }, [baseCards, cardTypes]);
 
   // Handle single-select type toggle
+  // Also clears sub-filters when type changes to prevent stale state
   const handleTypeSelect = (type: string) => {
     const cardType = type as CardType;
     if (cardTypes.includes(cardType)) {
+      // Deselecting - clear type and all sub-filters
       setCardTypes([]);
+      if (specialties.length > 0) setFilters({ specialties: [] });
+      if (reactorTypes.length > 0) setFilters({ reactorTypes: [] });
+      if (generatorTypes.length > 0) setFilters({ generatorTypes: [] });
     } else {
+      // Selecting new type - clear sub-filters that don't apply
       setCardTypes([cardType]);
+      // Clear specialty if not colonist/robonaut
+      if (cardType !== 'colonist' && cardType !== 'robonaut' && specialties.length > 0) {
+        setFilters({ specialties: [] });
+      }
+      // Clear reactor type if not reactor
+      if (cardType !== 'reactor' && reactorTypes.length > 0) {
+        setFilters({ reactorTypes: [] });
+      }
+      // Clear generator type if not generator
+      if (cardType !== 'generator' && generatorTypes.length > 0) {
+        setFilters({ generatorTypes: [] });
+      }
     }
   };
 

@@ -1,0 +1,93 @@
+name: Card Feedback
+description: Report incorrect data, missing stats, or OCR errors on a card
+title: "[Card] "
+labels: ["card-data", "needs-review"]
+body:
+  - type: input
+    id: card-name
+    attributes:
+      label: Card Name
+      placeholder: e.g., "VASIMR Plasma Drive"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: card-type
+    attributes:
+      label: Card Type
+      options:
+        - Thruster
+        - Reactor
+        - Generator
+        - Radiator
+        - Robonaut
+        - Refinery
+        - Colonist
+        - Bernal
+        - Freighter
+        - GW Thruster
+        - Crew
+        - Contract
+        - Spaceborn
+        - Exodus
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: card-side
+    attributes:
+      label: Card Side
+      options:
+        - White (Base)
+        - Black (Promoted)
+        - Purple (Promoted)
+        - Blue
+        - Yellow
+        - Not applicable
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Incorrect stat value
+        - Missing stat
+        - Wrong card name (OCR error)
+        - Wrong spectral type
+        - Missing ability text
+        - Incorrect ability text
+        - Image quality issue
+        - Card not appearing in filters
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What's wrong and what should it be?
+      placeholder: |
+        Current value: Mass = 5
+        Correct value: Mass = 3
+
+        Or describe the issue in detail...
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Source/Reference
+      description: How did you verify the correct value?
+      placeholder: "Physical card, rulebook p.42, BGG thread, official errata, etc."
+
+  - type: input
+    id: card-url
+    attributes:
+      label: Card URL (if available)
+      description: Link to the card on the site
+      placeholder: "https://hf4a.github.io/?type=thruster"
