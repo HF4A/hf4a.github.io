@@ -165,8 +165,8 @@ export function CardDetail() {
       touchRef.current.direction = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical';
     }
 
-    // Prevent scrolling if swiping horizontally on card
-    if (touchRef.current.direction === 'horizontal') {
+    // Prevent scrolling for any swipe on card image
+    if (touchRef.current.direction) {
       e.preventDefault();
     }
   }, []);
@@ -262,9 +262,9 @@ export function CardDetail() {
             </svg>
           </button>
 
-          {/* Card Image with Flip Animation */}
+          {/* Card Image with Flip Animation - touch-none to capture all gestures */}
           <div
-            className="flex-shrink-0 w-full lg:w-auto touch-manipulation"
+            className="flex-shrink-0 w-full lg:w-auto touch-none"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
