@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { CardType, SpectralType, CardSide, FilterState } from '../types/card';
 
 interface FilterStore extends FilterState {
+  showFlipped: boolean;
   setCardTypes: (types: CardType[]) => void;
   toggleCardType: (type: CardType) => void;
   setSpectralTypes: (types: SpectralType[]) => void;
@@ -15,11 +16,16 @@ interface FilterStore extends FilterState {
   setSearchQuery: (query: string) => void;
   setShowUpgradedSide: (show: boolean) => void;
   toggleShowUpgradedSide: () => void;
+  toggleFlipped: () => void;
   clearFilters: () => void;
   setFilters: (filters: Partial<FilterState>) => void;
 }
 
-const initialState: FilterState = {
+interface ExtendedFilterState extends FilterState {
+  showFlipped: boolean;
+}
+
+const initialState: ExtendedFilterState = {
   cardTypes: [],
   spectralTypes: [],
   sides: [],
@@ -28,6 +34,7 @@ const initialState: FilterState = {
   isruRange: null,
   searchQuery: '',
   showUpgradedSide: false,
+  showFlipped: false,
 };
 
 export const useFilterStore = create<FilterStore>()(
@@ -74,6 +81,9 @@ export const useFilterStore = create<FilterStore>()(
 
       toggleShowUpgradedSide: () =>
         set((state) => ({ showUpgradedSide: !state.showUpgradedSide })),
+
+      toggleFlipped: () =>
+        set((state) => ({ showFlipped: !state.showFlipped })),
 
       clearFilters: () => set(initialState),
 

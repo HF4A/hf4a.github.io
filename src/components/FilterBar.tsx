@@ -1,107 +1,73 @@
 import { useFilterStore } from '../store/filterStore';
 import { useCards } from '../hooks/useCards';
 import { CARD_TYPE_LABELS } from '../types/card';
-import type { CardType, SpectralType, CardSide } from '../types/card';
+import type { CardType, SpectralType } from '../types/card';
 
 export function FilterBar() {
   const {
     cardTypes,
     spectralTypes,
-    sides,
-    showUpgradedSide,
+    showFlipped,
     toggleCardType,
     toggleSpectralType,
-    toggleSide,
-    toggleShowUpgradedSide,
+    toggleFlipped,
     clearFilters,
   } = useFilterStore();
 
   const { filterOptions } = useCards();
 
-  const hasFilters =
-    cardTypes.length > 0 ||
-    spectralTypes.length > 0 ||
-    sides.length > 0;
+  const hasFilters = cardTypes.length > 0 || spectralTypes.length > 0;
 
   return (
-    <div className="border-t border-space-700 bg-space-800/50">
-      <div className="max-w-7xl mx-auto px-4 py-3">
-        {/* Filter Row */}
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Card Type Filter */}
-          <FilterDropdown
-            label="Type"
-            options={filterOptions.types}
-            selected={cardTypes}
-            onToggle={(type) => toggleCardType(type as CardType)}
-            getLabel={(type) => CARD_TYPE_LABELS[type as CardType] || type}
+    <div className="flex flex-wrap items-center gap-3">
+      {/* Card Type Filter */}
+      <FilterDropdown
+        label="Type"
+        options={filterOptions.types}
+        selected={cardTypes}
+        onToggle={(type) => toggleCardType(type as CardType)}
+        getLabel={(type) => CARD_TYPE_LABELS[type as CardType] || type}
+      />
+
+      {/* Spectral Type Filter */}
+      <FilterDropdown
+        label="Spectral"
+        options={filterOptions.spectralTypes}
+        selected={spectralTypes}
+        onToggle={(type) => toggleSpectralType(type as SpectralType)}
+        getLabel={(type) => type}
+      />
+
+      {/* Flip All Toggle */}
+      <button
+        onClick={toggleFlipped}
+        className={`chip ${showFlipped ? 'chip-active' : ''}`}
+      >
+        <svg
+          className={`w-4 h-4 mr-1 transition-transform ${showFlipped ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           />
+        </svg>
+        {showFlipped ? 'Upgraded' : 'Base'}
+      </button>
 
-          {/* Spectral Type Filter */}
-          <FilterDropdown
-            label="Spectral"
-            options={filterOptions.spectralTypes}
-            selected={spectralTypes}
-            onToggle={(type) => toggleSpectralType(type as SpectralType)}
-            getLabel={(type) => type}
-          />
-
-          {/* Side Filter */}
-          <FilterDropdown
-            label="Side"
-            options={filterOptions.sides}
-            selected={sides}
-            onToggle={(side) => toggleSide(side as CardSide)}
-            getLabel={(side) => side.charAt(0).toUpperCase() + side.slice(1)}
-          />
-
-          {/* Upgraded Toggle */}
-          <button
-            onClick={toggleShowUpgradedSide}
-            className={`chip ${showUpgradedSide ? 'chip-active' : ''}`}
-          >
-            <span className="mr-1">{showUpgradedSide ? '✓' : '○'}</span>
-            Show Upgraded
-          </button>
-
-          {/* Clear All */}
-          {hasFilters && (
-            <button
-              onClick={clearFilters}
-              className="text-sm text-gray-400 hover:text-white transition-colors"
-            >
-              Clear all
-            </button>
-          )}
-        </div>
-
-        {/* Active Filters */}
-        {hasFilters && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {cardTypes.map((type) => (
-              <ActiveFilter
-                key={type}
-                label={CARD_TYPE_LABELS[type] || type}
-                onRemove={() => toggleCardType(type)}
-              />
-            ))}
-            {spectralTypes.map((type) => (
-              <ActiveFilter
-                key={type}
-                label={`Spectral: ${type}`}
-                onRemove={() => toggleSpectralType(type)}
-              />
-            ))}
-            {sides.map((side) => (
-              <ActiveFilter
-                key={side}
-                label={side.charAt(0).toUpperCase() + side.slice(1)}
-                onRemove={() => toggleSide(side)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Clear All */}
+      {hasFilters && (
+        <button
+          onClick={clearFilters}
+          className="text-sm text-gray-400 hover:text-white transition-colors"
+        >
+          Clear
+        </button>
+      )}
     </div>
   );
 }
@@ -147,8 +113,8 @@ function FilterDropdown({
         </svg>
       </button>
 
-      {/* Dropdown */}
-      <div className="absolute top-full left-0 mt-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[160px]">
+      {/* Dropdown - opens upward since we're at the bottom */}
+      <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[160px] max-h-64 overflow-y-auto">
         {options.map((option) => (
           <button
             key={option}
@@ -177,31 +143,5 @@ function FilterDropdown({
         ))}
       </div>
     </div>
-  );
-}
-
-interface ActiveFilterProps {
-  label: string;
-  onRemove: () => void;
-}
-
-function ActiveFilter({ label, onRemove }: ActiveFilterProps) {
-  return (
-    <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-600/20 text-blue-300 rounded text-sm">
-      {label}
-      <button
-        onClick={onRemove}
-        className="hover:text-white"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-    </span>
   );
 }

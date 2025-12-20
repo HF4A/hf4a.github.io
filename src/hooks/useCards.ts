@@ -41,12 +41,18 @@ export function useCards() {
 
   // Filter and search cards
   const filteredCards = useMemo(() => {
-    let result = cards;
+    // First, filter to only show base (white) side cards, or cards without sides
+    let result = cards.filter((card) => {
+      if (!card.side) return true; // Cards without sides (contracts, crew, etc.)
+      const side = card.side.toLowerCase();
+      return side === 'white'; // Only show white (non-upgraded) side
+    });
 
     // Apply search query
     if (filters.searchQuery.trim()) {
       const searchResults = fuse.search(filters.searchQuery);
-      result = searchResults.map((r) => r.item);
+      const searchIds = new Set(searchResults.map((r) => r.item.id));
+      result = result.filter((card) => searchIds.has(card.id));
     }
 
     // Filter by card type
@@ -60,41 +66,6 @@ export function useCards() {
         const spectral = card.ocr?.spectralType;
         if (!spectral) return false;
         return filters.spectralTypes.includes(spectral as any);
-      });
-    }
-
-    // Filter by side
-    if (filters.sides.length > 0) {
-      result = result.filter((card) => {
-        const side = card.side?.toLowerCase();
-        return side && filters.sides.includes(side as any);
-      });
-    }
-
-    // Filter by mass range
-    if (filters.massRange) {
-      result = result.filter((card) => {
-        const mass = card.ocr?.stats?.mass;
-        if (mass === undefined) return false;
-        return mass >= filters.massRange!.min && mass <= filters.massRange!.max;
-      });
-    }
-
-    // Filter by rad-hard range
-    if (filters.radHardRange) {
-      result = result.filter((card) => {
-        const radHard = card.ocr?.stats?.radHard;
-        if (radHard === undefined) return false;
-        return radHard >= filters.radHardRange!.min && radHard <= filters.radHardRange!.max;
-      });
-    }
-
-    // Filter by ISRU range
-    if (filters.isruRange) {
-      result = result.filter((card) => {
-        const isru = card.ocr?.stats?.isru;
-        if (isru === undefined) return false;
-        return isru >= filters.isruRange!.min && isru <= filters.isruRange!.max;
       });
     }
 
