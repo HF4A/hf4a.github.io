@@ -643,7 +643,7 @@ export function CardDetail() {
                   </span>
                 </div>
                 <a
-                  href={`https://github.com/HF4A/hf4a.github.io/issues/new?template=card-feedback.yml&title=${encodeURIComponent(`[Card] ${displayName}`)}&card-name=${encodeURIComponent(displayName)}&card-url=${encodeURIComponent(window.location.href)}`}
+                  href={`https://docs.google.com/forms/d/e/1FAIpQLSfG1ylpJXQVvn2Q3yEQQzEgD6e1nX-Tsgf6WxNVmaow1p2_kw/viewform?usp=pp_url&entry.325757878=${encodeURIComponent(displayName)}&entry.93108582=${encodeURIComponent(window.location.href)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-1"
