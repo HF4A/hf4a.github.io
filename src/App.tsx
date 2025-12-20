@@ -11,6 +11,7 @@ export default function App() {
 
       {/* Modal overlay for card detail */}
       <Routes>
+        <Route path="/" element={null} />
         <Route path="/card/:cardId" element={<CardDetail />} />
       </Routes>
     </Layout>
