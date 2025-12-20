@@ -425,22 +425,26 @@ function SingleSelectFilter({
       <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 min-w-[180px] max-h-64 overflow-y-auto">
         {options.map((option) => {
           const count = getCounts(option);
+          const isSelected = selected === option;
           return (
             <button
               key={option}
               onClick={() => onSelect(option)}
               className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2 ${
-                selected === option ? 'bg-space-600 text-white' : 'text-gray-300'
+                isSelected ? 'bg-space-600 text-white' : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-2">
+                {/* Radio button style - outer ring with inner dot when selected */}
                 <span
-                  className={`w-3 h-3 rounded-full ${
-                    selected === option
-                      ? 'bg-blue-500'
-                      : 'border border-gray-500'
+                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                    isSelected ? 'border-blue-500' : 'border-gray-500'
                   }`}
-                />
+                >
+                  {isSelected && (
+                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                  )}
+                </span>
                 {getLabel(option)}
               </div>
               <span className="text-xs text-gray-500">{count}</span>
