@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SearchInput } from './SearchInput';
 import { FilterBar } from './FilterBar';
 import { useCards } from '../hooks/useCards';
+import { useUrlFilters } from '../hooks/useUrlFilters';
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,6 +11,9 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const { filteredCount, totalCount, isLoading } = useCards();
+
+  // Sync filters with URL for shareable links
+  useUrlFilters();
 
   return (
     <div className="min-h-screen bg-space-900 flex flex-col">

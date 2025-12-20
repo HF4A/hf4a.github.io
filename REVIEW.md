@@ -241,7 +241,7 @@ All 10 spreadsheet CSVs match their online counterparts. Key columns per sheet:
 ### Remaining Suggestions (Low Priority)
 
 - **9. Card Comparison Mode** - Side-by-side stat comparison for deck building
-- **10. URL-Based Filter State** - Shareable filter URLs for sharing builds
+- ~~**10. URL-Based Filter State**~~ - IMPLEMENTED (Share button + URL params)
 - **11. Mass/Rad-Hard Range Filters** - Slider filters for numeric stats
 
 ### Build Status
@@ -250,3 +250,120 @@ All 10 spreadsheet CSVs match their online counterparts. Key columns per sheet:
 npm run build ✓
 npm run import-spreadsheet ✓ (0 unmatched)
 ```
+
+---
+
+## Feedback Mechanism Proposal
+
+### Goal
+Enable users to provide feedback on card data accuracy (OCR errors, missing stats, incorrect values) and channel it to a reviewable location.
+
+### Recommended Approach: GitHub Issues with Template
+
+**Why GitHub Issues:**
+- Already integrated with the repo (HF4A/hf4a.github.io)
+- No additional infrastructure or costs
+- Structured templates ensure consistent feedback
+- Easy to track, assign, and close issues
+- Public visibility encourages community contributions
+
+**Implementation Steps:**
+
+1. **Create Issue Template** (`.github/ISSUE_TEMPLATE/card-feedback.yml`):
+```yaml
+name: Card Feedback
+description: Report incorrect data, missing stats, or OCR errors on a card
+title: "[Card] "
+labels: ["card-data", "needs-review"]
+body:
+  - type: input
+    id: card-name
+    attributes:
+      label: Card Name
+      placeholder: e.g., "VASIMR Plasma Drive"
+    validations:
+      required: true
+  - type: dropdown
+    id: card-type
+    attributes:
+      label: Card Type
+      options:
+        - Thruster
+        - Reactor
+        - Generator
+        - Radiator
+        - Robonaut
+        - Refinery
+        - Colonist
+        - Bernal
+        - Freighter
+        - GW Thruster
+        - Crew
+        - Contract
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Incorrect stat value
+        - Missing stat
+        - Wrong card name (OCR error)
+        - Wrong spectral type
+        - Missing ability text
+        - Image quality issue
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What's wrong and what should it be?
+      placeholder: |
+        Current value: Mass = 5
+        Correct value: Mass = 3
+        Source: Physical card / rulebook page X
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source/Reference
+      placeholder: "Physical card, rulebook p.42, BGG thread, etc."
+```
+
+2. **Add Feedback Button to CardDetail.tsx**:
+```tsx
+// Add near the close button in card detail modal
+<a
+  href={`https://github.com/HF4A/hf4a.github.io/issues/new?template=card-feedback.yml&title=${encodeURIComponent(`[Card] ${card.name}`)}&card-name=${encodeURIComponent(card.name)}&card-type=${encodeURIComponent(card.type)}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-sm text-gray-400 hover:text-white"
+>
+  Report Issue
+</a>
+```
+
+3. **Review Workflow**:
+   - Issues automatically labeled `card-data` + `needs-review`
+   - Maintainer reviews issue, verifies against source
+   - Update spreadsheet or OCR data
+   - Re-run `npm run import-spreadsheet`
+   - Close issue with commit reference
+
+### Alternative Options
+
+| Option | Pros | Cons |
+|--------|------|------|
+| **Google Form → Sheet** | Easy setup, familiar UI | Separate from codebase, manual export needed |
+| **Airtable** | Rich UI, API access | Cost for larger usage, another tool to manage |
+| **Discord Channel** | Community engagement | Informal, hard to track/close items |
+| **In-app Database** | Seamless UX | Requires backend, auth, moderation |
+
+### Recommendation
+
+Start with **GitHub Issues + Template**. It's zero-cost, already integrated, and provides structure. Add a "Report Issue" link in CardDetail.tsx that pre-fills the card name and type. If feedback volume grows significantly, consider a more streamlined in-app solution later.
