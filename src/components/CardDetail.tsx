@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCardStore } from '../store/cardStore';
+import { useFilterStore } from '../store/filterStore';
 import { CARD_TYPE_LABELS, SPECTRAL_TYPE_LABELS } from '../types/card';
 import type { Card } from '../types/card';
 
@@ -9,22 +10,27 @@ export function CardDetail() {
   const { cardId } = useParams<{ cardId: string }>();
   const navigate = useNavigate();
   const { cards, isLoading } = useCardStore();
-  const [isFlipped, setIsFlipped] = useState(false);
+  const { showFlipped } = useFilterStore();
+  const [isFlipped, setIsFlipped] = useState(showFlipped);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const card = cards.find((c) => c.id === cardId);
 
   // Find related cards (other side, upgrade chain, etc.)
-  const relatedCards = card?.relatedCards
-    ? Object.values(card.relatedCards)
-        .map((filename) => cards.find((c) => c.filename === filename))
-        .filter((c): c is Card => c !== undefined)
-    : undefined;
+  const relatedCards = useMemo(() => {
+    if (!card?.relatedCards) return undefined;
+    return Object.values(card.relatedCards)
+      .map((filename) => cards.find((c) => c.filename === filename))
+      .filter((c): c is Card => c !== undefined);
+  }, [card, cards]);
 
-  // Find the other side of this card
-  const otherSide = relatedCards?.find(
-    (c) => c.cardGroupId === card?.cardGroupId && c.side !== card?.side
-  );
+  // Find the upgraded (non-white) side of this card
+  const upgradedSide = useMemo(() => {
+    if (!relatedCards) return undefined;
+    return relatedCards.find(
+      (c) => c.side && c.side.toLowerCase() !== 'white'
+    );
+  }, [relatedCards]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
@@ -35,7 +41,7 @@ export function CardDetail() {
           break;
         case ' ':
         case 'f':
-          if (otherSide) {
+          if (upgradedSide) {
             e.preventDefault();
             setIsFlipped(!isFlipped);
           }
@@ -48,7 +54,7 @@ export function CardDetail() {
           break;
       }
     },
-    [navigate, otherSide, isFlipped]
+    [navigate, upgradedSide, isFlipped]
   );
 
   useEffect(() => {
@@ -56,11 +62,11 @@ export function CardDetail() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  // Reset flip state when card changes
+  // Sync flip state with global showFlipped when card changes
   useEffect(() => {
-    setIsFlipped(false);
+    setIsFlipped(showFlipped);
     setImageLoaded(false);
-  }, [cardId]);
+  }, [cardId, showFlipped]);
 
   if (isLoading) {
     return (
@@ -81,7 +87,7 @@ export function CardDetail() {
     );
   }
 
-  const displayCard = isFlipped && otherSide ? otherSide : card;
+  const displayCard = isFlipped && upgradedSide ? upgradedSide : card;
   const displayName = displayCard.ocr?.name || displayCard.name || 'Unknown Card';
   const imagePath = `${import.meta.env.BASE_URL}cards/full/${displayCard.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
 
@@ -137,7 +143,7 @@ export function CardDetail() {
               </AnimatePresence>
 
               {/* Flip button */}
-              {otherSide && (
+              {upgradedSide && (
                 <button
                   onClick={() => setIsFlipped(!isFlipped)}
                   className="absolute bottom-4 right-4 p-3 rounded-full bg-space-700/90 text-white hover:bg-space-600 transition-colors"
@@ -262,7 +268,7 @@ export function CardDetail() {
                 <span className="mr-4">
                   <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Esc</kbd> Close
                 </span>
-                {otherSide && (
+                {upgradedSide && (
                   <span>
                     <kbd className="px-1.5 py-0.5 bg-space-700 rounded">Space</kbd> Flip
                   </span>
