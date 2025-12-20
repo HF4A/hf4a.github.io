@@ -35,10 +35,10 @@ export function CardThumbnail({ card }: CardThumbnailProps) {
   // The card to display (either base or upgraded)
   const displayCard = showFlipped && upgradedCard ? upgradedCard : card;
 
-  // Reset loaded state when card changes
+  // Reset loaded state when card changes (use filename for stability)
   useEffect(() => {
     setIsLoaded(false);
-  }, [displayCard.id]);
+  }, [displayCard.filename]);
 
   // Lazy loading with IntersectionObserver
   useEffect(() => {

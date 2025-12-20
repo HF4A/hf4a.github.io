@@ -1,8 +1,29 @@
+import { useState, useEffect, useRef } from 'react';
 import { useCards } from '../hooks/useCards';
 import { CardThumbnail } from './CardThumbnail';
+import { useFilterStore } from '../store/filterStore';
 
 export function CardGrid() {
   const { cards: filteredCards, isLoading, error } = useCards();
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevCardsRef = useRef<string[]>([]);
+
+  // Get filter state to detect changes
+  const { cardTypes, spectralTypes, specialties, reactorTypes, generatorTypes, searchQuery } = useFilterStore();
+
+  // Brief transition when filters change to smooth the visual update
+  useEffect(() => {
+    const currentIds = filteredCards.map(c => c.filename).sort().join(',');
+    const prevIds = prevCardsRef.current.join(',');
+
+    if (prevIds && currentIds !== prevIds) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => setIsTransitioning(false), 150);
+      return () => clearTimeout(timer);
+    }
+
+    prevCardsRef.current = filteredCards.map(c => c.filename).sort();
+  }, [filteredCards, cardTypes, spectralTypes, specialties, reactorTypes, generatorTypes, searchQuery]);
 
   if (isLoading) {
     return (
@@ -46,7 +67,11 @@ export function CardGrid() {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+    <div
+      className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 transition-opacity duration-150 ${
+        isTransitioning ? 'opacity-70' : 'opacity-100'
+      }`}
+    >
       {filteredCards.map((card: import('../types/card').Card) => (
         <CardThumbnail key={card.filename} card={card} />
       ))}
