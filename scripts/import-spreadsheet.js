@@ -15,7 +15,20 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(__dirname, '..', 'data');
 const spreadsheetDir = path.join(dataDir, 'spreadsheet');
-const cardsPath = path.join(__dirname, '..', 'public', 'data', 'cards.json');
+// Read from existing cards data, write to public folder
+const cardsInputPath = path.join(dataDir, 'cards.json');
+const cardsOutputPath = path.join(__dirname, '..', 'public', 'data', 'cards.json');
+
+// Name aliases: spreadsheet name -> OCR name (for cases where OCR differs from official names)
+const NAME_ALIASES = {
+  'monoatomic plug nozzle': 'monatomic plug nozzle',  // Missing 'o' in OCR
+  'levitated dipole 6li-h fusion': 'levitated dipole li-h fusion',  // 6Li vs Li
+  'spheromak 3he-d magnetic fusion': 'spheromak he-d magnetic fusion',  // 3He vs He
+  'colliding frc 3he-d fusion': 'colliding frc he-d fusion',  // 3He vs He
+  'daedalus 3he-d inertial fusion': 'daedalus he-d inertial fusion',  // 3He vs He
+  'd-d fusion inertial': 'd-d inertial fusion',  // Word order
+  'jtec h2 thermoelectric': 'jtech h2 thermoelectric',  // JTEC vs JTECH
+};
 
 // Sheet configurations: filename -> card type and column mappings
 const SHEET_CONFIGS = {
@@ -46,6 +59,7 @@ const SHEET_CONFIGS = {
     cardType: 'gw-thruster',
     columns: {
       'Name': 'name',
+      'Type': 'cardSubtype',  // e.g., "GW Thruster" vs "GW Thruster Fleet"
       'Spectral Type': 'spectralType',
       'Promotion Colony': 'promotionColony',
       'Mass': 'mass',
@@ -123,17 +137,21 @@ const SHEET_CONFIGS = {
   },
   'radiators.csv': {
     cardType: 'radiator',
-    columns: {
-      'Name': 'name',
-      'Spectral Type': 'spectralType',
-      // Light side columns (assuming they come first)
-      'Mass': 'lightSideMass',
-      'Rad-Hard': 'lightSideRadHard',
-      'Therms': 'lightSideTherms',
-      // Note: Heavy side columns need special handling as they repeat
-      'e Generator': 'generatorElectric',
-      'Ability': 'ability',
+    // Use column indices for radiators since headers repeat (Light Side vs Heavy Side)
+    useColumnIndices: true,
+    columnIndices: {
+      0: 'name',
+      1: 'spectralType',
+      2: 'lightSideMass',
+      3: 'lightSideRadHard',
+      4: 'lightSideTherms',
+      5: 'heavySideMass',
+      6: 'heavySideRadHard',
+      7: 'heavySideTherms',
+      8: 'generatorElectric',
+      9: 'ability',
     },
+    columns: {}, // Not used when useColumnIndices is true
   },
   'generators.csv': {
     cardType: 'generator',
@@ -160,6 +178,7 @@ const SHEET_CONFIGS = {
     cardType: 'freighter',
     columns: {
       'Name': 'name',
+      'Type': 'cardSubtype',  // e.g., "Freighter" vs "Freighter Fleet"
       'Spectral Type': 'spectralType',
       'Promotion Colony': 'promotionColony',
       'Mass': 'mass',
@@ -301,6 +320,8 @@ function parseCSV(content) {
         row[headers[j]] = rowData[j] || '';
       }
     }
+    // Store raw values for index-based access (needed for sheets with duplicate headers like radiators)
+    row._rawValues = rowData;
     result.push(row);
   }
 
@@ -308,12 +329,16 @@ function parseCSV(content) {
 }
 
 // Normalize name for matching
-function normalizeName(name) {
+function normalizeName(name, applyAliases = false) {
   if (!name) return '';
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-    .trim();
+  let normalized = name.toLowerCase().trim();
+
+  // Apply name aliases if requested (for spreadsheet names)
+  if (applyAliases && NAME_ALIASES[normalized]) {
+    normalized = NAME_ALIASES[normalized];
+  }
+
+  return normalized.replace(/[^a-z0-9]/g, '');
 }
 
 // Parse boolean values
@@ -338,8 +363,16 @@ function parseRow(row, config) {
     spreadsheet: {},
   };
 
-  for (const [csvCol, fieldName] of Object.entries(config.columns)) {
-    const value = row[csvCol];
+  // Determine which column mapping to use
+  const columnEntries = config.useColumnIndices
+    ? Object.entries(config.columnIndices).map(([idx, fieldName]) => [parseInt(idx), fieldName])
+    : Object.entries(config.columns);
+
+  for (const [csvCol, fieldName] of columnEntries) {
+    // Get value either by index (for radiators) or by header name
+    const value = config.useColumnIndices
+      ? (row._rawValues ? row._rawValues[csvCol] : undefined)
+      : row[csvCol];
     if (!value || value === '' || value === '—' || value === '-') continue;
 
     // Categorize fields
@@ -358,7 +391,7 @@ function parseRow(row, config) {
       'reactorFusion', 'reactorAntimatter', 'reactorAny',
     ];
     const spreadsheetFields = [
-      'promotionColony', 'future', 'colonistType', 'specialty', 'ideology',
+      'promotionColony', 'future', 'colonistType', 'specialty', 'ideology', 'cardSubtype',
     ];
 
     if (fieldName === 'name') {
@@ -437,10 +470,22 @@ async function main() {
     return;
   }
 
-  // Load existing cards
-  console.log('Loading existing cards...');
-  const cards = JSON.parse(fs.readFileSync(cardsPath, 'utf-8'));
+  // Load cards from data
+  console.log('Loading cards...');
+  const cards = JSON.parse(fs.readFileSync(cardsInputPath, 'utf-8'));
   console.log(`Loaded ${cards.length} cards`);
+
+  // Fix exodus cards that were typed as 'unknown'
+  let exodusFixed = 0;
+  for (const card of cards) {
+    if (card.type === 'unknown' && card.filename.toLowerCase().startsWith('exodus')) {
+      card.type = 'exodus';
+      exodusFixed++;
+    }
+  }
+  if (exodusFixed > 0) {
+    console.log(`Fixed ${exodusFixed} Exodus cards from 'unknown' to 'exodus'`);
+  }
 
   // Build name lookup map
   const cardsByName = new Map();
@@ -478,7 +523,8 @@ async function main() {
       const data = parseRow(row, config);
       if (!data.name) continue;
 
-      const normalizedName = normalizeName(data.name);
+      // Apply aliases when normalizing spreadsheet names to match OCR names
+      const normalizedName = normalizeName(data.name, true);
       const matchingCards = cardsByName.get(normalizedName) || [];
 
       if (matchingCards.length === 0) {
@@ -521,9 +567,9 @@ async function main() {
   fs.writeFileSync(outputPath, JSON.stringify(cards, null, 2));
   console.log(`\nSaved enriched data to: ${outputPath}`);
 
-  // Also update the public cards.json
-  fs.writeFileSync(cardsPath, JSON.stringify(cards, null, 2));
-  console.log(`Updated: ${cardsPath}`);
+  // Update the public cards.json for the web app
+  fs.writeFileSync(cardsOutputPath, JSON.stringify(cards, null, 2));
+  console.log(`Updated: ${cardsOutputPath}`);
 }
 
 // Merge spreadsheet data into card

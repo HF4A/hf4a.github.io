@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useFilterStore } from '../store/filterStore';
 import { useCardStore } from '../store/cardStore';
-import { CARD_TYPE_LABELS } from '../types/card';
-import type { CardType, SpectralType, Card } from '../types/card';
+import { CARD_TYPE_LABELS, SPECIALTY_LABELS, REACTOR_TYPE_LABELS } from '../types/card';
+import type { CardType, SpectralType, ReactorType, Specialty, Card } from '../types/card';
 
 // Ordered list of card types for the filter
 const TYPE_ORDER: CardType[] = [
@@ -38,16 +38,23 @@ export function FilterBar() {
   const {
     cardTypes,
     spectralTypes,
+    specialties,
+    reactorTypes,
+    generatorTypes,
     showFlipped,
     setCardTypes,
     toggleSpectralType,
+    toggleSpecialty,
+    toggleReactorType,
+    toggleGeneratorType,
     toggleFlipped,
     clearFilters,
   } = useFilterStore();
 
   const { cards } = useCardStore();
 
-  const hasFilters = cardTypes.length > 0 || spectralTypes.length > 0;
+  const hasFilters = cardTypes.length > 0 || spectralTypes.length > 0 ||
+    specialties.length > 0 || reactorTypes.length > 0 || generatorTypes.length > 0;
 
   // Get base-side cards only for counting
   const baseCards = useMemo(() => {
@@ -129,6 +136,81 @@ export function FilterBar() {
     return Array.from(types).sort();
   }, [baseCards]);
 
+  // Get available specialties (from colonist cards)
+  const specialtyOptions = useMemo(() => {
+    const specs = new Set<string>();
+    baseCards.forEach(c => {
+      if (c.spreadsheet?.specialty) specs.add(c.spreadsheet.specialty);
+    });
+    return Array.from(specs).sort();
+  }, [baseCards]);
+
+  // Calculate specialty counts
+  const specialtyCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    let filteredCards = baseCards;
+    if (cardTypes.length > 0) {
+      filteredCards = baseCards.filter(c => cardTypes.includes(c.type));
+    }
+    filteredCards.forEach(c => {
+      const spec = c.spreadsheet?.specialty;
+      if (spec) {
+        counts[spec] = (counts[spec] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [baseCards, cardTypes]);
+
+  // Get available reactor types
+  const reactorTypeOptions = useMemo(() => {
+    const types = new Set<string>();
+    baseCards.forEach(c => {
+      if (c.ocr?.stats?.reactorType) types.add(c.ocr.stats.reactorType);
+    });
+    return Array.from(types).sort();
+  }, [baseCards]);
+
+  // Calculate reactor type counts
+  const reactorTypeCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    let filteredCards = baseCards;
+    if (cardTypes.length > 0) {
+      filteredCards = baseCards.filter(c => cardTypes.includes(c.type));
+    }
+    filteredCards.forEach(c => {
+      const rt = c.ocr?.stats?.reactorType;
+      if (rt) {
+        counts[rt] = (counts[rt] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [baseCards, cardTypes]);
+
+  // Get available generator types
+  const generatorTypeOptions = useMemo(() => {
+    const types = new Set<string>();
+    baseCards.forEach(c => {
+      if (c.ocr?.stats?.generatorType) types.add(c.ocr.stats.generatorType);
+    });
+    return Array.from(types).sort();
+  }, [baseCards]);
+
+  // Calculate generator type counts
+  const generatorTypeCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    let filteredCards = baseCards;
+    if (cardTypes.length > 0) {
+      filteredCards = baseCards.filter(c => cardTypes.includes(c.type));
+    }
+    filteredCards.forEach(c => {
+      const gt = c.ocr?.stats?.generatorType;
+      if (gt) {
+        counts[gt] = (counts[gt] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [baseCards, cardTypes]);
+
   // Handle single-select type toggle
   const handleTypeSelect = (type: string) => {
     const cardType = type as CardType;
@@ -160,6 +242,42 @@ export function FilterBar() {
         getLabel={(type) => type}
         getCounts={(type) => spectralCounts[type] || 0}
       />
+
+      {/* Specialty Filter - show when colonist/robonaut cards may be visible */}
+      {specialtyOptions.length > 0 && (
+        <FilterDropdown
+          label="Specialty"
+          options={specialtyOptions}
+          selected={specialties}
+          onToggle={(spec) => toggleSpecialty(spec)}
+          getLabel={(spec) => SPECIALTY_LABELS[spec as Specialty] || spec}
+          getCounts={(spec) => specialtyCounts[spec] || 0}
+        />
+      )}
+
+      {/* Reactor Type Filter - show when reactors may be visible */}
+      {reactorTypeOptions.length > 0 && (
+        <FilterDropdown
+          label="Reactor"
+          options={reactorTypeOptions}
+          selected={reactorTypes}
+          onToggle={(type) => toggleReactorType(type as ReactorType)}
+          getLabel={(type) => REACTOR_TYPE_LABELS[type as ReactorType] || type}
+          getCounts={(type) => reactorTypeCounts[type] || 0}
+        />
+      )}
+
+      {/* Generator Type Filter - show when generators may be visible */}
+      {generatorTypeOptions.length > 0 && (
+        <FilterDropdown
+          label="Generator"
+          options={generatorTypeOptions}
+          selected={generatorTypes}
+          onToggle={(type) => toggleGeneratorType(type as 'push' | 'electric')}
+          getLabel={(type) => type === 'push' ? 'Push (⟛)' : 'Electric (e)'}
+          getCounts={(type) => generatorTypeCounts[type] || 0}
+        />
+      )}
 
       {/* Flip All Toggle */}
       <button

@@ -357,6 +357,11 @@ export function CardDetail() {
                   <span className="chip chip-active">
                     {CARD_TYPE_LABELS[displayCard.type] || displayCard.type}
                   </span>
+                  {displayCard.spreadsheet?.cardSubtype && (
+                    <span className="chip bg-teal-900/50 text-teal-300">
+                      {displayCard.spreadsheet.cardSubtype}
+                    </span>
+                  )}
                   {displayCard.ocr?.spectralType && (
                     <span className="chip">
                       {(SPECTRAL_TYPE_LABELS as Record<string, string>)[displayCard.ocr.spectralType] || displayCard.ocr.spectralType}
@@ -403,6 +408,49 @@ export function CardDetail() {
                         <div className="text-lg font-bold text-blue-400">+{displayCard.ocr.stats.bonusPivots}</div>
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {/* Radiator Dual-Side Stats */}
+              {displayCard.type === 'radiator' && displayCard.ocr?.stats?.lightSideMass !== undefined && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Radiator Sides</h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-space-700 rounded-lg p-3">
+                      <div className="text-xs text-gray-400 mb-2 font-medium">Light Side</div>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <div className="text-xs text-gray-500">Mass</div>
+                          <div className="text-sm font-bold text-white">{displayCard.ocr.stats.lightSideMass}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Rad</div>
+                          <div className="text-sm font-bold text-white">{displayCard.ocr.stats.lightSideRadHard}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Therms</div>
+                          <div className="text-sm font-bold text-cyan-400">{displayCard.ocr.stats.lightSideTherms}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-space-700 rounded-lg p-3">
+                      <div className="text-xs text-gray-400 mb-2 font-medium">Heavy Side</div>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <div className="text-xs text-gray-500">Mass</div>
+                          <div className="text-sm font-bold text-white">{displayCard.ocr.stats.heavySideMass}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Rad</div>
+                          <div className="text-sm font-bold text-white">{displayCard.ocr.stats.heavySideRadHard}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Therms</div>
+                          <div className="text-sm font-bold text-orange-400">{displayCard.ocr.stats.heavySideTherms}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -467,6 +515,65 @@ export function CardDetail() {
                   <h2 className="text-sm font-medium text-gray-400 mb-2">Promotion</h2>
                   <span className="chip bg-blue-900/50 text-blue-300">
                     {displayCard.spreadsheet.promotionColony}
+                  </span>
+                </div>
+              )}
+
+              {/* Colonist Info (Type, Specialty, Ideology) */}
+              {(displayCard.spreadsheet?.colonistType || displayCard.spreadsheet?.specialty || displayCard.spreadsheet?.ideology) && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Colonist Info</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {displayCard.spreadsheet?.colonistType && (
+                      <span className={`chip ${displayCard.spreadsheet.colonistType === 'Robot' ? 'bg-cyan-900/50 text-cyan-300' : 'bg-amber-900/50 text-amber-300'}`}>
+                        {displayCard.spreadsheet.colonistType}
+                      </span>
+                    )}
+                    {displayCard.spreadsheet?.specialty && (
+                      <span className="chip bg-indigo-900/50 text-indigo-300">
+                        {displayCard.spreadsheet.specialty}
+                      </span>
+                    )}
+                    {displayCard.spreadsheet?.ideology && (
+                      <span className={`chip ${
+                        displayCard.spreadsheet.ideology === 'Green' ? 'bg-green-900/50 text-green-300' :
+                        displayCard.spreadsheet.ideology === 'Yellow' ? 'bg-yellow-900/50 text-yellow-300' :
+                        displayCard.spreadsheet.ideology === 'Blue' ? 'bg-blue-900/50 text-blue-300' :
+                        displayCard.spreadsheet.ideology === 'Red' ? 'bg-red-900/50 text-red-300' :
+                        displayCard.spreadsheet.ideology === 'Purple' ? 'bg-purple-900/50 text-purple-300' :
+                        displayCard.spreadsheet.ideology === 'Grey' ? 'bg-gray-700/50 text-gray-300' :
+                        displayCard.spreadsheet.ideology === 'White' ? 'bg-gray-200/50 text-gray-800' :
+                        'bg-gray-900/50 text-gray-300'
+                      }`}>
+                        {displayCard.spreadsheet.ideology}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Generator Type */}
+              {displayCard.ocr?.stats?.generatorType && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Generator Type</h2>
+                  <span className="chip bg-yellow-900/50 text-yellow-300">
+                    {displayCard.ocr.stats.generatorType === 'push' ? '⟛ Push Generator' : 'e Electric Generator'}
+                  </span>
+                </div>
+              )}
+
+              {/* Reactor Type */}
+              {displayCard.ocr?.stats?.reactorType && (
+                <div className="mb-6">
+                  <h2 className="text-sm font-medium text-gray-400 mb-2">Reactor Type</h2>
+                  <span className={`chip ${
+                    displayCard.ocr.stats.reactorType === 'X' ? 'bg-orange-900/50 text-orange-300' :
+                    displayCard.ocr.stats.reactorType === 'wave' ? 'bg-cyan-900/50 text-cyan-300' :
+                    'bg-red-900/50 text-red-300'
+                  }`}>
+                    {displayCard.ocr.stats.reactorType === 'X' ? 'X Fission' :
+                     displayCard.ocr.stats.reactorType === 'wave' ? '∿ Fusion' :
+                     '💣 Antimatter'}
                   </span>
                 </div>
               )}

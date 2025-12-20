@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CardType, SpectralType, CardSide, FilterState } from '../types/card';
+import type { CardType, SpectralType, CardSide, FilterState, ReactorType } from '../types/card';
 
 interface FilterStore extends FilterState {
   showFlipped: boolean;
@@ -19,6 +19,10 @@ interface FilterStore extends FilterState {
   toggleFlipped: () => void;
   clearFilters: () => void;
   setFilters: (filters: Partial<FilterState>) => void;
+  // Advanced filter actions
+  toggleSpecialty: (specialty: string) => void;
+  toggleReactorType: (type: ReactorType) => void;
+  toggleGeneratorType: (type: 'push' | 'electric') => void;
 }
 
 interface ExtendedFilterState extends FilterState {
@@ -35,6 +39,10 @@ const initialState: ExtendedFilterState = {
   searchQuery: '',
   showUpgradedSide: false,
   showFlipped: false,
+  // Advanced filters
+  specialties: [],
+  reactorTypes: [],
+  generatorTypes: [],
 };
 
 export const useFilterStore = create<FilterStore>()(
@@ -88,6 +96,28 @@ export const useFilterStore = create<FilterStore>()(
       clearFilters: () => set(initialState),
 
       setFilters: (filters) => set(filters),
+
+      // Advanced filter toggles
+      toggleSpecialty: (specialty) =>
+        set((state) => ({
+          specialties: state.specialties.includes(specialty)
+            ? state.specialties.filter((s) => s !== specialty)
+            : [...state.specialties, specialty],
+        })),
+
+      toggleReactorType: (type) =>
+        set((state) => ({
+          reactorTypes: state.reactorTypes.includes(type)
+            ? state.reactorTypes.filter((t) => t !== type)
+            : [...state.reactorTypes, type],
+        })),
+
+      toggleGeneratorType: (type) =>
+        set((state) => ({
+          generatorTypes: state.generatorTypes.includes(type)
+            ? state.generatorTypes.filter((t) => t !== type)
+            : [...state.generatorTypes, type],
+        })),
     }),
     {
       name: 'hf4a-filters',

@@ -13,6 +13,7 @@
     "optimize-images": "tsx scripts/optimize-images.ts",
     "ocr-cards": "tsx scripts/ocr-cards.ts",
     "validate-data": "tsx scripts/validate-data.ts",
+    "import-spreadsheet": "node scripts/import-spreadsheet.js",
     "data-pipeline": "npm run generate-manifest && npm run parse-filenames && npm run build-relationships",
     "prepare-data": "npm run data-pipeline && npm run validate-data"
   },

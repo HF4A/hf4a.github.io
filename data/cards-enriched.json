@@ -6411,6 +6411,7 @@
       "purple": "Freighter01-Purple-FissionGCR.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "M"
     }
   },
@@ -6460,6 +6461,7 @@
       "black": "Freighter01-Black-Fission-HeatedSteam.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "EXOPLANET HUNT FUTURE: Req = Claim Sedna. Effect = (Endgame) 12 VP."
     }
   },
@@ -6509,6 +6511,7 @@
       "purple": "Freighter02-Purple-AntiprotonSailandHarvester.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "M"
     }
   },
@@ -6560,6 +6563,7 @@
       "black": "Freighter02-Black-FusionFragmentSail.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "ANTIMATTER FUTURE: Req = Promoted Bernal with S Dirtside. Effects = double isotope refuel, 10 VP."
     }
   },
@@ -6608,6 +6612,7 @@
       "purple": "Freighter03-Purple-MagneticMirrorBeamRider.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "Push"
     }
   },
@@ -6658,6 +6663,7 @@
       "black": "Freighter03-Black-HIIPERBeamRider.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "STAR WISP FUTURE: Req = Promoted Freighter (End game) at either neutrino sunlens (6 VP) or EM sunlens = 11 VP."
     }
   },
@@ -6707,6 +6713,7 @@
       "purple": "Freighter04-Purple-ArchimedesPalmerLens.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "C"
     }
   },
@@ -6757,6 +6764,7 @@
       "black": "Freighter04-Black-InflatableSolar-Heated.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "TERRAFORM FUTURE: Req = Promoted Bernal at a non-Martian Atmospheric Dirtside. Effect = 8 VP."
     }
   },
@@ -6807,6 +6815,7 @@
       "purple": "Freighter05-Purple-D-NanotubeDirtLauncher.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "S"
     }
   },
@@ -6852,6 +6861,7 @@
       "black": "Freighter05-Black-PoodleSteam.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "BEANSTALK FUTURE: Req = 3+ Space Elevators built by any player. Effect (Endgame) = +3 VP for each Factory connected to a Space Elevator."
     }
   },
@@ -6902,6 +6912,7 @@
       "purple": "Freighter06-Purple-KESTSHoopDirtLauncher.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "C"
     }
   },
@@ -6952,6 +6963,7 @@
       "black": "Freighter06-Black-RotaryDirtLauncher.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "BEEHIVE ARK FUTURE: Req = Promoted Bernal anchored at a Synodic Comet. Effect = 7 VP."
     }
   },
@@ -7000,6 +7012,7 @@
       "purple": "Freighter07-Purple-Z-Pinch3He-DTargetFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter",
       "promotionColony": "H"
     }
   },
@@ -7048,6 +7061,7 @@
       "black": "Freighter07-Black-Z-PinchD-T:6LiFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "Freighter Fleet",
       "future": "GOLDEN APPLES FUTURE: Req = Industrialize Kreutz Sungrazer. Effects = Ignore solar flares, 14 VP."
     }
   },
@@ -7071,11 +7085,20 @@
       "description": "The thermoelectric effect converts heat into electricity. Power: 60 MWe Efficiency: 60%",
       "stats": {
         "mass": 1,
-        "radHard": 4
+        "radHard": 4,
+        "airEater": true,
+        "solar": true,
+        "generatorType": "electric"
       },
       "spectralType": "C",
       "supportIcons": [],
-      "rawText": "Generator 1 MASS 4 Rad-Hard JTECH H2 Thermoelectric"
+      "rawText": "Generator 1 MASS 4 Rad-Hard JTECH H2 Thermoelectric",
+      "supportRequirements": {
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorFusion": false,
+        "reactorAntimatter": false
+      }
     },
     "cardGroupId": "generator-01",
     "upgradeChain": [
@@ -8668,6 +8691,7 @@
       "purple": "GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.png"
     },
     "spreadsheet": {
+      "cardSubtype": "GW Thruster",
       "promotionColony": "D"
     }
   },
@@ -8719,6 +8743,7 @@
       "black": "GWThruster01-Black-Amat-CatalyzedFission-Fusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "TW Thruster",
       "future": "MINI-BLACK HOLE FUTURE: Req = Industrialized centaur with 10 isotope FTs. Effects = double all isotope refuel, 10 VP."
     }
   },
@@ -8770,6 +8795,7 @@
       "purple": "GWThruster02-Purple-CrossfireH-BFocusFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "GW Thruster",
       "promotionColony": "D"
     }
   },
@@ -8820,6 +8846,7 @@
       "black": "GWThruster02-Black-DensePlasmaH-BFocusFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "TW Thruster",
       "future": "PROTIUM FUSION FUTURE: Req = Promoted Bernal with H Dirtside. Effects = double all isotope refuel, 10 VP."
     }
   },
@@ -8845,14 +8872,23 @@
         "mass": 4,
         "radHard": 5,
         "thrust": 2,
-        "fuelEfficiency": 4
+        "fuelEfficiency": 4,
+        "fuelConsumption": "0",
+        "afterburn": 4,
+        "therms": 1
       },
       "spectralType": "V",
       "supportIcons": [
         "fuel",
         "refinery"
       ],
-      "rawText": "GW Thruster 4 MASS 5 Rad-Hard Levitated Dipole Li-H Fusion"
+      "rawText": "GW Thruster 4 MASS 5 Rad-Hard Levitated Dipole Li-H Fusion",
+      "supportRequirements": {
+        "generatorPush": false,
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorAny": false
+      }
     },
     "cardGroupId": "gw-thruster-03",
     "upgradeChain": [
@@ -8861,6 +8897,10 @@
     ],
     "relatedCards": {
       "purple": "GWThruster03-Purple-DustyPlasma.png"
+    },
+    "spreadsheet": {
+      "cardSubtype": "GW Thruster",
+      "promotionColony": "S"
     }
   },
   {
@@ -8911,6 +8951,7 @@
       "black": "GWThruster03-Black-LevitatedDipole6Li-HFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "TW Thruster",
       "future": "MASS BEAM FUTURE: Req = Promoted Bernal with Io or Triton Dirtside. Effects = your Powersat adds +2 thrust, 7 VP."
     }
   },
@@ -8962,6 +9003,7 @@
       "purple": "GWThruster04-Purple-SolemMedusaTuggedOrion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "GW Thruster",
       "promotionColony": "D"
     }
   },
@@ -9010,6 +9052,7 @@
       "black": "GWThruster04-Black-Mini-MagOrionZ-PinchFission.png"
     },
     "spreadsheet": {
+      "cardSubtype": "TW Thruster",
       "future": "LITHIATED AMMONIA ICE STARSHIP FUTURE: Req = Ad astra exit with 10 isotope fuel. Effect = 14 VP."
     }
   },
@@ -9059,6 +9102,7 @@
       "purple": "GWThruster05-Purple-Zubrin-GDM.png"
     },
     "spreadsheet": {
+      "cardSubtype": "GW Thruster",
       "promotionColony": "M"
     }
   },
@@ -9111,6 +9155,7 @@
       "black": "GWThruster05-Black-Salt-WaterZubrin.png"
     },
     "spreadsheet": {
+      "cardSubtype": "TW Thruster",
       "future": "SPACEFARING FUTURE: Req = Bernal with 8+ dirtside hydration. Effects = Allowed 1 extra Colonist, 7 VP."
     }
   },
@@ -9136,7 +9181,10 @@
         "mass": 4,
         "radHard": 8,
         "thrust": 6,
-        "fuelEfficiency": 6
+        "fuelEfficiency": 6,
+        "fuelConsumption": "1/10",
+        "afterburn": 6,
+        "therms": 4
       },
       "spectralType": "H",
       "supportIcons": [
@@ -9145,7 +9193,13 @@
         "radiator",
         "radiator"
       ],
-      "rawText": "GW Thruster 4 MASS 8 Rad-Hard Spheromak He-D Magnetic Fusion"
+      "rawText": "GW Thruster 4 MASS 8 Rad-Hard Spheromak He-D Magnetic Fusion",
+      "supportRequirements": {
+        "generatorPush": false,
+        "generatorElectric": true,
+        "reactorFission": false,
+        "reactorAny": false
+      }
     },
     "cardGroupId": "gw-thruster-06",
     "upgradeChain": [
@@ -9154,6 +9208,10 @@
     ],
     "relatedCards": {
       "purple": "GWThruster06-Purple-CollidingFRC3He-DFusion.png"
+    },
+    "spreadsheet": {
+      "cardSubtype": "GW Thruster",
+      "promotionColony": "H"
     }
   },
   {
@@ -9178,13 +9236,22 @@
         "mass": 3,
         "radHard": 9,
         "thrust": 4,
-        "fuelEfficiency": 10
+        "fuelEfficiency": 10,
+        "fuelConsumption": "0",
+        "afterburn": 10,
+        "therms": 2
       },
       "spectralType": "H",
       "supportIcons": [
         "radiator"
       ],
-      "rawText": "TW Thruster 3 MASS 9 Rad-Hard Colliding FRC He-D Fusion"
+      "rawText": "TW Thruster 3 MASS 9 Rad-Hard Colliding FRC He-D Fusion",
+      "supportRequirements": {
+        "generatorPush": true,
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorAny": true
+      }
     },
     "cardGroupId": "gw-thruster-06",
     "upgradeChain": [
@@ -9193,6 +9260,10 @@
     ],
     "relatedCards": {
       "black": "GWThruster06-Black-Spheromak3He-DMagneticFusion.png"
+    },
+    "spreadsheet": {
+      "cardSubtype": "TW Thruster",
+      "future": "ENZMANN STARSHIP FUTURE: Req = Ad astra exit with 2 Promoted Colonists + Mobile Factory. Effect = 12 VP."
     }
   },
   {
@@ -9244,6 +9315,7 @@
       "purple": "GWThruster07-Purple-Daedalus3He-DInertialFusion.png"
     },
     "spreadsheet": {
+      "cardSubtype": "GW Thruster",
       "promotionColony": "H"
     }
   },
@@ -9269,7 +9341,10 @@
         "mass": 5,
         "radHard": 9,
         "thrust": 11,
-        "fuelEfficiency": 8
+        "fuelEfficiency": 8,
+        "fuelConsumption": "0",
+        "afterburn": 8,
+        "therms": 3
       },
       "spectralType": "H",
       "supportIcons": [
@@ -9277,7 +9352,13 @@
         "radiator",
         "radiator"
       ],
-      "rawText": "TW Thruster 5 MASS 9 Rad-Hard Daedalus He-D Inertial Fusion"
+      "rawText": "TW Thruster 5 MASS 9 Rad-Hard Daedalus He-D Inertial Fusion",
+      "supportRequirements": {
+        "generatorPush": true,
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorAny": false
+      }
     },
     "cardGroupId": "gw-thruster-07",
     "upgradeChain": [
@@ -9286,6 +9367,10 @@
     ],
     "relatedCards": {
       "black": "GWThruster07-Black-VISTAD-TInertialFusion.png"
+    },
+    "spreadsheet": {
+      "cardSubtype": "TW Thruster",
+      "future": "FUSION CANDLE FUTURE: Req = Triton Colony & Promoted Bernal with Neptune Aerostat Dirtside. Effects = double all isotope refuel, 14 VP."
     }
   },
   {
@@ -9309,9 +9394,12 @@
       "stats": {
         "mass": 0,
         "radHard": 3,
-        "lightSideMass": 1,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 3,
+        "lightSideTherms": 1,
+        "heavySideMass": 1,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 3
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -9350,9 +9438,12 @@
       "stats": {
         "mass": 0,
         "radHard": 1,
-        "lightSideMass": 1,
-        "lightSideRadHard": 0,
-        "lightSideTherms": 2
+        "lightSideMass": 0,
+        "lightSideRadHard": 1,
+        "lightSideTherms": 1,
+        "heavySideMass": 1,
+        "heavySideRadHard": 0,
+        "heavySideTherms": 2
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -9391,9 +9482,12 @@
       "stats": {
         "mass": 0,
         "radHard": 7,
-        "lightSideMass": 1,
+        "lightSideMass": 0,
         "lightSideRadHard": 7,
-        "lightSideTherms": 2
+        "lightSideTherms": 1,
+        "heavySideMass": 1,
+        "heavySideRadHard": 7,
+        "heavySideTherms": 2
       },
       "spectralType": "D",
       "supportIcons": [],
@@ -9432,9 +9526,12 @@
       "stats": {
         "mass": 2,
         "radHard": 2,
-        "lightSideMass": 5,
+        "lightSideMass": 4,
         "lightSideRadHard": 7,
-        "lightSideTherms": 3
+        "lightSideTherms": 2,
+        "heavySideMass": 5,
+        "heavySideRadHard": 7,
+        "heavySideTherms": 3
       },
       "spectralType": "D",
       "supportIcons": [],
@@ -9473,9 +9570,12 @@
       "stats": {
         "mass": 0,
         "radHard": 5,
-        "lightSideMass": 1,
-        "lightSideRadHard": 3,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 5,
+        "lightSideTherms": 1,
+        "heavySideMass": 1,
+        "heavySideRadHard": 3,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9514,9 +9614,12 @@
       "stats": {
         "mass": 1,
         "radHard": 1,
-        "lightSideMass": 2,
+        "lightSideMass": 1,
         "lightSideRadHard": 1,
-        "lightSideTherms": 2
+        "lightSideTherms": 1,
+        "heavySideMass": 2,
+        "heavySideRadHard": 1,
+        "heavySideTherms": 2
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9555,9 +9658,12 @@
       "stats": {
         "mass": 1,
         "radHard": 6,
-        "lightSideMass": 2,
+        "lightSideMass": 1,
         "lightSideRadHard": 6,
-        "lightSideTherms": 6
+        "lightSideTherms": 1,
+        "heavySideMass": 2,
+        "heavySideRadHard": 6,
+        "heavySideTherms": 6
       },
       "spectralType": "S",
       "supportIcons": [],
@@ -9597,9 +9703,12 @@
       "stats": {
         "mass": 2,
         "radHard": 6,
-        "lightSideMass": 3,
+        "lightSideMass": 2,
         "lightSideRadHard": 6,
-        "lightSideTherms": 5
+        "lightSideTherms": 1,
+        "heavySideMass": 3,
+        "heavySideRadHard": 6,
+        "heavySideTherms": 5
       },
       "spectralType": "S",
       "supportIcons": [],
@@ -9639,9 +9748,12 @@
       "stats": {
         "mass": 0,
         "radHard": 5,
-        "lightSideMass": 1,
-        "lightSideRadHard": 4,
-        "lightSideTherms": 2
+        "lightSideMass": 0,
+        "lightSideRadHard": 5,
+        "lightSideTherms": 1,
+        "heavySideMass": 1,
+        "heavySideRadHard": 4,
+        "heavySideTherms": 2
       },
       "spectralType": "S",
       "supportIcons": [],
@@ -9680,9 +9792,12 @@
       "stats": {
         "mass": 2,
         "radHard": 6,
-        "lightSideMass": 3,
+        "lightSideMass": 2,
         "lightSideRadHard": 6,
-        "lightSideTherms": 4
+        "lightSideTherms": 3,
+        "heavySideMass": 3,
+        "heavySideRadHard": 6,
+        "heavySideTherms": 4
       },
       "spectralType": "S",
       "supportIcons": [],
@@ -9722,9 +9837,12 @@
       "stats": {
         "mass": 0,
         "radHard": 2,
-        "lightSideMass": 1,
-        "lightSideRadHard": 1,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 2,
+        "lightSideTherms": 2,
+        "heavySideMass": 1,
+        "heavySideRadHard": 1,
+        "heavySideTherms": 3
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -9763,9 +9881,12 @@
       "stats": {
         "mass": 2,
         "radHard": 1,
-        "lightSideMass": 3,
-        "lightSideRadHard": 0,
-        "lightSideTherms": 3
+        "lightSideMass": 2,
+        "lightSideRadHard": 1,
+        "lightSideTherms": 2,
+        "heavySideMass": 3,
+        "heavySideRadHard": 0,
+        "heavySideTherms": 3
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -9804,9 +9925,12 @@
       "stats": {
         "mass": 0,
         "radHard": 3,
-        "lightSideMass": 1,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 3,
+        "lightSideTherms": 2,
+        "heavySideMass": 1,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9845,9 +9969,12 @@
       "stats": {
         "mass": 2,
         "radHard": 3,
-        "lightSideMass": 2,
-        "lightSideRadHard": 1,
-        "lightSideTherms": 3
+        "lightSideMass": 1,
+        "lightSideRadHard": 2,
+        "lightSideTherms": 2,
+        "heavySideMass": 2,
+        "heavySideRadHard": 1,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9886,9 +10013,12 @@
       "stats": {
         "mass": 1,
         "radHard": 5,
-        "lightSideMass": 1,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 3,
+        "lightSideTherms": 2,
+        "heavySideMass": 1,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9927,9 +10057,12 @@
       "stats": {
         "mass": 1,
         "radHard": 4,
-        "lightSideMass": 4,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 2
+        "lightSideMass": 1,
+        "lightSideRadHard": 4,
+        "lightSideTherms": 1,
+        "heavySideMass": 4,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 2
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -9968,9 +10101,12 @@
       "stats": {
         "mass": 1,
         "radHard": 6,
-        "lightSideMass": 2,
+        "lightSideMass": 1,
         "lightSideRadHard": 6,
-        "lightSideTherms": 3
+        "lightSideTherms": 2,
+        "heavySideMass": 2,
+        "heavySideRadHard": 6,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -10009,9 +10145,12 @@
       "stats": {
         "mass": 3,
         "radHard": 3,
-        "lightSideMass": 4,
-        "lightSideRadHard": 0,
-        "lightSideTherms": 3
+        "lightSideMass": 2,
+        "lightSideRadHard": 1,
+        "lightSideTherms": 2,
+        "heavySideMass": 4,
+        "heavySideRadHard": 0,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -10050,9 +10189,12 @@
       "stats": {
         "mass": 0,
         "radHard": 4,
-        "lightSideMass": 1,
-        "lightSideRadHard": 3,
-        "lightSideTherms": 3
+        "lightSideMass": 0,
+        "lightSideRadHard": 4,
+        "lightSideTherms": 2,
+        "heavySideMass": 1,
+        "heavySideRadHard": 3,
+        "heavySideTherms": 3
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -10091,9 +10233,12 @@
       "stats": {
         "mass": 3,
         "radHard": 4,
-        "lightSideMass": 4,
+        "lightSideMass": 3,
         "lightSideRadHard": 4,
-        "lightSideTherms": 3
+        "lightSideTherms": 2,
+        "heavySideMass": 4,
+        "heavySideRadHard": 4,
+        "heavySideTherms": 3
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -10132,9 +10277,12 @@
       "stats": {
         "mass": 1,
         "radHard": 1,
-        "lightSideMass": 2,
+        "lightSideMass": 1,
         "lightSideRadHard": 1,
-        "lightSideTherms": 4
+        "lightSideTherms": 2,
+        "heavySideMass": 2,
+        "heavySideRadHard": 1,
+        "heavySideTherms": 4
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -10173,9 +10321,12 @@
       "stats": {
         "mass": 3,
         "radHard": 2,
-        "lightSideMass": 4,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 2
+        "lightSideMass": 2,
+        "lightSideRadHard": 3,
+        "lightSideTherms": 1,
+        "heavySideMass": 4,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 2
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -10214,9 +10365,12 @@
       "stats": {
         "mass": 0,
         "radHard": 5,
-        "lightSideMass": 2,
+        "lightSideMass": 1,
         "lightSideRadHard": 5,
-        "lightSideTherms": 3
+        "lightSideTherms": 1,
+        "heavySideMass": 2,
+        "heavySideRadHard": 5,
+        "heavySideTherms": 3
       },
       "spectralType": "M",
       "supportIcons": [],
@@ -10255,9 +10409,12 @@
       "stats": {
         "mass": 2,
         "radHard": 2,
-        "lightSideMass": 4,
-        "lightSideRadHard": 2,
-        "lightSideTherms": 2
+        "lightSideMass": 2,
+        "lightSideRadHard": 3,
+        "lightSideTherms": 1,
+        "heavySideMass": 4,
+        "heavySideRadHard": 2,
+        "heavySideTherms": 2
       },
       "spectralType": "C",
       "supportIcons": [],
@@ -13068,11 +13225,28 @@
       "stats": {
         "mass": 1,
         "radHard": 4,
-        "isru": 2
+        "isru": 1,
+        "thrust": 3,
+        "fuelConsumption": "1/2",
+        "fuelType": "Water",
+        "afterburn": 1,
+        "push": false,
+        "solar": false,
+        "missile": true,
+        "raygun": false,
+        "buggy": false,
+        "therms": 2
       },
       "spectralType": "S",
       "supportIcons": [],
-      "rawText": "Robonaut 1 MASS 4 Rad-Hard D-D Inertial Fusion"
+      "rawText": "Robonaut 1 MASS 4 Rad-Hard D-D Inertial Fusion",
+      "supportRequirements": {
+        "generatorPush": true,
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorFusion": false,
+        "reactorAntimatter": false
+      }
     },
     "cardGroupId": "robonaut-07",
     "upgradeChain": [
@@ -15096,13 +15270,26 @@
       "stats": {
         "mass": 0,
         "radHard": 6,
-        "thrust": 4
+        "thrust": 4,
+        "fuelConsumption": "3",
+        "fuelType": "Water",
+        "bonusPivots": 0,
+        "afterburn": 1,
+        "push": false,
+        "solar": false
       },
       "spectralType": "M",
       "supportIcons": [
         "radiator"
       ],
-      "rawText": "Thruster 0 MASS 6 Rad-Hard Monatomic Plug Nozzle"
+      "rawText": "Thruster 0 MASS 6 Rad-Hard Monatomic Plug Nozzle",
+      "supportRequirements": {
+        "generatorPush": false,
+        "generatorElectric": false,
+        "reactorFission": false,
+        "reactorFusion": true,
+        "reactorAntimatter": false
+      }
     },
     "cardGroupId": "thruster-07",
     "upgradeChain": [
@@ -15619,7 +15806,7 @@
   },
   {
     "id": "unknown-01",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "01",
     "side": "unknown",
@@ -15650,7 +15837,7 @@
   },
   {
     "id": "unknown-02",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "02",
     "side": "unknown",
@@ -15681,7 +15868,7 @@
   },
   {
     "id": "unknown-03",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "03",
     "side": "unknown",
@@ -15712,7 +15899,7 @@
   },
   {
     "id": "unknown-04",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "04",
     "side": "unknown",
@@ -15743,7 +15930,7 @@
   },
   {
     "id": "unknown-05",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "05",
     "side": "unknown",
@@ -15774,7 +15961,7 @@
   },
   {
     "id": "unknown-06",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "06",
     "side": "unknown",
@@ -15805,7 +15992,7 @@
   },
   {
     "id": "unknown-07",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "07",
     "side": "unknown",
@@ -15836,7 +16023,7 @@
   },
   {
     "id": "unknown-08",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "08",
     "side": "unknown",
@@ -15867,7 +16054,7 @@
   },
   {
     "id": "unknown-09",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "09",
     "side": "unknown",
@@ -15898,7 +16085,7 @@
   },
   {
     "id": "unknown-10",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "10",
     "side": "unknown",
@@ -15929,7 +16116,7 @@
   },
   {
     "id": "unknown-11",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "11",
     "side": "unknown",
@@ -15960,7 +16147,7 @@
   },
   {
     "id": "unknown-12",
-    "type": "unknown",
+    "type": "exodus",
     "typeRaw": "Exodus",
     "number": "12",
     "side": "unknown",

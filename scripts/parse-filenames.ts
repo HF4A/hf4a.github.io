@@ -20,7 +20,7 @@ type CardType =
   | 'thruster' | 'reactor' | 'generator' | 'radiator'
   | 'robonaut' | 'refinery' | 'colonist' | 'bernal'
   | 'freighter' | 'gw-thruster' | 'crew' | 'contract'
-  | 'spaceborn' | 'unknown';
+  | 'spaceborn' | 'exodus' | 'unknown';
 
 type CardSide = 'white' | 'black' | 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'grey' | 'unknown';
 
@@ -61,6 +61,7 @@ function normalizeType(raw: string): CardType {
     'crew': 'crew',
     'contract': 'contract',
     'spaceborn': 'spaceborn',
+    'exodus': 'exodus',
   };
   return typeMap[lower] || 'unknown';
 }

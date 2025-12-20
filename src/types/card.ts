@@ -103,6 +103,7 @@ export interface SpreadsheetData {
   colonistType?: ColonistType;  // Robot or Human
   specialty?: Specialty;        // Engineer, Miner, etc.
   ideology?: Ideology;          // Green, Yellow, etc.
+  cardSubtype?: string;         // e.g., "Freighter Fleet", "GW Thruster"
 }
 
 export interface CardOCR {
@@ -154,6 +155,10 @@ export interface FilterState {
   isruRange: { min: number; max: number } | null;
   searchQuery: string;
   showUpgradedSide: boolean;
+  // Advanced filters
+  specialties: string[];           // Colonist specialty filter
+  reactorTypes: ReactorType[];     // Reactor type filter (X, wave, bomb)
+  generatorTypes: ('push' | 'electric')[];  // Generator type filter
 }
 
 export const CARD_TYPE_LABELS: Record<CardType, string> = {

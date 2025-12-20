@@ -82,6 +82,33 @@ export function useCards() {
       });
     }
 
+    // Filter by colonist specialty
+    if (filters.specialties.length > 0) {
+      result = result.filter((card) => {
+        const specialty = card.spreadsheet?.specialty;
+        if (!specialty) return false;
+        return filters.specialties.includes(specialty);
+      });
+    }
+
+    // Filter by reactor type
+    if (filters.reactorTypes.length > 0) {
+      result = result.filter((card) => {
+        const reactorType = card.ocr?.stats?.reactorType;
+        if (!reactorType) return false;
+        return filters.reactorTypes.includes(reactorType as any);
+      });
+    }
+
+    // Filter by generator type
+    if (filters.generatorTypes.length > 0) {
+      result = result.filter((card) => {
+        const generatorType = card.ocr?.stats?.generatorType;
+        if (!generatorType) return false;
+        return filters.generatorTypes.includes(generatorType as any);
+      });
+    }
+
     return result;
   }, [cards, fuse, filters]);
 
@@ -90,6 +117,9 @@ export function useCards() {
     const types = new Set<string>();
     const spectralTypes = new Set<string>();
     const sides = new Set<string>();
+    const specialties = new Set<string>();
+    const reactorTypes = new Set<string>();
+    const generatorTypes = new Set<string>();
     let maxMass = 0;
     let maxRadHard = 0;
     let maxIsru = 0;
@@ -98,6 +128,9 @@ export function useCards() {
       types.add(card.type);
       if (card.ocr?.spectralType) spectralTypes.add(card.ocr.spectralType);
       if (card.side) sides.add(card.side.toLowerCase());
+      if (card.spreadsheet?.specialty) specialties.add(card.spreadsheet.specialty);
+      if (card.ocr?.stats?.reactorType) reactorTypes.add(card.ocr.stats.reactorType);
+      if (card.ocr?.stats?.generatorType) generatorTypes.add(card.ocr.stats.generatorType);
       if (card.ocr?.stats?.mass !== undefined) maxMass = Math.max(maxMass, card.ocr.stats.mass);
       if (card.ocr?.stats?.radHard !== undefined) maxRadHard = Math.max(maxRadHard, card.ocr.stats.radHard);
       if (card.ocr?.stats?.isru !== undefined) maxIsru = Math.max(maxIsru, card.ocr.stats.isru);
@@ -107,6 +140,9 @@ export function useCards() {
       types: Array.from(types).sort(),
       spectralTypes: Array.from(spectralTypes).sort(),
       sides: Array.from(sides).sort(),
+      specialties: Array.from(specialties).sort(),
+      reactorTypes: Array.from(reactorTypes).sort(),
+      generatorTypes: Array.from(generatorTypes).sort(),
       maxMass,
       maxRadHard,
       maxIsru,
