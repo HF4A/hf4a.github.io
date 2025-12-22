@@ -1,14 +1,22 @@
 import { useEffect, useState, useRef } from 'react';
 import { useCamera } from '../hooks/useCamera';
+import { useCardDetection } from '../hooks/useCardDetection';
 import { HudOverlay } from './HudOverlay';
 import { useShowxatingStore } from '../store/showxatingStore';
 
 export function CameraView() {
   const { videoRef, cameraReady, cameraError, isStarting, start, stop } = useCamera();
-  const { isActive } = useShowxatingStore();
+  const { isActive, mode } = useShowxatingStore();
 
   // Track video dimensions for HUD
   const [dimensions, setDimensions] = useState({ width: 1280, height: 720 });
+  const [videoDimensions, setVideoDimensions] = useState({ width: 1280, height: 720 });
+
+  // Card detection (only in scan mode)
+  const { opencvLoading } = useCardDetection({
+    videoRef,
+    enabled: mode === 'scan' && cameraReady,
+  });
 
   // Use refs to avoid effect re-runs from function identity changes
   const startRef = useRef(start);
@@ -29,15 +37,31 @@ export function CameraView() {
   // Update dimensions when video loads
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
-      setDimensions({
-        width: videoRef.current.videoWidth || 1280,
-        height: videoRef.current.videoHeight || 720,
-      });
+      const videoWidth = videoRef.current.videoWidth || 1280;
+      const videoHeight = videoRef.current.videoHeight || 720;
+      setVideoDimensions({ width: videoWidth, height: videoHeight });
+      setDimensions({ width: videoWidth, height: videoHeight });
     }
   };
 
+  // Track container size for proper HUD scaling
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const updateContainerSize = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.clientWidth,
+          height: containerRef.current.clientHeight,
+        });
+      }
+    };
+    updateContainerSize();
+    window.addEventListener('resize', updateContainerSize);
+    return () => window.removeEventListener('resize', updateContainerSize);
+  }, []);
+
   return (
-    <div className="relative w-full h-full bg-black overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-full bg-black overflow-hidden">
       {/* Video feed */}
       <video
         ref={videoRef}
@@ -50,11 +74,23 @@ export function CameraView() {
 
       {/* HUD overlay */}
       {cameraReady && (
-        <HudOverlay width={dimensions.width} height={dimensions.height} />
+        <HudOverlay
+          width={dimensions.width}
+          height={dimensions.height}
+          videoWidth={videoDimensions.width}
+          videoHeight={videoDimensions.height}
+        />
       )}
 
       {/* Scanline effect */}
       {cameraReady && <div className="scanline-overlay" />}
+
+      {/* OpenCV loading indicator */}
+      {cameraReady && opencvLoading && (
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded">
+          <div className="hud-text hud-text-dim text-sm">LOADING VISION...</div>
+        </div>
+      )}
 
       {/* Loading state */}
       {isStarting && (

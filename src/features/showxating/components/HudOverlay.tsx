@@ -1,12 +1,40 @@
-import { useShowxatingStore, DetectionStatus } from '../store/showxatingStore';
+import { useShowxatingStore, DetectionStatus, Point } from '../store/showxatingStore';
 
 interface HudOverlayProps {
   width: number;
   height: number;
+  videoWidth: number;
+  videoHeight: number;
 }
 
-export function HudOverlay({ width, height }: HudOverlayProps) {
-  const { detectionStatus, matchConfidence } = useShowxatingStore();
+export function HudOverlay({ width, height, videoWidth, videoHeight }: HudOverlayProps) {
+  const { detectionStatus, matchConfidence, detectedQuadrilateral } = useShowxatingStore();
+
+  // Compute object-cover transformation
+  // object-cover fills container while maintaining aspect ratio, cropping overflow
+  const videoAR = (videoWidth || width) / (videoHeight || height);
+  const containerAR = width / height;
+
+  let scale: number;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (videoAR > containerAR) {
+    // Video is wider - scale by height, crop sides
+    scale = height / (videoHeight || height);
+    const displayedVideoWidth = (videoWidth || width) * scale;
+    offsetX = (displayedVideoWidth - width) / 2;
+  } else {
+    // Video is taller - scale by width, crop top/bottom
+    scale = width / (videoWidth || width);
+    const displayedVideoHeight = (videoHeight || height) * scale;
+    offsetY = (displayedVideoHeight - height) / 2;
+  }
+
+  // Log when we have a quadrilateral
+  if (detectedQuadrilateral) {
+    console.log('[HUD] Quad:', detectedQuadrilateral[0], 'scale:', scale.toFixed(3), 'offset:', offsetX.toFixed(0), offsetY.toFixed(0), 'dims:', width, height, videoWidth, videoHeight);
+  }
 
   const cx = width / 2;
   const cy = height / 2;
@@ -21,13 +49,24 @@ export function HudOverlay({ width, height }: HudOverlayProps) {
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMidYMid slice"
     >
-      {/* Corner brackets */}
+      {/* Static corner brackets (frame) */}
       <CornerBrackets
         width={width}
         height={height}
         size={bracketSize}
         inset={bracketInset}
       />
+
+      {/* Detected card brackets */}
+      {detectedQuadrilateral && (
+        <DetectedCardBrackets
+          corners={detectedQuadrilateral}
+          scale={scale}
+          offsetX={offsetX}
+          offsetY={offsetY}
+          status={detectionStatus}
+        />
+      )}
 
       {/* Center crosshair */}
       <Crosshair cx={cx} cy={cy} size={40} status={detectionStatus} />
@@ -268,4 +307,104 @@ function BottomStatus({
       {modeText}
     </text>
   );
+}
+
+// Detected card brackets - drawn around the detected quadrilateral
+function DetectedCardBrackets({
+  corners,
+  scale,
+  offsetX,
+  offsetY,
+  status,
+}: {
+  corners: Point[];
+  scale: number;
+  offsetX: number;
+  offsetY: number;
+  status: DetectionStatus;
+}) {
+  // Transform video coordinates to display coordinates (accounting for object-cover)
+  // displayX = (videoX * scale) - offsetX
+  // displayY = (videoY * scale) - offsetY
+  const scaled = corners.map(p => ({
+    x: p.x * scale - offsetX,
+    y: p.y * scale - offsetY,
+  }));
+
+  console.log('[HUD] Brackets - input:', corners[0], 'scale:', scale.toFixed(3), 'offset:', offsetX.toFixed(0), offsetY.toFixed(0), '=> output:', scaled[0]);
+
+  // Bracket size (smaller than frame brackets)
+  const bracketSize = 30;
+
+  // Color based on status - use hardcoded colors to ensure visibility
+  const color = status === 'locked'
+    ? '#00d4ff'
+    : status === 'tracking'
+    ? '#d4a84b'
+    : '#a08040';
+
+  // Draw corner brackets at each detected corner
+  return (
+    <g stroke={color} strokeWidth={status === 'locked' ? 3 : 2} fill="none">
+      {scaled.map((corner, i) => {
+        // Get adjacent corners for bracket direction
+        const prev = scaled[(i + 3) % 4];
+        const next = scaled[(i + 1) % 4];
+
+        // Direction vectors (normalized)
+        const toPrev = normalize({ x: prev.x - corner.x, y: prev.y - corner.y });
+        const toNext = normalize({ x: next.x - corner.x, y: next.y - corner.y });
+
+        // Bracket endpoints
+        const p1 = {
+          x: corner.x + toPrev.x * bracketSize,
+          y: corner.y + toPrev.y * bracketSize,
+        };
+        const p2 = {
+          x: corner.x + toNext.x * bracketSize,
+          y: corner.y + toNext.y * bracketSize,
+        };
+
+        return (
+          <path
+            key={i}
+            d={`M ${p1.x} ${p1.y} L ${corner.x} ${corner.y} L ${p2.x} ${p2.y}`}
+            strokeLinecap="square"
+          />
+        );
+      })}
+
+      {/* Draw outline of detected card (subtle) */}
+      {status === 'locked' && (
+        <path
+          d={`M ${scaled[0].x} ${scaled[0].y}
+              L ${scaled[1].x} ${scaled[1].y}
+              L ${scaled[2].x} ${scaled[2].y}
+              L ${scaled[3].x} ${scaled[3].y} Z`}
+          strokeWidth={1}
+          strokeDasharray="4 4"
+          opacity={0.5}
+        />
+      )}
+
+      {/* Debug: circles at each corner to verify rendering */}
+      {scaled.map((corner, i) => (
+        <circle
+          key={`debug-${i}`}
+          cx={corner.x}
+          cy={corner.y}
+          r={8}
+          fill={color}
+          opacity={0.9}
+        />
+      ))}
+    </g>
+  );
+}
+
+// Normalize a vector
+function normalize(v: Point): Point {
+  const len = Math.sqrt(v.x * v.x + v.y * v.y);
+  if (len === 0) return { x: 0, y: 0 };
+  return { x: v.x / len, y: v.y / len };
 }
