@@ -55,34 +55,91 @@ Language
 
 ⸻
 
-4. SHOWXATING entry point
-	•	New primary navigation item: SHOWXATING
-	•	First entry shows:
-	•	Camera permission explanation.
-	•	Audio permission explanation for Capture Mode.
-	•	Statement that all processing is local unless exported.
+4. App-Wide Navigation Architecture
+
+Top Navigation Bar
+```
+┌────────────────────────────────┐
+│ [SYS]    SHOWXATING     [CAT] │
+└────────────────────────────────┘
+```
+
+- **Active view**: Large text, no bounding box
+- **Inactive views**: Smaller text, bounding box (like buttons)
+- When user taps [CAT], it becomes "CATALOG" (large, unboxed), and "SHOWXATING" shrinks into [SHO] box
+
+Navigation Items:
+- **SYS** - System settings panel (small, upper-left)
+- **SHOWXATING** - Scan mode with live camera
+- **CAT** - Card Catalog (original all-card sortable view)
+
+Default Behavior:
+- SHOWXATING (Scan mode) loads by default on app launch
+- User can change default via SYS settings
+- Setting persisted via localStorage
+
+Theme Consistency:
+- Apply Amber Belter theme to Card Catalog view
+- Unified visual language across all app views
+- Dark backgrounds, gold accents, Eurostile-style typography
 
 ⸻
 
-5. Mode A.  Scan Mode (live card recognition)
+5. SYS Panel (System Settings)
+
+Location: Upper-left corner, small bounding box
+
+Contents:
+- Default launch mode toggle (Catalog vs Scan)
+- CAPTURE mode access (hidden here, not prominent)
+- Future settings as needed
+
+Design:
+- Minimal footprint when closed
+- Expands on tap to show options
+- Same Belter styling as rest of app
+
+⸻
+
+6. Mode A.  Scan Mode (live card recognition)
 
 Purpose
 
-Recognize a single HF4A card in view and overlay the opposite side of that card in real time.
+Recognize HF4A cards in view and overlay the opposite side in real time. Capture snapshots for detailed exploration away from the table.
 
-User flow
-	1.	User enters SHOWXATING and selects Scan.
-	2.	Camera opens with Belter HUD.
-	3.	User points at a card.
-	4.	HUD crosshair snaps to the card when detected.
-	5.	App identifies the card.
-	6.	Overlay renders the reverse side of the card aligned to perspective.
-	7.	User may:
-	•	Freeze frame.
-	•	Toggle front/back overlay.
-	•	Open full card details.
+Bottom Action Bar
+```
+┌─────────────────────────────────┐
+│ [S3] [S2] [S1]          [SCAN] │
+└─────────────────────────────────┘
+```
 
-HUD elements
+Slot System (S1, S2, S3):
+- **S1**: Most recent captured scan
+- **S2**: Previous scan
+- **S3**: Oldest scan (drops off when new scan captured)
+- Maximum 3 active captured scans at a time
+- Draggable/swipeable horizontally
+- Centered slot is "active" (displayed in main view) and larger
+- When SCAN is centered, live camera mode is visible
+
+SCAN Button Behavior:
+- Captures snapshot of current camera view with card overlays
+- Frozen image with detected cards and overlays preserved
+- New capture goes to S1, existing scans shift left (S1→S2, S2→S3, S3 dropped)
+- User can then go back to their seat to explore captured cards in detail
+
+User Flow
+	1.	User opens SHOWXATING (default on app launch).
+	2.	Camera opens with Belter HUD, SCAN centered (live view).
+	3.	User points at card(s) on table.
+	4.	HUD brackets snap to detected cards, overlays appear.
+	5.	User taps SCAN to capture current view with overlays.
+	6.	Captured view goes to S1, user can swipe to explore it.
+	7.	User can return to seat and swipe through S1/S2/S3 to explore captures.
+	8.	Swipe back to SCAN to return to live camera mode.
+
+HUD Elements
 	•	Center targeting crosshair.
 	•	Card boundary brackets.
 	•	Confidence indicator.
@@ -103,7 +160,9 @@ Explicit exclusions
 
 ⸻
 
-6. Mode B.  Capture Mode (training data collection)
+7. Mode B.  Capture Mode (training data collection)
+
+Access: Via SYS panel (not prominently displayed)
 
 Purpose
 
@@ -114,7 +173,7 @@ Core idea
 After a game, the user walks around the table and records photos or video while narrating what matters.  The narration is the ground truth.  The app does not interpret it.
 
 User flow
-	1.	User selects Capture.
+	1.	User opens SYS panel and selects Capture.
 	2.	App displays a short capture checklist:
 	•	Lighting.
 	•	Glare.
@@ -159,7 +218,7 @@ Important
 
 ⸻
 
-7. Data storage and export
+8. Data storage and export
 
 Local storage
 	•	IndexedDB for session metadata and thumbnails.
@@ -176,7 +235,7 @@ Export is explicit and user-initiated.
 
 ⸻
 
-8. Technology stack
+9. Technology stack
 
 Existing base
 	•	Angular.
@@ -201,7 +260,7 @@ Capture Mode additions
 
 ⸻
 
-9. Angular architecture
+10. Architecture
 
 Routes
 	•	/showxating/scan
@@ -222,7 +281,7 @@ Services
 
 ⸻
 
-10. Guardrails and constraints
+11. Guardrails and constraints
 	•	Camera and microphone always require explicit consent.
 	•	Recording indicators are always visible.
 	•	No background capture.
@@ -231,7 +290,7 @@ Services
 
 ⸻
 
-11. Acceptance criteria
+12. Acceptance criteria
 	•	Scan Mode recognizes cards and overlays the opposite side with stable alignment.
 	•	Capture Mode records photos and narrated video.
 	•	Exported bundles are complete, deterministic, and usable offline.
@@ -240,7 +299,7 @@ Services
 
 ⸻
 
-12. Product positioning
+13. Product positioning
 
 Scan Mode is the immediate value.
 Capture Mode is the long-term unlock.

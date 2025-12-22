@@ -127,33 +127,81 @@ Nav entry point: Add "SHOWXATING" link to `Layout.tsx` header.
 - [x] Connect detection to store
 
 **Deliverable**: Brackets appear around detected card shapes
-**Status**: Built, ready for testing
+**Status**: Working on mobile (2024-12-22). Desktop has SVG rendering quirk (paths/rects don't render, only lines).
 
-### Phase 3: Card Identification
+### Phase 3: App-Wide Navigation & Theme
+**Goal**: Unified navigation and Belter theme across app
+
+Top Navigation Bar:
+```
+┌────────────────────────────────┐
+│ [SYS]    SHOWXATING     [CAT] │
+└────────────────────────────────┘
+```
+
+- [ ] Create new top nav component with [SYS] / active title / [CAT] layout
+- [ ] Active view = large text, no box; inactive = smaller, boxed
+- [ ] Apply Belter theme (gold, dark bg, Eurostile font) to Card Catalog
+- [ ] Default to SHOWXATING on app launch
+- [ ] localStorage for user preference (default mode setting)
+- [ ] Update routing to support new navigation pattern
+
+**Deliverable**: Unified Belter-themed app with seamless navigation
+
+### Phase 4: Card Identification
 **Goal**: Detected card matched to database
 
 - [ ] `scripts/generate-card-index.ts` build script
 - [ ] Generate `card-index.json` with dHash values
 - [ ] `CardMatcher` class
 - [ ] `useCardIdentification` hook
-- [ ] Confidence ring and status text in HUD
+- [ ] Display matched card name in HUD
 
 **Deliverable**: Card name appears when recognized
 
-### Phase 4: Overlay Rendering
+### Phase 5: Overlay Rendering
 **Goal**: Opposite side overlaid with perspective correction
 
 - [ ] `perspectiveTransform.ts` (homography)
 - [ ] `CardOverlay` component with CSS matrix3d
 - [ ] Connect to `relatedCards` for opposite lookup
-- [ ] Freeze/unfreeze toggle
-- [ ] Flip overlay (same vs opposite side)
-- [ ] "Open Details" navigation
+- [ ] Toggle front/back overlay
+- [ ] "Open Details" navigation to card detail view
 
-**Deliverable**: Full Scan Mode working
+**Deliverable**: Detected cards show opposite side overlay
 
-### Phase 5: Capture Mode
-**Goal**: Photo/video/audio capture with storage
+### Phase 6: Snapshot & Slot System
+**Goal**: Capture snapshots for away-from-table exploration
+
+Bottom Action Bar:
+```
+┌─────────────────────────────────┐
+│ [S3] [S2] [S1]          [SCAN] │
+└─────────────────────────────────┘
+```
+
+- [ ] SCAN button captures current view with overlays
+- [ ] S1/S2/S3 slot carousel (max 3 captures)
+- [ ] New capture → S1, older shifts left (S1→S2, S2→S3, S3 dropped)
+- [ ] Draggable/swipeable bottom bar
+- [ ] Centered slot is "active" and displayed in main view
+- [ ] When SCAN centered = live camera; when Sx centered = frozen capture
+- [ ] Store captures in memory (not persisted)
+
+**Deliverable**: User can snapshot table, go back to seat, explore captures
+
+### Phase 7: SYS Panel
+**Goal**: System settings accessible via [SYS] button
+
+- [ ] Small popup/drawer from upper-left
+- [ ] Default launch mode toggle (Catalog vs Scan)
+- [ ] CAPTURE mode access (hidden from main nav)
+- [ ] Future settings placeholder
+
+**Deliverable**: Settings accessible, CAPTURE mode reachable
+
+### Phase 8: Capture Mode
+**Goal**: Training data collection for future models
 
 - [ ] IndexedDB schema (`lib/idb/captureDB.ts`)
 - [ ] `captureStore`
@@ -164,15 +212,16 @@ Nav entry point: Add "SHOWXATING" link to `Layout.tsx` header.
 
 **Deliverable**: Can capture and review sessions
 
-### Phase 6: Export & Polish
+### Phase 9: Export & Polish
 **Goal**: Export bundles, final polish
 
 - [ ] ZIP export with JSZip
 - [ ] Share/download flow
-- [ ] HUD animations (Framer Motion)
+- [ ] HUD animations (subtle, fast fades)
 - [ ] Performance optimization
-- [ ] Mobile Safari testing
-- [ ] Error handling
+- [ ] Mobile Safari edge cases
+- [ ] Error handling and recovery
+- [ ] Fix desktop SVG rendering issue
 
 **Deliverable**: Feature complete
 
