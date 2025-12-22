@@ -48,7 +48,8 @@ export function CardDetailView() {
   const { cards, isLoading } = useCardStore();
   const { showFlipped } = useFilterStore();
   const [isFlipped, setIsFlipped] = useState(showFlipped);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [baseImageLoaded, setBaseImageLoaded] = useState(false);
+  const [promotedImageLoaded, setPromotedImageLoaded] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
@@ -143,9 +144,24 @@ export function CardDetailView() {
   // Sync flip state with global showFlipped when card changes
   useEffect(() => {
     setIsFlipped(showFlipped);
-    setImageLoaded(false);
+    setBaseImageLoaded(false);
+    setPromotedImageLoaded(false);
     setShowInfo(false);
   }, [cardId, showFlipped]);
+
+  // Preload both images
+  useEffect(() => {
+    if (card) {
+      const baseImg = new Image();
+      baseImg.src = `${import.meta.env.BASE_URL}cards/full/${card.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
+      baseImg.onload = () => setBaseImageLoaded(true);
+    }
+    if (promotedSide) {
+      const promotedImg = new Image();
+      promotedImg.src = `${import.meta.env.BASE_URL}cards/full/${promotedSide.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
+      promotedImg.onload = () => setPromotedImageLoaded(true);
+    }
+  }, [card, promotedSide]);
 
   // Handle drag gestures on the card
   const handleDragEnd = useCallback(
@@ -211,6 +227,7 @@ export function CardDetailView() {
   const displayCard = isFlipped && promotedSide ? promotedSide : card;
   const displayName = displayCard.ocr?.name || displayCard.name || 'Unknown Card';
   const imagePath = `${import.meta.env.BASE_URL}cards/full/${displayCard.filename.replace(/\.(png|jpg)$/i, '.webp')}`;
+  const imageLoaded = isFlipped ? promotedImageLoaded : baseImageLoaded;
 
   return (
     <div
@@ -293,7 +310,6 @@ export function CardDetailView() {
               <img
                 src={imagePath}
                 alt={displayName}
-                onLoad={() => setImageLoaded(true)}
                 className={`w-full h-full object-contain transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
@@ -406,21 +422,26 @@ function InfoPanel({ card, onClose, cards }: InfoPanelProps) {
       className="min-h-screen"
       style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
     >
-      {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[#0a0a0f] border-b border-[#d4a84b]/30">
-        <h1
-          className="text-lg tracking-wider uppercase truncate flex-1"
-          style={{ color: '#d4a84b' }}
-        >
-          {displayName}
-        </h1>
-        <button
-          onClick={onClose}
-          className="ml-4 px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
-          style={{ borderColor: '#d4a84b50', color: '#a08040' }}
-        >
-          CLOSE
-        </button>
+      {/* Header - just close button */}
+      <header className="sticky top-0 z-10 bg-[#0a0a0f] border-b border-[#d4a84b]/30">
+        <div className="flex items-center justify-end px-4 py-3">
+          <button
+            onClick={onClose}
+            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
+            style={{ borderColor: '#d4a84b50', color: '#a08040' }}
+          >
+            CLOSE
+          </button>
+        </div>
+        {/* Card title below buttons */}
+        <div className="px-4 pb-3">
+          <h1
+            className="text-lg tracking-wider uppercase"
+            style={{ color: '#d4a84b' }}
+          >
+            {displayName}
+          </h1>
+        </div>
       </header>
 
       {/* Content */}
