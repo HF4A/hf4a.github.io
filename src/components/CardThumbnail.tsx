@@ -68,7 +68,7 @@ export function CardThumbnail({ card }: CardThumbnailProps) {
 
   return (
     <Link
-      to={`/card/${card.id}`}
+      to={`/catalog/card/${card.id}`}
       className="group block"
     >
       <motion.div

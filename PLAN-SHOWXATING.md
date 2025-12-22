@@ -129,7 +129,7 @@ Nav entry point: Add "SHOWXATING" link to `Layout.tsx` header.
 **Deliverable**: Brackets appear around detected card shapes
 **Status**: Working on mobile (2024-12-22). Desktop has SVG rendering quirk (paths/rects don't render, only lines).
 
-### Phase 3: App-Wide Navigation & Theme
+### Phase 3: App-Wide Navigation & Theme ✅ COMPLETE
 **Goal**: Unified navigation and Belter theme across app
 
 Top Navigation Bar:
@@ -139,27 +139,29 @@ Top Navigation Bar:
 └────────────────────────────────┘
 ```
 
-- [ ] Create new top nav component with [SYS] / active title / [CAT] layout
-- [ ] Active view = large text, no box; inactive = smaller, boxed
-- [ ] Apply Belter theme (gold, dark bg, Eurostile font) to Card Catalog
-- [ ] Default to SHOWXATING on app launch
-- [ ] localStorage for user preference (default mode setting)
-- [ ] Update routing: `/` redirects based on setting, `/showxating`, `/catalog`
+- [x] Create new top nav component with [SYS] / active title / [CAT] layout
+- [x] Active view = large text, no box; inactive = smaller, boxed
+- [x] Apply Belter theme (gold, dark bg, Eurostile font) to Card Catalog
+- [x] Default to SHOWXATING on app launch
+- [x] localStorage for user preference (default mode setting)
+- [x] Update routing: `/` redirects based on setting, `/showxating`, `/catalog`
 
 **Deliverable**: Unified Belter-themed app with seamless navigation
+**Status**: Deployed (2024-12-22). TopNavBar, SysPanel, CatalogLayout, settingsStore all implemented.
 
-### Phase 4: Card Detail View (Shared)
+### Phase 4: Card Detail View (Shared) ✅ COMPLETE
 **Goal**: Full-screen card detail with swipe gestures, used by both Scan and Catalog
 
-- [ ] Full-screen card component (dark bg, centered card)
-- [ ] Swipe left/right to flip card
-- [ ] Swipe up/down to dismiss
-- [ ] Small [INFO] button (Belter style) in corner
-- [ ] Info page shows metadata in Belter style
-- [ ] Remove metadata panel from current card detail
-- [ ] Works in both Catalog grid and Scan overlays
+- [x] Full-screen card component (dark bg, centered card)
+- [x] Swipe left/right to flip card
+- [x] Swipe up/down to dismiss (down) or show info (up)
+- [x] Small [INFO] button (Belter style) in header
+- [x] Info page shows metadata in Belter style (full-screen slide-up panel)
+- [x] Remove metadata panel from current card detail
+- [x] Works in Catalog grid (Scan overlays in later phase)
 
 **Deliverable**: Clean card detail view with flip/dismiss gestures
+**Status**: Deployed (2024-12-22). New CardDetailView component with drag gestures, Belter styling.
 
 ### Phase 5: Card Identification System
 **Goal**: Build dHash index and matching for card identification
