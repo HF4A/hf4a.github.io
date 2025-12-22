@@ -31,10 +31,6 @@ export function HudOverlay({ width, height, videoWidth, videoHeight }: HudOverla
     offsetY = (displayedVideoHeight - height) / 2;
   }
 
-  // Log when we have a quadrilateral
-  if (detectedQuadrilateral) {
-    console.log('[HUD] Quad:', detectedQuadrilateral[0], 'scale:', scale.toFixed(3), 'offset:', offsetX.toFixed(0), offsetY.toFixed(0), 'dims:', width, height, videoWidth, videoHeight);
-  }
 
   const cx = width / 2;
   const cy = height / 2;
@@ -57,36 +53,15 @@ export function HudOverlay({ width, height, videoWidth, videoHeight }: HudOverla
         inset={bracketInset}
       />
 
-      {/* DEBUG: Always-visible test rectangle */}
-      <rect
-        x={100}
-        y={100}
-        width={200}
-        height={100}
-        fill="red"
-        opacity={0.8}
-      />
-
       {/* Detected card brackets */}
       {detectedQuadrilateral && (
-        <>
-          {/* DEBUG: marker at first corner */}
-          <rect
-            x={detectedQuadrilateral[0].x * scale - offsetX - 20}
-            y={detectedQuadrilateral[0].y * scale - offsetY - 20}
-            width={40}
-            height={40}
-            fill="lime"
-            opacity={0.9}
-          />
-          <DetectedCardBrackets
-            corners={detectedQuadrilateral}
-            scale={scale}
-            offsetX={offsetX}
-            offsetY={offsetY}
-            status={detectionStatus}
-          />
-        </>
+        <DetectedCardBrackets
+          corners={detectedQuadrilateral}
+          scale={scale}
+          offsetX={offsetX}
+          offsetY={offsetY}
+          status={detectionStatus}
+        />
       )}
 
       {/* Center crosshair */}
@@ -352,7 +327,6 @@ function DetectedCardBrackets({
     y: p.y * scale - offsetY,
   }));
 
-  console.log('[HUD] Brackets - input:', corners[0], 'scale:', scale.toFixed(3), 'offset:', offsetX.toFixed(0), offsetY.toFixed(0), '=> output:', scaled[0]);
 
   // Bracket size (smaller than frame brackets)
   const bracketSize = 30;
@@ -408,17 +382,6 @@ function DetectedCardBrackets({
         />
       )}
 
-      {/* Debug: circles at each corner to verify rendering */}
-      {scaled.map((corner, i) => (
-        <circle
-          key={`debug-${i}`}
-          cx={corner.x}
-          cy={corner.y}
-          r={8}
-          fill={color}
-          opacity={0.9}
-        />
-      ))}
     </g>
   );
 }

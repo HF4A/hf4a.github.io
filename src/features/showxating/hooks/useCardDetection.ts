@@ -49,12 +49,6 @@ export function useCardDetection({ videoRef, enabled = true }: UseCardDetectionO
   const processFrame = useCallback(() => {
     // Use refs to get current values (avoid stale closures)
     if (!videoRef.current || !cameraReadyRef.current || !opencvReadyRef.current || overlayFrozenRef.current) {
-      console.log('[Detection] processFrame early return:', {
-        hasVideo: !!videoRef.current,
-        cameraReady: cameraReadyRef.current,
-        opencvReady: opencvReadyRef.current,
-        overlayFrozen: overlayFrozenRef.current,
-      });
       return;
     }
 
@@ -99,10 +93,6 @@ export function useCardDetection({ videoRef, enabled = true }: UseCardDetectionO
       return;
     }
 
-    // Log detection results only when found
-    if (result.found) {
-      console.log('[Detection] FOUND:', { confidence: result.confidence?.toFixed(2), area: result.area, corners: result.corners });
-    }
 
     // Scale corners back to full resolution
     if (result.corners) {
@@ -125,26 +115,18 @@ export function useCardDetection({ videoRef, enabled = true }: UseCardDetectionO
 
       // Update store based on stability
       if (stableDetectionCountRef.current >= STABLE_FRAMES_REQUIRED) {
-        console.log('[Detection] Setting LOCKED state with corners:', result.corners);
         setDetection(result.corners, null, result.confidence);
         setDetectionStatus('locked');
       } else {
-        console.log('[Detection] Setting TRACKING state with corners:', result.corners);
         setDetection(result.corners, null, result.confidence * 0.5);
         setDetectionStatus('tracking');
       }
     } else {
-      // No detection
+      // No detection - clear immediately to prevent ghosting
       if (stableDetectionCountRef.current > 0) {
         stableDetectionCountRef.current = 0;
-        setDetectionStatus('lost');
-        // Keep last detection visible briefly
-        setTimeout(() => {
-          if (stableDetectionCountRef.current === 0) {
-            clearDetection();
-            setDetectionStatus('searching');
-          }
-        }, 500);
+        clearDetection();
+        setDetectionStatus('searching');
       }
     }
   }, [videoRef, getCanvas, setDetection, clearDetection, setDetectionStatus]);
@@ -153,21 +135,11 @@ export function useCardDetection({ videoRef, enabled = true }: UseCardDetectionO
   const processFrameRef = useRef(processFrame);
   processFrameRef.current = processFrame;
 
-  const loopCountRef = useRef(0);
-
   const runDetectionLoop = useCallback(() => {
-    loopCountRef.current++;
-    if (loopCountRef.current === 1) {
-      console.log('[Detection] Loop running, first iteration');
-    }
-
     const now = performance.now();
     const elapsed = now - lastFrameTimeRef.current;
 
     if (elapsed >= FRAME_INTERVAL) {
-      if (loopCountRef.current <= 3) {
-        console.log('[Detection] Calling processFrame, iteration:', loopCountRef.current);
-      }
       lastFrameTimeRef.current = now - (elapsed % FRAME_INTERVAL);
       processFrameRef.current();
     }
@@ -177,32 +149,24 @@ export function useCardDetection({ videoRef, enabled = true }: UseCardDetectionO
 
   // Start/stop detection loop
   useEffect(() => {
-    console.log('[Detection] Effect running:', { enabled, cameraReady, opencvReady, opencvLoading, opencvError });
-
     if (!enabled || !cameraReady) {
-      console.log('[Detection] Not enabled or camera not ready');
       return;
     }
 
     // Load OpenCV if not ready
     if (!opencvReady && !opencvLoading && !opencvError) {
-      console.log('[Detection] Loading OpenCV...');
       loadOpenCV();
       return;
     }
 
     if (!opencvReady) {
-      console.log('[Detection] Waiting for OpenCV...');
       return;
     }
 
-    console.log('[Detection] Starting detection loop');
-
-    // Start the loop directly - runDetectionLoop is stable (no deps)
+    // Start the loop
     animationFrameRef.current = requestAnimationFrame(runDetectionLoop);
 
     return () => {
-      console.log('[Detection] Stopping detection loop');
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;

@@ -33,10 +33,6 @@ export function detectCardQuadrilateral(
   const minArea = frameArea * MIN_AREA_RATIO;
   const maxArea = frameArea * MAX_AREA_RATIO;
 
-  // Throttle logging
-  (window as any).__visionLogCount = ((window as any).__visionLogCount || 0) + 1;
-  const shouldLog = (window as any).__visionLogCount % 15 === 0;
-
   let src: any = null;
   let gray: any = null;
   let blurred: any = null;
@@ -69,19 +65,16 @@ export function detectCardQuadrilateral(
     let bestArea = 0;
     let bestConfidence = 0;
     let bestAspectRatio = 0;
-    let quadCount = 0;
-    let passedAreaFilter = 0;
 
     // Iterate through contours to find card-like quadrilaterals
     for (let i = 0; i < contours.size(); i++) {
       const contour = contours.get(i);
       const area = cv.contourArea(contour);
 
-      // Filter by area - be more lenient
+      // Filter by area
       if (area < minArea || area > maxArea) {
         continue;
       }
-      passedAreaFilter++;
 
       // Approximate the contour to a polygon
       // Use larger epsilon (0.04) to smooth rounded corners into 4-point quad
@@ -89,14 +82,8 @@ export function detectCardQuadrilateral(
       const epsilon = 0.04 * cv.arcLength(contour, true);
       cv.approxPolyDP(contour, approx, epsilon, true);
 
-      // Log non-quads that pass area filter (helps debug)
-      if (shouldLog && approx.rows !== 4) {
-        console.log('[Vision] Large contour with', approx.rows, 'corners, area:', area.toFixed(0));
-      }
-
       // We want quadrilaterals (4 corners)
       if (approx.rows === 4) {
-        quadCount++;
         // Check if convex
         if (cv.isContourConvex(approx)) {
           // Get bounding rect for aspect ratio check
@@ -107,11 +94,6 @@ export function detectCardQuadrilateral(
           const aspectDiff = Math.abs(aspectRatio - CARD_ASPECT_RATIO);
           const invertedAspectDiff = Math.abs(1 / aspectRatio - CARD_ASPECT_RATIO);
           const minAspectDiff = Math.min(aspectDiff, invertedAspectDiff);
-
-          // Only log quad details when throttle allows
-          if (shouldLog) {
-            console.log('[Vision] Quad aspect:', aspectRatio.toFixed(2), 'diff:', minAspectDiff.toFixed(2), 'tolerance:', ASPECT_RATIO_TOLERANCE, 'area:', area);
-          }
 
           if (minAspectDiff < ASPECT_RATIO_TOLERANCE) {
             // Calculate confidence based on area and aspect ratio match
@@ -125,18 +107,12 @@ export function detectCardQuadrilateral(
               bestConfidence = confidence;
               bestAspectRatio = aspectRatio;
               bestQuad = extractCorners(approx);
-              console.log('[Vision] *** CARD DETECTED *** confidence:', confidence.toFixed(2), 'area:', area);
             }
           }
         }
       }
 
       approx.delete();
-    }
-
-    // Log summary throttled
-    if (shouldLog) {
-      console.log('[Vision] Contours:', contours.size(), 'passedArea:', passedAreaFilter, 'quads:', quadCount);
     }
 
     return {
@@ -176,7 +152,6 @@ function extractCorners(approx: any): Point[] {
     });
   }
 
-  console.log('[Vision] Raw corners:', points);
 
   // Sort to get consistent ordering (TL, TR, BR, BL)
   return orderCorners(points);
