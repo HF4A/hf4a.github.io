@@ -240,8 +240,13 @@ export function FilterBar() {
     }
   };
 
+  // Belter chip styles
+  const chipBase = "px-3 py-1.5 text-xs font-medium tracking-wider uppercase border transition-colors";
+  const chipInactive = `${chipBase} border-[#d4a84b]/30 text-[#a08040] hover:bg-[#d4a84b]/10`;
+  const chipActive = `${chipBase} bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]`;
+
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3" style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}>
       {/* Card Type Filter - Single Select */}
       <SingleSelectFilter
         label="Type"
@@ -301,7 +306,7 @@ export function FilterBar() {
       {/* Flip All Toggle */}
       <button
         onClick={toggleFlipped}
-        className={`chip ${showFlipped ? 'chip-active' : ''}`}
+        className={showFlipped ? chipActive : chipInactive}
       >
         <svg
           className={`w-4 h-4 mr-1 transition-transform ${showFlipped ? 'rotate-180' : ''}`}
@@ -328,7 +333,8 @@ export function FilterBar() {
       {hasFilters && (
         <button
           onClick={clearFilters}
-          className="text-sm text-gray-400 hover:text-white transition-colors"
+          className="text-sm tracking-wider uppercase transition-colors"
+          style={{ color: '#a08040' }}
         >
           Clear
         </button>
@@ -361,15 +367,16 @@ function ShareButton() {
   return (
     <button
       onClick={handleShare}
-      className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1"
+      className="text-sm tracking-wider uppercase transition-colors flex items-center gap-1"
+      style={{ color: '#a08040' }}
       title="Copy shareable link"
     >
       {copied ? (
         <>
-          <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4" style={{ color: '#00d4ff' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <span className="text-green-400">Copied</span>
+          <span style={{ color: '#00d4ff' }}>Copied</span>
         </>
       ) : (
         <>
@@ -416,10 +423,14 @@ function SingleSelectFilter({
     }
   }, [isOpen]);
 
+  const chipBase = "px-3 py-1.5 text-xs font-medium tracking-wider uppercase border transition-colors flex items-center";
+  const chipInactive = `${chipBase} border-[#d4a84b]/30 text-[#a08040] hover:bg-[#d4a84b]/10`;
+  const chipActive = `${chipBase} bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]`;
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className={`chip ${selected ? 'chip-active' : ''}`}
+        className={selected ? chipActive : chipInactive}
         onClick={() => setIsOpen(!isOpen)}
       >
         {selected ? getLabel(selected) : label}
@@ -440,7 +451,7 @@ function SingleSelectFilter({
 
       {/* Dropdown - opens upward since we're at the bottom */}
       {isOpen && (
-        <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg z-50 min-w-[180px] max-h-64 overflow-y-auto">
+        <div className="absolute bottom-full left-0 mb-1 py-2 bg-[#0a0a0f] border border-[#d4a84b]/30 shadow-lg z-50 min-w-[180px] max-h-64 overflow-y-auto">
           {options.map((option) => {
             const count = getCounts(option);
             const isSelected = selected === option;
@@ -451,24 +462,24 @@ function SingleSelectFilter({
                   onSelect(option);
                   setIsOpen(false);
                 }}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2 ${
-                  isSelected ? 'bg-space-600 text-white' : 'text-gray-300'
+                className={`w-full px-4 py-2 text-left text-sm tracking-wider uppercase hover:bg-[#d4a84b]/10 flex items-center justify-between gap-2 ${
+                  isSelected ? 'bg-[#d4a84b]/20' : ''
                 }`}
+                style={{ color: isSelected ? '#d4a84b' : '#a08040' }}
               >
                 <div className="flex items-center gap-2">
                   {/* Radio button style - outer ring with inner dot when selected */}
                   <span
-                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                      isSelected ? 'border-blue-500' : 'border-gray-500'
-                    }`}
+                    className="w-4 h-4 rounded-full border-2 flex items-center justify-center"
+                    style={{ borderColor: isSelected ? '#d4a84b' : '#a08040' }}
                   >
                     {isSelected && (
-                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#d4a84b' }} />
                     )}
                   </span>
                   {getLabel(option)}
                 </div>
-                <span className="text-xs text-gray-500">{count}</span>
+                <span className="text-xs" style={{ color: '#707080' }}>{count}</span>
               </button>
             );
           })}
@@ -511,15 +522,19 @@ function FilterDropdown({
     }
   }, [isOpen]);
 
+  const chipBase = "px-3 py-1.5 text-xs font-medium tracking-wider uppercase border transition-colors flex items-center";
+  const chipInactive = `${chipBase} border-[#d4a84b]/30 text-[#a08040] hover:bg-[#d4a84b]/10`;
+  const chipActive = `${chipBase} bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]`;
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className={`chip ${selected.length > 0 ? 'chip-active' : ''}`}
+        className={selected.length > 0 ? chipActive : chipInactive}
         onClick={() => setIsOpen(!isOpen)}
       >
         {label}
         {selected.length > 0 && (
-          <span className="ml-1 bg-white/20 px-1.5 rounded-full text-xs">
+          <span className="ml-1 bg-[#0a0a0f]/30 px-1.5 rounded-full text-xs">
             {selected.length}
           </span>
         )}
@@ -540,25 +555,27 @@ function FilterDropdown({
 
       {/* Dropdown - opens upward since we're at the bottom */}
       {isOpen && (
-        <div className="absolute bottom-full left-0 mb-1 py-2 bg-space-700 rounded-lg shadow-lg z-50 min-w-[120px] max-h-64 overflow-y-auto">
+        <div className="absolute bottom-full left-0 mb-1 py-2 bg-[#0a0a0f] border border-[#d4a84b]/30 shadow-lg z-50 min-w-[120px] max-h-64 overflow-y-auto">
           {options.map((option) => {
             const count = getCounts(option);
+            const isChecked = selected.includes(option);
             return (
               <button
                 key={option}
                 onClick={() => onToggle(option)}
-                className="w-full px-4 py-2 text-left text-sm hover:bg-space-600 flex items-center justify-between gap-2"
+                className="w-full px-4 py-2 text-left text-sm tracking-wider uppercase hover:bg-[#d4a84b]/10 flex items-center justify-between gap-2"
+                style={{ color: isChecked ? '#d4a84b' : '#a08040' }}
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`w-4 h-4 rounded border ${
-                      selected.includes(option)
-                        ? 'bg-blue-600 border-blue-600'
-                        : 'border-gray-500'
-                    } flex items-center justify-center`}
+                    className="w-4 h-4 rounded border flex items-center justify-center"
+                    style={{
+                      backgroundColor: isChecked ? '#d4a84b' : 'transparent',
+                      borderColor: isChecked ? '#d4a84b' : '#a08040'
+                    }}
                   >
-                    {selected.includes(option) && (
-                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    {isChecked && (
+                      <svg className="w-3 h-3" style={{ color: '#0a0a0f' }} fill="currentColor" viewBox="0 0 20 20">
                         <path
                           fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -569,7 +586,7 @@ function FilterDropdown({
                   </span>
                   {getLabel(option)}
                 </div>
-                <span className="text-xs text-gray-500">{count}</span>
+                <span className="text-xs" style={{ color: '#707080' }}>{count}</span>
               </button>
             );
           })}

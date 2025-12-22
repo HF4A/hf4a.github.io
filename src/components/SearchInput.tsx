@@ -28,7 +28,8 @@ export function SearchInput() {
       {/* Search Icon */}
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <svg
-          className="h-5 w-5 text-gray-500"
+          className="h-5 w-5"
+          style={{ color: '#a08040' }}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -47,15 +48,20 @@ export function SearchInput() {
         type="text"
         value={localQuery}
         onChange={(e) => setLocalQuery(e.target.value)}
-        placeholder="Search cards..."
-        className="input w-full pl-10 pr-10"
+        placeholder="SEARCH CARDS..."
+        className="w-full pl-10 pr-10 py-2 bg-[#0a0a0f] border border-[#d4a84b]/30 focus:border-[#d4a84b] focus:outline-none text-sm tracking-wider uppercase"
+        style={{
+          fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          color: '#d4a84b',
+        }}
       />
 
       {/* Clear Button */}
       {localQuery && (
         <button
           onClick={handleClear}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center hover:opacity-80"
+          style={{ color: '#a08040' }}
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

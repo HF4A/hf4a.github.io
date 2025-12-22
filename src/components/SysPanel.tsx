@@ -1,0 +1,158 @@
+import { useSettingsStore } from '../store/settingsStore';
+
+interface SysPanelProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function SysPanel({ isOpen, onClose }: SysPanelProps) {
+  const { defaultMode, defaultScanResult, setDefaultMode, setDefaultScanResult } = useSettingsStore();
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/70 z-50"
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div
+        className="fixed top-0 left-0 w-80 max-w-[90vw] h-full bg-[#0a0a0f] border-r border-[#d4a84b]/30 z-50 overflow-y-auto"
+        style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-4 border-b border-[#d4a84b]/30">
+          <h2
+            className="text-lg font-semibold tracking-wider uppercase"
+            style={{ color: '#d4a84b' }}
+          >
+            SYSTEM
+          </h2>
+          <button
+            onClick={onClose}
+            className="px-3 py-1 text-xs tracking-wider uppercase border border-[#d4a84b]/50 hover:bg-[#d4a84b]/10 transition-colors"
+            style={{ color: '#a08040' }}
+          >
+            CLOSE
+          </button>
+        </div>
+
+        {/* Settings */}
+        <div className="p-4 space-y-6">
+          {/* Default Launch Mode */}
+          <div className="space-y-2">
+            <label
+              className="block text-xs tracking-wider uppercase"
+              style={{ color: '#a08040' }}
+            >
+              DEFAULT LAUNCH MODE
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setDefaultMode('scan')}
+                className={`flex-1 px-3 py-2 text-xs tracking-wider uppercase border transition-colors ${
+                  defaultMode === 'scan'
+                    ? 'bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]'
+                    : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
+                }`}
+              >
+                SCAN
+              </button>
+              <button
+                onClick={() => setDefaultMode('catalog')}
+                className={`flex-1 px-3 py-2 text-xs tracking-wider uppercase border transition-colors ${
+                  defaultMode === 'catalog'
+                    ? 'bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]'
+                    : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
+                }`}
+              >
+                CATALOG
+              </button>
+            </div>
+          </div>
+
+          {/* Default Scan Result */}
+          <div className="space-y-2">
+            <label
+              className="block text-xs tracking-wider uppercase"
+              style={{ color: '#a08040' }}
+            >
+              DEFAULT SCAN RESULT
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setDefaultScanResult('visible')}
+                className={`flex-1 px-3 py-2 text-xs tracking-wider uppercase border transition-colors ${
+                  defaultScanResult === 'visible'
+                    ? 'bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]'
+                    : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
+                }`}
+              >
+                VISIBLE
+              </button>
+              <button
+                onClick={() => setDefaultScanResult('opposite')}
+                className={`flex-1 px-3 py-2 text-xs tracking-wider uppercase border transition-colors ${
+                  defaultScanResult === 'opposite'
+                    ? 'bg-[#d4a84b] text-[#0a0a0f] border-[#d4a84b]'
+                    : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
+                }`}
+              >
+                OPPOSITE
+              </button>
+            </div>
+          </div>
+
+          {/* DIAG button - disabled */}
+          <div className="space-y-2">
+            <label
+              className="block text-xs tracking-wider uppercase"
+              style={{ color: '#a08040' }}
+            >
+              DIAGNOSTICS
+            </label>
+            <button
+              disabled
+              className="w-full px-3 py-2 text-xs tracking-wider uppercase border border-[#d4a84b]/20 text-[#d4a84b]/30 cursor-not-allowed"
+            >
+              DIAG - COMING SOON
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-[#d4a84b]/20 pt-4">
+            <label
+              className="block text-xs tracking-wider uppercase mb-3"
+              style={{ color: '#a08040' }}
+            >
+              SYSTEM STATUS
+            </label>
+
+            {/* System info */}
+            <div className="space-y-2 text-xs" style={{ color: '#707080' }}>
+              <div className="flex justify-between">
+                <span style={{ color: '#a08040' }}>VERSION</span>
+                <span style={{ color: '#d4a84b' }}>0.1.0</span>
+              </div>
+              <div className="flex justify-between">
+                <span style={{ color: '#a08040' }}>BUILD</span>
+                <span style={{ color: '#d4a84b' }}>2024.12.22</span>
+              </div>
+              <div className="flex justify-between">
+                <span style={{ color: '#a08040' }}>STATUS</span>
+                <span style={{ color: '#00d4ff' }}>ONLINE</span>
+              </div>
+              <div className="flex justify-between">
+                <span style={{ color: '#a08040' }}>TIME</span>
+                <span style={{ color: '#d4a84b' }}>{new Date().toLocaleTimeString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

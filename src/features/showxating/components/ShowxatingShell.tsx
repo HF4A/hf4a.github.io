@@ -1,13 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CameraView } from './CameraView';
+import { TopNavBar } from '../../../components/TopNavBar';
+import { SysPanel } from '../../../components/SysPanel';
 import { useShowxatingStore } from '../store/showxatingStore';
 import '../styles/belter-theme.css';
 
 export function ShowxatingShell() {
   const navigate = useNavigate();
+  const [showSysPanel, setShowSysPanel] = useState(false);
   const {
-    mode,
     setMode,
     setActive,
     cameraPermission,
@@ -34,7 +36,7 @@ export function ShowxatingShell() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        navigate('/');
+        navigate('/catalog');
       }
     };
 
@@ -44,57 +46,27 @@ export function ShowxatingShell() {
 
   return (
     <div className="showxating-shell fixed inset-0 z-50 flex flex-col">
-      {/* Header bar */}
-      <header className="flex items-center justify-between px-4 py-3 bg-black/80 border-b border-[var(--showxating-gold-dim)]">
-        <div className="flex items-center gap-4">
-          <Link
-            to="/"
-            className="hud-text hud-text-dim hover:text-[var(--showxating-gold)] transition-colors"
-          >
-            ← EXIT
-          </Link>
-          <h1 className="hud-text hud-text-glow text-lg">SHOWXATING</h1>
-        </div>
+      {/* Top Navigation */}
+      <TopNavBar onSysClick={() => setShowSysPanel(true)} />
 
-        {/* Mode indicator */}
-        <div className="flex items-center gap-4">
-          <span className="hud-text hud-text-dim text-xs">
-            {mode === 'scan' ? 'SCAN MODE' : mode === 'capture' ? 'CAPTURE MODE' : 'STANDBY'}
-          </span>
-          {cameraReady && (
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          )}
-        </div>
-      </header>
+      {/* SYS Panel */}
+      <SysPanel isOpen={showSysPanel} onClose={() => setShowSysPanel(false)} />
 
       {/* Main camera area */}
       <main className="flex-1 relative">
         <CameraView />
       </main>
 
-      {/* Bottom controls */}
+      {/* Bottom controls - will be replaced with S3/S2/S1/SCAN ribbon later */}
       <footer className="px-4 py-4 bg-black/80 border-t border-[var(--showxating-gold-dim)]">
         <div className="flex items-center justify-center gap-4">
-          {/* Mode toggle buttons */}
+          {/* SCAN button placeholder */}
           <button
-            onClick={() => {
-              setMode('scan');
-              setActive(true);
-            }}
-            className={`showxating-btn ${mode === 'scan' ? 'showxating-btn-primary' : ''}`}
+            className="showxating-btn showxating-btn-primary"
+            disabled
+            title="Coming in Phase 6"
           >
             SCAN
-          </button>
-          <button
-            onClick={() => {
-              setMode('capture');
-              setActive(true);
-            }}
-            className={`showxating-btn ${mode === 'capture' ? 'showxating-btn-primary' : ''}`}
-            disabled
-            title="Coming soon"
-          >
-            CAPTURE
           </button>
         </div>
 
