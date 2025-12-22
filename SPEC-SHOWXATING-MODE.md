@@ -238,46 +238,56 @@ Export is explicit and user-initiated.
 9. Technology stack
 
 Existing base
-	•	Angular.
-	•	TypeScript.
-	•	GitHub Pages deployment.
+	•	React 18 + Vite
+	•	TypeScript
+	•	Zustand (state management)
+	•	Framer Motion (animations)
+	•	TailwindCSS
+	•	GitHub Pages deployment
 
 Camera and media
-	•	WebRTC getUserMedia.
-	•	MediaRecorder API.
-	•	Canvas 2D and optional WebGL.
+	•	WebRTC getUserMedia
+	•	MediaRecorder API
+	•	Canvas 2D for frame processing
 
 Vision pipeline for Scan Mode
-	•	Card contour detection.
-	•	Perspective transform.
-	•	Local card index using perceptual hashes or embeddings.
-	•	No server calls.
+	•	OpenCV.js (~8MB, CDN, lazy-loaded)
+	•	Card contour detection
+	•	Perspective transform
+	•	dHash perceptual hashing for card identification
+	•	No server calls
 
 Capture Mode additions
-	•	MediaRecorder service.
-	•	IndexedDB session store.
-	•	ZIP export library.
+	•	MediaRecorder for video/audio
+	•	IndexedDB via `idb` library
+	•	JSZip for export bundles
 
 ⸻
 
 10. Architecture
 
 Routes
-	•	/showxating/scan
-	•	/showxating/capture
+	•	/ (root, redirects based on default setting)
+	•	/showxating (Scan Mode)
+	•	/catalog (Card Catalog)
+	•	/showxating/capture (via SYS panel)
 
 Key components
-	•	ShowxatingShellComponent.
-	•	CameraViewComponent.
-	•	HudOverlayComponent.
-	•	CardOverlayComponent.
-	•	CaptureReviewComponent.
+	•	ShowxatingShell.tsx
+	•	CameraView.tsx
+	•	HudOverlay.tsx
+	•	CardOverlay.tsx
+	•	CaptureReview.tsx
 
-Services
-	•	CameraService.
-	•	VisionPipelineService.
-	•	CaptureSessionService.
-	•	ExportBundleService.
+Hooks
+	•	useCamera.ts
+	•	useOpenCV.ts
+	•	useCardDetection.ts
+	•	useCardIdentification.ts
+
+Stores (Zustand)
+	•	showxatingStore.ts
+	•	captureStore.ts
 
 ⸻
 
