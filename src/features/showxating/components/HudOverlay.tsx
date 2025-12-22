@@ -57,15 +57,36 @@ export function HudOverlay({ width, height, videoWidth, videoHeight }: HudOverla
         inset={bracketInset}
       />
 
+      {/* DEBUG: Always-visible test rectangle */}
+      <rect
+        x={100}
+        y={100}
+        width={200}
+        height={100}
+        fill="red"
+        opacity={0.8}
+      />
+
       {/* Detected card brackets */}
       {detectedQuadrilateral && (
-        <DetectedCardBrackets
-          corners={detectedQuadrilateral}
-          scale={scale}
-          offsetX={offsetX}
-          offsetY={offsetY}
-          status={detectionStatus}
-        />
+        <>
+          {/* DEBUG: marker at first corner */}
+          <rect
+            x={detectedQuadrilateral[0].x * scale - offsetX - 20}
+            y={detectedQuadrilateral[0].y * scale - offsetY - 20}
+            width={40}
+            height={40}
+            fill="lime"
+            opacity={0.9}
+          />
+          <DetectedCardBrackets
+            corners={detectedQuadrilateral}
+            scale={scale}
+            offsetX={offsetX}
+            offsetY={offsetY}
+            status={detectionStatus}
+          />
+        </>
       )}
 
       {/* Center crosshair */}
