@@ -31,6 +31,15 @@ export function Layout({ children }: LayoutProps) {
               </div>
             </Link>
 
+            {/* SHOWXATING link */}
+            <Link
+              to="/showxating"
+              className="px-3 py-1.5 text-xs font-semibold tracking-wider text-amber-400 border border-amber-400/50 hover:bg-amber-400/10 transition-colors uppercase"
+              style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
+            >
+              SHOWXATING
+            </Link>
+
             {/* Count */}
             <div className="text-sm text-gray-400">
               {isLoading ? (

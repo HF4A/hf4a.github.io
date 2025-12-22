@@ -1,0 +1,153 @@
+/* SHOWXATING Belter Theme
+ * Visual reference: The Expanse HUD (IMG_2282.heic)
+ * Primary color: SHOWXATING Gold #d4a84b
+ */
+
+.showxating-shell {
+  /* Color palette */
+  --showxating-gold: #d4a84b;
+  --showxating-gold-dim: rgba(212, 168, 75, 0.6);
+  --showxating-gold-glow: rgba(212, 168, 75, 0.3);
+  --showxating-bg: #0a0a0f;
+  --showxating-bg-panel: rgba(15, 15, 25, 0.85);
+  --showxating-cyan: #00d4ff;
+  --showxating-red: #ff3b3b;
+  --showxating-text: #e0e0e0;
+  --showxating-text-dim: #707080;
+
+  /* Typography */
+  --showxating-font-ui: 'Eurostile', 'Bank Gothic', 'Industry', -apple-system, sans-serif;
+  --showxating-font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  background: var(--showxating-bg);
+  color: var(--showxating-text);
+  font-family: var(--showxating-font-ui);
+}
+
+/* HUD text styling */
+.hud-text {
+  font-family: var(--showxating-font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--showxating-gold);
+}
+
+.hud-text-dim {
+  color: var(--showxating-gold-dim);
+}
+
+.hud-text-glow {
+  text-shadow: 0 0 10px var(--showxating-gold-glow);
+}
+
+/* HUD SVG elements */
+.hud-stroke {
+  stroke: var(--showxating-gold);
+  stroke-width: 2;
+  fill: none;
+}
+
+.hud-stroke-thin {
+  stroke: var(--showxating-gold);
+  stroke-width: 1;
+  fill: none;
+}
+
+.hud-stroke-dim {
+  stroke: var(--showxating-gold-dim);
+  stroke-width: 1;
+  fill: none;
+}
+
+/* Corner brackets */
+.hud-bracket {
+  stroke: var(--showxating-gold);
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Crosshair */
+.hud-crosshair {
+  stroke: var(--showxating-gold);
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.hud-crosshair-center {
+  stroke: var(--showxating-gold);
+  stroke-width: 2;
+}
+
+/* Status indicators */
+.status-searching {
+  color: var(--showxating-text-dim);
+}
+
+.status-tracking {
+  color: var(--showxating-gold);
+}
+
+.status-locked {
+  color: var(--showxating-cyan);
+}
+
+.status-lost {
+  color: var(--showxating-red);
+}
+
+/* Scanline overlay effect (subtle) */
+.scanline-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.02) 2px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
+  opacity: 0.5;
+}
+
+/* Panel styling */
+.showxating-panel {
+  background: var(--showxating-bg-panel);
+  border: 1px solid var(--showxating-gold-dim);
+  backdrop-filter: blur(8px);
+}
+
+/* Button styling */
+.showxating-btn {
+  font-family: var(--showxating-font-ui);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--showxating-gold);
+  background: transparent;
+  border: 1px solid var(--showxating-gold);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.showxating-btn:hover {
+  background: var(--showxating-gold);
+  color: var(--showxating-bg);
+}
+
+.showxating-btn:active {
+  background: var(--showxating-gold-dim);
+}
+
+.showxating-btn-primary {
+  background: var(--showxating-gold);
+  color: var(--showxating-bg);
+}
+
+.showxating-btn-primary:hover {
+  background: #e0b85c;
+}
