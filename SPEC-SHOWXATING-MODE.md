@@ -133,16 +133,33 @@ For each detected card in the captured image:
 1. Show bounding box around detected card shape
 2. **Scanlines animate up/down** within the bounding box (indicates processing)
 3. Once card is identified, replace bounding box with **scaled card image from library**
-4. The overlay shows the **opposite side** of the detected card
+4. Initial overlay shows either **visible side** or **opposite side** based on SYS setting (Default Scan Result)
 
-### Card Detail Interaction
+### Card Overlay Interaction (on captured image)
 
-When user taps a card overlay:
+**Tap overlay**: Flips card between visible/opposite side (does NOT open full detail)
+- Each card's flip state is tracked independently
+- Flip states persist per card, per scan slot
+- Quick way to check the other side without leaving the scan view
+
+**Long-press or double-tap overlay**: Opens full-screen card detail view
+
+### Card Detail View (full screen)
+
+When user long-presses or double-taps a card overlay:
 1. Card expands to **full screen** (like card catalog detail view)
 2. **Swipe left/right**: Flip card to see other side
 3. **Swipe up/down**: Dismiss, return to scanned image with overlays
-4. Small **[INFO]** button (same style as [SCAN]) opens metadata/info page in Belter style
-5. **NO metadata panel** - card detail shows ONLY the card image with flip capability
+4. Small **[INFO]** button (same style as [SCAN]) opens metadata/info page in Belter style, as a popup on top of the Card Detail
+5. **NO metadata panel to scroll to** - card detail shows ONLY the card image with flip capability; metadata is hidden until INFO selected
+
+### State Persistence
+
+- **Scan slots (S1/S2/S3)**: Persisted in localStorage between page reloads
+  - Captured image data
+  - Detected cards and their positions
+  - Flip state for each card
+- **Settings**: Persisted in localStorage (see SYS settings)
 
 ### User Flow Summary
 1. User opens SHOWXATING (default on app launch)
@@ -151,10 +168,11 @@ When user taps a card overlay:
 4. Brackets show detected card shapes (no identification yet)
 5. User taps [SCAN] to capture
 6. Static image captured, scanlines animate on each card
-7. Cards identified, overlays appear (opposite sides)
-8. User can scroll ribbon to view S1/S2/S3 history or return to SCAN
-9. User taps any overlay to see full card detail
-10. Swipe to flip or dismiss
+7. Cards identified, overlays appear (visible or opposite side per SYS setting)
+8. User can **tap any overlay to flip** it (quick toggle between sides)
+9. User can scroll ribbon to view S1/S2/S3 history or return to SCAN
+10. User **long-presses overlay** for full card detail view
+11. In detail view: swipe left/right to flip, up/down to dismiss
 
 ### HUD Elements (Live View)
 - Center targeting crosshair
@@ -220,9 +238,16 @@ Toggle between:
 - **Scan** (Mode A) - Default
 - **Catalog** (Mode B)
 
-Preference stored in cookies/localStorage.
+Preference stored in localStorage.
 
-**2. [DIAG] - Diagnostics Capture**
+**2. Default Scan Result**
+When a new scan is captured, show:
+- **Visible Side** (Default) - Show the same side that was photographed
+- **Opposite Side** - Show the reverse of what was photographed
+
+Preference stored in localStorage.
+
+**3. [DIAG] - Diagnostics Capture**
 - Greyed out / disabled in initial build
 - Future: Training data collection for model improvement
 - Will be developed later

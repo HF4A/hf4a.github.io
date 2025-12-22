@@ -180,14 +180,17 @@ Top Navigation Bar:
 - [ ] Run card detection on static image (find all cards)
 - [ ] For each detected card: show bounding box with scanline animation
 - [ ] Match each card against dHash index
-- [ ] Once identified: replace bounding box with scaled card image (opposite side)
+- [ ] Once identified: replace bounding box with scaled card image
+- [ ] Initial overlay shows visible or opposite side (based on SYS setting)
 - [ ] `perspectiveTransform.ts` for correct overlay positioning
-- [ ] Tap overlay to open card detail view
+- [ ] **Tap overlay**: Flip between visible/opposite side (quick toggle)
+- [ ] **Long-press overlay**: Open full card detail view
+- [ ] Track flip state per card independently
 
-**Deliverable**: Captured image shows identified cards with opposite-side overlays
+**Deliverable**: Captured image shows identified cards with flippable overlays
 
 ### Phase 7: Scan History (Bottom Ribbon)
-**Goal**: S1/S2/S3 slot system for scan history
+**Goal**: S1/S2/S3 slot system for scan history with persistence
 
 Bottom Action Bar:
 ```
@@ -203,15 +206,22 @@ Bottom Action Bar:
 - [ ] S1/S2/S3 centered = viewing that capture
 - [ ] New capture → S1, shifts older left
 - [ ] Max 3 captures in memory
+- [ ] **Persist scan slots in localStorage**:
+  - Captured image data (as data URL or blob)
+  - Detected cards and positions
+  - Flip state for each card per slot
+- [ ] Restore slots on page reload
 
-**Deliverable**: User can scroll between live view and 3 captured scans
+**Deliverable**: User can scroll between live view and 3 captured scans (persisted)
 
 ### Phase 8: System Settings [SYS]
 **Goal**: Settings panel with preferences and system info
 
 - [ ] [SYS] button opens settings panel/drawer
-- [ ] Toggle: Default launch mode (Scan vs Catalog)
-- [ ] Store preference in localStorage/cookies
+- [ ] **Setting 1**: Default Launch Mode (Scan vs Catalog)
+- [ ] **Setting 2**: Default Scan Result (Visible Side vs Opposite Side)
+  - Controls what side overlays show when new scan captured
+- [ ] Store all preferences in localStorage
 - [ ] [DIAG] button - greyed out, placeholder for future
 - [ ] System info display (Belter ship status style):
   - App version
