@@ -144,34 +144,50 @@ Top Navigation Bar:
 - [ ] Apply Belter theme (gold, dark bg, Eurostile font) to Card Catalog
 - [ ] Default to SHOWXATING on app launch
 - [ ] localStorage for user preference (default mode setting)
-- [ ] Update routing to support new navigation pattern
+- [ ] Update routing: `/` redirects based on setting, `/showxating`, `/catalog`
 
 **Deliverable**: Unified Belter-themed app with seamless navigation
 
-### Phase 4: Card Identification
-**Goal**: Detected card matched to database
+### Phase 4: Card Detail View (Shared)
+**Goal**: Full-screen card detail with swipe gestures, used by both Scan and Catalog
+
+- [ ] Full-screen card component (dark bg, centered card)
+- [ ] Swipe left/right to flip card
+- [ ] Swipe up/down to dismiss
+- [ ] Small [INFO] button (Belter style) in corner
+- [ ] Info page shows metadata in Belter style
+- [ ] Remove metadata panel from current card detail
+- [ ] Works in both Catalog grid and Scan overlays
+
+**Deliverable**: Clean card detail view with flip/dismiss gestures
+
+### Phase 5: Card Identification System
+**Goal**: Build dHash index and matching for card identification
 
 - [ ] `scripts/generate-card-index.ts` build script
-- [ ] Generate `card-index.json` with dHash values
-- [ ] `CardMatcher` class
+- [ ] Generate `card-index.json` with dHash values for all cards
+- [ ] `CardMatcher` class for hash comparison
 - [ ] `useCardIdentification` hook
-- [ ] Display matched card name in HUD
+- [ ] Support matching multiple cards from single image
+- [ ] Return matched card ID + confidence + bounding box
 
-**Deliverable**: Card name appears when recognized
+**Deliverable**: Can identify cards from captured image
 
-### Phase 5: Overlay Rendering
-**Goal**: Opposite side overlaid with perspective correction
+### Phase 6: Scan Capture & Overlays
+**Goal**: SCAN button captures image, identifies cards, shows overlays
 
-- [ ] `perspectiveTransform.ts` (homography)
-- [ ] `CardOverlay` component with CSS matrix3d
-- [ ] Connect to `relatedCards` for opposite lookup
-- [ ] Toggle front/back overlay
-- [ ] "Open Details" navigation to card detail view
+- [ ] SCAN button captures static image from camera
+- [ ] Run card detection on static image (find all cards)
+- [ ] For each detected card: show bounding box with scanline animation
+- [ ] Match each card against dHash index
+- [ ] Once identified: replace bounding box with scaled card image (opposite side)
+- [ ] `perspectiveTransform.ts` for correct overlay positioning
+- [ ] Tap overlay to open card detail view
 
-**Deliverable**: Detected cards show opposite side overlay
+**Deliverable**: Captured image shows identified cards with opposite-side overlays
 
-### Phase 6: Snapshot & Slot System
-**Goal**: Capture snapshots for away-from-table exploration
+### Phase 7: Scan History (Bottom Ribbon)
+**Goal**: S1/S2/S3 slot system for scan history
 
 Bottom Action Bar:
 ```
@@ -180,50 +196,54 @@ Bottom Action Bar:
 └─────────────────────────────────┘
 ```
 
-- [ ] SCAN button captures current view with overlays
-- [ ] S1/S2/S3 slot carousel (max 3 captures)
-- [ ] New capture → S1, older shifts left (S1→S2, S2→S3, S3 dropped)
-- [ ] Draggable/swipeable bottom bar
-- [ ] Centered slot is "active" and displayed in main view
-- [ ] When SCAN centered = live camera; when Sx centered = frozen capture
-- [ ] Store captures in memory (not persisted)
+- [ ] Horizontal scrollable bottom ribbon
+- [ ] SCAN + 3 history slots (S1, S2, S3)
+- [ ] Centered slot = active view (larger)
+- [ ] SCAN centered = live camera
+- [ ] S1/S2/S3 centered = viewing that capture
+- [ ] New capture → S1, shifts older left
+- [ ] Max 3 captures in memory
 
-**Deliverable**: User can snapshot table, go back to seat, explore captures
+**Deliverable**: User can scroll between live view and 3 captured scans
 
-### Phase 7: SYS Panel
-**Goal**: System settings accessible via [SYS] button
+### Phase 8: System Settings [SYS]
+**Goal**: Settings panel with preferences and system info
 
-- [ ] Small popup/drawer from upper-left
-- [ ] Default launch mode toggle (Catalog vs Scan)
-- [ ] CAPTURE mode access (hidden from main nav)
-- [ ] Future settings placeholder
+- [ ] [SYS] button opens settings panel/drawer
+- [ ] Toggle: Default launch mode (Scan vs Catalog)
+- [ ] Store preference in localStorage/cookies
+- [ ] [DIAG] button - greyed out, placeholder for future
+- [ ] System info display (Belter ship status style):
+  - App version
+  - System date/time
+  - Device info
+  - Connection status
 
-**Deliverable**: Settings accessible, CAPTURE mode reachable
+**Deliverable**: Settings accessible, preferences persist
 
-### Phase 8: Capture Mode
-**Goal**: Training data collection for future models
+### Phase 9: Diagnostics Capture [DIAG]
+**Goal**: Training data collection (FUTURE - greyed out initially)
 
-- [ ] IndexedDB schema (`lib/idb/captureDB.ts`)
-- [ ] `captureStore`
-- [ ] `CaptureModeControls`
-- [ ] MediaRecorder for video/audio
+- [ ] Enable [DIAG] button in SYS panel
+- [ ] IndexedDB schema for sessions
+- [ ] Photo/video/audio capture
 - [ ] Session metadata form
-- [ ] `CaptureReview` component
+- [ ] Export as ZIP bundle
 
-**Deliverable**: Can capture and review sessions
+**Deliverable**: Can capture training data (deferred)
 
-### Phase 9: Export & Polish
-**Goal**: Export bundles, final polish
+### Phase 10: Polish & Optimization
+**Goal**: Final polish and performance
 
-- [ ] ZIP export with JSZip
-- [ ] Share/download flow
-- [ ] HUD animations (subtle, fast fades)
-- [ ] Performance optimization
+- [ ] Scanline animation refinement
+- [ ] Smooth transitions between views
+- [ ] Performance optimization (lazy loading, caching)
 - [ ] Mobile Safari edge cases
 - [ ] Error handling and recovery
 - [ ] Fix desktop SVG rendering issue
+- [ ] Accessibility review
 
-**Deliverable**: Feature complete
+**Deliverable**: Production-ready feature
 
 ---
 

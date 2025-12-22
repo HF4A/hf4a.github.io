@@ -85,27 +85,13 @@ Theme Consistency:
 
 ⸻
 
-5. SYS Panel (System Settings)
-
-Location: Upper-left corner, small bounding box
-
-Contents:
-- Default launch mode toggle (Catalog vs Scan)
-- CAPTURE mode access (hidden here, not prominent)
-- Future settings as needed
-
-Design:
-- Minimal footprint when closed
-- Expands on tap to show options
-- Same Belter styling as rest of app
-
-⸻
-
-6. Mode A.  Scan Mode (live card recognition)
+5. Mode A: Scan Mode [SHOWXATING]
 
 Purpose
 
-Recognize HF4A cards in view and overlay the opposite side in real time. Capture snapshots for detailed exploration away from the table.
+Capture photos of HF4A cards on the table, identify them, and overlay the opposite side for easy reference. User can then explore captured cards away from the table.
+
+Top Banner Position: Center (active view, large text, no box)
 
 Bottom Action Bar
 ```
@@ -114,111 +100,174 @@ Bottom Action Bar
 └─────────────────────────────────┘
 ```
 
+The bottom ribbon scrolls horizontally. The centered button indicates the active view:
+- **SCAN centered**: Live camera view, ready to capture
+- **S1/S2/S3 centered**: Viewing that captured image with overlays
+
 Slot System (S1, S2, S3):
 - **S1**: Most recent captured scan
 - **S2**: Previous scan
 - **S3**: Oldest scan (drops off when new scan captured)
-- Maximum 3 active captured scans at a time
-- Draggable/swipeable horizontally
-- Centered slot is "active" (displayed in main view) and larger
-- When SCAN is centered, live camera mode is visible
+- Maximum 3 captured scans in history
+- New capture → S1, existing scans shift left (S1→S2, S2→S3, S3 dropped)
 
-SCAN Button Behavior:
-- Captures snapshot of current camera view with card overlays
-- Frozen image with detected cards and overlays preserved
-- New capture goes to S1, existing scans shift left (S1→S2, S2→S3, S3 dropped)
-- User can then go back to their seat to explore captured cards in detail
+### Live View (SCAN centered)
 
-User Flow
-	1.	User opens SHOWXATING (default on app launch).
-	2.	Camera opens with Belter HUD, SCAN centered (live view).
-	3.	User points at card(s) on table.
-	4.	HUD brackets snap to detected cards, overlays appear.
-	5.	User taps SCAN to capture current view with overlays.
-	6.	Captured view goes to S1, user can swipe to explore it.
-	7.	User can return to seat and swipe through S1/S2/S3 to explore captures.
-	8.	Swipe back to SCAN to return to live camera mode.
+Shows camera feed with visual indicators that image recognition is active:
+- Card edge detection brackets (cyan/gold)
+- Crosshair and status indicators
+- **Does NOT identify cards by name in live view**
+- Purpose: Show user that cards are being detected, ready to capture
 
-HUD Elements
-	•	Center targeting crosshair.
-	•	Card boundary brackets.
-	•	Confidence indicator.
-	•	Orientation indicator.
-	•	Minimal status text.
+### Capture Flow
 
-Functional requirements
-	•	Live camera via getUserMedia.
-	•	Card quadrilateral detection.
-	•	Perspective correction.
-	•	Card identification via local index.
-	•	Perspective-correct overlay of opposite side.
+When [SCAN] is pressed:
+1. Static image captured from camera
+2. Image becomes S1, view switches to S1
+3. Card identification begins on the static image
+4. **Multiple cards** may be in the scanned image - detect and identify ALL
 
-Explicit exclusions
-	•	No scoring.
-	•	No board-wide inference.
-	•	No data recording unless Capture Mode is active.
+### Card Identification Animation
+
+For each detected card in the captured image:
+1. Show bounding box around detected card shape
+2. **Scanlines animate up/down** within the bounding box (indicates processing)
+3. Once card is identified, replace bounding box with **scaled card image from library**
+4. The overlay shows the **opposite side** of the detected card
+
+### Card Detail Interaction
+
+When user taps a card overlay:
+1. Card expands to **full screen** (like card catalog detail view)
+2. **Swipe left/right**: Flip card to see other side
+3. **Swipe up/down**: Dismiss, return to scanned image with overlays
+4. Small **[INFO]** button (same style as [SCAN]) opens metadata/info page in Belter style
+5. **NO metadata panel** - card detail shows ONLY the card image with flip capability
+
+### User Flow Summary
+1. User opens SHOWXATING (default on app launch)
+2. Live camera with detection indicators, SCAN centered
+3. User points phone at card(s) on table
+4. Brackets show detected card shapes (no identification yet)
+5. User taps [SCAN] to capture
+6. Static image captured, scanlines animate on each card
+7. Cards identified, overlays appear (opposite sides)
+8. User can scroll ribbon to view S1/S2/S3 history or return to SCAN
+9. User taps any overlay to see full card detail
+10. Swipe to flip or dismiss
+
+### HUD Elements (Live View)
+- Center targeting crosshair
+- Card boundary brackets (detection indicator)
+- Status text: SEARCHING → TRACKING → READY
+- Minimal, functional Belter aesthetic
+
+### Functional Requirements
+- Live camera via getUserMedia
+- Card quadrilateral detection (OpenCV.js)
+- Static image capture on SCAN press
+- Card identification via dHash perceptual hashing
+- Perspective-correct overlay of opposite side
+- Support multiple cards per capture
+- History of 3 captures
 
 ⸻
 
-7. Mode B.  Capture Mode (training data collection)
+6. Mode B: Card Catalog [CAT]
 
-Access: Via SYS panel (not prominently displayed)
+Top Banner Position: Right (when inactive: small, boxed as [CAT])
 
 Purpose
 
-Create high-quality, structured datasets for future vision models using real games as ground truth, narrated by the player.
+Searchable and filterable view of all HF4A cards, styled in Amber Belter theme.
 
-Core idea
+This is the original app functionality before SHOWXATING was introduced, restyled to match the Belter aesthetic.
 
-After a game, the user walks around the table and records photos or video while narrating what matters.  The narration is the ground truth.  The app does not interpret it.
+Features:
+- Browse all 370+ cards
+- Search by name, keywords
+- Filter by type, spectral class, side, etc.
+- Grid view with card thumbnails
+- Same card detail view as Mode A (full screen, flip, [INFO] button)
 
-User flow
-	1.	User opens SYS panel and selects Capture.
-	2.	App displays a short capture checklist:
-	•	Lighting.
-	•	Glare.
-	•	Slow movement.
-	•	Keep pieces visible.
-	3.	User selects capture type:
-	•	Photo set.
-	•	Video sweep.
-	•	Video sweep with narration.
-	4.	Capture begins.  HUD shows acquisition aids only.
-	5.	User ends capture.
-	6.	Session review screen appears.
-	7.	User exports the session bundle.
+Card Detail (same as Mode A):
+- Full screen card image
+- Swipe left/right to flip
+- Swipe up/down to dismiss
+- [INFO] button for metadata page
+- No metadata panel cluttering the view
 
-HUD behavior in Capture Mode
-	•	No recognition overlays by default.
-	•	Stability indicator.
-	•	Exposure and blur hints.
-	•	Recording indicator when audio or video is active.
-
-What is captured
-
-Media
-	•	Photos.
-	•	Video.
-	•	Optional audio narration.
-
-Metadata
-	•	Timestamps.
-	•	Device class and resolution.
-	•	Capture mode.
-	•	User-entered context fields:
-	•	Expansion set.
-	•	Lighting notes.
-	•	Sleeves yes or no.
-	•	App version and schema version.
-
-Important
-	•	No scoring.
-	•	No auto-labeling.
-	•	No inference output.
+Visual Style:
+- Dark backgrounds
+- Gold/amber accents (#d4a84b)
+- Eurostile-style typography
+- Thin borders, no heavy panels
 
 ⸻
 
-8. Data storage and export
+7. Mode C: System Settings [SYS]
+
+Top Banner Position: Left (always small, boxed as [SYS])
+
+Purpose
+
+System configuration and diagnostics access.
+
+### Settings Options
+
+**1. Default Launch Mode**
+Toggle between:
+- **Scan** (Mode A) - Default
+- **Catalog** (Mode B)
+
+Preference stored in cookies/localStorage.
+
+**2. [DIAG] - Diagnostics Capture**
+- Greyed out / disabled in initial build
+- Future: Training data collection for model improvement
+- Will be developed later
+
+### System Info Display
+
+Displayed in Belter ship status style:
+- App version number
+- System date/time
+- Device info
+- Connection status
+- Other relevant system metrics
+
+Visual style: Like a ship's system readout panel - functional, minimal, amber text on dark background.
+
+⸻
+
+8. Card Detail View (Shared)
+
+Used by both Mode A (Scan) and Mode B (Catalog).
+
+Layout:
+- Full screen card image
+- Dark background
+- Card centered and scaled appropriately
+
+Interactions:
+- **Swipe left/right**: Flip card to opposite side
+- **Swipe up/down**: Dismiss, return to previous view
+- **[INFO] button**: Small, bottom corner, Belter style - opens metadata page
+
+Metadata/Info Page:
+- Accessed via [INFO] button only
+- Shows all card details (name, type, stats, flavor text, etc.)
+- Styled in Amber Belter theme
+- Back button to return to card view
+
+Design Principle:
+- Card image is primary
+- Metadata is secondary, accessed on demand
+- Clean, uncluttered viewing experience
+
+⸻
+
+9. Data storage and export
 
 Local storage
 	•	IndexedDB for session metadata and thumbnails.
@@ -235,7 +284,7 @@ Export is explicit and user-initiated.
 
 ⸻
 
-9. Technology stack
+10. Technology stack
 
 Existing base
 	•	React 18 + Vite
@@ -264,7 +313,7 @@ Capture Mode additions
 
 ⸻
 
-10. Architecture
+11. Architecture
 
 Routes
 	•	/ (root, redirects based on default setting)
@@ -291,7 +340,7 @@ Stores (Zustand)
 
 ⸻
 
-11. Guardrails and constraints
+12. Guardrails and constraints
 	•	Camera and microphone always require explicit consent.
 	•	Recording indicators are always visible.
 	•	No background capture.
@@ -300,7 +349,7 @@ Stores (Zustand)
 
 ⸻
 
-12. Acceptance criteria
+13. Acceptance criteria
 	•	Scan Mode recognizes cards and overlays the opposite side with stable alignment.
 	•	Capture Mode records photos and narrated video.
 	•	Exported bundles are complete, deterministic, and usable offline.
@@ -309,7 +358,7 @@ Stores (Zustand)
 
 ⸻
 
-13. Product positioning
+14. Product positioning
 
 Scan Mode is the immediate value.
 Capture Mode is the long-term unlock.
