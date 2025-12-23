@@ -10,12 +10,14 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, PanInfo } from 'framer-motion';
+import Tesseract from 'tesseract.js';
 import { useShowxatingStore, IdentifiedCard } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
 import { useCardStore } from '../../../store/cardStore';
+import { useSettingsStore, ALL_CARD_TYPES, CARD_TYPE_LABELS } from '../../../store/settingsStore';
 import { log } from '../../../store/logsStore';
 import Fuse from 'fuse.js';
-import type { Card } from '../../../types/card';
+import type { Card, CardType } from '../../../types/card';
 
 // Swipe gesture thresholds
 const SWIPE_THRESHOLD = 80;
@@ -573,9 +575,13 @@ function CorrectionModal({
   onClose,
 }: CorrectionModalProps) {
   const { cards: catalogCards } = useCardStore();
+  const { activeCardTypes } = useSettingsStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [candidates, setCandidates] = useState<Array<{ card: Card; distance?: number }>>([]);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [extractedText, setExtractedText] = useState<string | null>(null);
+  const [isOcrRunning, setIsOcrRunning] = useState(false);
+  const [selectedType, setSelectedType] = useState<CardType | 'all'>('all');
   const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
 
   // Crop the bounding box from the scan image
@@ -606,18 +612,45 @@ function CorrectionModal({
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-        setCroppedImage(canvas.toDataURL('image/jpeg', 0.8));
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        setCroppedImage(dataUrl);
+
+        // Run OCR on the cropped image
+        setIsOcrRunning(true);
+        Tesseract.recognize(dataUrl, 'eng', {
+          logger: (m) => {
+            if (m.status === 'recognizing text') {
+              log.debug(`OCR progress: ${Math.round((m.progress || 0) * 100)}%`);
+            }
+          },
+        })
+          .then(({ data: { text } }) => {
+            // Clean up OCR text - remove excessive whitespace
+            const cleaned = text
+              .replace(/\s+/g, ' ')
+              .trim()
+              .substring(0, 200); // Limit length
+            setExtractedText(cleaned || '(no text detected)');
+            log.info(`OCR extracted: "${cleaned.substring(0, 50)}..."`);
+          })
+          .catch((err) => {
+            log.error(`OCR failed: ${err.message}`);
+            setExtractedText('(OCR failed)');
+          })
+          .finally(() => {
+            setIsOcrRunning(false);
+          });
       }
     };
     img.src = scanImageDataUrl;
   }, [scanImageDataUrl, identifiedCard.corners]);
 
-  // Initialize candidates based on dHash matches and search
+  // Initialize candidates based on dHash matches, search, and type filter
   useEffect(() => {
     const topMatchIds = identifiedCard.topMatches?.map((m) => m.cardId) || [];
 
     // Get top hash-matched cards
-    const hashMatches = topMatchIds
+    let hashMatches = topMatchIds
       .map((id) => {
         const card = catalogCards.find((c) => c.id === id);
         const matchInfo = identifiedCard.topMatches?.find((m) => m.cardId === id);
@@ -625,9 +658,19 @@ function CorrectionModal({
       })
       .filter(Boolean) as Array<{ card: Card; distance?: number }>;
 
+    // Filter by selected type
+    if (selectedType !== 'all') {
+      hashMatches = hashMatches.filter(({ card }) => card.type === selectedType);
+    }
+
     // If we have search query, use Fuse.js
     if (searchQuery.trim()) {
-      const fuse = new Fuse(catalogCards, {
+      let searchPool = catalogCards;
+      // Filter search pool by type if selected
+      if (selectedType !== 'all') {
+        searchPool = catalogCards.filter((c) => c.type === selectedType);
+      }
+      const fuse = new Fuse(searchPool, {
         keys: ['name', 'ocr.name', 'id', 'type'],
         threshold: 0.4,
         includeScore: true,
@@ -635,10 +678,10 @@ function CorrectionModal({
       const results = fuse.search(searchQuery).slice(0, 30);
       setCandidates(results.map((r) => ({ card: r.item })));
     } else {
-      // Show all hash matches
+      // Show all hash matches (filtered by type)
       setCandidates(hashMatches);
     }
-  }, [searchQuery, catalogCards, identifiedCard.topMatches]);
+  }, [searchQuery, catalogCards, identifiedCard.topMatches, selectedType]);
 
   // Handle double-tap to select
   const handleCardTap = useCallback(
@@ -671,6 +714,9 @@ function CorrectionModal({
     if (!hash) return 'N/A';
     return hash.length > 8 ? hash.substring(0, 8) + '...' : hash;
   };
+
+  // Get available types (from active card types in settings)
+  const availableTypes = ALL_CARD_TYPES.filter((t) => activeCardTypes.includes(t));
 
   return (
     <div
@@ -726,27 +772,58 @@ function CorrectionModal({
 
           {/* Debug info section */}
           <div className="space-y-2">
-            {/* Extracted text */}
-            {identifiedCard.extractedText && (
-              <div>
-                <p
-                  className="text-[10px] tracking-wider uppercase mb-1"
-                  style={{ color: 'var(--showxating-gold-dim)' }}
-                >
-                  EXTRACTED TEXT:
-                </p>
-                <p
-                  className="text-xs p-2 rounded bg-black/50 border break-words"
-                  style={{
-                    borderColor: 'var(--showxating-gold-dim)',
-                    color: 'var(--showxating-gold)',
-                    fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-                  }}
-                >
-                  {identifiedCard.extractedText}
-                </p>
-              </div>
-            )}
+            {/* OCR Extracted text */}
+            <div>
+              <p
+                className="text-[10px] tracking-wider uppercase mb-1"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                EXTRACTED TEXT:
+              </p>
+              <p
+                className="text-[10px] p-1.5 rounded bg-black/50 border break-words leading-relaxed"
+                style={{
+                  borderColor: 'var(--showxating-gold-dim)',
+                  color: 'var(--showxating-gold)',
+                  minHeight: '3rem',
+                }}
+              >
+                {isOcrRunning ? (
+                  <span style={{ color: 'var(--showxating-cyan)' }}>⟳ Running OCR...</span>
+                ) : extractedText ? (
+                  extractedText
+                ) : (
+                  <span style={{ color: 'var(--showxating-gold-dim)' }}>(waiting for image)</span>
+                )}
+              </p>
+            </div>
+
+            {/* Type filter selector */}
+            <div>
+              <p
+                className="text-[10px] tracking-wider uppercase mb-1"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                FILTER BY TYPE:
+              </p>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value as CardType | 'all')}
+                className="w-full px-2 py-1.5 rounded bg-black/50 border text-xs"
+                style={{
+                  borderColor: 'var(--showxating-gold-dim)',
+                  color: 'var(--showxating-gold)',
+                  fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                }}
+              >
+                <option value="all">ALL TYPES</option>
+                {availableTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {CARD_TYPE_LABELS[type].toUpperCase()}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Computed hash */}
             <div>
@@ -766,27 +843,6 @@ function CorrectionModal({
                 {formatHash(identifiedCard.computedHash)}
               </p>
             </div>
-
-            {/* Detected types */}
-            {identifiedCard.detectedTypes && identifiedCard.detectedTypes.length > 0 && (
-              <div>
-                <p
-                  className="text-[10px] tracking-wider uppercase mb-1"
-                  style={{ color: 'var(--showxating-gold-dim)' }}
-                >
-                  DETECTED TYPES:
-                </p>
-                <p
-                  className="text-[10px] p-1.5 rounded bg-black/50 border"
-                  style={{
-                    borderColor: 'var(--showxating-gold-dim)',
-                    color: 'var(--showxating-gold)',
-                  }}
-                >
-                  {identifiedCard.detectedTypes.join(', ')}
-                </p>
-              </div>
-            )}
 
             {/* Original match info */}
             {identifiedCard.cardId !== 'unknown' && (
