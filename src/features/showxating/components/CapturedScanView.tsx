@@ -336,12 +336,11 @@ function CardOverlay({
       onClick={handleTap}
       onTouchEnd={handleTap}
     >
-      {/* Card image - mirrored horizontally when showing opposite side (like physically flipping a card) */}
+      {/* Card image - opposite side has its own correctly-oriented image */}
       <img
         src={`${import.meta.env.BASE_URL}cards/full/${displayFilename}`}
         alt={catalogCard.ocr?.name || card.cardId}
         className="w-full h-full object-cover"
-        style={card.showingOpposite ? { transform: 'scaleX(-1)' } : undefined}
         draggable={false}
       />
 
