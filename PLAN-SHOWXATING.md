@@ -298,8 +298,8 @@ Bottom Action Bar:
 - All `catalogCards.find(c => c.id === card.cardId)` calls return undefined → UNIDENTIFIED
 
 **Fix**:
-- [ ] **Option A**: Call `useCards()` in `ShowxatingShell` or `App.tsx` to ensure cards load on startup
-- [ ] **Option B**: Move card loading to a provider that wraps the entire app
+- [x] **Option A**: Call `useCards()` in `App.tsx` to ensure cards load on startup ✅ v0.2.2
+- [ ] ~~**Option B**: Move card loading to a provider that wraps the entire app~~
 - [ ] Add loading state check before rendering card overlays
 
 **Files to modify**:
@@ -337,16 +337,16 @@ Bottom Action Bar:
 
 **Fixes** (priority order):
 
-- [ ] **Quick win: Lower threshold** to 12-14 bits (19-22% difference)
+- [x] **Quick win: Lower threshold** to 12 bits (19% difference) ✅ v0.2.2
   - File: `src/features/showxating/services/cardMatcher.ts`
-  - Change: `MAX_MATCH_DISTANCE = 12`
+  - Change: `MAX_MATCH_DISTANCE = 12`, `CONFIDENT_DISTANCE = 6`
   - Effect: More cards show as "unknown" but fewer false positives
 
-- [ ] **Medium: Perspective warp before hashing**
-  - Use OpenCV `warpPerspective()` to transform detected quad to rectangle
-  - Hash the warped image, not the bounding box crop
-  - File: `src/features/showxating/services/cardMatcher.ts` - `matchFromCanvas()`
-  - File: `src/features/showxating/services/visionPipeline.ts` - add warp function
+- [x] **Medium: Perspective warp before hashing** ✅ v0.2.2
+  - Added `warpCardToRectangle()` to visionPipeline.ts
+  - Uses OpenCV `getPerspectiveTransform()` + `warpPerspective()`
+  - ShowxatingShell now warps detected cards before hashing
+  - Falls back to bounding box if warp fails
 
 - [ ] **Medium: Crop inner region**
   - Hash only center 70-80% of detected area
@@ -365,23 +365,19 @@ Bottom Action Bar:
 
 ---
 
-#### Problem 3: Empty Slots Still Display
+#### Problem 3: Empty Slots Still Display ✅ FIXED v0.2.2
 **Symptom**: All 7 slot buttons (S1-S7) visible even when empty.
 
 **User Request**: "I noted earlier not to display slots that were empty. So, they shouldn't be in the ribbon at the bottom, until an image is actually in the slot."
 
 **Fix**:
-- [ ] Filter `slots.map()` to only render slots with content
-- [ ] Or: Hide slots with `hasContent === false` entirely (not just opacity/disabled)
+- [x] Filter `slots.map()` to only render slots with content ✅ v0.2.2
 
-**File to modify**:
-- `src/features/showxating/components/ScanActionBar.tsx` lines 103-153
+**File modified**:
+- `src/features/showxating/components/ScanActionBar.tsx`
 
 ```tsx
-// Current: renders all 7 slots
-{slots.map(({ id, label }) => { ... })}
-
-// Fix: only render slots with content
+// Now only renders slots with content
 {slots.filter(({ id }) => scanSlots[id] !== null).map(({ id, label }) => { ... })}
 ```
 
