@@ -19,37 +19,39 @@ export function CatalogLayout({ children }: CatalogLayoutProps) {
   useUrlFilters();
 
   return (
-    <div className="showxating-shell min-h-screen flex flex-col">
-      {/* Top Navigation */}
-      <TopNavBar onSysClick={() => setShowSysPanel(true)} />
+    <div className="showxating-shell min-h-screen bg-[#0a0a0f]">
+      {/* Top Navigation - fixed */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <TopNavBar onSysClick={() => setShowSysPanel(true)} />
+
+        {/* Count bar */}
+        <div className="px-4 py-2 bg-[#0a0a0f] border-b border-[#d4a84b]/20">
+          <div className="text-center">
+            <span
+              className="text-xs tracking-wider uppercase"
+              style={{
+                fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                color: '#a08040',
+              }}
+            >
+              {isLoading ? (
+                'LOADING...'
+              ) : (
+                <>
+                  <span style={{ color: '#d4a84b' }}>{filteredCount}</span>
+                  {filteredCount !== totalCount && <span> OF {totalCount}</span>} CARDS
+                </>
+              )}
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* SYS Panel */}
       <SysPanel isOpen={showSysPanel} onClose={() => setShowSysPanel(false)} />
 
-      {/* Count bar */}
-      <div className="px-4 py-2 bg-[#0a0a0f] border-b border-[#d4a84b]/20">
-        <div className="text-center">
-          <span
-            className="text-xs tracking-wider uppercase"
-            style={{
-              fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-              color: '#a08040',
-            }}
-          >
-            {isLoading ? (
-              'LOADING...'
-            ) : (
-              <>
-                <span style={{ color: '#d4a84b' }}>{filteredCount}</span>
-                {filteredCount !== totalCount && <span> OF {totalCount}</span>} CARDS
-              </>
-            )}
-          </span>
-        </div>
-      </div>
-
-      {/* Main Content - scrollable area above bottom bar */}
-      <main className="flex-1 overflow-auto pb-32 bg-[#0a0a0f]">
+      {/* Main Content - scrollable area with top and bottom padding for fixed bars */}
+      <main className="pt-24 pb-32">
         <div className="max-w-7xl mx-auto px-4 py-6">
           {children}
         </div>

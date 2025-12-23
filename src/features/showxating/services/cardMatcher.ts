@@ -23,10 +23,11 @@ export interface MatchResult {
 }
 
 // Maximum Hamming distance to consider a match (out of 64 bits)
-const MAX_MATCH_DISTANCE = 15;
+// Increased from 15 to 20 to be more lenient with camera captures
+const MAX_MATCH_DISTANCE = 20;
 
 // Distance at which we consider it a very confident match
-const CONFIDENT_DISTANCE = 8;
+const CONFIDENT_DISTANCE = 10;
 
 /**
  * Compute dHash from an ImageData object (from canvas)
@@ -204,11 +205,11 @@ export class CardMatcher {
       const distance = hammingDistance(queryHash, entry.hashBytes);
 
       if (distance <= MAX_MATCH_DISTANCE) {
-        // Calculate confidence: 1.0 at distance 0, decreasing to 0 at MAX_MATCH_DISTANCE
+        // Calculate confidence: 1.0 at distance 0, decreasing to 0.3 at MAX_MATCH_DISTANCE
         const confidence =
           distance <= CONFIDENT_DISTANCE
             ? 1.0 - (distance / CONFIDENT_DISTANCE) * 0.3 // 1.0 to 0.7 for confident matches
-            : 0.7 - ((distance - CONFIDENT_DISTANCE) / (MAX_MATCH_DISTANCE - CONFIDENT_DISTANCE)) * 0.7; // 0.7 to 0 for uncertain matches
+            : 0.7 - ((distance - CONFIDENT_DISTANCE) / (MAX_MATCH_DISTANCE - CONFIDENT_DISTANCE)) * 0.4; // 0.7 to 0.3 for uncertain matches
 
         results.push({
           filename: entry.filename,

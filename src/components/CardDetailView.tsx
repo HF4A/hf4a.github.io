@@ -422,16 +422,18 @@ function InfoPanel({ card, onClose, cards }: InfoPanelProps) {
       className="min-h-screen"
       style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
     >
-      {/* Header - just close button */}
+      {/* Header - close button on LEFT */}
       <header className="sticky top-0 z-10 bg-[#0a0a0f] border-b border-[#d4a84b]/30">
-        <div className="flex items-center justify-end px-4 py-3">
+        <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={onClose}
             className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
             style={{ borderColor: '#d4a84b50', color: '#a08040' }}
           >
-            CLOSE
+            ← CLOSE
           </button>
+          {/* Empty space on right to balance layout */}
+          <div />
         </div>
         {/* Card title below buttons */}
         <div className="px-4 pb-3">
