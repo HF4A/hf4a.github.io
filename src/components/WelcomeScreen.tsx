@@ -25,9 +25,6 @@ export function WelcomeScreen() {
         {/* Header */}
         <header className="sticky top-0 z-10 bg-[#0a0a0f]/95 backdrop-blur border-b border-[#d4a84b]/30">
           <div className="px-6 py-4">
-            <p className="text-center text-[10px] tracking-wider mb-2" style={{ color: '#707080' }}>
-              v{APP_VERSION}
-            </p>
             <h1
               className="text-2xl font-bold tracking-widest uppercase text-center"
               style={{ color: '#d4a84b' }}
@@ -195,7 +192,7 @@ export function WelcomeScreen() {
             OKEY, LET'S GO
           </button>
           <p className="text-center text-xs mt-3" style={{ color: '#707080' }}>
-            Kowmang rise up, beratna!
+            Kowmang rise up, beratna! <span style={{ color: '#505060' }}>v{APP_VERSION}</span>
           </p>
         </footer>
       </div>
