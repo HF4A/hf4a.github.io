@@ -229,7 +229,7 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
                     onClick={handleFactoryReset}
                     className="flex-1 px-3 py-2 text-xs tracking-wider uppercase border border-[#ff3b3b] bg-[#ff3b3b]/20 text-[#ff3b3b] hover:bg-[#ff3b3b]/30 transition-colors"
                   >
-                    VENT IT
+                    WIPE IT
                   </button>
                 </div>
               </div>

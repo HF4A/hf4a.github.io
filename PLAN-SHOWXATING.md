@@ -647,7 +647,86 @@ interface ManualCorrection {
 ---
 
 **Deliverable**: Improved UX with better matching and debugging
-**Status**: v0.2.7 in progress
+**Status**: v0.2.7 complete
+
+---
+
+#### Problem 19: Button Text Mismatch 🚧 v0.2.8
+**Symptom**: "WIPE THE CORE" button has "VENT IT" as confirmation button text.
+
+**Fix**:
+- [x] Change confirmation button from "VENT IT" to "WIPE IT"
+- Maintains consistent metaphor
+
+---
+
+#### Problem 20: Card Type Detection for Better Matching 🚧 v0.2.8
+**Symptom**: dHash matches wrong card types (Generator matched as Contract, Reactor as Colonist).
+
+**Root Cause**: Pure visual hashing doesn't consider card structure. All card types have similar overall layout.
+
+**Solution**: Two-stage matching
+1. **Stage 1: Type Detection** - Identify card type from visual features
+   - Type icons have consistent position (top-left corner)
+   - Each type has distinct icon shape/color
+   - Analyze warped card's top-left region for type icon
+   - Use color histogram + simple shape detection
+
+2. **Stage 2: Filtered Hash Match** - Only match against cards of detected type
+   - Dramatically reduces false positives
+   - 10-50 candidates instead of 370+
+   - Much higher match accuracy within type
+
+**Implementation**:
+- [x] Create `detectCardType()` function in cardMatcher.ts
+- [x] Analyze top-left 20% of warped card image
+- [x] Compare against type icon reference colors/shapes
+- [x] Filter candidate cards by detected type before hash matching
+- [x] Fall back to all-card matching if type detection fails
+
+**Card Type Visual Signatures**:
+| Type | Icon Position | Primary Color | Shape |
+|------|---------------|---------------|-------|
+| Thruster | Top-left | Yellow/Orange | Flame |
+| Reactor | Top-left | Red/Orange | Atom |
+| Generator | Top-left | Yellow | Lightning |
+| Radiator | Top-left | Blue/Cyan | Waves |
+| Robonaut | Top-left | Gray/Metal | Robot |
+| Refinery | Top-left | Brown/Orange | Factory |
+| Crew | Top-left | Various | Person |
+| Colonist | Top-left | Various | Person |
+| Contract | Top-left | Blue/Yellow | Document |
+| Bernal | Top-left | Purple | Station |
+
+---
+
+#### Problem 21: Text Extraction Not Implemented 🚧 v0.2.8
+**Symptom**: Correction flow shows no extracted text because extraction isn't implemented.
+
+**Solution**: Simple text extraction from warped card image
+- Extract card title from known position (top area, below type icon)
+- Use contrast-based text region detection
+- Convert to grayscale, threshold, find text regions
+- Use simple OCR or fuzzy match against known card names
+
+**Implementation**:
+- [ ] Create `extractCardText()` function
+- [ ] Analyze top 15-20% of card (title region)
+- [ ] Apply adaptive thresholding for text isolation
+- [ ] Match extracted text against card names using Fuse.js
+- [ ] Store in `extractedText` field on IdentifiedCard
+- [ ] Display in correction panel
+
+**Simplified Approach for v0.2.8**:
+- Skip full OCR (too heavy)
+- Use image fingerprint of title region
+- Compare against pre-computed title fingerprints
+- Fall back to hash matching if no title match
+
+---
+
+**Deliverable**: Type-aware matching with dramatically improved accuracy
+**Status**: v0.2.8 in progress
 
 ---
 

@@ -14,7 +14,7 @@
 - [ ] move version number to bottom under 'okey let's go' button, small and unobtrusive, next to the beratna quote (not another line)
 - [ ] Show the first time welcome screen to users on middle number version update (0.2.7 to 0.3.0 for example)
 - [ ] Belter / HF4A inspired favicon?
-- [x] the back-side card is backwards!
+- [ ] the back-side card is backwards!
 
 ## Simplified First Launch
 - [x] On first launch, have a scrollable welcome screen, explaining the app's purpose and how to use, possibly with simple low-res mockups of the screen, in language that is sprinkled with Belta Creole but understandable for the most part, sasa ke?
