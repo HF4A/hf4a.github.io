@@ -6,6 +6,7 @@
  */
 
 import { useSettingsStore } from '../store/settingsStore';
+import { APP_VERSION } from '../version';
 
 export function WelcomeScreen() {
   const { setHasSeenWelcome } = useSettingsStore();
@@ -24,6 +25,9 @@ export function WelcomeScreen() {
         {/* Header */}
         <header className="sticky top-0 z-10 bg-[#0a0a0f]/95 backdrop-blur border-b border-[#d4a84b]/30">
           <div className="px-6 py-4">
+            <p className="text-center text-[10px] tracking-wider mb-2" style={{ color: '#707080' }}>
+              v{APP_VERSION}
+            </p>
             <h1
               className="text-2xl font-bold tracking-widest uppercase text-center"
               style={{ color: '#d4a84b' }}

@@ -29,12 +29,12 @@ export interface MatchResultWithDebug {
 }
 
 // Maximum Hamming distance to consider a match (out of 64 bits)
-// Lowered from 20 to 12 (~19% bit difference) to reduce false positives
-// Without perspective correction, looser thresholds cause cross-type confusion
-const MAX_MATCH_DISTANCE = 12;
+// Set to 18 (~28% bit difference) - balances false positives vs recognition rate
+// With perspective warp, matches typically come in at 17-22 distance
+const MAX_MATCH_DISTANCE = 18;
 
 // Distance at which we consider it a very confident match
-const CONFIDENT_DISTANCE = 6;
+const CONFIDENT_DISTANCE = 10;
 
 /**
  * Compute dHash from an ImageData object (from canvas)

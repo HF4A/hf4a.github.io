@@ -4,5 +4,6 @@
 // 0.2.x - SHOWXATING scanner mode
 //   0.2.1 - Expanded diagnostics with debug info
 //   0.2.2 - Fix card identification: load cards at startup, perspective warp, stricter threshold
-export const APP_VERSION = '0.2.2';
+//   0.2.3 - Version on welcome screen, right-align slots, threshold tuning (18)
+export const APP_VERSION = '0.2.3';
 export const BUILD_DATE = '2025-12-23';
