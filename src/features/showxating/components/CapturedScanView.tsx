@@ -10,7 +10,6 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, PanInfo } from 'framer-motion';
-import Tesseract from 'tesseract.js';
 import { useShowxatingStore, IdentifiedCard } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
 import { useCardStore } from '../../../store/cardStore';
@@ -678,28 +677,41 @@ function CorrectionModal({
 
           const ocrDataUrl = ocrCanvas.toDataURL('image/png');
 
-          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale, binarized)`);
+          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
 
-          Tesseract.recognize(ocrDataUrl, 'eng', {
-            logger: (m) => {
-              if (m.status === 'recognizing text' && m.progress) {
-                log.debug(`OCR progress: ${Math.round(m.progress * 100)}%`);
-              }
+          // Use OCR.space API (free tier: 25k requests/month)
+          // Engine 2 is better for alphanumeric text and handles rotation
+          const formData = new FormData();
+          formData.append('base64Image', ocrDataUrl);
+          formData.append('language', 'eng');
+          formData.append('OCREngine', '2');
+          formData.append('scale', 'true');
+          formData.append('isTable', 'false');
+
+          fetch('https://api.ocr.space/parse/image', {
+            method: 'POST',
+            headers: {
+              'apikey': 'helloworld', // Free demo key - works for testing
             },
+            body: formData,
           })
-            .then(({ data: { text, confidence } }) => {
+            .then((res) => res.json())
+            .then((result) => {
               const ocrDuration = Math.round(performance.now() - ocrStartTime);
-              // Clean up OCR text - remove excessive whitespace
-              const cleaned = text
-                .replace(/\s+/g, ' ')
-                .trim()
-                .substring(0, 100); // Title should be short
-              setExtractedText(cleaned || '(no text detected)');
-              log.info(`OCR extracted in ${ocrDuration}ms (conf: ${Math.round(confidence)}%): "${cleaned}"`);
+              if (result.ParsedResults && result.ParsedResults.length > 0) {
+                const text = result.ParsedResults[0].ParsedText || '';
+                const cleaned = text.replace(/\s+/g, ' ').trim().substring(0, 100);
+                setExtractedText(cleaned || '(no text detected)');
+                log.info(`OCR.space extracted in ${ocrDuration}ms: "${cleaned}"`);
+              } else {
+                const errorMsg = result.ErrorMessage || result.ErrorDetails || 'Unknown error';
+                log.error(`OCR.space error: ${errorMsg}`);
+                setExtractedText(`(OCR error: ${errorMsg})`);
+              }
             })
             .catch((err) => {
               const ocrDuration = Math.round(performance.now() - ocrStartTime);
-              log.error(`OCR failed after ${ocrDuration}ms: ${err.message}`);
+              log.error(`OCR.space failed after ${ocrDuration}ms: ${err.message}`);
               setExtractedText('(OCR failed)');
             })
             .finally(() => {

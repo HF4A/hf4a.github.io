@@ -16,5 +16,6 @@
 //   0.2.12 - Fix front side image after correction (.webp), scale up OCR region for better accuracy
 //   0.2.13 - OCR type region (top of card) instead of title (bottom) - type labels are more readable
 //   0.2.14 - OCR preprocessing: binarize image, scale to 200px, expand type region
-export const APP_VERSION = '0.2.14';
+//   0.2.15 - Switch to OCR.space API (free tier) - much better accuracy than Tesseract
+export const APP_VERSION = '0.2.15';
 export const BUILD_DATE = '2025-12-23';
