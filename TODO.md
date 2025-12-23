@@ -24,3 +24,43 @@
 
 ## Beyond
 - [ ] after making sure basic app works, create a series of crew cards inspired by the TV show "The Expanse", complete with images.
+
+---
+
+## 🔴 PICKUP POINT (2025-12-23 ~1:15am)
+
+### Current State: v0.2.16
+OCR text extraction in correction modal is broken - always shows "(no text detected)"
+
+### What We Tried Tonight (all failed):
+1. **Tesseract.js** - Extracted garbage like "ay _3 d Thr" for "Thruster"
+2. **Tesseract + preprocessing** - Binarization, scaling to 200px - still garbage
+3. **OCR.space API** (free tier) - Returns no text at all, even with clear images
+
+### Files Modified:
+- `src/features/showxating/components/CapturedScanView.tsx` - OCR logic is in the `CorrectionModal` component's useEffect (~line 628-720)
+- Removed Tesseract.js import, now using fetch to OCR.space API
+- Type region defined: `CARD_REGIONS.type = { x: 0, y: 0, w: 50, h: 18 }` (top-left of card)
+
+### Likely Issues to Investigate:
+1. **CORS** - OCR.space may block browser requests (check Network tab)
+2. **Demo API key** - `helloworld` may have limitations
+3. **Image format** - Currently sending JPEG data URL, maybe needs different format
+4. Check the **logs** in diagnostics export - added debug logging for API response
+
+### Other Bugs Fixed Tonight:
+- ✅ Type filter now shows ALL cards of selected type (was showing empty)
+- ✅ Front side image after correction (was showing ? due to .png vs .webp)
+- ✅ Robonaut is pink, Thruster is orange (not pink as I wrongly said)
+
+### Options for Tomorrow:
+1. Debug OCR.space - check network tab, get real API key
+2. Try **Puter.js OCR** - free, no API key needed
+3. Try **Google Cloud Vision** - very accurate, free tier 1000/month
+4. Skip cloud OCR, use better local: **PaddleOCR** (15MB WASM) or **EasyOCR**
+5. Hybrid: use dHash for matching, OCR only for disambiguation/verification
+
+### Key Insight:
+The card TYPE label (Thruster, Refinery, etc.) is at TOP of card in colored banner.
+The card NAME (Re-Solar Moth, etc.) is at BOTTOM.
+Currently extracting from type region (top) - should be easier to read.
