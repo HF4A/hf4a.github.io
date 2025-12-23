@@ -44,3 +44,4 @@ yarn-error.log*
 # Temporary files
 *.tmp
 *.temp
+hf4a-diagnostics-*.zip
