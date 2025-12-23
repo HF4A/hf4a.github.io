@@ -23,9 +23,10 @@ import type { Card, CardType } from '../../../types/card';
 // HF4A cards have consistent layouts: type at top, title at bottom
 const CARD_REGIONS = {
   // Title region: bottom of card, usually contains the card name in readable font
-  title: { x: 5, y: 82, w: 90, h: 15 },
+  // Expanded from y:82 h:15 to capture more of the title area
+  title: { x: 2, y: 78, w: 96, h: 20 },
   // Type region: top-left of card, contains type icon and name
-  type: { x: 0, y: 0, w: 35, h: 12 },
+  type: { x: 0, y: 0, w: 40, h: 15 },
 };
 
 // Swipe gesture thresholds
@@ -645,6 +646,8 @@ function CorrectionModal({
           titleCtx.drawImage(canvas, titleX, titleY, titleW, titleH, 0, 0, titleW, titleH);
           const titleDataUrl = titleCanvas.toDataURL('image/png');
 
+          log.debug(`OCR title region: ${titleW}x${titleH}px from card ${cropW}x${cropH}px`);
+
           Tesseract.recognize(titleDataUrl, 'eng', {
             logger: (m) => {
               if (m.status === 'recognizing text' && m.progress) {
@@ -652,7 +655,7 @@ function CorrectionModal({
               }
             },
           })
-            .then(({ data: { text } }) => {
+            .then(({ data: { text, confidence } }) => {
               const ocrDuration = Math.round(performance.now() - ocrStartTime);
               // Clean up OCR text - remove excessive whitespace
               const cleaned = text
@@ -660,10 +663,11 @@ function CorrectionModal({
                 .trim()
                 .substring(0, 100); // Title should be short
               setExtractedText(cleaned || '(no text detected)');
-              log.info(`OCR extracted in ${ocrDuration}ms: "${cleaned}"`);
+              log.info(`OCR extracted in ${ocrDuration}ms (conf: ${Math.round(confidence)}%): "${cleaned}"`);
             })
             .catch((err) => {
-              log.error(`OCR failed: ${err.message}`);
+              const ocrDuration = Math.round(performance.now() - ocrStartTime);
+              log.error(`OCR failed after ${ocrDuration}ms: ${err.message}`);
               setExtractedText('(OCR failed)');
             })
             .finally(() => {
@@ -671,6 +675,7 @@ function CorrectionModal({
             });
         } else {
           setIsOcrRunning(false);
+          log.error('OCR: failed to create title canvas context');
           setExtractedText('(failed to create title canvas)');
         }
       }
@@ -680,21 +685,11 @@ function CorrectionModal({
 
   // Initialize candidates based on dHash matches, search, and type filter
   useEffect(() => {
-    const topMatchIds = identifiedCard.topMatches?.map((m) => m.cardId) || [];
-
-    // Get top hash-matched cards
-    let hashMatches = topMatchIds
-      .map((id) => {
-        const card = catalogCards.find((c) => c.id === id);
-        const matchInfo = identifiedCard.topMatches?.find((m) => m.cardId === id);
-        return card ? { card, distance: matchInfo?.distance } : null;
-      })
-      .filter(Boolean) as Array<{ card: Card; distance?: number }>;
-
-    // Filter by selected type
-    if (selectedType !== 'all') {
-      hashMatches = hashMatches.filter(({ card }) => card.type === selectedType);
-    }
+    // Create a map of hash distances for sorting
+    const distanceMap = new Map<string, number>();
+    identifiedCard.topMatches?.forEach((m) => {
+      distanceMap.set(m.cardId, m.distance);
+    });
 
     // If we have search query, use Fuse.js
     if (searchQuery.trim()) {
@@ -708,10 +703,33 @@ function CorrectionModal({
         threshold: 0.4,
         includeScore: true,
       });
-      const results = fuse.search(searchQuery).slice(0, 30);
-      setCandidates(results.map((r) => ({ card: r.item })));
+      const results = fuse.search(searchQuery).slice(0, 50);
+      setCandidates(results.map((r) => ({ card: r.item, distance: distanceMap.get(r.item.id) })));
+    } else if (selectedType !== 'all') {
+      // Show ALL cards of the selected type, sorted by hash distance
+      const typeCards = catalogCards
+        .filter((c) => c.type === selectedType)
+        .map((card) => ({ card, distance: distanceMap.get(card.id) }))
+        .sort((a, b) => {
+          // Cards with distance come first (sorted by distance ascending)
+          // Cards without distance come last (sorted by name)
+          if (a.distance !== undefined && b.distance !== undefined) {
+            return a.distance - b.distance;
+          }
+          if (a.distance !== undefined) return -1;
+          if (b.distance !== undefined) return 1;
+          return (a.card.ocr?.name || a.card.name).localeCompare(b.card.ocr?.name || b.card.name);
+        });
+      setCandidates(typeCards);
     } else {
-      // Show all hash matches (filtered by type)
+      // No filter selected - show top hash matches
+      const topMatchIds = identifiedCard.topMatches?.map((m) => m.cardId) || [];
+      const hashMatches = topMatchIds
+        .map((id) => {
+          const card = catalogCards.find((c) => c.id === id);
+          return card ? { card, distance: distanceMap.get(id) } : null;
+        })
+        .filter(Boolean) as Array<{ card: Card; distance?: number }>;
       setCandidates(hashMatches);
     }
   }, [searchQuery, catalogCards, identifiedCard.topMatches, selectedType]);

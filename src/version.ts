@@ -12,5 +12,6 @@
 //   0.2.8 - Type-first card matching, fix back side image orientation, fix WIPE IT button text
 //   0.2.9 - Add Tesseract.js OCR, type filter dropdown in correction modal, tap-to-ID fix
 //   0.2.10 - Region-targeted OCR (title area only), card template definitions, timing in logs
-export const APP_VERSION = '0.2.10';
+//   0.2.11 - Fix type filter: show ALL cards of type, expand OCR region, add confidence logging
+export const APP_VERSION = '0.2.11';
 export const BUILD_DATE = '2025-12-23';
