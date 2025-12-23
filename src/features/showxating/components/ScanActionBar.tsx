@@ -99,58 +99,54 @@ export function ScanActionBar({ onScan, disabled }: ScanActionBarProps) {
       {/* Scrollable slots container */}
       <div className="flex-1 overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-2 min-w-min px-1">
-          {/* History slots */}
-          {slots.map(({ id, label }) => {
-            const scan = scanSlots[id];
-            const isActive = activeSlot === id;
-            const hasContent = scan !== null;
+          {/* History slots - only render slots with content */}
+          {slots
+            .filter(({ id }) => scanSlots[id] !== null)
+            .map(({ id, label }) => {
+              const scan = scanSlots[id]!;
+              const isActive = activeSlot === id;
 
-            return (
-              <button
-                key={id}
-                onClick={() => handleClick(id, hasContent)}
-                onPointerDown={(e) => handlePointerDown(e, id)}
-                onPointerUp={handlePointerUp}
-                onPointerLeave={handlePointerLeave}
-                onPointerCancel={handlePointerUp}
-                disabled={!hasContent}
-                className={`
-                  relative w-11 h-11 flex-shrink-0 rounded-lg border-2 transition-all touch-manipulation
-                  ${isActive
-                    ? 'border-[var(--showxating-cyan)] bg-[var(--showxating-cyan)]/20'
-                    : hasContent
-                    ? 'border-[var(--showxating-gold-dim)] bg-black/50 hover:border-[var(--showxating-gold)]'
-                    : 'border-[var(--showxating-gold-dim)]/30 bg-black/30 opacity-50 cursor-not-allowed'
-                  }
-                `}
-              >
-                {/* Thumbnail preview */}
-                {scan && (
+              return (
+                <button
+                  key={id}
+                  onClick={() => handleClick(id, true)}
+                  onPointerDown={(e) => handlePointerDown(e, id)}
+                  onPointerUp={handlePointerUp}
+                  onPointerLeave={handlePointerLeave}
+                  onPointerCancel={handlePointerUp}
+                  className={`
+                    relative w-11 h-11 flex-shrink-0 rounded-lg border-2 transition-all touch-manipulation
+                    ${isActive
+                      ? 'border-[var(--showxating-cyan)] bg-[var(--showxating-cyan)]/20'
+                      : 'border-[var(--showxating-gold-dim)] bg-black/50 hover:border-[var(--showxating-gold)]'
+                    }
+                  `}
+                >
+                  {/* Thumbnail preview */}
                   <img
                     src={scan.imageDataUrl}
                     alt={label}
                     className="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] object-cover rounded opacity-60 pointer-events-none"
                   />
-                )}
-                {/* Slot label */}
-                <span
-                  className={`
-                    absolute inset-0 flex items-center justify-center
-                    hud-text text-xs font-bold pointer-events-none
-                    ${isActive ? 'text-[var(--showxating-cyan)]' : 'text-[var(--showxating-gold-dim)]'}
-                  `}
-                >
-                  {label}
-                </span>
-                {/* Card count badge */}
-                {scan && scan.cards.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[var(--showxating-cyan)] flex items-center justify-center text-[10px] text-black font-bold pointer-events-none">
-                    {scan.cards.length}
+                  {/* Slot label */}
+                  <span
+                    className={`
+                      absolute inset-0 flex items-center justify-center
+                      hud-text text-xs font-bold pointer-events-none
+                      ${isActive ? 'text-[var(--showxating-cyan)]' : 'text-[var(--showxating-gold-dim)]'}
+                    `}
+                  >
+                    {label}
                   </span>
-                )}
-              </button>
-            );
-          })}
+                  {/* Card count badge */}
+                  {scan.cards.length > 0 && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[var(--showxating-cyan)] flex items-center justify-center text-[10px] text-black font-bold pointer-events-none">
+                      {scan.cards.length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
         </div>
       </div>
 

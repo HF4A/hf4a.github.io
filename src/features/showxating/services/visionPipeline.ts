@@ -253,3 +253,86 @@ function orderCorners(points: Point[]): Point[] {
 
   return ordered;
 }
+
+/**
+ * Warp a detected card quadrilateral to a rectangle
+ * Returns a canvas with the perspective-corrected card image
+ *
+ * @param sourceCanvas - The canvas containing the source image
+ * @param corners - The 4 corners of the detected card (TL, TR, BR, BL order)
+ * @param outputWidth - Width of the output image (default: 200)
+ * @param outputHeight - Height of the output image (default: 280, based on card aspect ratio)
+ */
+export function warpCardToRectangle(
+  sourceCanvas: HTMLCanvasElement,
+  corners: Point[],
+  outputWidth: number = 200,
+  outputHeight: number = 280
+): HTMLCanvasElement | null {
+  const cv = window.cv;
+
+  if (!cv || !cv.Mat) {
+    console.warn('[warpCardToRectangle] OpenCV not loaded');
+    return null;
+  }
+
+  let src: any = null;
+  let dst: any = null;
+  let srcPoints: any = null;
+  let dstPoints: any = null;
+  let transform: any = null;
+
+  try {
+    // Get source image from canvas
+    const ctx = sourceCanvas.getContext('2d');
+    if (!ctx) return null;
+
+    const imageData = ctx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+    src = cv.matFromImageData(imageData);
+
+    // Define source points (detected corners)
+    // Corners are already ordered: TL, TR, BR, BL
+    srcPoints = cv.matFromArray(4, 1, cv.CV_32FC2, [
+      corners[0].x, corners[0].y,  // TL
+      corners[1].x, corners[1].y,  // TR
+      corners[2].x, corners[2].y,  // BR
+      corners[3].x, corners[3].y,  // BL
+    ]);
+
+    // Define destination points (rectangle)
+    dstPoints = cv.matFromArray(4, 1, cv.CV_32FC2, [
+      0, 0,                        // TL
+      outputWidth, 0,              // TR
+      outputWidth, outputHeight,   // BR
+      0, outputHeight,             // BL
+    ]);
+
+    // Compute perspective transform matrix
+    transform = cv.getPerspectiveTransform(srcPoints, dstPoints);
+
+    // Create output mat
+    dst = new cv.Mat();
+    const dsize = new cv.Size(outputWidth, outputHeight);
+
+    // Apply perspective warp
+    cv.warpPerspective(src, dst, transform, dsize);
+
+    // Convert result to canvas
+    const outputCanvas = document.createElement('canvas');
+    outputCanvas.width = outputWidth;
+    outputCanvas.height = outputHeight;
+    cv.imshow(outputCanvas, dst);
+
+    return outputCanvas;
+  } catch (err) {
+    console.error('[warpCardToRectangle] Error:', err);
+    return null;
+  } finally {
+    // Cleanup OpenCV matrices
+    src?.delete();
+    dst?.delete();
+    srcPoints?.delete();
+    dstPoints?.delete();
+    transform?.delete();
+  }
+}

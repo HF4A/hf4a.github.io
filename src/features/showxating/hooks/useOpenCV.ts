@@ -15,6 +15,7 @@ declare global {
     Point: new (x: number, y: number) => Point;
     Scalar: new (r: number, g: number, b: number, a?: number) => Scalar;
     matFromImageData: (imageData: ImageData) => Mat;
+    matFromArray: (rows: number, cols: number, type: number, data: number[]) => Mat;
     cvtColor: (src: Mat, dst: Mat, code: number) => void;
     GaussianBlur: (src: Mat, dst: Mat, ksize: Size, sigmaX: number) => void;
     Canny: (src: Mat, dst: Mat, threshold1: number, threshold2: number) => void;
@@ -24,9 +25,13 @@ declare global {
     contourArea: (contour: Mat) => number;
     boundingRect: (contour: Mat) => Rect;
     isContourConvex: (contour: Mat) => boolean;
+    getPerspectiveTransform: (src: Mat, dst: Mat) => Mat;
+    warpPerspective: (src: Mat, dst: Mat, M: Mat, dsize: Size) => void;
+    imshow: (canvas: HTMLCanvasElement, mat: Mat) => void;
     COLOR_RGBA2GRAY: number;
     RETR_EXTERNAL: number;
     CHAIN_APPROX_SIMPLE: number;
+    CV_32FC2: number;
   };
   interface Mat {
     delete: () => void;

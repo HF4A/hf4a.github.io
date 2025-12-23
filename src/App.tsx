@@ -5,6 +5,7 @@ import { CardDetailView } from './components/CardDetailView';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { ShowxatingShell } from './features/showxating';
 import { useSettingsStore } from './store/settingsStore';
+import { useCards } from './hooks/useCards';
 
 function DefaultRedirect() {
   const { defaultMode } = useSettingsStore();
@@ -19,6 +20,9 @@ function LegacyCardRedirect() {
 
 export default function App() {
   const { hasSeenWelcome } = useSettingsStore();
+
+  // Load card catalog data on app startup (required for SHOWXATING mode)
+  useCards();
 
   // Show welcome screen on first launch
   if (!hasSeenWelcome) {

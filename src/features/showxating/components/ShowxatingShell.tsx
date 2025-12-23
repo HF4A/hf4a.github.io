@@ -7,7 +7,7 @@ import { TopNavBar } from '../../../components/TopNavBar';
 import { SysPanel } from '../../../components/SysPanel';
 import { useShowxatingStore, IdentifiedCard, CapturedScan } from '../store/showxatingStore';
 import { useCardIdentification } from '../hooks/useCardIdentification';
-import { detectAllCards } from '../services/visionPipeline';
+import { detectAllCards, warpCardToRectangle } from '../services/visionPipeline';
 import { getCardMatcher } from '../services/cardMatcher';
 import { useSettingsStore } from '../../../store/settingsStore';
 import '../styles/belter-theme.css';
@@ -84,7 +84,7 @@ export function ShowxatingShell() {
       for (const card of detection.cards) {
         if (!card.corners) continue;
 
-        // Get bounding box from corners
+        // Get bounding box from corners (for diagnostics)
         const minX = Math.min(...card.corners.map((c) => c.x));
         const maxX = Math.max(...card.corners.map((c) => c.x));
         const minY = Math.min(...card.corners.map((c) => c.y));
@@ -98,8 +98,20 @@ export function ShowxatingShell() {
         };
 
         if (matcher.isLoaded()) {
-          // Use debug method to capture hash and top matches
-          const debugResult = matcher.matchFromCanvasWithDebug(canvas, region);
+          // Apply perspective warp to get clean card image before hashing
+          const warpedCanvas = warpCardToRectangle(canvas, card.corners);
+
+          let debugResult;
+          if (warpedCanvas) {
+            // Use warped (perspective-corrected) image for matching
+            console.log('[ShowxatingShell] Using warped image for matching');
+            debugResult = matcher.matchFromCanvasWithDebug(warpedCanvas);
+          } else {
+            // Fall back to bounding box crop if warp fails
+            console.log('[ShowxatingShell] Warp failed, falling back to bounding box');
+            debugResult = matcher.matchFromCanvasWithDebug(canvas, region);
+          }
+
           const matches = debugResult.matches;
           console.log('[ShowxatingShell] Card region:', region, 'Hash:', debugResult.computedHash, 'Top matches:', debugResult.topMatches);
 
