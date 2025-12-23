@@ -17,5 +17,6 @@
 //   0.2.13 - OCR type region (top of card) instead of title (bottom) - type labels are more readable
 //   0.2.14 - OCR preprocessing: binarize image, scale to 200px, expand type region
 //   0.2.15 - Switch to OCR.space API (free tier) - much better accuracy than Tesseract
-export const APP_VERSION = '0.2.15';
+//   0.2.16 - Remove binarization (was destroying text), add debug logging, use Engine 1
+export const APP_VERSION = '0.2.16';
 export const BUILD_DATE = '2025-12-23';

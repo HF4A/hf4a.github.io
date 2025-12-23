@@ -657,62 +657,54 @@ function CorrectionModal({
           ocrCtx.imageSmoothingEnabled = true;
           ocrCtx.imageSmoothingQuality = 'high';
 
-          // Draw scaled type region
+          // Draw scaled type region (no preprocessing - OCR.space handles it)
           ocrCtx.drawImage(canvas, regionX, regionY, regionW, regionH, 0, 0, scaledW, scaledH);
 
-          // Preprocess for better OCR: convert to grayscale and increase contrast
-          const imageData = ocrCtx.getImageData(0, 0, scaledW, scaledH);
-          const data = imageData.data;
-          for (let i = 0; i < data.length; i += 4) {
-            // Convert to grayscale
-            const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-            // Increase contrast and binarize (threshold at 128)
-            const bw = gray > 128 ? 255 : 0;
-            data[i] = bw;     // R
-            data[i + 1] = bw; // G
-            data[i + 2] = bw; // B
-            // Alpha stays the same
-          }
-          ocrCtx.putImageData(imageData, 0, 0);
-
-          const ocrDataUrl = ocrCanvas.toDataURL('image/png');
+          const ocrDataUrl = ocrCanvas.toDataURL('image/jpeg', 0.9); // JPEG for smaller size
 
           log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
 
           // Use OCR.space API (free tier: 25k requests/month)
-          // Engine 2 is better for alphanumeric text and handles rotation
           const formData = new FormData();
           formData.append('base64Image', ocrDataUrl);
           formData.append('language', 'eng');
-          formData.append('OCREngine', '2');
+          formData.append('OCREngine', '1'); // Engine 1 for general text
           formData.append('scale', 'true');
-          formData.append('isTable', 'false');
+          formData.append('detectOrientation', 'true');
+
+          log.debug(`Sending to OCR.space: ${Math.round(ocrDataUrl.length / 1024)}KB image`);
 
           fetch('https://api.ocr.space/parse/image', {
             method: 'POST',
             headers: {
-              'apikey': 'helloworld', // Free demo key - works for testing
+              'apikey': 'helloworld', // Free demo key
             },
             body: formData,
           })
             .then((res) => res.json())
             .then((result) => {
               const ocrDuration = Math.round(performance.now() - ocrStartTime);
+              log.debug(`OCR.space response: ${JSON.stringify(result).substring(0, 500)}`);
+
               if (result.ParsedResults && result.ParsedResults.length > 0) {
-                const text = result.ParsedResults[0].ParsedText || '';
+                const parsed = result.ParsedResults[0];
+                const text = parsed.ParsedText || '';
                 const cleaned = text.replace(/\s+/g, ' ').trim().substring(0, 100);
                 setExtractedText(cleaned || '(no text detected)');
-                log.info(`OCR.space extracted in ${ocrDuration}ms: "${cleaned}"`);
+                log.info(`OCR.space in ${ocrDuration}ms: "${cleaned}"`);
+              } else if (result.IsErroredOnProcessing) {
+                const errorMsg = result.ErrorMessage?.[0] || 'Processing error';
+                log.error(`OCR.space processing error: ${errorMsg}`);
+                setExtractedText(`(error: ${errorMsg})`);
               } else {
-                const errorMsg = result.ErrorMessage || result.ErrorDetails || 'Unknown error';
-                log.error(`OCR.space error: ${errorMsg}`);
-                setExtractedText(`(OCR error: ${errorMsg})`);
+                log.warn(`OCR.space no results: ${JSON.stringify(result)}`);
+                setExtractedText('(no text found)');
               }
             })
             .catch((err) => {
               const ocrDuration = Math.round(performance.now() - ocrStartTime);
-              log.error(`OCR.space failed after ${ocrDuration}ms: ${err.message}`);
-              setExtractedText('(OCR failed)');
+              log.error(`OCR.space network error after ${ocrDuration}ms: ${err.message}`);
+              setExtractedText('(network error)');
             })
             .finally(() => {
               setIsOcrRunning(false);
