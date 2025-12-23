@@ -176,23 +176,24 @@ Top Navigation Bar:
 **Deliverable**: Can identify cards from captured image
 **Status**: Deployed (2024-12-22). dHash matching working with confidence scoring.
 
-### Phase 6: Scan Capture & Overlays
+### Phase 6: Scan Capture & Overlays ✅ COMPLETE
 **Goal**: SCAN button captures image, identifies cards, shows overlays
 
-- [ ] SCAN button captures static image from camera
-- [ ] Run card detection on static image (find all cards)
-- [ ] For each detected card: show bounding box with scanline animation
-- [ ] Match each card against dHash index
-- [ ] Once identified: replace bounding box with scaled card image
-- [ ] Initial overlay shows visible or opposite side (based on SYS setting)
-- [ ] `perspectiveTransform.ts` for correct overlay positioning
-- [ ] **Tap overlay**: Flip between visible/opposite side (quick toggle)
-- [ ] **Long-press overlay**: Open full card detail view
-- [ ] Track flip state per card independently
+- [x] SCAN button captures static image from camera
+- [x] Run card detection on static image (find all cards)
+- [x] For each detected card: show bounding box with scanline animation
+- [x] Match each card against dHash index
+- [x] Once identified: replace bounding box with scaled card image
+- [x] Initial overlay shows visible or opposite side (based on SYS setting)
+- [x] `perspectiveTransform.ts` for correct overlay positioning (bounding box)
+- [x] **Tap overlay**: Flip between visible/opposite side (quick toggle)
+- [x] **Long-press overlay**: Open full card detail view
+- [x] Track flip state per card independently
 
 **Deliverable**: Captured image shows identified cards with flippable overlays
+**Status**: Deployed (2024-12-22). SCAN captures, detects, identifies, overlays with flip.
 
-### Phase 7: Scan History (Bottom Ribbon)
+### Phase 7: Scan History (Bottom Ribbon) ✅ COMPLETE
 **Goal**: S1/S2/S3 slot system for scan history with persistence
 
 Bottom Action Bar:
@@ -202,20 +203,20 @@ Bottom Action Bar:
 └─────────────────────────────────┘
 ```
 
-- [ ] Horizontal scrollable bottom ribbon
-- [ ] SCAN + 3 history slots (S1, S2, S3)
-- [ ] Centered slot = active view (larger)
-- [ ] SCAN centered = live camera
-- [ ] S1/S2/S3 centered = viewing that capture
-- [ ] New capture → S1, shifts older left
-- [ ] Max 3 captures in memory
-- [ ] **Persist scan slots in localStorage**:
-  - Captured image data (as data URL or blob)
+- [x] Horizontal bottom ribbon (ScanActionBar component)
+- [x] SCAN + 3 history slots (S1, S2, S3)
+- [x] SCAN button = live camera, history slots = captured scans
+- [x] New capture → S1, shifts older left
+- [x] Max 3 captures in memory
+- [x] **Persist scan slots in localStorage** via Zustand persist:
+  - Captured image data (as data URL)
   - Detected cards and positions
   - Flip state for each card per slot
-- [ ] Restore slots on page reload
+- [x] Restore slots on page reload
+- [x] LIVE button returns to camera feed
 
 **Deliverable**: User can scroll between live view and 3 captured scans (persisted)
+**Status**: Deployed (2024-12-22). Slots persist, thumbnails show, tap to switch views.
 
 ### Phase 8: System Settings [SYS]
 **Goal**: Settings panel with preferences and system info
