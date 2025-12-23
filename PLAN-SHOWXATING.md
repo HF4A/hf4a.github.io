@@ -244,42 +244,43 @@ Bottom Action Bar:
 **Deliverable**: Can detect and identify multiple cards in single capture
 **Status**: Deployed (2024-12-22). Multi-card detection working. Irregular edges from overlapping cards and rotation >10° can reduce detection accuracy.
 
-### Phase 9: System Settings & Diagnostics
+### Phase 9: System Settings & Diagnostics ✅ COMPLETE
 **Goal**: Settings panel with diagnostics export and expanded scan history
 
 **SYS Panel Buttons**:
 - [x] **Setting 1**: Default Launch Mode (Scan vs Catalog) - already implemented
 - [x] **Setting 2**: Default Scan Result (Visible Side vs Opposite Side) - already implemented
-- [ ] **[SEND DIAGNOSTICS]**: Package full local state as ZIP for troubleshooting:
+- [x] **[SEND DIAGNOSTICS]**: Package full local state as ZIP for troubleshooting:
   - All captured scan images (data URLs)
   - Detected bounding boxes and corners
   - OpenCV detection metadata (skew angle, confidence, areas)
   - Card identification results (matched IDs, distances, confidence)
   - Device info and app version
   - Export via share sheet (mail, messages, etc.)
-- [ ] **[RECORD TELEMETRY]**: Greyed out placeholder for future video recording capability
-- [ ] System info display (Belter ship status style):
+- [x] **[RECORD TELEMETRY]**: Greyed out placeholder for future video recording capability
+- [x] System info display (Belter ship status style):
   - App version
   - System date/time
   - Device info
   - Connection status
 
 **Bottom Ribbon Expansion**:
-- [ ] Expand scan slots from 3 to 7 (S1-S7)
-- [ ] Make entire bottom bar horizontally scrollable
-- [ ] **Long-press on slot**: Show dialog with:
+- [x] Expand scan slots from 3 to 7 (S1-S7)
+- [x] Make entire bottom bar horizontally scrollable
+- [x] **Long-press on slot**: Show dialog with:
   - [CLEAR] - Remove slot, shift older scans to fill gap
   - [SEND] - Greyed out, future functionality
 
 **Implementation**:
-- [ ] Update `showxatingStore` to support 7 slots
-- [ ] Add horizontal scroll container to `ScanActionBar`
-- [ ] Create `SlotContextMenu` component for long-press dialog
-- [ ] Create `exportDiagnostics.ts` service for ZIP generation
-- [ ] Add JSZip dependency
-- [ ] Wire up SEND DIAGNOSTICS button in SysPanel
+- [x] Update `showxatingStore` to support 7 slots
+- [x] Add horizontal scroll container to `ScanActionBar`
+- [x] Create `SlotContextMenu` component for long-press dialog
+- [x] Create `exportDiagnostics.ts` service for ZIP generation
+- [x] Add JSZip dependency
+- [x] Wire up SEND DIAGNOSTICS button in SysPanel
 
 **Deliverable**: Settings accessible, diagnostics exportable, 7 scan slots with management
+**Status**: Deployed (2024-12-22). 7 slots, scrollable ribbon, long-press context menu, diagnostics export.
 
 ### Phase 10: Polish & Optimization
 **Goal**: Final polish and performance
