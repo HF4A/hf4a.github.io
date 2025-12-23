@@ -282,7 +282,126 @@ Bottom Action Bar:
 **Deliverable**: Settings accessible, diagnostics exportable, 7 scan slots with management
 **Status**: Deployed (2024-12-22). 7 slots, scrollable ribbon, long-press context menu, diagnostics export.
 
-### Phase 10: Polish & Optimization
+### Phase 10: Card Identification Critical Fixes 🚨
+**Goal**: Fix broken card identification pipeline
+
+**Status**: Diagnostics from 2025-12-23 revealed card matching is fundamentally broken.
+
+#### Problem 1: Cards NEVER Display as Identified (UI Bug)
+**Symptom**: All cards show "UNIDENTIFIED" in the UI, even when diagnostics show successful matches.
+
+**Root Cause**: Card catalog data not loaded in SHOWXATING mode.
+- `CapturedScanView.tsx:121` looks up cards via `useCardStore()` directly
+- `useCardStore()` returns raw state (empty array until loaded)
+- `useCards()` hook fetches `cards.json` but is only called in Catalog components
+- If user defaults to SHOWXATING and never visits Catalog, cards array is always empty
+- All `catalogCards.find(c => c.id === card.cardId)` calls return undefined → UNIDENTIFIED
+
+**Fix**:
+- [ ] **Option A**: Call `useCards()` in `ShowxatingShell` or `App.tsx` to ensure cards load on startup
+- [ ] **Option B**: Move card loading to a provider that wraps the entire app
+- [ ] Add loading state check before rendering card overlays
+
+**Files to modify**:
+- `src/features/showxating/components/ShowxatingShell.tsx` - Add `useCards()` call
+- OR `src/App.tsx` - Add card loading at app root
+
+---
+
+#### Problem 2: dHash Matching Accuracy (Algorithm Issue)
+**Symptom**: When matches ARE computed (visible in diagnostics), they're ~95% wrong.
+
+**Evidence from diagnostics** (5 scans, 29 detected cards):
+- Actual cards: Thrusters, Generators, Robonauts, Reactors, Refineries, Radiators
+- Matched cards: Contracts, Colonists, Crew cards (completely different types)
+- Match distances: 14-20 bits (14-31% bit difference)
+- Only 1 correct match out of 18 "identified" cards: `generator-09` at distance 20
+
+**Root Causes**:
+
+1. **No perspective correction before hashing**
+   - Camera captures skewed quadrilaterals
+   - Hash computed from axis-aligned bounding box, not warped card content
+   - Background pixels contaminate the hash
+   - Reference images are clean, orthogonal shots
+
+2. **Threshold too loose**
+   - `MAX_MATCH_DISTANCE = 20` accepts 31% bit difference (20/64)
+   - Top matches are 1-3 bits apart (noise-level)
+   - Effectively random selection among ~5-10 candidates
+
+3. **Low-entropy reference images**
+   - Crew cards all have similar face/uniform layouts → similar hashes
+   - Contracts have similar border/text layouts → cluster together
+   - Cross-type confusion (Reactor matched as Crew card)
+
+**Fixes** (priority order):
+
+- [ ] **Quick win: Lower threshold** to 12-14 bits (19-22% difference)
+  - File: `src/features/showxating/services/cardMatcher.ts`
+  - Change: `MAX_MATCH_DISTANCE = 12`
+  - Effect: More cards show as "unknown" but fewer false positives
+
+- [ ] **Medium: Perspective warp before hashing**
+  - Use OpenCV `warpPerspective()` to transform detected quad to rectangle
+  - Hash the warped image, not the bounding box crop
+  - File: `src/features/showxating/services/cardMatcher.ts` - `matchFromCanvas()`
+  - File: `src/features/showxating/services/visionPipeline.ts` - add warp function
+
+- [ ] **Medium: Crop inner region**
+  - Hash only center 70-80% of detected area
+  - Excludes card borders and background contamination
+  - Reduces sensitivity to edge detection errors
+
+- [ ] **Larger: Multi-feature matching**
+  - Combine dHash with color histogram matching
+  - Weight card type icons (top-left corner) heavily
+  - Consider card title text area separately
+
+- [ ] **Future: OCR fallback**
+  - If hash confidence < threshold, read card title text
+  - Use fuzzy string matching against card names
+  - More robust but slower
+
+---
+
+#### Problem 3: Empty Slots Still Display
+**Symptom**: All 7 slot buttons (S1-S7) visible even when empty.
+
+**User Request**: "I noted earlier not to display slots that were empty. So, they shouldn't be in the ribbon at the bottom, until an image is actually in the slot."
+
+**Fix**:
+- [ ] Filter `slots.map()` to only render slots with content
+- [ ] Or: Hide slots with `hasContent === false` entirely (not just opacity/disabled)
+
+**File to modify**:
+- `src/features/showxating/components/ScanActionBar.tsx` lines 103-153
+
+```tsx
+// Current: renders all 7 slots
+{slots.map(({ id, label }) => { ... })}
+
+// Fix: only render slots with content
+{slots.filter(({ id }) => scanSlots[id] !== null).map(({ id, label }) => { ... })}
+```
+
+---
+
+#### Diagnostics Improvements (Completed in v0.2.1)
+- [x] Add `computedHash` to diagnostics (what hash was computed for detected card)
+- [x] Add `matchDistance` (Hamming distance to best match)
+- [x] Add `topMatches[]` (top 5 closest matches with distances)
+- [x] Add `boundingBox` coordinates
+- [x] Semantic versioning: v0.2.1
+
+---
+
+**Deliverable**: Cards correctly identified and displayed in overlay
+**Priority**: CRITICAL - feature is non-functional without these fixes
+
+---
+
+### Phase 11: Polish & Optimization
 **Goal**: Final polish and performance
 
 - [ ] Scanline animation refinement
