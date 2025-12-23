@@ -129,6 +129,7 @@ export function ShowxatingShell() {
               computedHash: debugResult.computedHash,
               matchDistance: match.distance,
               topMatches: debugResult.topMatches,
+              detectedTypes: debugResult.detectedTypes,
             });
           } else {
             // Card detected but not identified
@@ -143,6 +144,7 @@ export function ShowxatingShell() {
               boundingBox: region,
               computedHash: debugResult.computedHash,
               topMatches: debugResult.topMatches,
+              detectedTypes: debugResult.detectedTypes,
             });
           }
         }

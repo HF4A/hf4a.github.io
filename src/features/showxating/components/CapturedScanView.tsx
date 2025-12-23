@@ -146,6 +146,10 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
               setDetailData({ card: catalogCard, identifiedCard: card, cardIndex: index });
             }
           }}
+          onOpenCorrection={() => {
+            // Open correction flow for this card
+            setCorrectionData({ card, cardIndex: index });
+          }}
         />
       ))}
 
@@ -199,6 +203,7 @@ interface CardOverlayProps {
   imageRef: React.RefObject<HTMLImageElement | null>;
   onFlip: () => void;
   onOpenDetail: () => void;
+  onOpenCorrection: () => void;
 }
 
 function CardOverlay({
@@ -207,6 +212,7 @@ function CardOverlay({
   imageRef,
   onFlip,
   onOpenDetail,
+  onOpenCorrection,
 }: CardOverlayProps) {
   const { cards: catalogCards } = useCardStore();
   const lastTapRef = useRef<number>(0);
@@ -308,13 +314,19 @@ function CardOverlay({
   const displayFilename = getDisplayFilename();
 
   if (card.cardId === 'unknown' || !catalogCard) {
-    // Unknown card - show placeholder with animation
+    // Unknown card - show placeholder, tap opens correction modal
     return (
       <div
         style={style}
-        className="border-2 border-[var(--showxating-gold)] bg-black/50 rounded-lg flex items-center justify-center touch-none select-none"
-        onClick={handleTap}
-        onTouchEnd={handleTap}
+        className="border-2 border-[var(--showxating-gold)] bg-black/50 rounded-lg flex items-center justify-center touch-none select-none cursor-pointer"
+        onClick={(e) => {
+          e.preventDefault();
+          onOpenCorrection();
+        }}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          onOpenCorrection();
+        }}
       >
         <div className="scan-animation" />
         <div className="flex flex-col items-center gap-1">
@@ -654,8 +666,17 @@ function CorrectionModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  // Format hash for display (already hex, just truncate)
+  const formatHash = (hash?: string) => {
+    if (!hash) return 'N/A';
+    return hash.length > 8 ? hash.substring(0, 8) + '...' : hash;
+  };
+
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col">
+    <div
+      className="fixed inset-0 z-[100] bg-black/95 flex flex-col"
+      style={{ touchAction: 'pan-y' }}
+    >
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-3 border-b border-[var(--showxating-gold-dim)]">
         <button
@@ -683,29 +704,31 @@ function CorrectionModal({
 
       {/* Two-panel layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left panel - cropped image + extracted text */}
-        <div className="w-1/3 border-r border-[var(--showxating-gold-dim)] p-4 flex flex-col">
+        {/* Left panel - cropped image + debug info */}
+        <div className="w-2/5 border-r border-[var(--showxating-gold-dim)] p-3 flex flex-col overflow-y-auto">
           <p
             className="text-[10px] tracking-wider uppercase mb-2"
             style={{ color: 'var(--showxating-gold-dim)' }}
           >
             SCANNED REGION:
           </p>
-          <div className="flex-1 flex flex-col items-center justify-start">
-            <div
-              className="w-full max-h-[40vh] rounded overflow-hidden border"
-              style={{ borderColor: 'var(--showxating-gold-dim)' }}
-            >
-              <img
-                src={croppedImage || scanImageDataUrl}
-                alt="Scanned region"
-                className="w-full h-full object-contain"
-              />
-            </div>
+          <div
+            className="w-full rounded overflow-hidden border mb-3"
+            style={{ borderColor: 'var(--showxating-gold-dim)' }}
+          >
+            <img
+              src={croppedImage || scanImageDataUrl}
+              alt="Scanned region"
+              className="w-full object-contain"
+              style={{ maxHeight: '35vh' }}
+            />
+          </div>
 
+          {/* Debug info section */}
+          <div className="space-y-2">
             {/* Extracted text */}
             {identifiedCard.extractedText && (
-              <div className="mt-4 w-full">
+              <div>
                 <p
                   className="text-[10px] tracking-wider uppercase mb-1"
                   style={{ color: 'var(--showxating-gold-dim)' }}
@@ -713,7 +736,7 @@ function CorrectionModal({
                   EXTRACTED TEXT:
                 </p>
                 <p
-                  className="text-xs p-2 rounded bg-black/50 border"
+                  className="text-xs p-2 rounded bg-black/50 border break-words"
                   style={{
                     borderColor: 'var(--showxating-gold-dim)',
                     color: 'var(--showxating-gold)',
@@ -725,20 +748,81 @@ function CorrectionModal({
               </div>
             )}
 
-            {/* Instructions */}
-            <p
-              className="mt-4 text-[10px] tracking-wider uppercase text-center"
-              style={{ color: 'var(--showxating-gold-dim)' }}
-            >
-              DOUBLE-TAP A CARD TO SELECT
-            </p>
+            {/* Computed hash */}
+            <div>
+              <p
+                className="text-[10px] tracking-wider uppercase mb-1"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                COMPUTED HASH:
+              </p>
+              <p
+                className="text-[10px] p-1.5 rounded bg-black/50 border font-mono"
+                style={{
+                  borderColor: 'var(--showxating-gold-dim)',
+                  color: 'var(--showxating-cyan)',
+                }}
+              >
+                {formatHash(identifiedCard.computedHash)}
+              </p>
+            </div>
+
+            {/* Detected types */}
+            {identifiedCard.detectedTypes && identifiedCard.detectedTypes.length > 0 && (
+              <div>
+                <p
+                  className="text-[10px] tracking-wider uppercase mb-1"
+                  style={{ color: 'var(--showxating-gold-dim)' }}
+                >
+                  DETECTED TYPES:
+                </p>
+                <p
+                  className="text-[10px] p-1.5 rounded bg-black/50 border"
+                  style={{
+                    borderColor: 'var(--showxating-gold-dim)',
+                    color: 'var(--showxating-gold)',
+                  }}
+                >
+                  {identifiedCard.detectedTypes.join(', ')}
+                </p>
+              </div>
+            )}
+
+            {/* Original match info */}
+            {identifiedCard.cardId !== 'unknown' && (
+              <div>
+                <p
+                  className="text-[10px] tracking-wider uppercase mb-1"
+                  style={{ color: 'var(--showxating-gold-dim)' }}
+                >
+                  ORIGINAL MATCH:
+                </p>
+                <p
+                  className="text-[10px] p-1.5 rounded bg-black/50 border"
+                  style={{
+                    borderColor: 'var(--showxating-gold-dim)',
+                    color: 'var(--showxating-gold)',
+                  }}
+                >
+                  {identifiedCard.cardId} ({Math.round(identifiedCard.confidence * 100)}%)
+                </p>
+              </div>
+            )}
           </div>
+
+          {/* Instructions */}
+          <p
+            className="mt-auto pt-3 text-[10px] tracking-wider uppercase text-center"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            DOUBLE-TAP A CARD TO SELECT
+          </p>
         </div>
 
         {/* Right panel - candidate list */}
-        <div className="w-2/3 flex flex-col overflow-hidden">
+        <div className="w-3/5 flex flex-col overflow-hidden">
           {/* Search input */}
-          <div className="px-4 py-3 border-b border-[var(--showxating-gold-dim)]">
+          <div className="px-3 py-2 border-b border-[var(--showxating-gold-dim)]">
             <input
               type="text"
               placeholder="Search by name..."
@@ -749,13 +833,13 @@ function CorrectionModal({
                 borderColor: 'var(--showxating-gold-dim)',
                 color: 'var(--showxating-gold)',
                 fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                fontSize: '16px', // Prevents iOS zoom on focus
               }}
-              autoFocus
             />
           </div>
 
-          {/* Scrollable candidate grid */}
-          <div className="flex-1 overflow-y-auto px-4 py-3">
+          {/* Scrollable candidate list - single column */}
+          <div className="flex-1 overflow-y-auto px-3 py-2" style={{ touchAction: 'pan-y' }}>
             <p
               className="text-[10px] tracking-wider uppercase mb-2"
               style={{ color: 'var(--showxating-gold-dim)' }}
@@ -763,41 +847,51 @@ function CorrectionModal({
               {searchQuery ? 'SEARCH RESULTS' : 'LIKELY MATCHES'} ({candidates.length}):
             </p>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-2">
               {candidates.map(({ card, distance }) => (
                 <button
                   key={card.id}
                   onClick={() => handleCardTap(card.id)}
-                  className="flex flex-col items-center p-2 rounded border transition-all hover:bg-[var(--showxating-gold)]/10 active:bg-[var(--showxating-cyan)]/20"
+                  className="flex items-center gap-3 p-2 rounded border transition-all active:bg-[var(--showxating-cyan)]/20"
                   style={{
                     borderColor:
                       card.id === identifiedCard.cardId
                         ? 'var(--showxating-cyan)'
                         : 'var(--showxating-gold-dim)',
+                    touchAction: 'manipulation',
                   }}
                 >
                   <img
                     src={`${import.meta.env.BASE_URL}cards/full/${card.filename.replace('.png', '.webp')}`}
                     alt={card.ocr?.name || card.name}
-                    className="w-full aspect-[2/3] object-cover rounded mb-2"
+                    className="w-16 h-24 object-cover rounded flex-shrink-0"
                   />
-                  <span
-                    className="text-[10px] tracking-wider uppercase text-center truncate w-full"
-                    style={{
-                      color: 'var(--showxating-gold)',
-                      fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-                    }}
-                  >
-                    {card.ocr?.name || card.name}
-                  </span>
-                  {distance !== undefined && (
+                  <div className="flex-1 text-left min-w-0">
                     <span
-                      className="text-[9px] tracking-wider"
+                      className="text-xs tracking-wider uppercase block truncate"
+                      style={{
+                        color: 'var(--showxating-gold)',
+                        fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                      }}
+                    >
+                      {card.ocr?.name || card.name}
+                    </span>
+                    <span
+                      className="text-[10px] tracking-wider block"
                       style={{ color: 'var(--showxating-gold-dim)' }}
                     >
-                      d={distance}
+                      {card.type.toUpperCase()}
+                      {card.side && ` • ${card.side.toUpperCase()}`}
                     </span>
-                  )}
+                    {distance !== undefined && (
+                      <span
+                        className="text-[9px] tracking-wider"
+                        style={{ color: 'var(--showxating-cyan)' }}
+                      >
+                        distance: {distance}
+                      </span>
+                    )}
+                  </div>
                 </button>
               ))}
             </div>

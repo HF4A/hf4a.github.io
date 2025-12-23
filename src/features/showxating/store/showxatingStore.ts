@@ -20,10 +20,11 @@ export interface IdentifiedCard {
   showingOpposite: boolean; // flip state for this card
   // Debug info for diagnostics
   boundingBox?: { x: number; y: number; width: number; height: number };
-  computedHash?: string;
+  computedHash?: string; // 64-bit dHash as hex string
   matchDistance?: number;
   topMatches?: { cardId: string; distance: number }[];
   extractedText?: string; // Text extracted from card for matching (future)
+  detectedTypes?: string[]; // Card types detected from color analysis
 }
 
 export interface CapturedScan {
