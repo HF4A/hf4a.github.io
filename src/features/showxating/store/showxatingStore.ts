@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 export type ShowxatingMode = 'idle' | 'scan' | 'capture';
 export type DetectionStatus = 'searching' | 'tracking' | 'locked' | 'lost';
 export type PermissionStatus = 'prompt' | 'granted' | 'denied';
-export type ScanSlot = 'live' | 's1' | 's2' | 's3';
+export type ScanSlot = 'live' | 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7';
 
 export interface Point {
   x: number;
@@ -50,13 +50,17 @@ interface ShowxatingStore {
   overlayFrozen: boolean;
   showingOpposite: boolean;
 
-  // Scan capture state (Phase 6-7)
+  // Scan capture state (Phase 6-7, expanded to 7 slots in Phase 9)
   activeSlot: ScanSlot;
   isCapturing: boolean;
   scanSlots: {
     s1: CapturedScan | null;
     s2: CapturedScan | null;
     s3: CapturedScan | null;
+    s4: CapturedScan | null;
+    s5: CapturedScan | null;
+    s6: CapturedScan | null;
+    s7: CapturedScan | null;
   };
 
   // Actions
@@ -77,17 +81,22 @@ interface ShowxatingStore {
   setCapturing: (capturing: boolean) => void;
   addCapture: (scan: CapturedScan) => void;
   updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
-  clearSlot: (slotId: 's1' | 's2' | 's3') => void;
+  clearSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void;
+  removeSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void; // Remove and shift
 
   reset: () => void;
 }
 
 // Separate persisted state for scan slots (survives page reload)
-interface PersistedScanState {
+export interface PersistedScanState {
   scanSlots: {
     s1: CapturedScan | null;
     s2: CapturedScan | null;
     s3: CapturedScan | null;
+    s4: CapturedScan | null;
+    s5: CapturedScan | null;
+    s6: CapturedScan | null;
+    s7: CapturedScan | null;
   };
 }
 
@@ -98,6 +107,10 @@ export const useScanSlotsStore = create<PersistedScanState>()(
         s1: null,
         s2: null,
         s3: null,
+        s4: null,
+        s5: null,
+        s6: null,
+        s7: null,
       },
     }),
     {
@@ -161,11 +174,15 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
 
   addCapture: (scan) => {
     const state = get();
-    // Shift slots: s2 -> s3, s1 -> s2, new -> s1
+    // Shift slots: s6 -> s7, s5 -> s6, ... s1 -> s2, new -> s1
     const newSlots = {
       s1: scan,
       s2: state.scanSlots.s1,
       s3: state.scanSlots.s2,
+      s4: state.scanSlots.s3,
+      s5: state.scanSlots.s4,
+      s6: state.scanSlots.s5,
+      s7: state.scanSlots.s6,
     };
     set({ scanSlots: newSlots, activeSlot: 's1' });
     // Persist to localStorage
@@ -175,7 +192,7 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
   updateCardFlip: (slotId, cardIndex, showingOpposite) => {
     if (slotId === 'live') return;
     const state = get();
-    const slot = state.scanSlots[slotId];
+    const slot = state.scanSlots[slotId as keyof typeof state.scanSlots];
     if (!slot || !slot.cards[cardIndex]) return;
 
     const updatedCards = [...slot.cards];
@@ -193,6 +210,26 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
     const state = get();
     const newSlots = { ...state.scanSlots, [slotId]: null };
     set({ scanSlots: newSlots });
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  removeSlot: (slotId) => {
+    const state = get();
+    const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
+    const slotIndex = slotOrder.indexOf(slotId);
+    if (slotIndex === -1) return;
+
+    // Build new slots by shifting everything after the removed slot
+    const newSlots = { ...state.scanSlots };
+    for (let i = slotIndex; i < slotOrder.length - 1; i++) {
+      newSlots[slotOrder[i]] = state.scanSlots[slotOrder[i + 1]];
+    }
+    newSlots.s7 = null; // Last slot becomes empty
+
+    // If we were viewing the removed slot, go to live
+    const newActiveSlot = state.activeSlot === slotId ? 'live' : state.activeSlot;
+
+    set({ scanSlots: newSlots, activeSlot: newActiveSlot });
     useScanSlotsStore.setState({ scanSlots: newSlots });
   },
 

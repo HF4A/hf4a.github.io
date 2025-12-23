@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
+import { shareDiagnostics } from '../features/showxating/services/exportDiagnostics';
+import { useScanSlotsStore } from '../features/showxating/store/showxatingStore';
 
 interface SysPanelProps {
   isOpen: boolean;
@@ -7,6 +10,29 @@ interface SysPanelProps {
 
 export function SysPanel({ isOpen, onClose }: SysPanelProps) {
   const { defaultMode, defaultScanResult, setDefaultMode, setDefaultScanResult } = useSettingsStore();
+  const { scanSlots } = useScanSlotsStore();
+  const [isExporting, setIsExporting] = useState(false);
+
+  // Count total scans
+  const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
+  const scansCount = slotOrder.filter(id => scanSlots[id] !== null).length;
+
+  const handleSendDiagnostics = async () => {
+    if (scansCount === 0) {
+      alert('No scans to export. Capture some cards first!');
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      await shareDiagnostics();
+    } catch (err) {
+      console.error('[SysPanel] Failed to export diagnostics:', err);
+      alert('Failed to export diagnostics. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -106,7 +132,7 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
             </div>
           </div>
 
-          {/* DIAG button - disabled */}
+          {/* Diagnostics Section */}
           <div className="space-y-2">
             <label
               className="block text-xs tracking-wider uppercase"
@@ -114,11 +140,24 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
             >
               DIAGNOSTICS
             </label>
+            {/* SEND DIAGNOSTICS button */}
+            <button
+              onClick={handleSendDiagnostics}
+              disabled={isExporting || scansCount === 0}
+              className={`w-full px-3 py-2 text-xs tracking-wider uppercase border transition-colors ${
+                isExporting || scansCount === 0
+                  ? 'border-[#d4a84b]/20 text-[#d4a84b]/30 cursor-not-allowed'
+                  : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
+              }`}
+            >
+              {isExporting ? 'EXPORTING...' : `SEND DIAGNOSTICS${scansCount > 0 ? ` (${scansCount})` : ''}`}
+            </button>
+            {/* RECORD TELEMETRY button - disabled */}
             <button
               disabled
               className="w-full px-3 py-2 text-xs tracking-wider uppercase border border-[#d4a84b]/20 text-[#d4a84b]/30 cursor-not-allowed"
             >
-              DIAG - COMING SOON
+              RECORD TELEMETRY
             </button>
           </div>
 

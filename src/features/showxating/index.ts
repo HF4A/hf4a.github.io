@@ -7,6 +7,7 @@ export type { CameraViewHandle } from './components/CameraView';
 export { HudOverlay } from './components/HudOverlay';
 export { ScanActionBar } from './components/ScanActionBar';
 export { CapturedScanView } from './components/CapturedScanView';
+export { SlotContextMenu } from './components/SlotContextMenu';
 
 // Hooks
 export { useCamera } from './hooks/useCamera';
@@ -21,6 +22,8 @@ export { detectCardQuadrilateral, detectAllCards } from './services/visionPipeli
 export type { DetectionResult, MultiDetectionResult } from './services/visionPipeline';
 export { CardMatcher, getCardMatcher, computeDHashFromImageData, hammingDistance } from './services/cardMatcher';
 export type { CardIndexEntry, MatchResult } from './services/cardMatcher';
+export { exportDiagnosticsZip, downloadDiagnostics, shareDiagnostics } from './services/exportDiagnostics';
+export type { DiagnosticsMetadata, ScanDiagnostics, CardDiagnostics } from './services/exportDiagnostics';
 
 // Store
 export { useShowxatingStore, useScanSlotsStore } from './store/showxatingStore';
@@ -32,4 +35,5 @@ export type {
   ScanSlot,
   IdentifiedCard as StoreIdentifiedCard,
   CapturedScan,
+  PersistedScanState,
 } from './store/showxatingStore';

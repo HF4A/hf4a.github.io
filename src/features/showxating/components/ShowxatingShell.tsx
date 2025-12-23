@@ -185,7 +185,7 @@ export function ShowxatingShell() {
         {activeSlot === 'live' ? (
           <CameraView ref={cameraViewRef} />
         ) : (
-          <CapturedScanView slotId={activeSlot as 's1' | 's2' | 's3'} />
+          <CapturedScanView slotId={activeSlot as 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7'} />
         )}
       </main>
 

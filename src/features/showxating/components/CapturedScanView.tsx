@@ -11,7 +11,7 @@ import { useShowxatingStore, IdentifiedCard } from '../store/showxatingStore';
 import { useCardStore } from '../../../store/cardStore';
 
 interface CapturedScanViewProps {
-  slotId: 's1' | 's2' | 's3';
+  slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7';
 }
 
 export function CapturedScanView({ slotId }: CapturedScanViewProps) {

@@ -218,7 +218,7 @@ Bottom Action Bar:
 **Deliverable**: User can scroll between live view and 3 captured scans (persisted)
 **Status**: Deployed (2024-12-22). Slots persist, thumbnails show, tap to switch views.
 
-### Phase 8: Multi-Card Detection
+### Phase 8: Multi-Card Detection ✅ COMPLETE
 **Goal**: Detect and identify multiple cards in a single scan
 
 **Assumptions**:
@@ -234,45 +234,54 @@ Bottom Action Bar:
 5. Identify each detected card independently
 
 **Implementation**:
-- [ ] Refactor `detectCardQuadrilateral` to `detectAllCards` returning array
-- [ ] Add perspective skew estimation from largest detected quad
-- [ ] Apply skew correction before secondary detection pass
-- [ ] Size-based filtering: keep quads within 30% of median area
-- [ ] Update `useScanCapture` to handle multiple detections
-- [ ] Update `CapturedScanView` to render multiple card overlays
-- [ ] Test with 2-4 cards in frame
+- [x] Refactor `detectCardQuadrilateral` to `detectAllCards` returning array
+- [x] Add perspective skew estimation from largest detected quad
+- [x] Size-based filtering: keep quads within 40% of median area
+- [x] Update `ShowxatingShell` capture to handle multiple detections
+- [x] Update `CapturedScanView` to render multiple card overlays
+- [x] Test with 2-4 cards in frame
 
 **Deliverable**: Can detect and identify multiple cards in single capture
+**Status**: Deployed (2024-12-22). Multi-card detection working. Irregular edges from overlapping cards and rotation >10° can reduce detection accuracy.
 
-### Phase 9: System Settings [SYS]
-**Goal**: Settings panel with preferences and system info
+### Phase 9: System Settings & Diagnostics
+**Goal**: Settings panel with diagnostics export and expanded scan history
 
-- [ ] [SYS] button opens settings panel/drawer
-- [ ] **Setting 1**: Default Launch Mode (Scan vs Catalog)
-- [ ] **Setting 2**: Default Scan Result (Visible Side vs Opposite Side)
-  - Controls what side overlays show when new scan captured
-- [ ] Store all preferences in localStorage
-- [ ] [DIAG] button - greyed out, placeholder for future
+**SYS Panel Buttons**:
+- [x] **Setting 1**: Default Launch Mode (Scan vs Catalog) - already implemented
+- [x] **Setting 2**: Default Scan Result (Visible Side vs Opposite Side) - already implemented
+- [ ] **[SEND DIAGNOSTICS]**: Package full local state as ZIP for troubleshooting:
+  - All captured scan images (data URLs)
+  - Detected bounding boxes and corners
+  - OpenCV detection metadata (skew angle, confidence, areas)
+  - Card identification results (matched IDs, distances, confidence)
+  - Device info and app version
+  - Export via share sheet (mail, messages, etc.)
+- [ ] **[RECORD TELEMETRY]**: Greyed out placeholder for future video recording capability
 - [ ] System info display (Belter ship status style):
   - App version
   - System date/time
   - Device info
   - Connection status
 
-**Deliverable**: Settings accessible, preferences persist
+**Bottom Ribbon Expansion**:
+- [ ] Expand scan slots from 3 to 7 (S1-S7)
+- [ ] Make entire bottom bar horizontally scrollable
+- [ ] **Long-press on slot**: Show dialog with:
+  - [CLEAR] - Remove slot, shift older scans to fill gap
+  - [SEND] - Greyed out, future functionality
 
-### Phase 10: Diagnostics Capture [DIAG]
-**Goal**: Training data collection (FUTURE - greyed out initially)
+**Implementation**:
+- [ ] Update `showxatingStore` to support 7 slots
+- [ ] Add horizontal scroll container to `ScanActionBar`
+- [ ] Create `SlotContextMenu` component for long-press dialog
+- [ ] Create `exportDiagnostics.ts` service for ZIP generation
+- [ ] Add JSZip dependency
+- [ ] Wire up SEND DIAGNOSTICS button in SysPanel
 
-- [ ] Enable [DIAG] button in SYS panel
-- [ ] IndexedDB schema for sessions
-- [ ] Photo/video/audio capture
-- [ ] Session metadata form
-- [ ] Export as ZIP bundle
+**Deliverable**: Settings accessible, diagnostics exportable, 7 scan slots with management
 
-**Deliverable**: Can capture training data (deferred)
-
-### Phase 11: Polish & Optimization
+### Phase 10: Polish & Optimization
 **Goal**: Final polish and performance
 
 - [ ] Scanline animation refinement
@@ -282,6 +291,7 @@ Bottom Action Bar:
 - [ ] Error handling and recovery
 - [ ] Fix desktop SVG rendering issue
 - [ ] Accessibility review
+- [ ] Improved detection robustness (irregular edges, rotation tolerance)
 
 **Deliverable**: Production-ready feature
 
