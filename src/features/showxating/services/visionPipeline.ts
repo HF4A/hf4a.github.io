@@ -8,25 +8,47 @@ export interface DetectionResult {
   area: number;
 }
 
+export interface MultiDetectionResult {
+  cards: DetectionResult[];
+  skewAngle: number; // Detected perspective skew in degrees
+}
+
 // Card aspect ratio is approximately 63mm x 88mm = 0.716 (width/height)
 // Or inverted: 1.397 (height/width)
 const CARD_ASPECT_RATIO = 88 / 63; // ~1.4
-const ASPECT_RATIO_TOLERANCE = 0.3; // Allow some variance
-const MIN_AREA_RATIO = 0.04; // Card must be at least 4% of frame (filters out internal card elements)
-const MAX_AREA_RATIO = 0.9; // Card can't be more than 90% of frame
+const ASPECT_RATIO_TOLERANCE = 0.35; // Allow some variance
+const MIN_AREA_RATIO = 0.02; // Card must be at least 2% of frame (lowered for multi-card)
+const MAX_AREA_RATIO = 0.6; // Card can't be more than 60% of frame (lowered for multi-card)
+const SIZE_TOLERANCE = 0.4; // Cards must be within 40% of median size
 
 /**
- * Detect a card-shaped quadrilateral in the frame
+ * Detect a single card-shaped quadrilateral in the frame (legacy, for live detection)
  */
 export function detectCardQuadrilateral(
   imageData: ImageData,
   frameWidth: number,
   frameHeight: number
 ): DetectionResult {
+  const result = detectAllCards(imageData, frameWidth, frameHeight);
+  if (result.cards.length === 0) {
+    return { found: false, corners: null, confidence: 0, aspectRatio: 0, area: 0 };
+  }
+  // Return the largest/best card
+  return result.cards[0];
+}
+
+/**
+ * Detect all card-shaped quadrilaterals in the frame
+ */
+export function detectAllCards(
+  imageData: ImageData,
+  frameWidth: number,
+  frameHeight: number
+): MultiDetectionResult {
   const cv = window.cv;
 
   if (!cv || !cv.Mat) {
-    return { found: false, corners: null, confidence: 0, aspectRatio: 0, area: 0 };
+    return { cards: [], skewAngle: 0 };
   }
 
   const frameArea = frameWidth * frameHeight;
@@ -61,12 +83,9 @@ export function detectCardQuadrilateral(
     // Find contours
     cv.findContours(edges, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
-    let bestQuad: Point[] | null = null;
-    let bestArea = 0;
-    let bestConfidence = 0;
-    let bestAspectRatio = 0;
+    // Collect all valid card candidates
+    const candidates: DetectionResult[] = [];
 
-    // Iterate through contours to find card-like quadrilaterals
     for (let i = 0; i < contours.size(); i++) {
       const contour = contours.get(i);
       const area = cv.contourArea(contour);
@@ -77,7 +96,6 @@ export function detectCardQuadrilateral(
       }
 
       // Approximate the contour to a polygon
-      // Use larger epsilon (0.04) to smooth rounded corners into 4-point quad
       const approx = new cv.Mat();
       const epsilon = 0.04 * cv.arcLength(contour, true);
       cv.approxPolyDP(contour, approx, epsilon, true);
@@ -97,16 +115,18 @@ export function detectCardQuadrilateral(
 
           if (minAspectDiff < ASPECT_RATIO_TOLERANCE) {
             // Calculate confidence based on area and aspect ratio match
-            const areaConfidence = Math.min(area / (frameArea * 0.15), 1); // Larger is better up to 15%
+            const areaConfidence = Math.min(area / (frameArea * 0.1), 1);
             const aspectConfidence = 1 - (minAspectDiff / ASPECT_RATIO_TOLERANCE);
             const confidence = (areaConfidence * 0.4 + aspectConfidence * 0.6);
 
-            // Keep the best match (largest area with reasonable confidence)
-            if (area > bestArea && confidence > 0.1) {
-              bestArea = area;
-              bestConfidence = confidence;
-              bestAspectRatio = aspectRatio;
-              bestQuad = extractCorners(approx);
+            if (confidence > 0.1) {
+              candidates.push({
+                found: true,
+                corners: extractCorners(approx),
+                confidence,
+                aspectRatio,
+                area,
+              });
             }
           }
         }
@@ -115,16 +135,38 @@ export function detectCardQuadrilateral(
       approx.delete();
     }
 
+    // If no candidates, return empty
+    if (candidates.length === 0) {
+      return { cards: [], skewAngle: 0 };
+    }
+
+    // Sort by area (largest first)
+    candidates.sort((a, b) => b.area - a.area);
+
+    // Calculate median area for size filtering
+    const areas = candidates.map(c => c.area);
+    const medianArea = areas[Math.floor(areas.length / 2)];
+
+    // Filter cards by size consistency (within tolerance of median)
+    const filteredCards = candidates.filter(c => {
+      const sizeRatio = c.area / medianArea;
+      return sizeRatio >= (1 - SIZE_TOLERANCE) && sizeRatio <= (1 + SIZE_TOLERANCE);
+    });
+
+    // Calculate skew angle from the largest card
+    const skewAngle = filteredCards.length > 0
+      ? calculateSkewAngle(filteredCards[0].corners!)
+      : 0;
+
+    console.log(`[detectAllCards] Found ${candidates.length} candidates, ${filteredCards.length} after size filtering, skew: ${skewAngle.toFixed(1)}°`);
+
     return {
-      found: bestQuad !== null,
-      corners: bestQuad,
-      confidence: bestConfidence,
-      aspectRatio: bestAspectRatio,
-      area: bestArea,
+      cards: filteredCards,
+      skewAngle,
     };
   } catch (err) {
     console.error('Vision pipeline error:', err);
-    return { found: false, corners: null, confidence: 0, aspectRatio: 0, area: 0 };
+    return { cards: [], skewAngle: 0 };
   } finally {
     // Cleanup OpenCV matrices
     src?.delete();
@@ -134,6 +176,24 @@ export function detectCardQuadrilateral(
     contours?.delete();
     hierarchy?.delete();
   }
+}
+
+/**
+ * Calculate the skew angle of a card from its corners
+ * Returns angle in degrees (positive = clockwise rotation)
+ */
+function calculateSkewAngle(corners: Point[]): number {
+  // Use the top edge (TL to TR) to determine rotation
+  const topLeft = corners[0];
+  const topRight = corners[1];
+
+  const dx = topRight.x - topLeft.x;
+  const dy = topRight.y - topLeft.y;
+
+  // Calculate angle in degrees
+  const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+  return angle;
 }
 
 /**

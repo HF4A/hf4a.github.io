@@ -17,8 +17,8 @@ export type { IdentifiedCard, DetectedCard } from './hooks/useCardIdentification
 export { useScanCapture } from './hooks/useScanCapture';
 
 // Services
-export { detectCardQuadrilateral } from './services/visionPipeline';
-export type { DetectionResult } from './services/visionPipeline';
+export { detectCardQuadrilateral, detectAllCards } from './services/visionPipeline';
+export type { DetectionResult, MultiDetectionResult } from './services/visionPipeline';
 export { CardMatcher, getCardMatcher, computeDHashFromImageData, hammingDistance } from './services/cardMatcher';
 export type { CardIndexEntry, MatchResult } from './services/cardMatcher';
 

@@ -7,7 +7,7 @@ import { TopNavBar } from '../../../components/TopNavBar';
 import { SysPanel } from '../../../components/SysPanel';
 import { useShowxatingStore, IdentifiedCard, CapturedScan } from '../store/showxatingStore';
 import { useCardIdentification } from '../hooks/useCardIdentification';
-import { detectCardQuadrilateral } from '../services/visionPipeline';
+import { detectAllCards } from '../services/visionPipeline';
 import { getCardMatcher } from '../services/cardMatcher';
 import { useSettingsStore } from '../../../store/settingsStore';
 import '../styles/belter-theme.css';
@@ -72,18 +72,23 @@ export function ShowxatingShell() {
       // Get image data for detection
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-      // Detect card quadrilateral
-      const detection = detectCardQuadrilateral(imageData, canvas.width, canvas.height);
-      console.log('[ShowxatingShell] Detection result:', detection);
+      // Detect ALL card quadrilaterals
+      const detection = detectAllCards(imageData, canvas.width, canvas.height);
+      console.log('[ShowxatingShell] Detection result:', detection.cards.length, 'cards, skew:', detection.skewAngle.toFixed(1) + '°');
 
       const identifiedCards: IdentifiedCard[] = [];
+      const matcher = getCardMatcher();
+      console.log('[ShowxatingShell] Matcher loaded:', matcher.isLoaded(), 'Index size:', matcher.getIndexSize());
 
-      if (detection.found && detection.corners) {
+      // Process each detected card
+      for (const card of detection.cards) {
+        if (!card.corners) continue;
+
         // Get bounding box from corners
-        const minX = Math.min(...detection.corners.map((c) => c.x));
-        const maxX = Math.max(...detection.corners.map((c) => c.x));
-        const minY = Math.min(...detection.corners.map((c) => c.y));
-        const maxY = Math.max(...detection.corners.map((c) => c.y));
+        const minX = Math.min(...card.corners.map((c) => c.x));
+        const maxX = Math.max(...card.corners.map((c) => c.x));
+        const minY = Math.min(...card.corners.map((c) => c.y));
+        const maxY = Math.max(...card.corners.map((c) => c.y));
 
         const region = {
           x: Math.max(0, minX),
@@ -91,15 +96,10 @@ export function ShowxatingShell() {
           width: Math.min(canvas.width - minX, maxX - minX),
           height: Math.min(canvas.height - minY, maxY - minY),
         };
-        console.log('[ShowxatingShell] Card region:', region);
-
-        // Identify the card
-        const matcher = getCardMatcher();
-        console.log('[ShowxatingShell] Matcher loaded:', matcher.isLoaded(), 'Index size:', matcher.getIndexSize());
 
         if (matcher.isLoaded()) {
           const matches = matcher.matchFromCanvas(canvas, region);
-          console.log('[ShowxatingShell] Matches found:', matches.length, matches.slice(0, 3));
+          console.log('[ShowxatingShell] Card region:', region, 'Matches:', matches.length, matches.slice(0, 2));
 
           if (matches.length > 0) {
             const match = matches[0];
@@ -108,7 +108,7 @@ export function ShowxatingShell() {
               filename: match.filename,
               side: match.side,
               confidence: match.confidence,
-              corners: detection.corners,
+              corners: card.corners,
               showingOpposite: defaultScanResult === 'opposite',
             });
           } else {
@@ -118,14 +118,14 @@ export function ShowxatingShell() {
               filename: '',
               side: null,
               confidence: 0,
-              corners: detection.corners,
+              corners: card.corners,
               showingOpposite: defaultScanResult === 'opposite',
             });
           }
-        } else {
-          console.warn('[ShowxatingShell] Matcher not loaded!');
         }
       }
+
+      console.log('[ShowxatingShell] Total identified cards:', identifiedCards.length);
 
       // Create scan record
       const scan: CapturedScan = {

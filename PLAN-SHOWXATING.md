@@ -218,7 +218,33 @@ Bottom Action Bar:
 **Deliverable**: User can scroll between live view and 3 captured scans (persisted)
 **Status**: Deployed (2024-12-22). Slots persist, thumbnails show, tap to switch views.
 
-### Phase 8: System Settings [SYS]
+### Phase 8: Multi-Card Detection
+**Goal**: Detect and identify multiple cards in a single scan
+
+**Assumptions**:
+- Cards are roughly the same size in the image
+- Cards have similar orientation (not wildly rotated)
+- Some parallax is expected (image not from directly overhead)
+
+**Approach**:
+1. Detect perspective skew from the dominant card orientation
+2. Apply correction to normalize the view
+3. Find all card-sized quadrilaterals (not just the largest)
+4. Filter by consistent size (within tolerance of median card size)
+5. Identify each detected card independently
+
+**Implementation**:
+- [ ] Refactor `detectCardQuadrilateral` to `detectAllCards` returning array
+- [ ] Add perspective skew estimation from largest detected quad
+- [ ] Apply skew correction before secondary detection pass
+- [ ] Size-based filtering: keep quads within 30% of median area
+- [ ] Update `useScanCapture` to handle multiple detections
+- [ ] Update `CapturedScanView` to render multiple card overlays
+- [ ] Test with 2-4 cards in frame
+
+**Deliverable**: Can detect and identify multiple cards in single capture
+
+### Phase 9: System Settings [SYS]
 **Goal**: Settings panel with preferences and system info
 
 - [ ] [SYS] button opens settings panel/drawer
@@ -235,7 +261,7 @@ Bottom Action Bar:
 
 **Deliverable**: Settings accessible, preferences persist
 
-### Phase 9: Diagnostics Capture [DIAG]
+### Phase 10: Diagnostics Capture [DIAG]
 **Goal**: Training data collection (FUTURE - greyed out initially)
 
 - [ ] Enable [DIAG] button in SYS panel
@@ -246,7 +272,7 @@ Bottom Action Bar:
 
 **Deliverable**: Can capture training data (deferred)
 
-### Phase 10: Polish & Optimization
+### Phase 11: Polish & Optimization
 **Goal**: Final polish and performance
 
 - [ ] Scanline animation refinement
@@ -276,8 +302,9 @@ Bottom Action Bar:
 
 ### Card Detection (OpenCV.js)
 1. Grayscale → Gaussian blur → Canny edges → Find contours
-2. Filter for 4-corner convex shapes with ~1.5 aspect ratio (card proportions)
-3. Return largest matching quadrilateral corners
+2. Filter for 4-corner convex shapes with ~1.4 aspect ratio (card proportions)
+3. **Multi-card mode**: Return all matching quadrilaterals within size tolerance
+4. Optional skew correction based on dominant card orientation
 
 ### Card Identification (dHash)
 1. Extract detected region, resize to 9x8
