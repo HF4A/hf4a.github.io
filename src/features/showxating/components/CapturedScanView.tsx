@@ -23,10 +23,10 @@ import type { Card, CardType } from '../../../types/card';
 // HF4A cards have consistent layouts: type at top, title at bottom
 const CARD_REGIONS = {
   // Title region: bottom of card, usually contains the card name in readable font
-  // Expanded from y:82 h:15 to capture more of the title area
   title: { x: 2, y: 78, w: 96, h: 20 },
-  // Type region: top-left of card, contains type icon and name
-  type: { x: 0, y: 0, w: 40, h: 15 },
+  // Type region: top of card, contains type name in colored banner
+  // Expanded to capture full banner area (was w:40 h:15)
+  type: { x: 0, y: 0, w: 50, h: 18 },
 };
 
 // Swipe gesture thresholds
@@ -644,8 +644,8 @@ function CorrectionModal({
 
         if (ocrCtx) {
           // Scale up small images for better OCR accuracy
-          // Tesseract works best with text ~30-40px tall, so scale to ~150px region height
-          const MIN_OCR_HEIGHT = 150;
+          // Tesseract works best with text ~30-40px tall, so scale to ~200px region height
+          const MIN_OCR_HEIGHT = 200;
           const scaleFactor = regionH < MIN_OCR_HEIGHT ? MIN_OCR_HEIGHT / regionH : 1;
           const scaledW = Math.round(regionW * scaleFactor);
           const scaledH = Math.round(regionH * scaleFactor);
@@ -660,9 +660,25 @@ function CorrectionModal({
 
           // Draw scaled type region
           ocrCtx.drawImage(canvas, regionX, regionY, regionW, regionH, 0, 0, scaledW, scaledH);
+
+          // Preprocess for better OCR: convert to grayscale and increase contrast
+          const imageData = ocrCtx.getImageData(0, 0, scaledW, scaledH);
+          const data = imageData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            // Convert to grayscale
+            const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+            // Increase contrast and binarize (threshold at 128)
+            const bw = gray > 128 ? 255 : 0;
+            data[i] = bw;     // R
+            data[i + 1] = bw; // G
+            data[i + 2] = bw; // B
+            // Alpha stays the same
+          }
+          ocrCtx.putImageData(imageData, 0, 0);
+
           const ocrDataUrl = ocrCanvas.toDataURL('image/png');
 
-          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
+          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale, binarized)`);
 
           Tesseract.recognize(ocrDataUrl, 'eng', {
             logger: (m) => {

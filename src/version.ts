@@ -15,5 +15,6 @@
 //   0.2.11 - Fix type filter: show ALL cards of type, expand OCR region, add confidence logging
 //   0.2.12 - Fix front side image after correction (.webp), scale up OCR region for better accuracy
 //   0.2.13 - OCR type region (top of card) instead of title (bottom) - type labels are more readable
-export const APP_VERSION = '0.2.13';
+//   0.2.14 - OCR preprocessing: binarize image, scale to 200px, expand type region
+export const APP_VERSION = '0.2.14';
 export const BUILD_DATE = '2025-12-23';
