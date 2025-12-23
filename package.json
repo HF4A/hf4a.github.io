@@ -14,6 +14,7 @@
     "ocr-cards": "tsx scripts/ocr-cards.ts",
     "validate-data": "tsx scripts/validate-data.ts",
     "import-spreadsheet": "node scripts/import-spreadsheet.js",
+    "generate-card-index": "tsx scripts/generate-card-index.ts",
     "data-pipeline": "npm run generate-manifest && npm run parse-filenames && npm run build-relationships",
     "prepare-data": "npm run data-pipeline && npm run validate-data"
   },
