@@ -137,29 +137,43 @@ For each detected card in the captured image:
 
 ### Card Overlay Interaction (on captured image)
 
-**Tap overlay**: Flips card between visible/opposite side (does NOT open full detail)
+**Single tap**: Flips card between visible/opposite side (quick toggle)
 - Each card's flip state is tracked independently
 - Flip states persist per card, per scan slot
 - Quick way to check the other side without leaving the scan view
 
-**Long-press or double-tap overlay**: Opens full-screen card detail view
+**Double-tap**: Opens full-screen card detail view (modal)
+- Card expands to full screen
+- Swipe left/right to flip, tap to dismiss
+- [INFO] button for metadata
+
+**Long-press**: Manual correction flow
+1. Remove the image overlay to reveal original captured image
+2. Display ranked list of likely matches (top 5-10 candidates by combined score)
+3. User selects correct match from list
+4. Correction is saved and applied
+5. Correction persists in cache for future training data
 
 ### Card Detail View (full screen)
 
-When user long-presses or double-taps a card overlay:
+When user double-taps a card overlay:
 1. Card expands to **full screen** (like card catalog detail view)
 2. **Swipe left/right**: Flip card to see other side
-3. **Swipe up/down**: Dismiss, return to scanned image with overlays
+3. **Tap anywhere / swipe down**: Dismiss, return to scanned image with overlays
 4. Small **[INFO]** button (same style as [SCAN]) opens metadata/info page in Belter style, as a popup on top of the Card Detail
 5. **NO metadata panel to scroll to** - card detail shows ONLY the card image with flip capability; metadata is hidden until INFO selected
 
 ### State Persistence
 
-- **Scan slots (S1/S2/S3)**: Persisted in localStorage between page reloads
+- **Scan slots (S1-S7)**: Persisted in localStorage between page reloads
   - Captured image data
   - Detected cards and their positions
   - Flip state for each card
 - **Settings**: Persisted in localStorage (see SYS settings)
+- **Manual corrections cache**: Persisted separately from scan slots
+  - Stores user corrections even after slots clear
+  - Includes: original hash, incorrect match, correct match, timestamp
+  - Exported with diagnostics for model training
 
 ### User Flow Summary
 1. User opens SHOWXATING (default on app launch)
@@ -328,7 +342,10 @@ Vision pipeline for Scan Mode
 	•	OpenCV.js (~8MB, CDN, lazy-loaded)
 	•	Card contour detection
 	•	Perspective transform
-	•	dHash perceptual hashing for card identification
+	•	Multi-factor card identification:
+		- dHash perceptual hashing (visual structure)
+		- Text extraction and fuzzy matching against card metadata (title, description, stats)
+		- Combined scoring for improved accuracy
 	•	No server calls
 
 Capture Mode additions

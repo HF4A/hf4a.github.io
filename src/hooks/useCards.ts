@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import { useCardStore } from '../store/cardStore';
 import { useFilterStore } from '../store/filterStore';
+import { useSettingsStore } from '../store/settingsStore';
 import type { Card } from '../types/card';
 
 const fuseOptions = {
@@ -20,6 +21,7 @@ const fuseOptions = {
 export function useCards() {
   const { cards, isLoading, error, setCards, setError } = useCardStore();
   const filters = useFilterStore();
+  const { getActiveCardTypes } = useSettingsStore();
 
   // Load cards on mount
   useEffect(() => {
@@ -39,12 +41,21 @@ export function useCards() {
   // Create Fuse instance for search
   const fuse = useMemo(() => new Fuse(cards, fuseOptions), [cards]);
 
+  // Get active modules for filtering
+  const activeModules = useSettingsStore((state) => state.activeModules);
+
   // Filter and search cards
   const filteredCards = useMemo(() => {
-    // First, filter to only show base side cards
+    // Get active card types from module settings
+    const activeTypes = new Set(getActiveCardTypes());
+
+    // First, filter by active modules (card types)
+    let result = cards.filter((card) => activeTypes.has(card.type));
+
+    // Then filter to only show base side cards
     // Base side is the first element of upgradeChain
     // Cards without upgrade chains are standalone and all shown
-    let result = cards.filter((card) => {
+    result = result.filter((card) => {
       // Cards without sides are always shown
       if (!card.side) return true;
 
@@ -110,7 +121,7 @@ export function useCards() {
     }
 
     return result;
-  }, [cards, fuse, filters]);
+  }, [cards, fuse, filters, activeModules, getActiveCardTypes]);
 
   // Get unique values for filter options
   const filterOptions = useMemo(() => {

@@ -392,8 +392,151 @@ Bottom Action Bar:
 
 ---
 
+#### Problem 4: Image Not Loading (Question Mark Display) ✅ FIXED v0.2.6
+**Symptom**: Identified cards show question mark instead of card image.
+
+**Root Cause**: File extension mismatch
+- `cards.json` contains `.png` extensions: `Colonist12-Purple-NeumannMatter.png`
+- Actual files on disk are `.webp`: `Colonist12-Purple-NeumannMatter.webp`
+- `card-index.json` correctly has `.webp` extensions
+- When scanner identifies card (returns `.webp`), UI looks up `catalogCard.filename` (has `.png`)
+- Image src points to non-existent `.png` file → broken image
+
+**Fix**:
+- [x] Use scanner's filename (`.webp`) for visible side instead of catalogCard.filename
+- [x] Add `ensureWebp()` helper to convert `.png` to `.webp` for opposite side lookup
+- File: `src/features/showxating/components/CapturedScanView.tsx`
+
+---
+
+#### Problem 5: VIS/OPP Nomenclature Confusing ✅ FIXED v0.2.6
+**Symptom**: Labels "VIS" and "OPP" not intuitive for users.
+
+**Fix**:
+- [x] Changed to "FRONT" and "BACK" throughout
+- [x] Updated overlay indicator in CapturedScanView
+- [x] Updated SYS panel "Default Scan Result" buttons
+
+---
+
+#### Problem 6: Long-Press Navigates to URL ✅ FIXED v0.2.6
+**Symptom**: Long-pressing identified card navigates to `/catalog/card-id` URL instead of modal.
+
+**Fix**:
+- [x] Created `CardDetailModal` component for in-page card detail view
+- [x] Long-press now opens modal overlay instead of URL navigation
+- [x] Modal supports tap-to-flip and escape-to-close
+- File: `src/features/showxating/components/CapturedScanView.tsx`
+
+---
+
+#### Problem 7: Card Flip Rendering Backwards ✅ FIXED v0.2.5
+**Symptom**: When tapping to flip to back side, card image appears mirrored.
+
+**Fix**:
+- [x] Added CSS `transform: scaleX(-1)` when `showingOpposite` is true
+- Simulates physically flipping a card horizontally
+- File: `src/features/showxating/components/CapturedScanView.tsx:248`
+
+---
+
+#### Problem 8: Module Filter for Scan Matching ✅ ADDED v0.2.5
+**Feature**: Allow users to filter which card types are active for scanning.
+
+**Implementation**:
+- [x] Added `activeModules` setting to settingsStore (default: modules 0, 1, 2)
+- [x] Added "ACTIVE MODULES" section to SYS panel with toggle buttons
+- [x] Filter applied to card matching (only match cards from active modules)
+- [x] Filter applied to catalog display (only show cards from active modules)
+- Reduces false positives by excluding expansion cards user doesn't own
+
+---
+
+#### Problem 9: Multi-Factor Matching for Improved Accuracy 🚧 v0.2.6
+**Goal**: Combine visual hashing with text-based matching for better identification.
+
+**Current State**: dHash alone produces ~70% accuracy with 22-bit threshold.
+
+**Implementation**:
+- [ ] Extract text from warped card image using simple edge detection / contrast analysis
+- [ ] Match extracted text against card metadata (title, description)
+- [ ] Use Fuse.js fuzzy matching (already in project) for text comparison
+- [ ] Combine dHash distance + text match score for final ranking
+- [ ] Weight factors: dHash 60%, text match 40%
+
+**Files to modify**:
+- `src/features/showxating/services/cardMatcher.ts` - Add text matching
+- `src/features/showxating/services/textExtractor.ts` - New file for OCR-lite
+
+---
+
+#### Problem 10: Interaction Model Update 🚧 v0.2.6
+**Goal**: Differentiate single-tap, double-tap, and long-press behaviors.
+
+**New Interaction Model**:
+- **Single tap**: Flip card (FRONT/BACK) - unchanged
+- **Double-tap**: Open card detail modal
+- **Long-press**: Manual correction flow
+
+**Manual Correction Flow**:
+1. Remove overlay to show original captured image
+2. Display ranked list of top matches (from multi-factor scoring)
+3. User selects correct card
+4. Correction saved to persistent cache
+5. Overlay updates to show corrected card
+
+**Implementation**:
+- [ ] Add double-tap detection (300ms threshold)
+- [ ] Move modal open from long-press to double-tap
+- [ ] Create `CorrectionPanel` component for long-press
+- [ ] Show top 5-10 matches with thumbnails and names
+- [ ] Implement correction selection and save
+
+**Files to modify**:
+- `src/features/showxating/components/CapturedScanView.tsx`
+
+---
+
+#### Problem 11: Manual Corrections Cache 🚧 v0.2.6
+**Goal**: Persist user corrections for training data.
+
+**Data Structure**:
+```typescript
+interface ManualCorrection {
+  id: string;
+  timestamp: number;
+  computedHash: string;
+  originalMatch: string | null;  // What the system guessed
+  correctedMatch: string;         // What user selected
+  topMatches: { cardId: string; score: number }[];
+  imageDataUrl?: string;          // Optional: cropped card region
+}
+```
+
+**Persistence**:
+- Stored in localStorage via Zustand persist
+- Survives slot clears and app restarts
+- Included in diagnostics export
+- Can be cleared manually from SYS panel
+
+**Implementation**:
+- [ ] Create `correctionsStore.ts` with persist middleware
+- [ ] Add correction on user selection
+- [ ] Export corrections in `exportDiagnostics.ts`
+- [ ] Add "CLEAR CORRECTIONS" button to SYS panel (optional)
+
+---
+
+#### UI Update: Factory Reset Wording 🚧 v0.2.6
+**Change**: "Blow da airlocks" → "Wipe the core"
+- Reference to wiping data cores in The Expanse
+- More thematically appropriate
+
+---
+
 **Deliverable**: Cards correctly identified and displayed in overlay
 **Priority**: CRITICAL - feature is non-functional without these fixes
+**Status**: v0.2.6 - Image loading, nomenclature, modal, flip, multi-factor, corrections
 
 ---
 

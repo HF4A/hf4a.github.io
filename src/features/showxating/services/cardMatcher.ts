@@ -6,12 +6,42 @@
  * hashes computed from detected card regions in the camera feed.
  */
 
+import type { CardType } from '../../../types/card';
+import { useSettingsStore, MODULE_CARD_TYPES } from '../../../store/settingsStore';
+
 export interface CardIndexEntry {
   filename: string;
   cardId: string;
   side: string | null;
   hash: string;
   hashBytes: number[];
+  type?: CardType; // Derived from cardId
+}
+
+/**
+ * Extract card type from cardId (e.g., "bernal-01" -> "bernal")
+ */
+function getTypeFromCardId(cardId: string): CardType {
+  const typeStr = cardId.replace(/-\d+$/, '').toLowerCase();
+  // Handle special cases
+  if (typeStr === 'gw-thruster') return 'gw-thruster';
+  return typeStr as CardType;
+}
+
+/**
+ * Get currently active card types from settings
+ */
+function getActiveTypes(): Set<CardType> {
+  const store = useSettingsStore.getState();
+  const types = new Set<CardType>(MODULE_CARD_TYPES[-1]); // Always include base
+  for (const mod of store.activeModules) {
+    if (MODULE_CARD_TYPES[mod]) {
+      for (const t of MODULE_CARD_TYPES[mod]) {
+        types.add(t);
+      }
+    }
+  }
+  return types;
 }
 
 export interface MatchResult {
@@ -127,7 +157,12 @@ export class CardMatcher {
         if (!response.ok) {
           throw new Error(`Failed to load card index: ${response.status}`);
         }
-        this.index = await response.json();
+        const rawIndex: CardIndexEntry[] = await response.json();
+        // Add type to each entry
+        this.index = rawIndex.map((entry) => ({
+          ...entry,
+          type: getTypeFromCardId(entry.cardId),
+        }));
         this.loaded = true;
         console.log(`[CardMatcher] Loaded ${this.index.length} card hashes`);
       } catch (error) {
@@ -207,16 +242,23 @@ export class CardMatcher {
 
   /**
    * Match a hash against the index with debug info
+   * Only matches cards from active modules
    */
   matchFromHashWithDebug(queryHash: number[]): MatchResultWithDebug {
     if (!this.loaded) {
       throw new Error('Card index not loaded. Call loadIndex() first.');
     }
 
+    const activeTypes = getActiveTypes();
     const results: MatchResult[] = [];
     const allDistances: { cardId: string; distance: number }[] = [];
 
     for (const entry of this.index) {
+      // Skip cards not in active modules
+      if (entry.type && !activeTypes.has(entry.type)) {
+        continue;
+      }
+
       const distance = hammingDistance(queryHash, entry.hashBytes);
       allDistances.push({ cardId: entry.cardId, distance });
 

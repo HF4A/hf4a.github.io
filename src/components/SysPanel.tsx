@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSettingsStore } from '../store/settingsStore';
+import { useSettingsStore, MODULE_LABELS } from '../store/settingsStore';
 import { shareDiagnostics } from '../features/showxating/services/exportDiagnostics';
 import { useScanSlotsStore } from '../features/showxating/store/showxatingStore';
 import { APP_VERSION, BUILD_DATE } from '../version';
@@ -10,7 +10,7 @@ interface SysPanelProps {
 }
 
 export function SysPanel({ isOpen, onClose }: SysPanelProps) {
-  const { defaultMode, defaultScanResult, setDefaultMode, setDefaultScanResult } = useSettingsStore();
+  const { defaultMode, defaultScanResult, activeModules, setDefaultMode, setDefaultScanResult, toggleModule } = useSettingsStore();
   const { scanSlots } = useScanSlotsStore();
   const [isExporting, setIsExporting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -126,7 +126,7 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
                     : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
                 }`}
               >
-                VISIBLE
+                FRONT
               </button>
               <button
                 onClick={() => setDefaultScanResult('opposite')}
@@ -136,7 +136,7 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
                     : 'border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10'
                 }`}
               >
-                OPPOSITE
+                BACK
               </button>
             </div>
           </div>
@@ -200,6 +200,39 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
             </div>
           </div>
 
+          {/* Active Modules Section */}
+          <div className="border-t border-[#d4a84b]/20 pt-4">
+            <label
+              className="block text-xs tracking-wider uppercase mb-3"
+              style={{ color: '#a08040' }}
+            >
+              ACTIVE MODULES
+            </label>
+            <p className="text-[10px] mb-3" style={{ color: '#707080' }}>
+              Base cards always included. Select expansion modules for catalog and scan matching.
+            </p>
+            <div className="space-y-2">
+              {Object.entries(MODULE_LABELS).map(([moduleNum, label]) => {
+                const num = parseInt(moduleNum);
+                const isActive = activeModules.includes(num);
+                return (
+                  <button
+                    key={num}
+                    onClick={() => toggleModule(num)}
+                    className={`w-full px-3 py-2 text-xs tracking-wider uppercase border text-left transition-colors flex items-center justify-between ${
+                      isActive
+                        ? 'bg-[#d4a84b]/20 border-[#d4a84b] text-[#d4a84b]'
+                        : 'border-[#d4a84b]/30 text-[#a08040]/50 hover:bg-[#d4a84b]/5'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    <span>{isActive ? '●' : '○'}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Factory Reset Section */}
           <div className="border-t border-[#d4a84b]/20 pt-4">
             <label
@@ -214,13 +247,13 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
                 onClick={() => setShowResetConfirm(true)}
                 className="w-full px-3 py-2 text-xs tracking-wider uppercase border border-[#ff3b3b]/50 text-[#ff3b3b]/70 hover:bg-[#ff3b3b]/10 transition-colors"
               >
-                BLOW DA AIRLOCKS
+                WIPE THE CORE
               </button>
             ) : (
               <div className="space-y-3 p-3 border border-[#ff3b3b]/50 bg-[#ff3b3b]/5 rounded">
                 <p className="text-xs" style={{ color: '#ff3b3b' }}>
-                  Oye, beratna! Dis gonna vent all yo data to da void, sasa ke?
-                  All scans, settings, ereything go tumang.
+                  Oye, kopeng! Dis gonna wipe da whole core, sasa ke?
+                  All scans, settings, corrections - ereything go poof.
                 </p>
                 <div className="flex gap-2">
                   <button

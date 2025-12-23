@@ -11,6 +11,7 @@
 
 import JSZip from 'jszip';
 import { useScanSlotsStore, CapturedScan, IdentifiedCard } from '../store/showxatingStore';
+import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
 import { APP_VERSION, BUILD_DATE } from '../../../version';
 
 export interface DiagnosticsMetadata {
@@ -24,6 +25,7 @@ export interface DiagnosticsMetadata {
   scansCount: number;
   totalCardsDetected: number;
   totalCardsIdentified: number;
+  correctionsCount: number;
 }
 
 export interface ScanDiagnostics {
@@ -74,7 +76,7 @@ function formatScanDiagnostics(scan: CapturedScan): ScanDiagnostics {
   };
 }
 
-function getMetadata(scans: CapturedScan[]): DiagnosticsMetadata {
+function getMetadata(scans: CapturedScan[], corrections: ManualCorrection[]): DiagnosticsMetadata {
   const totalCards = scans.reduce((sum, s) => sum + s.cards.length, 0);
   const identifiedCards = scans.reduce(
     (sum, s) => sum + s.cards.filter(c => c.cardId !== 'unknown' && c.cardId !== '').length,
@@ -95,6 +97,7 @@ function getMetadata(scans: CapturedScan[]): DiagnosticsMetadata {
     scansCount: scans.length,
     totalCardsDetected: totalCards,
     totalCardsIdentified: identifiedCards,
+    correctionsCount: corrections.length,
   };
 }
 
@@ -131,21 +134,28 @@ export async function exportDiagnosticsZip(): Promise<Blob> {
     }
   });
 
-  if (scans.length === 0) {
-    // Create empty diagnostics if no scans
-    const metadata = getMetadata([]);
+  // Get all corrections from persisted store
+  const corrections = useCorrectionsStore.getState().getAllCorrections();
+
+  if (scans.length === 0 && corrections.length === 0) {
+    // Create empty diagnostics if no scans or corrections
+    const metadata = getMetadata([], []);
     zip.file('metadata.json', JSON.stringify(metadata, null, 2));
     zip.file('scans.json', JSON.stringify([], null, 2));
+    zip.file('corrections.json', JSON.stringify([], null, 2));
     return zip.generateAsync({ type: 'blob' });
   }
 
   // Add metadata
-  const metadata = getMetadata(scans);
+  const metadata = getMetadata(scans, corrections);
   zip.file('metadata.json', JSON.stringify(metadata, null, 2));
 
   // Add scan diagnostics (without images)
   const scanDiagnostics = scans.map(formatScanDiagnostics);
   zip.file('scans.json', JSON.stringify(scanDiagnostics, null, 2));
+
+  // Add corrections (valuable training data for improving card matching)
+  zip.file('corrections.json', JSON.stringify(corrections, null, 2));
 
   // Create images folder and add scan images
   const imagesFolder = zip.folder('images');
