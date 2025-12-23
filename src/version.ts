@@ -13,5 +13,6 @@
 //   0.2.9 - Add Tesseract.js OCR, type filter dropdown in correction modal, tap-to-ID fix
 //   0.2.10 - Region-targeted OCR (title area only), card template definitions, timing in logs
 //   0.2.11 - Fix type filter: show ALL cards of type, expand OCR region, add confidence logging
-export const APP_VERSION = '0.2.11';
+//   0.2.12 - Fix front side image after correction (.webp), scale up OCR region for better accuracy
+export const APP_VERSION = '0.2.12';
 export const BUILD_DATE = '2025-12-23';

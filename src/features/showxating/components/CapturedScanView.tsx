@@ -237,7 +237,7 @@ function CardOverlay({
   const getDisplayFilename = useCallback(() => {
     const ensureWebp = (filename: string) => filename.replace('.png', '.webp');
 
-    if (!catalogCard) return card.filename; // Scanner filename already has .webp
+    if (!catalogCard) return ensureWebp(card.filename); // Ensure .webp even for scanner filename
 
     if (card.showingOpposite) {
       // Show opposite side - find related card
@@ -249,8 +249,8 @@ function CardOverlay({
       const filename = relatedCard?.filename || catalogCard.filename;
       return ensureWebp(filename);
     }
-    // Show visible side - use scanner's filename (has correct .webp) over catalog
-    return card.filename || ensureWebp(catalogCard.filename);
+    // Show visible side - always ensure .webp extension
+    return ensureWebp(card.filename || catalogCard.filename);
   }, [catalogCard, catalogCards, card.showingOpposite, card.filename]);
 
   // Calculate overlay position based on detected corners
@@ -643,10 +643,26 @@ function CorrectionModal({
         const titleCtx = titleCanvas.getContext('2d');
 
         if (titleCtx) {
-          titleCtx.drawImage(canvas, titleX, titleY, titleW, titleH, 0, 0, titleW, titleH);
+          // Scale up small images for better OCR accuracy
+          // Tesseract works best with text ~30-40px tall, so scale to ~150px region height
+          const MIN_OCR_HEIGHT = 150;
+          const scaleFactor = titleH < MIN_OCR_HEIGHT ? MIN_OCR_HEIGHT / titleH : 1;
+          const scaledW = Math.round(titleW * scaleFactor);
+          const scaledH = Math.round(titleH * scaleFactor);
+
+          // Resize canvas to scaled dimensions
+          titleCanvas.width = scaledW;
+          titleCanvas.height = scaledH;
+
+          // Enable image smoothing for better upscaling
+          titleCtx.imageSmoothingEnabled = true;
+          titleCtx.imageSmoothingQuality = 'high';
+
+          // Draw scaled title region
+          titleCtx.drawImage(canvas, titleX, titleY, titleW, titleH, 0, 0, scaledW, scaledH);
           const titleDataUrl = titleCanvas.toDataURL('image/png');
 
-          log.debug(`OCR title region: ${titleW}x${titleH}px from card ${cropW}x${cropH}px`);
+          log.debug(`OCR title region: ${titleW}x${titleH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
 
           Tesseract.recognize(titleDataUrl, 'eng', {
             logger: (m) => {
