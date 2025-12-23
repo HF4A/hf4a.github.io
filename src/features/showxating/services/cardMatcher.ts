@@ -7,7 +7,8 @@
  */
 
 import type { CardType } from '../../../types/card';
-import { useSettingsStore, MODULE_CARD_TYPES } from '../../../store/settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
+import { log } from '../../../store/logsStore';
 
 export interface CardIndexEntry {
   filename: string;
@@ -33,15 +34,7 @@ function getTypeFromCardId(cardId: string): CardType {
  */
 function getActiveTypes(): Set<CardType> {
   const store = useSettingsStore.getState();
-  const types = new Set<CardType>(MODULE_CARD_TYPES[-1]); // Always include base
-  for (const mod of store.activeModules) {
-    if (MODULE_CARD_TYPES[mod]) {
-      for (const t of MODULE_CARD_TYPES[mod]) {
-        types.add(t);
-      }
-    }
-  }
-  return types;
+  return new Set<CardType>(store.activeCardTypes);
 }
 
 export interface MatchResult {
@@ -164,9 +157,9 @@ export class CardMatcher {
           type: getTypeFromCardId(entry.cardId),
         }));
         this.loaded = true;
-        console.log(`[CardMatcher] Loaded ${this.index.length} card hashes`);
+        log.info(`Card index loaded: ${this.index.length} hashes`);
       } catch (error) {
-        console.error('[CardMatcher] Failed to load index:', error);
+        log.error('Failed to load card index', { error: String(error) });
         throw error;
       }
     })();

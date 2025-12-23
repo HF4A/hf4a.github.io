@@ -4,15 +4,22 @@
  * Gestures:
  * - Single tap: flip card (FRONT/BACK)
  * - Double-tap: open card detail modal
- * - Long-press: open correction modal (manual card selection)
+ *
+ * The card detail modal includes a [RESCAN] button for correction flow.
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { motion, PanInfo } from 'framer-motion';
 import { useShowxatingStore, IdentifiedCard } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
 import { useCardStore } from '../../../store/cardStore';
+import { log } from '../../../store/logsStore';
 import Fuse from 'fuse.js';
 import type { Card } from '../../../types/card';
+
+// Swipe gesture thresholds
+const SWIPE_THRESHOLD = 80;
+const VELOCITY_THRESHOLD = 500;
 
 interface CapturedScanViewProps {
   slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7';
@@ -24,7 +31,11 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
   const scan = scanSlots[slotId];
 
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const [detailCard, setDetailCard] = useState<Card | null>(null);
+  const [detailData, setDetailData] = useState<{
+    card: Card;
+    identifiedCard: IdentifiedCard;
+    cardIndex: number;
+  } | null>(null);
   const [correctionData, setCorrectionData] = useState<{
     card: IdentifiedCard;
     cardIndex: number;
@@ -132,18 +143,26 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
             // Find the card in the catalog and open detail modal
             const catalogCard = cards.find((c) => c.id === card.cardId);
             if (catalogCard) {
-              setDetailCard(catalogCard);
+              setDetailData({ card: catalogCard, identifiedCard: card, cardIndex: index });
             }
-          }}
-          onOpenCorrection={() => {
-            setCorrectionData({ card, cardIndex: index });
           }}
         />
       ))}
 
       {/* Card Detail Modal */}
-      {detailCard && (
-        <CardDetailModal card={detailCard} onClose={() => setDetailCard(null)} />
+      {detailData && (
+        <CardDetailModal
+          card={detailData.card}
+          onClose={() => setDetailData(null)}
+          onRescan={() => {
+            // Open correction flow for this card
+            setCorrectionData({
+              card: detailData.identifiedCard,
+              cardIndex: detailData.cardIndex,
+            });
+            setDetailData(null);
+          }}
+        />
       )}
 
       {/* Correction Modal */}
@@ -177,10 +196,9 @@ interface CardOverlayProps {
   card: IdentifiedCard;
   cardIndex: number;
   containerSize: { width: number; height: number };
-  imageRef: React.RefObject<HTMLImageElement>;
+  imageRef: React.RefObject<HTMLImageElement | null>;
   onFlip: () => void;
   onOpenDetail: () => void;
-  onOpenCorrection: () => void;
 }
 
 function CardOverlay({
@@ -189,12 +207,9 @@ function CardOverlay({
   imageRef,
   onFlip,
   onOpenDetail,
-  onOpenCorrection,
 }: CardOverlayProps) {
   const { cards: catalogCards } = useCardStore();
-  const longPressRef = useRef<NodeJS.Timeout | null>(null);
   const lastTapRef = useRef<number>(0);
-  const [isLongPress, setIsLongPress] = useState(false);
 
   // Find the catalog card to get the image
   const catalogCard = catalogCards.find((c) => c.id === card.cardId);
@@ -271,41 +286,23 @@ function CardOverlay({
 
   // Handle tap events
   // Single tap = flip, double tap = open detail modal
-  const handleTouchStart = () => {
-    setIsLongPress(false);
-    longPressRef.current = setTimeout(() => {
-      setIsLongPress(true);
-      onOpenCorrection();
-    }, 500);
-  };
+  const handleTap = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent default to avoid browser's save image dialog on long touch
+    e.preventDefault();
 
-  const handleTouchEnd = () => {
-    if (longPressRef.current) {
-      clearTimeout(longPressRef.current);
-    }
-    if (!isLongPress) {
-      const now = Date.now();
-      const timeSinceLastTap = now - lastTapRef.current;
+    const now = Date.now();
+    const timeSinceLastTap = now - lastTapRef.current;
 
-      if (timeSinceLastTap < 300) {
-        // Double tap - open detail modal
-        lastTapRef.current = 0; // Reset to prevent triple-tap issues
-        onOpenDetail();
-      } else {
-        // Single tap - flip
-        lastTapRef.current = now;
-        onFlip();
-      }
+    if (timeSinceLastTap < 300) {
+      // Double tap - open detail modal
+      lastTapRef.current = 0; // Reset to prevent triple-tap issues
+      onOpenDetail();
+    } else {
+      // Single tap - flip
+      lastTapRef.current = now;
+      onFlip();
     }
-    setIsLongPress(false);
-  };
-
-  const handleTouchCancel = () => {
-    if (longPressRef.current) {
-      clearTimeout(longPressRef.current);
-    }
-    setIsLongPress(false);
-  };
+  }, [onFlip, onOpenDetail]);
 
   const style = getOverlayStyle();
   const displayFilename = getDisplayFilename();
@@ -315,18 +312,14 @@ function CardOverlay({
     return (
       <div
         style={style}
-        className="border-2 border-[var(--showxating-gold)] bg-black/50 rounded-lg flex items-center justify-center"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchCancel}
-        onMouseDown={handleTouchStart}
-        onMouseUp={handleTouchEnd}
-        onMouseLeave={handleTouchCancel}
+        className="border-2 border-[var(--showxating-gold)] bg-black/50 rounded-lg flex items-center justify-center touch-none select-none"
+        onClick={handleTap}
+        onTouchEnd={handleTap}
       >
         <div className="scan-animation" />
         <div className="flex flex-col items-center gap-1">
           <span className="hud-text text-sm">UNIDENTIFIED</span>
-          <span className="hud-text hud-text-dim text-[10px]">LONG-PRESS TO ID</span>
+          <span className="hud-text hud-text-dim text-[10px]">TAP TO ID</span>
         </div>
       </div>
     );
@@ -337,15 +330,11 @@ function CardOverlay({
       style={style}
       className={`
         cursor-pointer overflow-hidden rounded-lg
-        border-2 transition-all
+        border-2 transition-all touch-none select-none
         ${card.showingOpposite ? 'border-[var(--showxating-cyan)]' : 'border-[var(--showxating-gold)]'}
       `}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchCancel}
-      onMouseDown={handleTouchStart}
-      onMouseUp={handleTouchEnd}
-      onMouseLeave={handleTouchCancel}
+      onClick={handleTap}
+      onTouchEnd={handleTap}
     >
       {/* Card image - mirrored horizontally when showing opposite side (like physically flipping a card) */}
       <img
@@ -381,15 +370,23 @@ function CardOverlay({
 
 /**
  * CardDetailModal - Full-screen modal for viewing card details
+ *
+ * Gestures:
+ * - Swipe left/right: flip card
+ * - Swipe up: show metadata (future)
+ * - Swipe down: dismiss
  */
 interface CardDetailModalProps {
   card: Card;
   onClose: () => void;
+  onRescan: () => void;
 }
 
-function CardDetailModal({ card, onClose }: CardDetailModalProps) {
+function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
   const { cards } = useCardStore();
   const [isFlipped, setIsFlipped] = useState(false);
+  const [dragX, setDragX] = useState(0);
+  const [dragY, setDragY] = useState(0);
 
   // Find the related card (opposite side)
   const relatedCard = cards.find(
@@ -405,12 +402,28 @@ function CardDetailModal({ card, onClose }: CardDetailModalProps) {
   // Convert .png to .webp for actual file
   const imagePath = `${import.meta.env.BASE_URL}cards/full/${displayCard.filename.replace('.png', '.webp')}`;
 
-  // Handle tap to flip
-  const handleTap = () => {
-    if (canFlip) {
-      setIsFlipped(!isFlipped);
-    }
-  };
+  // Handle drag gestures on the card
+  const handleDragEnd = useCallback(
+    (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+      const { offset, velocity } = info;
+
+      // Horizontal swipe = flip
+      if (Math.abs(offset.x) > SWIPE_THRESHOLD || Math.abs(velocity.x) > VELOCITY_THRESHOLD) {
+        if (canFlip) {
+          setIsFlipped(!isFlipped);
+        }
+      }
+      // Vertical swipe down = dismiss
+      else if (offset.y > SWIPE_THRESHOLD || velocity.y > VELOCITY_THRESHOLD) {
+        onClose();
+      }
+      // Vertical swipe up could show metadata (future)
+
+      setDragX(0);
+      setDragY(0);
+    },
+    [canFlip, isFlipped, onClose]
+  );
 
   // Close on escape key
   useEffect(() => {
@@ -441,28 +454,45 @@ function CardDetailModal({ card, onClose }: CardDetailModalProps) {
             fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
           }}
         >
-          CLOSE
+          ← CLOSE
         </button>
-        {canFlip && (
-          <span
-            className="text-xs tracking-wider uppercase"
-            style={{ color: 'var(--showxating-gold-dim)' }}
-          >
-            TAP TO FLIP
-          </span>
-        )}
+        <button
+          onClick={onRescan}
+          className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
+          style={{
+            borderColor: 'var(--showxating-cyan)',
+            color: 'var(--showxating-cyan)',
+            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          }}
+        >
+          RESCAN
+        </button>
       </header>
 
-      {/* Card image */}
-      <main
-        className="flex-1 flex items-center justify-center p-4"
-        onClick={handleTap}
-      >
-        <div
-          className="relative max-w-[85vw] max-h-[70vh] aspect-[2/3]"
+      {/* Card image with swipe gestures */}
+      <main className="flex-1 flex items-center justify-center p-4 overflow-hidden">
+        <motion.div
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          dragElastic={0.2}
+          onDrag={(_, info) => {
+            setDragX(info.offset.x);
+            setDragY(info.offset.y);
+          }}
+          onDragEnd={handleDragEnd}
+          animate={{
+            x: dragX,
+            y: dragY,
+            rotateY: isFlipped ? 180 : 0,
+            opacity: 1 - Math.abs(dragY) / 400,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          className="relative cursor-grab active:cursor-grabbing"
           style={{
-            transform: isFlipped ? 'scaleX(-1)' : 'none',
-            transition: 'transform 0.3s ease',
+            width: 'min(85vw, 400px)',
+            aspectRatio: '2/3',
+            transformStyle: 'preserve-3d',
+            perspective: '1000px',
           }}
         >
           <img
@@ -471,10 +501,11 @@ function CardDetailModal({ card, onClose }: CardDetailModalProps) {
             className="w-full h-full object-contain"
             style={{
               filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.3))',
+              transform: isFlipped ? 'rotateY(180deg)' : 'none',
             }}
             draggable={false}
           />
-        </div>
+        </motion.div>
       </main>
 
       {/* Footer with card info */}
@@ -495,6 +526,14 @@ function CardDetailModal({ card, onClose }: CardDetailModalProps) {
           {displayCard.type.toUpperCase()}
           {displayCard.side && ` • ${displayCard.side.toUpperCase()}`}
         </p>
+        {canFlip && (
+          <p
+            className="text-[10px] tracking-wider uppercase mt-2"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            ← SWIPE TO FLIP →
+          </p>
+        )}
       </footer>
     </div>
   );
@@ -503,8 +542,11 @@ function CardDetailModal({ card, onClose }: CardDetailModalProps) {
 /**
  * CorrectionModal - Manual card identification correction
  *
- * Shows the original scanned region and a list of candidate cards
- * for the user to select the correct identification.
+ * Two-panel layout:
+ * - Left (1/3): Cropped bounding box image + extracted text
+ * - Right (2/3): Scrollable candidate list
+ *
+ * Double-tap a candidate to select it as the correct match.
  */
 interface CorrectionModalProps {
   identifiedCard: IdentifiedCard;
@@ -522,6 +564,42 @@ function CorrectionModal({
   const { cards: catalogCards } = useCardStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [candidates, setCandidates] = useState<Array<{ card: Card; distance?: number }>>([]);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
+
+  // Crop the bounding box from the scan image
+  useEffect(() => {
+    if (!identifiedCard.corners || identifiedCard.corners.length < 4) return;
+
+    const img = new Image();
+    img.onload = () => {
+      // Get bounding box from corners
+      const xs = identifiedCard.corners.map((c) => c.x);
+      const ys = identifiedCard.corners.map((c) => c.y);
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+
+      // Add small padding
+      const padding = 10;
+      const cropX = Math.max(0, minX - padding);
+      const cropY = Math.max(0, minY - padding);
+      const cropW = Math.min(img.width - cropX, maxX - minX + padding * 2);
+      const cropH = Math.min(img.height - cropY, maxY - minY + padding * 2);
+
+      // Create canvas and draw cropped region
+      const canvas = document.createElement('canvas');
+      canvas.width = cropW;
+      canvas.height = cropH;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        setCroppedImage(canvas.toDataURL('image/jpeg', 0.8));
+      }
+    };
+    img.src = scanImageDataUrl;
+  }, [scanImageDataUrl, identifiedCard.corners]);
 
   // Initialize candidates based on dHash matches and search
   useEffect(() => {
@@ -543,13 +621,28 @@ function CorrectionModal({
         threshold: 0.4,
         includeScore: true,
       });
-      const results = fuse.search(searchQuery).slice(0, 20);
+      const results = fuse.search(searchQuery).slice(0, 30);
       setCandidates(results.map((r) => ({ card: r.item })));
     } else {
-      // Show hash matches first, then some popular card types
-      setCandidates(hashMatches.slice(0, 10));
+      // Show all hash matches
+      setCandidates(hashMatches);
     }
   }, [searchQuery, catalogCards, identifiedCard.topMatches]);
+
+  // Handle double-tap to select
+  const handleCardTap = useCallback(
+    (cardId: string) => {
+      const now = Date.now();
+      if (lastTapRef.current?.cardId === cardId && now - lastTapRef.current.time < 300) {
+        // Double-tap - select this card
+        log.correct(`Manual correction: selected ${cardId}`);
+        onSelect(cardId);
+      } else {
+        lastTapRef.current = { cardId, time: now };
+      }
+    },
+    [onSelect]
+  );
 
   // Close on escape
   useEffect(() => {
@@ -575,7 +668,7 @@ function CorrectionModal({
             fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
           }}
         >
-          CANCEL
+          ← CANCEL
         </button>
         <span
           className="text-xs tracking-wider uppercase"
@@ -589,99 +682,137 @@ function CorrectionModal({
         <div style={{ width: 70 }} /> {/* Spacer for centering */}
       </header>
 
-      {/* Search input */}
-      <div className="px-4 py-3">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-3 py-2 bg-black/50 border rounded text-sm"
-          style={{
-            borderColor: 'var(--showxating-gold-dim)',
-            color: 'var(--showxating-gold)',
-            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-          }}
-          autoFocus
-        />
-      </div>
-
-      {/* Original card region preview (if we have bounding box) */}
-      {identifiedCard.boundingBox && (
-        <div className="px-4 pb-2">
+      {/* Two-panel layout */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left panel - cropped image + extracted text */}
+        <div className="w-1/3 border-r border-[var(--showxating-gold-dim)] p-4 flex flex-col">
           <p
             className="text-[10px] tracking-wider uppercase mb-2"
             style={{ color: 'var(--showxating-gold-dim)' }}
           >
             SCANNED REGION:
           </p>
-          <div className="h-24 w-24 bg-black/50 rounded overflow-hidden">
-            {/* This would show a cropped version of the scan - simplified for now */}
-            <img
-              src={scanImageDataUrl}
-              alt="Scanned region"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Candidate list */}
-      <main className="flex-1 overflow-y-auto px-4 pb-4">
-        <p
-          className="text-[10px] tracking-wider uppercase mb-2 sticky top-0 bg-black py-2"
-          style={{ color: 'var(--showxating-gold-dim)' }}
-        >
-          {searchQuery ? 'SEARCH RESULTS' : 'LIKELY MATCHES'}:
-        </p>
-
-        <div className="grid grid-cols-2 gap-3">
-          {candidates.map(({ card, distance }) => (
-            <button
-              key={card.id}
-              onClick={() => onSelect(card.id)}
-              className="flex flex-col items-center p-2 rounded border transition-all hover:bg-[var(--showxating-gold)]/10"
-              style={{
-                borderColor:
-                  card.id === identifiedCard.cardId
-                    ? 'var(--showxating-cyan)'
-                    : 'var(--showxating-gold-dim)',
-              }}
+          <div className="flex-1 flex flex-col items-center justify-start">
+            <div
+              className="w-full max-h-[40vh] rounded overflow-hidden border"
+              style={{ borderColor: 'var(--showxating-gold-dim)' }}
             >
               <img
-                src={`${import.meta.env.BASE_URL}cards/full/${card.filename.replace('.png', '.webp')}`}
-                alt={card.ocr?.name || card.name}
-                className="w-full aspect-[2/3] object-cover rounded mb-2"
+                src={croppedImage || scanImageDataUrl}
+                alt="Scanned region"
+                className="w-full h-full object-contain"
               />
-              <span
-                className="text-[10px] tracking-wider uppercase text-center truncate w-full"
-                style={{
-                  color: 'var(--showxating-gold)',
-                  fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-                }}
-              >
-                {card.ocr?.name || card.name}
-              </span>
-              {distance !== undefined && (
-                <span
-                  className="text-[9px] tracking-wider"
+            </div>
+
+            {/* Extracted text */}
+            {identifiedCard.extractedText && (
+              <div className="mt-4 w-full">
+                <p
+                  className="text-[10px] tracking-wider uppercase mb-1"
                   style={{ color: 'var(--showxating-gold-dim)' }}
                 >
-                  d={distance}
-                </span>
-              )}
-            </button>
-          ))}
+                  EXTRACTED TEXT:
+                </p>
+                <p
+                  className="text-xs p-2 rounded bg-black/50 border"
+                  style={{
+                    borderColor: 'var(--showxating-gold-dim)',
+                    color: 'var(--showxating-gold)',
+                    fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                  }}
+                >
+                  {identifiedCard.extractedText}
+                </p>
+              </div>
+            )}
+
+            {/* Instructions */}
+            <p
+              className="mt-4 text-[10px] tracking-wider uppercase text-center"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              DOUBLE-TAP A CARD TO SELECT
+            </p>
+          </div>
         </div>
 
-        {candidates.length === 0 && (
-          <div className="text-center py-8">
-            <span className="hud-text hud-text-dim text-sm">
-              {searchQuery ? 'NO MATCHES FOUND' : 'NO CANDIDATES AVAILABLE'}
-            </span>
+        {/* Right panel - candidate list */}
+        <div className="w-2/3 flex flex-col overflow-hidden">
+          {/* Search input */}
+          <div className="px-4 py-3 border-b border-[var(--showxating-gold-dim)]">
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-3 py-2 bg-black/50 border rounded text-sm"
+              style={{
+                borderColor: 'var(--showxating-gold-dim)',
+                color: 'var(--showxating-gold)',
+                fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+              }}
+              autoFocus
+            />
           </div>
-        )}
-      </main>
+
+          {/* Scrollable candidate grid */}
+          <div className="flex-1 overflow-y-auto px-4 py-3">
+            <p
+              className="text-[10px] tracking-wider uppercase mb-2"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              {searchQuery ? 'SEARCH RESULTS' : 'LIKELY MATCHES'} ({candidates.length}):
+            </p>
+
+            <div className="grid grid-cols-2 gap-3">
+              {candidates.map(({ card, distance }) => (
+                <button
+                  key={card.id}
+                  onClick={() => handleCardTap(card.id)}
+                  className="flex flex-col items-center p-2 rounded border transition-all hover:bg-[var(--showxating-gold)]/10 active:bg-[var(--showxating-cyan)]/20"
+                  style={{
+                    borderColor:
+                      card.id === identifiedCard.cardId
+                        ? 'var(--showxating-cyan)'
+                        : 'var(--showxating-gold-dim)',
+                  }}
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}cards/full/${card.filename.replace('.png', '.webp')}`}
+                    alt={card.ocr?.name || card.name}
+                    className="w-full aspect-[2/3] object-cover rounded mb-2"
+                  />
+                  <span
+                    className="text-[10px] tracking-wider uppercase text-center truncate w-full"
+                    style={{
+                      color: 'var(--showxating-gold)',
+                      fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                    }}
+                  >
+                    {card.ocr?.name || card.name}
+                  </span>
+                  {distance !== undefined && (
+                    <span
+                      className="text-[9px] tracking-wider"
+                      style={{ color: 'var(--showxating-gold-dim)' }}
+                    >
+                      d={distance}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {candidates.length === 0 && (
+              <div className="text-center py-8">
+                <span className="hud-text hud-text-dim text-sm">
+                  {searchQuery ? 'NO MATCHES FOUND' : 'NO CANDIDATES AVAILABLE'}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

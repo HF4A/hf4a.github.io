@@ -8,5 +8,6 @@
 //   0.2.4 - Fix slot order (S1 right), raise threshold to 22
 //   0.2.5 - Remove 34 orphan cards, module filter, fix backwards flip
 //   0.2.6 - Fix image loading (.webp), FRONT/BACK labels, long-press modal
-export const APP_VERSION = '0.2.6';
-export const BUILD_DATE = '2025-12-23';
+//   0.2.7 - Fix gestures (remove long-press), add swipe card detail, individual card type filters, logs system
+export const APP_VERSION = '0.2.7';
+export const BUILD_DATE = '2025-12-22';

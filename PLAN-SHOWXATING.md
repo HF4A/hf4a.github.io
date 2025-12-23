@@ -527,16 +527,127 @@ interface ManualCorrection {
 
 ---
 
-#### UI Update: Factory Reset Wording 🚧 v0.2.6
+#### UI Update: Factory Reset Wording ✅ v0.2.6
 **Change**: "Blow da airlocks" → "Wipe the core"
 - Reference to wiping data cores in The Expanse
 - More thematically appropriate
 
 ---
 
-**Deliverable**: Cards correctly identified and displayed in overlay
-**Priority**: CRITICAL - feature is non-functional without these fixes
-**Status**: v0.2.6 - Image loading, nomenclature, modal, flip, multi-factor, corrections
+**Status**: v0.2.6 deployed - correctionsStore, double-tap/long-press gestures, diagnostics with corrections
+
+---
+
+#### Problem 12: Long-Press Triggers Image Save 🚧 v0.2.7
+**Symptom**: Long-pressing on card overlay triggers browser's "save image" dialog instead of correction flow.
+
+**Fix**:
+- [x] Remove long-press gesture entirely
+- [x] Move correction flow to [RESCAN] button in card detail view
+- [x] Prevent default touch behavior with `touch-action: manipulation`
+
+---
+
+#### Problem 13: Interaction Model Refinement 🚧 v0.2.7
+**Goal**: Cleaner, more consistent gesture model.
+
+**New Interactions**:
+- **Single tap**: Flip card (FRONT/BACK) - unchanged
+- **Double-tap**: Open card detail modal (same as Catalog)
+  - Swipe left/right to flip
+  - Swipe up for metadata
+  - Swipe down to dismiss
+  - [RESCAN] button (top-right) opens correction flow
+- **Long-press**: Removed (caused browser conflicts)
+
+**Implementation**:
+- [x] Update CardDetailModal to match Catalog behavior (swipe gestures)
+- [x] Add [RESCAN] button when opened from SHOWXATING
+- [x] Remove long-press handler
+
+---
+
+#### Problem 14: Correction Flow Redesign 🚧 v0.2.7
+**Goal**: Show cropped bounding box instead of full scan.
+
+**New Layout**:
+- Left panel (1/3): Zoomed bounding box crop + extracted text
+- Right panel (2/3): Scrollable candidate list ordered by score
+- Double-tap on candidate to select
+
+**Implementation**:
+- [x] Create CorrectionPanel component
+- [x] Extract bounding box from scan image
+- [x] Display extracted text below crop
+- [x] Show candidates with thumbnails and scores
+
+---
+
+#### Problem 15: Card Type Filter Redesign 🚧 v0.2.7
+**Goal**: Replace module toggles with individual card type toggles.
+
+**New UI**:
+- Single [ACTIVE CARD TYPES] button in SYS panel
+- Opens popup with all card types listed
+- Grouped by module for reference, but each type toggles independently
+
+**Card Types by Module**:
+- **Core Game**: thruster, reactor, generator, radiator, robonaut, refinery
+- **Module 0 (Politics)**: crew
+- **Module 1 (Terawatt)**: gw-thruster, freighter
+- **Module 2 (Colonization)**: colonist, bernal
+- **Module 4 (Exodus)**: contract, spaceborn
+
+**Implementation**:
+- [x] Create CardTypeFilterPopup component
+- [x] Update settingsStore with activeCardTypes (individual types vs modules)
+- [x] Update cardMatcher and useCards to filter by type
+
+---
+
+#### Problem 16: Matching Weight Adjustment 🚧 v0.2.7
+**Goal**: Weight text matching higher than visual matching.
+
+**New Weights**:
+- Text extraction + fuzzy match: 70%
+- dHash visual match: 30%
+
+**Implementation**:
+- [ ] Add text extraction from warped card image
+- [ ] Use Fuse.js to match extracted text against card metadata
+- [ ] Combine scores with weighted average
+
+---
+
+#### Problem 17: System Logging 🚧 v0.2.7
+**Goal**: Add persistent logging with Belter-themed display.
+
+**Features**:
+- Log app events, errors, matches, corrections
+- Store in localStorage with automatic aging (max 100 entries)
+- [VIEW LOGS] button in SYS panel
+- Belter spaceship terminal display
+
+**Implementation**:
+- [x] Create logsStore.ts with circular buffer
+- [x] Add logging calls throughout app
+- [x] Create LogViewer component with terminal styling
+- [x] Add logs to diagnostics export
+
+---
+
+#### Problem 18: Welcome Instructions Update 🚧 v0.2.7
+**Goal**: Update first-run instructions to reflect new interaction model.
+
+**Changes**:
+- Remove long-press references
+- Add [RESCAN] button explanation
+- Update gesture descriptions
+
+---
+
+**Deliverable**: Improved UX with better matching and debugging
+**Status**: v0.2.7 in progress
 
 ---
 

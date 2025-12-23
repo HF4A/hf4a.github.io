@@ -21,7 +21,6 @@ const fuseOptions = {
 export function useCards() {
   const { cards, isLoading, error, setCards, setError } = useCardStore();
   const filters = useFilterStore();
-  const { getActiveCardTypes } = useSettingsStore();
 
   // Load cards on mount
   useEffect(() => {
@@ -41,13 +40,13 @@ export function useCards() {
   // Create Fuse instance for search
   const fuse = useMemo(() => new Fuse(cards, fuseOptions), [cards]);
 
-  // Get active modules for filtering
-  const activeModules = useSettingsStore((state) => state.activeModules);
+  // Get active card types for filtering
+  const activeCardTypes = useSettingsStore((state) => state.activeCardTypes);
 
   // Filter and search cards
   const filteredCards = useMemo(() => {
-    // Get active card types from module settings
-    const activeTypes = new Set(getActiveCardTypes());
+    // Get active card types from settings
+    const activeTypes = new Set(activeCardTypes);
 
     // First, filter by active modules (card types)
     let result = cards.filter((card) => activeTypes.has(card.type));
@@ -121,7 +120,7 @@ export function useCards() {
     }
 
     return result;
-  }, [cards, fuse, filters, activeModules, getActiveCardTypes]);
+  }, [cards, fuse, filters, activeCardTypes]);
 
   // Get unique values for filter options
   const filterOptions = useMemo(() => {

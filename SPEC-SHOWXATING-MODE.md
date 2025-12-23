@@ -143,25 +143,44 @@ For each detected card in the captured image:
 - Quick way to check the other side without leaving the scan view
 
 **Double-tap**: Opens full-screen card detail view (modal)
-- Card expands to full screen
-- Swipe left/right to flip, tap to dismiss
-- [INFO] button for metadata
-
-**Long-press**: Manual correction flow
-1. Remove the image overlay to reveal original captured image
-2. Display ranked list of likely matches (top 5-10 candidates by combined score)
-3. User selects correct match from list
-4. Correction is saved and applied
-5. Correction persists in cache for future training data
+- Same behavior as Catalog card detail (consistent UX)
+- Swipe left/right to flip card
+- Swipe up for metadata info panel
+- Swipe down to dismiss
+- **[RESCAN] button** in top-right (only when opened from SHOWXATING) to trigger correction flow
 
 ### Card Detail View (full screen)
 
 When user double-taps a card overlay:
 1. Card expands to **full screen** (like card catalog detail view)
 2. **Swipe left/right**: Flip card to see other side
-3. **Tap anywhere / swipe down**: Dismiss, return to scanned image with overlays
-4. Small **[INFO]** button (same style as [SCAN]) opens metadata/info page in Belter style, as a popup on top of the Card Detail
-5. **NO metadata panel to scroll to** - card detail shows ONLY the card image with flip capability; metadata is hidden until INFO selected
+3. **Swipe up**: Show metadata info panel
+4. **Swipe down**: Dismiss, return to scanned image with overlays
+5. **[RESCAN] button** (top-right, when from SHOWXATING): Opens correction flow
+
+### Manual Correction Flow (via [RESCAN] button)
+
+Split-screen layout for manual card identification:
+
+**Left panel (1/3 width)**:
+- Zoomed view of ONLY the detected bounding box (cropped from scan)
+- Below: Any extracted text from the card region
+- Shows what the camera actually captured for this card
+
+**Right panel (2/3 width)**:
+- Scrollable list of candidate matches
+- Ordered by match score (best first)
+- Each card shows: thumbnail, name, match score
+- **Double-tap** on a card to select it as the correction
+
+**Behavior**:
+1. User taps [RESCAN] in card detail view
+2. Correction panel slides up
+3. User reviews cropped image and extracted text
+4. User scrolls through candidates
+5. User double-taps correct card
+6. Correction saved to persistent cache
+7. Overlay updates immediately
 
 ### State Persistence
 
@@ -261,10 +280,29 @@ When a new scan is captured, show:
 
 Preference stored in localStorage.
 
-**3. [DIAG] - Diagnostics Capture**
-- Greyed out / disabled in initial build
-- Future: Training data collection for model improvement
-- Will be developed later
+**3. [ACTIVE CARD TYPES] Button**
+Opens popup showing all card types that can be toggled on/off independently.
+
+Card types grouped by HF4A module (for reference only - each type toggled independently):
+- **Core Game**: Thrusters, Reactors, Generators, Radiators, Robonauts, Refineries
+- **Module 0: Politics**: Crew
+- **Module 1: Terawatt**: GW Thrusters, Freighters
+- **Module 2: Colonization**: Colonists, Bernals
+- **Module 4: Exodus**: Contracts, Spaceborn
+
+Active card types affect:
+- Which cards appear in Catalog
+- Which cards are matched during scanning
+
+**4. [SEND DIAGNOSTICS]**
+- Packages all scan data, corrections, and logs as ZIP
+- Shares via system share sheet
+
+**5. [VIEW LOGS] Button**
+- Opens Belter-styled system log viewer
+- Shows recent app events, errors, and diagnostics
+- Logs stored in localStorage with automatic aging (max 100 entries)
+- Displayed as ship's computer terminal readout
 
 ### System Info Display
 
@@ -276,6 +314,13 @@ Displayed in Belter ship status style:
 - Other relevant system metrics
 
 Visual style: Like a ship's system readout panel - functional, minimal, amber text on dark background.
+
+### Factory Reset
+
+**[WIPE THE CORE]** button:
+- Clears all localStorage data (scans, settings, corrections, logs)
+- Requires confirmation
+- Thematically: "wiping the core" like in The Expanse
 
 ⸻
 
@@ -342,9 +387,10 @@ Vision pipeline for Scan Mode
 	•	OpenCV.js (~8MB, CDN, lazy-loaded)
 	•	Card contour detection
 	•	Perspective transform
-	•	Multi-factor card identification:
-		- dHash perceptual hashing (visual structure)
-		- Text extraction and fuzzy matching against card metadata (title, description, stats)
+	•	Multi-factor card identification (weighted scoring):
+		- Text extraction via contrast analysis (70% weight)
+		- dHash perceptual hashing for visual structure (30% weight)
+		- Fuse.js fuzzy matching against card metadata (title, description, stats)
 		- Combined scoring for improved accuracy
 	•	No server calls
 

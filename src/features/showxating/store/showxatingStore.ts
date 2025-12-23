@@ -23,6 +23,7 @@ export interface IdentifiedCard {
   computedHash?: string;
   matchDistance?: number;
   topMatches?: { cardId: string; distance: number }[];
+  extractedText?: string; // Text extracted from card for matching (future)
 }
 
 export interface CapturedScan {
