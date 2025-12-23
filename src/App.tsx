@@ -2,6 +2,7 @@ import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { CatalogLayout } from './components/CatalogLayout';
 import { CardGrid } from './components/CardGrid';
 import { CardDetailView } from './components/CardDetailView';
+import { WelcomeScreen } from './components/WelcomeScreen';
 import { ShowxatingShell } from './features/showxating';
 import { useSettingsStore } from './store/settingsStore';
 
@@ -17,6 +18,13 @@ function LegacyCardRedirect() {
 }
 
 export default function App() {
+  const { hasSeenWelcome } = useSettingsStore();
+
+  // Show welcome screen on first launch
+  if (!hasSeenWelcome) {
+    return <WelcomeScreen />;
+  }
+
   return (
     <Routes>
       {/* Root redirects to default mode */}

@@ -8,10 +8,12 @@ interface SettingsState {
   // Settings
   defaultMode: DefaultMode;
   defaultScanResult: DefaultScanResult;
+  hasSeenWelcome: boolean;
 
   // Actions
   setDefaultMode: (mode: DefaultMode) => void;
   setDefaultScanResult: (result: DefaultScanResult) => void;
+  setHasSeenWelcome: (seen: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -20,10 +22,12 @@ export const useSettingsStore = create<SettingsState>()(
       // Default values
       defaultMode: 'scan',
       defaultScanResult: 'visible',
+      hasSeenWelcome: false,
 
       // Actions
       setDefaultMode: (mode) => set({ defaultMode: mode }),
       setDefaultScanResult: (result) => set({ defaultScanResult: result }),
+      setHasSeenWelcome: (seen) => set({ hasSeenWelcome: seen }),
     }),
     {
       name: 'showxating-settings',

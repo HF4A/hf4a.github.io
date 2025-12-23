@@ -12,6 +12,14 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
   const { defaultMode, defaultScanResult, setDefaultMode, setDefaultScanResult } = useSettingsStore();
   const { scanSlots } = useScanSlotsStore();
   const [isExporting, setIsExporting] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  const handleFactoryReset = () => {
+    // Clear all localStorage
+    localStorage.clear();
+    // Force reload to show welcome screen
+    window.location.reload();
+  };
 
   // Count total scans
   const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
@@ -189,6 +197,46 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
                 <span style={{ color: '#d4a84b' }}>{new Date().toLocaleTimeString()}</span>
               </div>
             </div>
+          </div>
+
+          {/* Factory Reset Section */}
+          <div className="border-t border-[#d4a84b]/20 pt-4">
+            <label
+              className="block text-xs tracking-wider uppercase mb-3"
+              style={{ color: '#a08040' }}
+            >
+              MAINTENANCE
+            </label>
+
+            {!showResetConfirm ? (
+              <button
+                onClick={() => setShowResetConfirm(true)}
+                className="w-full px-3 py-2 text-xs tracking-wider uppercase border border-[#ff3b3b]/50 text-[#ff3b3b]/70 hover:bg-[#ff3b3b]/10 transition-colors"
+              >
+                BLOW DA AIRLOCKS
+              </button>
+            ) : (
+              <div className="space-y-3 p-3 border border-[#ff3b3b]/50 bg-[#ff3b3b]/5 rounded">
+                <p className="text-xs" style={{ color: '#ff3b3b' }}>
+                  Oye, beratna! Dis gonna vent all yo data to da void, sasa ke?
+                  All scans, settings, ereything go tumang.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowResetConfirm(false)}
+                    className="flex-1 px-3 py-2 text-xs tracking-wider uppercase border border-[#d4a84b]/50 text-[#a08040] hover:bg-[#d4a84b]/10 transition-colors"
+                  >
+                    NA, WAIT
+                  </button>
+                  <button
+                    onClick={handleFactoryReset}
+                    className="flex-1 px-3 py-2 text-xs tracking-wider uppercase border border-[#ff3b3b] bg-[#ff3b3b]/20 text-[#ff3b3b] hover:bg-[#ff3b3b]/30 transition-colors"
+                  >
+                    VENT IT
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
