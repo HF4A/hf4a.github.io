@@ -5,5 +5,6 @@
 //   0.2.1 - Expanded diagnostics with debug info
 //   0.2.2 - Fix card identification: load cards at startup, perspective warp, stricter threshold
 //   0.2.3 - Version on welcome screen, right-align slots, threshold tuning (18)
-export const APP_VERSION = '0.2.3';
+//   0.2.4 - Fix slot order (S1 right), raise threshold to 22
+export const APP_VERSION = '0.2.4';
 export const BUILD_DATE = '2025-12-23';

@@ -99,10 +99,9 @@ export function ScanActionBar({ onScan, disabled }: ScanActionBarProps) {
       {/* Scrollable slots container - right-aligned */}
       <div className="flex-1 overflow-x-auto scrollbar-hide">
         <div className="flex items-center justify-end gap-2 min-w-min px-1">
-          {/* History slots - only render slots with content, reversed for right-alignment */}
+          {/* History slots - only render slots with content, S1 on right next to LIVE */}
           {slots
             .filter(({ id }) => scanSlots[id] !== null)
-            .reverse()
             .map(({ id, label }) => {
               const scan = scanSlots[id]!;
               const isActive = activeSlot === id;
