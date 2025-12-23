@@ -101,7 +101,7 @@ export function ScanActionBar({ onScan, disabled }: ScanActionBarProps) {
         <div className="flex items-center justify-end gap-2 min-w-min px-1">
           {/* History slots - only render slots with content, S1 on right next to LIVE */}
           {slots
-            .filter(({ id }) => scanSlots[id] !== null)
+            .filter(({ id }) => scanSlots[id] != null)
             .map(({ id, label }) => {
               const scan = scanSlots[id]!;
               const isActive = activeSlot === id;

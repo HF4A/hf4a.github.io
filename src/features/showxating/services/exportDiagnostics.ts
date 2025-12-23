@@ -12,6 +12,7 @@
 import JSZip from 'jszip';
 import { useScanSlotsStore, CapturedScan, IdentifiedCard } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
+import { useLogsStore } from '../../../store/logsStore';
 import { APP_VERSION, BUILD_DATE } from '../../../version';
 
 export interface DiagnosticsMetadata {
@@ -137,12 +138,16 @@ export async function exportDiagnosticsZip(): Promise<Blob> {
   // Get all corrections from persisted store
   const corrections = useCorrectionsStore.getState().getAllCorrections();
 
+  // Get logs (always include, even if no scans)
+  const logs = useLogsStore.getState().getLogs();
+
   if (scans.length === 0 && corrections.length === 0) {
-    // Create empty diagnostics if no scans or corrections
+    // Create empty diagnostics if no scans or corrections (but still include logs)
     const metadata = getMetadata([], []);
     zip.file('metadata.json', JSON.stringify(metadata, null, 2));
     zip.file('scans.json', JSON.stringify([], null, 2));
     zip.file('corrections.json', JSON.stringify([], null, 2));
+    zip.file('logs.json', JSON.stringify(logs, null, 2));
     return zip.generateAsync({ type: 'blob' });
   }
 
@@ -156,6 +161,9 @@ export async function exportDiagnosticsZip(): Promise<Blob> {
 
   // Add corrections (valuable training data for improving card matching)
   zip.file('corrections.json', JSON.stringify(corrections, null, 2));
+
+  // Add logs (critical for debugging OCR, API calls, etc.)
+  zip.file('logs.json', JSON.stringify(logs, null, 2));
 
   // Create images folder and add scan images
   const imagesFolder = zip.folder('images');
