@@ -1,12 +1,30 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export type ShowxatingMode = 'idle' | 'scan' | 'capture';
 export type DetectionStatus = 'searching' | 'tracking' | 'locked' | 'lost';
 export type PermissionStatus = 'prompt' | 'granted' | 'denied';
+export type ScanSlot = 'live' | 's1' | 's2' | 's3';
 
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface IdentifiedCard {
+  cardId: string;
+  filename: string;
+  side: string | null;
+  confidence: number;
+  corners: Point[];
+  showingOpposite: boolean; // flip state for this card
+}
+
+export interface CapturedScan {
+  id: string;
+  timestamp: number;
+  imageDataUrl: string;
+  cards: IdentifiedCard[];
 }
 
 interface ShowxatingStore {
@@ -22,7 +40,7 @@ interface ShowxatingStore {
   cameraReady: boolean;
   cameraError: string | null;
 
-  // Detection state (Scan Mode)
+  // Detection state (live scan)
   detectionStatus: DetectionStatus;
   detectedQuadrilateral: Point[] | null;
   matchedCardId: string | null;
@@ -31,6 +49,15 @@ interface ShowxatingStore {
   // Overlay state
   overlayFrozen: boolean;
   showingOpposite: boolean;
+
+  // Scan capture state (Phase 6-7)
+  activeSlot: ScanSlot;
+  isCapturing: boolean;
+  scanSlots: {
+    s1: CapturedScan | null;
+    s2: CapturedScan | null;
+    s3: CapturedScan | null;
+  };
 
   // Actions
   setMode: (mode: ShowxatingMode) => void;
@@ -44,10 +71,42 @@ interface ShowxatingStore {
   clearDetection: () => void;
   toggleFreeze: () => void;
   toggleOverlaySide: () => void;
+
+  // Scan capture actions
+  setActiveSlot: (slot: ScanSlot) => void;
+  setCapturing: (capturing: boolean) => void;
+  addCapture: (scan: CapturedScan) => void;
+  updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
+  clearSlot: (slotId: 's1' | 's2' | 's3') => void;
+
   reset: () => void;
 }
 
-export const useShowxatingStore = create<ShowxatingStore>((set) => ({
+// Separate persisted state for scan slots (survives page reload)
+interface PersistedScanState {
+  scanSlots: {
+    s1: CapturedScan | null;
+    s2: CapturedScan | null;
+    s3: CapturedScan | null;
+  };
+}
+
+export const useScanSlotsStore = create<PersistedScanState>()(
+  persist(
+    (): PersistedScanState => ({
+      scanSlots: {
+        s1: null,
+        s2: null,
+        s3: null,
+      },
+    }),
+    {
+      name: 'showxating-scan-slots',
+    }
+  )
+);
+
+export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
   // Initial state
   mode: 'idle',
   isActive: false,
@@ -61,6 +120,11 @@ export const useShowxatingStore = create<ShowxatingStore>((set) => ({
   matchConfidence: 0,
   overlayFrozen: false,
   showingOpposite: true,
+
+  // Scan capture state
+  activeSlot: 'live',
+  isCapturing: false,
+  scanSlots: useScanSlotsStore.getState().scanSlots,
 
   // Actions
   setMode: (mode) => set({ mode }),
@@ -91,6 +155,47 @@ export const useShowxatingStore = create<ShowxatingStore>((set) => ({
   toggleFreeze: () => set((state) => ({ overlayFrozen: !state.overlayFrozen })),
   toggleOverlaySide: () => set((state) => ({ showingOpposite: !state.showingOpposite })),
 
+  // Scan capture actions
+  setActiveSlot: (slot) => set({ activeSlot: slot }),
+  setCapturing: (capturing) => set({ isCapturing: capturing }),
+
+  addCapture: (scan) => {
+    const state = get();
+    // Shift slots: s2 -> s3, s1 -> s2, new -> s1
+    const newSlots = {
+      s1: scan,
+      s2: state.scanSlots.s1,
+      s3: state.scanSlots.s2,
+    };
+    set({ scanSlots: newSlots, activeSlot: 's1' });
+    // Persist to localStorage
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  updateCardFlip: (slotId, cardIndex, showingOpposite) => {
+    if (slotId === 'live') return;
+    const state = get();
+    const slot = state.scanSlots[slotId];
+    if (!slot || !slot.cards[cardIndex]) return;
+
+    const updatedCards = [...slot.cards];
+    updatedCards[cardIndex] = { ...updatedCards[cardIndex], showingOpposite };
+
+    const newSlots = {
+      ...state.scanSlots,
+      [slotId]: { ...slot, cards: updatedCards },
+    };
+    set({ scanSlots: newSlots });
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  clearSlot: (slotId) => {
+    const state = get();
+    const newSlots = { ...state.scanSlots, [slotId]: null };
+    set({ scanSlots: newSlots });
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
   reset: () =>
     set({
       mode: 'idle',
@@ -103,5 +208,12 @@ export const useShowxatingStore = create<ShowxatingStore>((set) => ({
       matchConfidence: 0,
       overlayFrozen: false,
       showingOpposite: true,
+      activeSlot: 'live',
+      isCapturing: false,
     }),
 }));
+
+// Sync persisted slots on load
+useScanSlotsStore.subscribe((state) => {
+  useShowxatingStore.setState({ scanSlots: state.scanSlots });
+});

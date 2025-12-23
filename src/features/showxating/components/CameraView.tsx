@@ -1,12 +1,21 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { useCamera } from '../hooks/useCamera';
 import { useCardDetection } from '../hooks/useCardDetection';
 import { HudOverlay } from './HudOverlay';
 import { useShowxatingStore } from '../store/showxatingStore';
 
-export function CameraView() {
+export interface CameraViewHandle {
+  videoRef: React.RefObject<HTMLVideoElement>;
+}
+
+export const CameraView = forwardRef<CameraViewHandle>(function CameraView(_, ref) {
   const { videoRef, cameraReady, cameraError, isStarting, start, stop } = useCamera();
   const { isActive, mode } = useShowxatingStore();
+
+  // Expose videoRef to parent
+  useImperativeHandle(ref, () => ({
+    videoRef,
+  }), [videoRef]);
 
   // Track video dimensions for HUD
   const [dimensions, setDimensions] = useState({ width: 1280, height: 720 });
@@ -126,4 +135,4 @@ export function CameraView() {
       )}
     </div>
   );
-}
+});

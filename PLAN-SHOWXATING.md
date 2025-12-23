@@ -163,17 +163,18 @@ Top Navigation Bar:
 **Deliverable**: Clean card detail view with flip/dismiss gestures
 **Status**: Deployed (2024-12-22). New CardDetailView component with drag gestures, Belter styling.
 
-### Phase 5: Card Identification System
+### Phase 5: Card Identification System ✅ COMPLETE
 **Goal**: Build dHash index and matching for card identification
 
-- [ ] `scripts/generate-card-index.ts` build script
-- [ ] Generate `card-index.json` with dHash values for all cards
-- [ ] `CardMatcher` class for hash comparison
-- [ ] `useCardIdentification` hook
-- [ ] Support matching multiple cards from single image
-- [ ] Return matched card ID + confidence + bounding box
+- [x] `scripts/generate-card-index.ts` build script
+- [x] Generate `card-index.json` with dHash values for all 392 cards
+- [x] `CardMatcher` class for hash comparison
+- [x] `useCardIdentification` hook
+- [x] Support matching multiple cards from single image
+- [x] Return matched card ID + confidence + bounding box
 
 **Deliverable**: Can identify cards from captured image
+**Status**: Deployed (2024-12-22). dHash matching working with confidence scoring.
 
 ### Phase 6: Scan Capture & Overlays
 **Goal**: SCAN button captures image, identifies cards, shows overlays

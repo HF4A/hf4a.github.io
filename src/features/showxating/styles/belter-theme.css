@@ -151,3 +151,72 @@
 .showxating-btn-primary:hover {
   background: #e0b85c;
 }
+
+.showxating-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.showxating-btn:disabled:hover {
+  background: transparent;
+  color: var(--showxating-gold);
+}
+
+.showxating-btn-primary:disabled:hover {
+  background: var(--showxating-gold);
+  color: var(--showxating-bg);
+}
+
+/* Scan animation (for unidentified cards) */
+.scan-animation {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.scan-animation::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--showxating-cyan),
+    var(--showxating-cyan),
+    transparent
+  );
+  animation: scanMove 1.5s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Card overlay pulse animation */
+@keyframes cardPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--showxating-cyan);
+  }
+  50% {
+    box-shadow: 0 0 10px 2px var(--showxating-cyan);
+  }
+}
+
+.card-overlay-locked {
+  animation: cardPulse 2s ease-in-out infinite;
+}

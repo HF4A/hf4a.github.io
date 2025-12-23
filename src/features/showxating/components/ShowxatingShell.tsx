@@ -1,22 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CameraView } from './CameraView';
+import { CameraView, CameraViewHandle } from './CameraView';
+import { CapturedScanView } from './CapturedScanView';
+import { ScanActionBar } from './ScanActionBar';
 import { TopNavBar } from '../../../components/TopNavBar';
 import { SysPanel } from '../../../components/SysPanel';
 import { useShowxatingStore } from '../store/showxatingStore';
+import { useScanCapture } from '../hooks/useScanCapture';
+import { useCardIdentification } from '../hooks/useCardIdentification';
 import '../styles/belter-theme.css';
 
 export function ShowxatingShell() {
   const navigate = useNavigate();
   const [showSysPanel, setShowSysPanel] = useState(false);
+  const cameraViewRef = useRef<CameraViewHandle>(null);
+
   const {
     setMode,
     setActive,
     cameraPermission,
     cameraReady,
     detectionStatus,
+    activeSlot,
     reset,
   } = useShowxatingStore();
+
+  // Load card index for identification
+  const { isIndexLoaded, isLoading: indexLoading } = useCardIdentification();
+
+  // Get videoRef from CameraView for capture
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Create a stable ref that points to the camera's video element
+  const getVideoRef = () => {
+    if (cameraViewRef.current?.videoRef?.current) {
+      return { current: cameraViewRef.current.videoRef.current };
+    }
+    return videoRef;
+  };
+
+  const { capture, isCapturing } = useScanCapture({ videoRef: getVideoRef() });
 
   // Use ref to avoid effect re-runs
   const resetRef = useRef(reset);
@@ -44,6 +67,8 @@ export function ShowxatingShell() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate]);
 
+  const canScan = cameraReady && isIndexLoaded && !isCapturing;
+
   return (
     <div className="showxating-shell fixed inset-0 z-50 flex flex-col">
       {/* Top Navigation */}
@@ -52,29 +77,33 @@ export function ShowxatingShell() {
       {/* SYS Panel */}
       <SysPanel isOpen={showSysPanel} onClose={() => setShowSysPanel(false)} />
 
-      {/* Main camera area */}
+      {/* Main view area */}
       <main className="flex-1 relative">
-        <CameraView />
+        {activeSlot === 'live' ? (
+          <CameraView ref={cameraViewRef} />
+        ) : (
+          <CapturedScanView slotId={activeSlot as 's1' | 's2' | 's3'} />
+        )}
       </main>
 
-      {/* Bottom controls - will be replaced with S3/S2/S1/SCAN ribbon later */}
+      {/* Bottom action bar */}
       <footer className="px-4 py-4 bg-black/80 border-t border-[var(--showxating-gold-dim)]">
-        <div className="flex items-center justify-center gap-4">
-          {/* SCAN button placeholder */}
-          <button
-            className="showxating-btn showxating-btn-primary"
-            disabled
-            title="Coming in Phase 6"
-          >
-            SCAN
-          </button>
-        </div>
+        <ScanActionBar
+          onScan={capture}
+          disabled={!canScan}
+        />
 
         {/* Status line */}
         <div className="mt-3 text-center">
           <span className="hud-text hud-text-dim text-xs">
             {cameraPermission === 'denied'
               ? 'CAMERA ACCESS DENIED'
+              : indexLoading
+              ? 'LOADING CARD INDEX...'
+              : !isIndexLoaded
+              ? 'INDEX NOT READY'
+              : activeSlot !== 'live'
+              ? `VIEWING ${activeSlot.toUpperCase()}`
               : cameraReady
               ? `STATUS: ${detectionStatus.toUpperCase()}`
               : 'AWAITING CAMERA'}
