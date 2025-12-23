@@ -14,5 +14,6 @@
 //   0.2.10 - Region-targeted OCR (title area only), card template definitions, timing in logs
 //   0.2.11 - Fix type filter: show ALL cards of type, expand OCR region, add confidence logging
 //   0.2.12 - Fix front side image after correction (.webp), scale up OCR region for better accuracy
-export const APP_VERSION = '0.2.12';
+//   0.2.13 - OCR type region (top of card) instead of title (bottom) - type labels are more readable
+export const APP_VERSION = '0.2.13';
 export const BUILD_DATE = '2025-12-23';

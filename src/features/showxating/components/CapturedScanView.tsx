@@ -625,46 +625,46 @@ function CorrectionModal({
         const dataUrl = canvas.toDataURL('image/png');
         setCroppedImage(dataUrl);
 
-        // Run OCR on the title region of the card (bottom area)
+        // Run OCR on the TYPE region (top of card) - more readable than title
         setIsOcrRunning(true);
         const ocrStartTime = performance.now();
 
-        // Extract title region from the cropped card
-        const titleRegion = CARD_REGIONS.title;
-        const titleX = Math.round((titleRegion.x / 100) * cropW);
-        const titleY = Math.round((titleRegion.y / 100) * cropH);
-        const titleW = Math.round((titleRegion.w / 100) * cropW);
-        const titleH = Math.round((titleRegion.h / 100) * cropH);
+        // Extract type region from the cropped card (top area where "Refinery", "Thruster", etc. appears)
+        const typeRegion = CARD_REGIONS.type;
+        const regionX = Math.round((typeRegion.x / 100) * cropW);
+        const regionY = Math.round((typeRegion.y / 100) * cropH);
+        const regionW = Math.round((typeRegion.w / 100) * cropW);
+        const regionH = Math.round((typeRegion.h / 100) * cropH);
 
-        // Create a canvas for the title region
-        const titleCanvas = document.createElement('canvas');
-        titleCanvas.width = titleW;
-        titleCanvas.height = titleH;
-        const titleCtx = titleCanvas.getContext('2d');
+        // Create a canvas for the type region
+        const ocrCanvas = document.createElement('canvas');
+        ocrCanvas.width = regionW;
+        ocrCanvas.height = regionH;
+        const ocrCtx = ocrCanvas.getContext('2d');
 
-        if (titleCtx) {
+        if (ocrCtx) {
           // Scale up small images for better OCR accuracy
           // Tesseract works best with text ~30-40px tall, so scale to ~150px region height
           const MIN_OCR_HEIGHT = 150;
-          const scaleFactor = titleH < MIN_OCR_HEIGHT ? MIN_OCR_HEIGHT / titleH : 1;
-          const scaledW = Math.round(titleW * scaleFactor);
-          const scaledH = Math.round(titleH * scaleFactor);
+          const scaleFactor = regionH < MIN_OCR_HEIGHT ? MIN_OCR_HEIGHT / regionH : 1;
+          const scaledW = Math.round(regionW * scaleFactor);
+          const scaledH = Math.round(regionH * scaleFactor);
 
           // Resize canvas to scaled dimensions
-          titleCanvas.width = scaledW;
-          titleCanvas.height = scaledH;
+          ocrCanvas.width = scaledW;
+          ocrCanvas.height = scaledH;
 
           // Enable image smoothing for better upscaling
-          titleCtx.imageSmoothingEnabled = true;
-          titleCtx.imageSmoothingQuality = 'high';
+          ocrCtx.imageSmoothingEnabled = true;
+          ocrCtx.imageSmoothingQuality = 'high';
 
-          // Draw scaled title region
-          titleCtx.drawImage(canvas, titleX, titleY, titleW, titleH, 0, 0, scaledW, scaledH);
-          const titleDataUrl = titleCanvas.toDataURL('image/png');
+          // Draw scaled type region
+          ocrCtx.drawImage(canvas, regionX, regionY, regionW, regionH, 0, 0, scaledW, scaledH);
+          const ocrDataUrl = ocrCanvas.toDataURL('image/png');
 
-          log.debug(`OCR title region: ${titleW}x${titleH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
+          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
 
-          Tesseract.recognize(titleDataUrl, 'eng', {
+          Tesseract.recognize(ocrDataUrl, 'eng', {
             logger: (m) => {
               if (m.status === 'recognizing text' && m.progress) {
                 log.debug(`OCR progress: ${Math.round(m.progress * 100)}%`);
@@ -691,8 +691,8 @@ function CorrectionModal({
             });
         } else {
           setIsOcrRunning(false);
-          log.error('OCR: failed to create title canvas context');
-          setExtractedText('(failed to create title canvas)');
+          log.error('OCR: failed to create canvas context');
+          setExtractedText('(failed to create canvas)');
         }
       }
     };
