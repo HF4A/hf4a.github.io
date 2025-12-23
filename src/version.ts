@@ -11,5 +11,6 @@
 //   0.2.7 - Fix gestures (remove long-press), add swipe card detail, individual card type filters, logs system
 //   0.2.8 - Type-first card matching, fix back side image orientation, fix WIPE IT button text
 //   0.2.9 - Add Tesseract.js OCR, type filter dropdown in correction modal, tap-to-ID fix
-export const APP_VERSION = '0.2.9';
+//   0.2.10 - Region-targeted OCR (title area only), card template definitions, timing in logs
+export const APP_VERSION = '0.2.10';
 export const BUILD_DATE = '2025-12-23';

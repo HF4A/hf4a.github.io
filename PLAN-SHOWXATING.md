@@ -726,7 +726,90 @@ interface ManualCorrection {
 ---
 
 **Deliverable**: Type-aware matching with dramatically improved accuracy
-**Status**: v0.2.8 in progress
+**Status**: v0.2.8 complete
+
+---
+
+#### Problem 22: OCR-First Card Identification 🚧 v0.2.9+
+**Goal**: Replace visual hashing with OCR-based text matching as primary identification method.
+
+**Insight**: HF4A cards have consistent, predictable layouts:
+- **Type indicator**: Always at top of card (icon + text)
+- **Card title**: Always at bottom, normal readable font
+- **Mass/Rad-hard**: Clear text in black boxes
+- All use standard fonts, not heavily stylized
+
+**Architecture Change**: OCR → Text Match → Hash Fallback
+1. Extract text from known card regions using Scribe.js
+2. Match extracted type + title against card database
+3. Only fall back to dHash if OCR fails or has low confidence
+4. Expected accuracy: ~95-100% with good text extraction
+
+**Card Template (Region Definitions)**:
+```typescript
+interface CardTemplate {
+  // All values as percentage of card dimensions
+  typeRegion: { x: 0, y: 0, w: 30, h: 15 };    // Top-left: type icon + name
+  titleRegion: { x: 5, y: 85, w: 90, h: 12 };  // Bottom: card title
+  statsRegion: { x: 70, y: 0, w: 28, h: 20 };  // Top-right: mass, thrust, etc
+}
+```
+
+**Implementation**:
+
+1. **OCR with Region Targeting** (Tesseract.js + targeted extraction)
+   - [x] Tried Scribe.js but has Vite build compatibility issues (worker format)
+   - [x] Using Tesseract.js with targeted region extraction instead
+   - [x] Define CARD_REGIONS for title (bottom 15%) and type (top-left 35x12%)
+   - [x] Extract and OCR only title region for faster, more accurate results
+
+2. **Define Card Regions**
+   - [ ] Create `cardTemplate.ts` with region definitions
+   - [ ] Add region extraction helper (`extractCardRegion()`)
+   - [ ] Test region accuracy across card types
+
+3. **OCR Integration in Matching Pipeline**
+   - [ ] Extract text from type region → detect card type
+   - [ ] Extract text from title region → match card name
+   - [ ] Use Fuse.js fuzzy matching against card database
+   - [ ] Combine scores: OCR match 80%, dHash 20%
+
+4. **Timing Metrics for Diagnostics**
+   - [ ] Track OCR duration per card
+   - [ ] Track total identification time
+   - [ ] Add timing to diagnostics export:
+     ```typescript
+     interface CardDiagnostics {
+       // ... existing fields
+       timing: {
+         ocrMs: number;        // OCR extraction time
+         matchMs: number;      // Text + hash matching time
+         totalMs: number;      // Total identification time
+       }
+     }
+     ```
+
+5. **Staged Display with Feedback**
+   - [ ] Show "SCANNING" state while OCR runs
+   - [ ] Flash "MATCH" briefly when card identified
+   - [ ] Stagger card reveals (50-100ms delay between cards)
+   - [ ] Perceptible but snappy feedback loop
+
+**Performance Targets**:
+- OCR per card: <500ms
+- Total identification (4 cards): <3s
+- Acceptable for batch scanning workflow
+
+**Scribe.js Notes**:
+- Must be bundled (no CDN due to same-origin requirement)
+- Larger than Tesseract.js but more accurate
+- Has custom model that outperforms Tesseract
+- Good for high-quality scans and screenshots
+
+---
+
+**Deliverable**: OCR-based identification with near-perfect accuracy
+**Status**: v0.2.9 in progress
 
 ---
 

@@ -19,6 +19,15 @@ import { log } from '../../../store/logsStore';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
+// Card region definitions (as percentage of card dimensions)
+// HF4A cards have consistent layouts: type at top, title at bottom
+const CARD_REGIONS = {
+  // Title region: bottom of card, usually contains the card name in readable font
+  title: { x: 5, y: 82, w: 90, h: 15 },
+  // Type region: top-left of card, contains type icon and name
+  type: { x: 0, y: 0, w: 35, h: 12 },
+};
+
 // Swipe gesture thresholds
 const SWIPE_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
@@ -612,34 +621,58 @@ function CorrectionModal({
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        const dataUrl = canvas.toDataURL('image/png');
         setCroppedImage(dataUrl);
 
-        // Run OCR on the cropped image
+        // Run OCR on the title region of the card (bottom area)
         setIsOcrRunning(true);
-        Tesseract.recognize(dataUrl, 'eng', {
-          logger: (m) => {
-            if (m.status === 'recognizing text') {
-              log.debug(`OCR progress: ${Math.round((m.progress || 0) * 100)}%`);
-            }
-          },
-        })
-          .then(({ data: { text } }) => {
-            // Clean up OCR text - remove excessive whitespace
-            const cleaned = text
-              .replace(/\s+/g, ' ')
-              .trim()
-              .substring(0, 200); // Limit length
-            setExtractedText(cleaned || '(no text detected)');
-            log.info(`OCR extracted: "${cleaned.substring(0, 50)}..."`);
+        const ocrStartTime = performance.now();
+
+        // Extract title region from the cropped card
+        const titleRegion = CARD_REGIONS.title;
+        const titleX = Math.round((titleRegion.x / 100) * cropW);
+        const titleY = Math.round((titleRegion.y / 100) * cropH);
+        const titleW = Math.round((titleRegion.w / 100) * cropW);
+        const titleH = Math.round((titleRegion.h / 100) * cropH);
+
+        // Create a canvas for the title region
+        const titleCanvas = document.createElement('canvas');
+        titleCanvas.width = titleW;
+        titleCanvas.height = titleH;
+        const titleCtx = titleCanvas.getContext('2d');
+
+        if (titleCtx) {
+          titleCtx.drawImage(canvas, titleX, titleY, titleW, titleH, 0, 0, titleW, titleH);
+          const titleDataUrl = titleCanvas.toDataURL('image/png');
+
+          Tesseract.recognize(titleDataUrl, 'eng', {
+            logger: (m) => {
+              if (m.status === 'recognizing text' && m.progress) {
+                log.debug(`OCR progress: ${Math.round(m.progress * 100)}%`);
+              }
+            },
           })
-          .catch((err) => {
-            log.error(`OCR failed: ${err.message}`);
-            setExtractedText('(OCR failed)');
-          })
-          .finally(() => {
-            setIsOcrRunning(false);
-          });
+            .then(({ data: { text } }) => {
+              const ocrDuration = Math.round(performance.now() - ocrStartTime);
+              // Clean up OCR text - remove excessive whitespace
+              const cleaned = text
+                .replace(/\s+/g, ' ')
+                .trim()
+                .substring(0, 100); // Title should be short
+              setExtractedText(cleaned || '(no text detected)');
+              log.info(`OCR extracted in ${ocrDuration}ms: "${cleaned}"`);
+            })
+            .catch((err) => {
+              log.error(`OCR failed: ${err.message}`);
+              setExtractedText('(OCR failed)');
+            })
+            .finally(() => {
+              setIsOcrRunning(false);
+            });
+        } else {
+          setIsOcrRunning(false);
+          setExtractedText('(failed to create title canvas)');
+        }
       }
     };
     img.src = scanImageDataUrl;
