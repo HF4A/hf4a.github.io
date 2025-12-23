@@ -23,9 +23,9 @@ import type { Card, CardType } from '../../../types/card';
 const CARD_REGIONS = {
   // Title region: bottom of card, usually contains the card name in readable font
   title: { x: 2, y: 78, w: 96, h: 20 },
-  // Type region: top of card, contains type name in colored banner
-  // Expanded to capture full banner area (was w:40 h:15)
-  type: { x: 0, y: 0, w: 50, h: 18 },
+  // Type region: top of card, contains type name (centered text)
+  // Full width to capture centered text like "Refinery", "Thruster"
+  type: { x: 0, y: 0, w: 100, h: 12 },
 };
 
 // Swipe gesture thresholds
@@ -668,9 +668,8 @@ function CorrectionModal({
           const formData = new FormData();
           formData.append('base64Image', ocrDataUrl);
           formData.append('language', 'eng');
-          formData.append('OCREngine', '1'); // Engine 1 for general text
+          formData.append('OCREngine', '2'); // Engine 2 better for photos/screenshots
           formData.append('scale', 'true');
-          formData.append('detectOrientation', 'true');
 
           log.debug(`Sending to OCR.space: ${Math.round(ocrDataUrl.length / 1024)}KB image`);
 
