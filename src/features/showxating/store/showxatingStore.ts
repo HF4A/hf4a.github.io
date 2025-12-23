@@ -18,6 +18,11 @@ export interface IdentifiedCard {
   confidence: number;
   corners: Point[];
   showingOpposite: boolean; // flip state for this card
+  // Debug info for diagnostics
+  boundingBox?: { x: number; y: number; width: number; height: number };
+  computedHash?: string;
+  matchDistance?: number;
+  topMatches?: { cardId: string; distance: number }[];
 }
 
 export interface CapturedScan {

@@ -11,6 +11,7 @@
 
 import JSZip from 'jszip';
 import { useScanSlotsStore, CapturedScan, IdentifiedCard } from '../store/showxatingStore';
+import { APP_VERSION, BUILD_DATE } from '../../../version';
 
 export interface DiagnosticsMetadata {
   exportedAt: string;
@@ -40,6 +41,11 @@ export interface CardDiagnostics {
   corners: { x: number; y: number }[];
   showingOpposite: boolean;
   identified: boolean;
+  // Debug info for troubleshooting (Phase 9.1)
+  boundingBox?: { x: number; y: number; width: number; height: number };
+  computedHash?: string;
+  matchDistance?: number;
+  topMatches?: { cardId: string; distance: number }[];
 }
 
 function formatCardDiagnostics(card: IdentifiedCard): CardDiagnostics {
@@ -51,6 +57,11 @@ function formatCardDiagnostics(card: IdentifiedCard): CardDiagnostics {
     corners: card.corners,
     showingOpposite: card.showingOpposite,
     identified: card.cardId !== 'unknown' && card.cardId !== '',
+    // Debug info
+    boundingBox: card.boundingBox,
+    computedHash: card.computedHash,
+    matchDistance: card.matchDistance,
+    topMatches: card.topMatches,
   };
 }
 
@@ -72,8 +83,8 @@ function getMetadata(scans: CapturedScan[]): DiagnosticsMetadata {
 
   return {
     exportedAt: new Date().toISOString(),
-    appVersion: '0.1.0',
-    buildDate: '2024.12.22',
+    appVersion: APP_VERSION,
+    buildDate: BUILD_DATE,
     userAgent: navigator.userAgent,
     platform: navigator.platform,
     screenSize: {

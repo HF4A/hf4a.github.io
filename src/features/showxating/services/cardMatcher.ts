@@ -22,6 +22,12 @@ export interface MatchResult {
   confidence: number; // 0-1, where 1 is perfect match
 }
 
+export interface MatchResultWithDebug {
+  matches: MatchResult[];
+  computedHash: string;
+  topMatches: { cardId: string; distance: number }[];
+}
+
 // Maximum Hamming distance to consider a match (out of 64 bits)
 // Increased from 15 to 20 to be more lenient with camera captures
 const MAX_MATCH_DISTANCE = 20;
@@ -195,14 +201,23 @@ export class CardMatcher {
    * Match a hash against the index
    */
   matchFromHash(queryHash: number[]): MatchResult[] {
+    return this.matchFromHashWithDebug(queryHash).matches;
+  }
+
+  /**
+   * Match a hash against the index with debug info
+   */
+  matchFromHashWithDebug(queryHash: number[]): MatchResultWithDebug {
     if (!this.loaded) {
       throw new Error('Card index not loaded. Call loadIndex() first.');
     }
 
     const results: MatchResult[] = [];
+    const allDistances: { cardId: string; distance: number }[] = [];
 
     for (const entry of this.index) {
       const distance = hammingDistance(queryHash, entry.hashBytes);
+      allDistances.push({ cardId: entry.cardId, distance });
 
       if (distance <= MAX_MATCH_DISTANCE) {
         // Calculate confidence: 1.0 at distance 0, decreasing to 0.3 at MAX_MATCH_DISTANCE
@@ -223,8 +238,13 @@ export class CardMatcher {
 
     // Sort by distance (best first)
     results.sort((a, b) => a.distance - b.distance);
+    allDistances.sort((a, b) => a.distance - b.distance);
 
-    return results;
+    return {
+      matches: results,
+      computedHash: hashToHex(queryHash),
+      topMatches: allDistances.slice(0, 5), // Top 5 closest matches for debugging
+    };
   }
 
   /**
@@ -236,6 +256,47 @@ export class CardMatcher {
   ): MatchResult | null {
     const matches = this.matchFromCanvas(canvas, region);
     return matches.length > 0 ? matches[0] : null;
+  }
+
+  /**
+   * Match from canvas with debug info
+   */
+  matchFromCanvasWithDebug(
+    canvas: HTMLCanvasElement,
+    region?: { x: number; y: number; width: number; height: number }
+  ): MatchResultWithDebug {
+    if (!this.loaded) {
+      throw new Error('Card index not loaded. Call loadIndex() first.');
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Could not get canvas context');
+    }
+
+    // Create a temporary canvas for resizing
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = 9;
+    tempCanvas.height = 8;
+    const tempCtx = tempCanvas.getContext('2d');
+    if (!tempCtx) {
+      throw new Error('Could not create temp canvas context');
+    }
+
+    // Draw the region (or entire canvas) scaled to 9x8
+    const srcX = region?.x ?? 0;
+    const srcY = region?.y ?? 0;
+    const srcW = region?.width ?? canvas.width;
+    const srcH = region?.height ?? canvas.height;
+
+    tempCtx.drawImage(canvas, srcX, srcY, srcW, srcH, 0, 0, 9, 8);
+
+    // Get the image data and compute hash
+    const imageData = tempCtx.getImageData(0, 0, 9, 8);
+    const queryHash = computeDHashFromImageData(imageData);
+
+    // Find matches with debug info
+    return this.matchFromHashWithDebug(queryHash);
   }
 
   /**

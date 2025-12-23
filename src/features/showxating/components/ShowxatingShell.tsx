@@ -98,8 +98,10 @@ export function ShowxatingShell() {
         };
 
         if (matcher.isLoaded()) {
-          const matches = matcher.matchFromCanvas(canvas, region);
-          console.log('[ShowxatingShell] Card region:', region, 'Matches:', matches.length, matches.slice(0, 2));
+          // Use debug method to capture hash and top matches
+          const debugResult = matcher.matchFromCanvasWithDebug(canvas, region);
+          const matches = debugResult.matches;
+          console.log('[ShowxatingShell] Card region:', region, 'Hash:', debugResult.computedHash, 'Top matches:', debugResult.topMatches);
 
           if (matches.length > 0) {
             const match = matches[0];
@@ -110,6 +112,11 @@ export function ShowxatingShell() {
               confidence: match.confidence,
               corners: card.corners,
               showingOpposite: defaultScanResult === 'opposite',
+              // Debug info
+              boundingBox: region,
+              computedHash: debugResult.computedHash,
+              matchDistance: match.distance,
+              topMatches: debugResult.topMatches,
             });
           } else {
             // Card detected but not identified
@@ -120,6 +127,10 @@ export function ShowxatingShell() {
               confidence: 0,
               corners: card.corners,
               showingOpposite: defaultScanResult === 'opposite',
+              // Debug info even for unknown cards
+              boundingBox: region,
+              computedHash: debugResult.computedHash,
+              topMatches: debugResult.topMatches,
             });
           }
         }

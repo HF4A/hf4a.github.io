@@ -21,7 +21,7 @@ export { useScanCapture } from './hooks/useScanCapture';
 export { detectCardQuadrilateral, detectAllCards } from './services/visionPipeline';
 export type { DetectionResult, MultiDetectionResult } from './services/visionPipeline';
 export { CardMatcher, getCardMatcher, computeDHashFromImageData, hammingDistance } from './services/cardMatcher';
-export type { CardIndexEntry, MatchResult } from './services/cardMatcher';
+export type { CardIndexEntry, MatchResult, MatchResultWithDebug } from './services/cardMatcher';
 export { exportDiagnosticsZip, downloadDiagnostics, shareDiagnostics } from './services/exportDiagnostics';
 export type { DiagnosticsMetadata, ScanDiagnostics, CardDiagnostics } from './services/exportDiagnostics';
 

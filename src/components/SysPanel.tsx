@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
 import { shareDiagnostics } from '../features/showxating/services/exportDiagnostics';
 import { useScanSlotsStore } from '../features/showxating/store/showxatingStore';
+import { APP_VERSION, BUILD_DATE } from '../version';
 
 interface SysPanelProps {
   isOpen: boolean;
@@ -182,11 +183,11 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
             <div className="space-y-2 text-xs" style={{ color: '#707080' }}>
               <div className="flex justify-between">
                 <span style={{ color: '#a08040' }}>VERSION</span>
-                <span style={{ color: '#d4a84b' }}>0.1.0</span>
+                <span style={{ color: '#d4a84b' }}>{APP_VERSION}</span>
               </div>
               <div className="flex justify-between">
                 <span style={{ color: '#a08040' }}>BUILD</span>
-                <span style={{ color: '#d4a84b' }}>2024.12.22</span>
+                <span style={{ color: '#d4a84b' }}>{BUILD_DATE}</span>
               </div>
               <div className="flex justify-between">
                 <span style={{ color: '#a08040' }}>STATUS</span>
