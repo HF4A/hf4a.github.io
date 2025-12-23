@@ -21,6 +21,8 @@ interface CardIndexEntry {
   filename: string;
   cardId: string;
   side: string | null;
+  type: string;        // Card type for text matching
+  name: string;        // Card name for text matching
   hash: string;
   // Also store the hash as array of 8 bytes for faster comparison
   hashBytes: number[];
@@ -31,6 +33,7 @@ interface CardData {
   filename: string;
   side?: string;
   type: string;
+  name: string;
   ocr?: {
     name?: string;
   };
@@ -127,10 +130,15 @@ async function main() {
       // Find card data
       const cardData = cardsByFilename.get(filename);
 
+      // Extract type from cardId if not in cardData (e.g., "refinery-04" -> "refinery")
+      const derivedType = (cardData?.id || filename).replace(/-\d+.*$/, '').toLowerCase();
+
       index.push({
         filename,
         cardId: cardData?.id || filename.replace('.webp', ''),
         side: cardData?.side || null,
+        type: cardData?.type || derivedType,
+        name: cardData?.name || '',
         hash,
         hashBytes,
       });

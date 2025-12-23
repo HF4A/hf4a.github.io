@@ -16,6 +16,9 @@
 - [ ] Belter / HF4A inspired favicon?
 - [ ] the back-side card is backwards!
 
+## Key Handling
+- [ ] evaluate switching to cloudflare - would allow more complex AI capabilities in future.  If not, come up with 'invite URL scheme' which allows sharing link in apple messages, which opens installed app and injects the API key - I don't expect people to copy and paste the key.
+
 ## Simplified First Launch
 - [x] On first launch, have a scrollable welcome screen, explaining the app's purpose and how to use, possibly with simple low-res mockups of the screen, in language that is sprinkled with Belta Creole but understandable for the most part, sasa ke?
 

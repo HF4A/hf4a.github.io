@@ -27,6 +27,8 @@ declare global {
     isContourConvex: (contour: Mat) => boolean;
     getPerspectiveTransform: (src: Mat, dst: Mat) => Mat;
     warpPerspective: (src: Mat, dst: Mat, M: Mat, dsize: Size) => void;
+    getRotationMatrix2D: (center: Point, angle: number, scale: number) => Mat;
+    warpAffine: (src: Mat, dst: Mat, M: Mat, dsize: Size) => void;
     imshow: (canvas: HTMLCanvasElement, mat: Mat) => void;
     COLOR_RGBA2GRAY: number;
     RETR_EXTERNAL: number;

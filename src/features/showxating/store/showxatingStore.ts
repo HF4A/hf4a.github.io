@@ -25,6 +25,18 @@ export interface IdentifiedCard {
   topMatches?: { cardId: string; distance: number }[];
   extractedText?: string; // Text extracted from card for matching (future)
   detectedTypes?: string[]; // Card types detected from color analysis
+  // v0.3.0: OCR-based matching diagnostics
+  ocrResult?: {
+    fullText: string;
+    typeText: string;
+    titleText: string;
+    confidence: number;
+    timing: { fullMs: number; typeMs: number; titleMs: number; totalMs: number };
+  };
+  matchSource?: 'text' | 'hash' | 'fused'; // Which method provided the match
+  textScore?: number;  // Text matching score (0 = perfect)
+  hashScore?: number;  // Hash matching score (0 = perfect)
+  fusedScore?: number; // Combined score (0 = perfect)
 }
 
 export interface CapturedScan {

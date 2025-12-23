@@ -18,5 +18,7 @@
 //   0.2.14 - OCR preprocessing: binarize image, scale to 200px, expand type region
 //   0.2.15 - Switch to OCR.space API (free tier) - much better accuracy than Tesseract
 //   0.2.16 - Remove binarization (was destroying text), add debug logging, use Engine 1
-export const APP_VERSION = '0.2.16';
+// 0.3.x - Pipeline refactor: warp-then-detect, OCR-primary matching
+//   0.3.0 - Full pipeline refactor: warp entire frame, OCR-primary, text matching, diagnostics
+export const APP_VERSION = '0.3.0';
 export const BUILD_DATE = '2025-12-23';

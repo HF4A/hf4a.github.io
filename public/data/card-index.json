@@ -1,8 +1,226 @@
 [
   {
+    "filename": "01a.webp",
+    "cardId": "01a",
+    "side": null,
+    "type": "01a.webp",
+    "name": "",
+    "hash": "bbd36ce2624cda66",
+    "hashBytes": [
+      187,
+      211,
+      108,
+      226,
+      98,
+      76,
+      218,
+      102
+    ]
+  },
+  {
+    "filename": "01b.webp",
+    "cardId": "01b",
+    "side": null,
+    "type": "01b.webp",
+    "name": "",
+    "hash": "c9ca994a90526269",
+    "hashBytes": [
+      201,
+      202,
+      153,
+      74,
+      144,
+      82,
+      98,
+      105
+    ]
+  },
+  {
+    "filename": "03a.webp",
+    "cardId": "03a",
+    "side": null,
+    "type": "03a.webp",
+    "name": "",
+    "hash": "cdd92e51294a640b",
+    "hashBytes": [
+      205,
+      217,
+      46,
+      81,
+      41,
+      74,
+      100,
+      11
+    ]
+  },
+  {
+    "filename": "03b.webp",
+    "cardId": "03b",
+    "side": null,
+    "type": "03b.webp",
+    "name": "",
+    "hash": "73b24aa86b4f6b15",
+    "hashBytes": [
+      115,
+      178,
+      74,
+      168,
+      107,
+      79,
+      107,
+      21
+    ]
+  },
+  {
+    "filename": "04a.webp",
+    "cardId": "04a",
+    "side": null,
+    "type": "04a.webp",
+    "name": "",
+    "hash": "6c92481818969825",
+    "hashBytes": [
+      108,
+      146,
+      72,
+      24,
+      24,
+      150,
+      152,
+      37
+    ]
+  },
+  {
+    "filename": "04b.webp",
+    "cardId": "04b",
+    "side": null,
+    "type": "04b.webp",
+    "name": "",
+    "hash": "4c35e23964000000",
+    "hashBytes": [
+      76,
+      53,
+      226,
+      57,
+      100,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "filename": "07a.webp",
+    "cardId": "07a",
+    "side": null,
+    "type": "07a.webp",
+    "name": "",
+    "hash": "a22662a7775975e6",
+    "hashBytes": [
+      162,
+      38,
+      98,
+      167,
+      119,
+      89,
+      117,
+      230
+    ]
+  },
+  {
+    "filename": "07b.webp",
+    "cardId": "07b",
+    "side": null,
+    "type": "07b.webp",
+    "name": "",
+    "hash": "265a296f674a46c6",
+    "hashBytes": [
+      38,
+      90,
+      41,
+      111,
+      103,
+      74,
+      70,
+      198
+    ]
+  },
+  {
+    "filename": "09a.webp",
+    "cardId": "09a",
+    "side": null,
+    "type": "09a.webp",
+    "name": "",
+    "hash": "0040004000000000",
+    "hashBytes": [
+      0,
+      64,
+      0,
+      64,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "filename": "09b.webp",
+    "cardId": "09b",
+    "side": null,
+    "type": "09b.webp",
+    "name": "",
+    "hash": "c0c000c000000000",
+    "hashBytes": [
+      192,
+      192,
+      0,
+      192,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "filename": "10a.webp",
+    "cardId": "10a",
+    "side": null,
+    "type": "10a.webp",
+    "name": "",
+    "hash": "e4e7256169e8a800",
+    "hashBytes": [
+      228,
+      231,
+      37,
+      97,
+      105,
+      232,
+      168,
+      0
+    ]
+  },
+  {
+    "filename": "10b.webp",
+    "cardId": "10b",
+    "side": null,
+    "type": "10b.webp",
+    "name": "",
+    "hash": "5646242421a0e100",
+    "hashBytes": [
+      86,
+      70,
+      36,
+      36,
+      33,
+      160,
+      225,
+      0
+    ]
+  },
+  {
     "filename": "Bernal01-Purple-SpaceElevatorLab.webp",
     "cardId": "bernal-01",
     "side": "purple",
+    "type": "bernal",
+    "name": "Space Elevator Lab",
     "hash": "71613ee3c66a700d",
     "hashBytes": [
       113,
@@ -19,6 +237,8 @@
     "filename": "Bernal01-White-GEOElevatorBernal.webp",
     "cardId": "bernal-01",
     "side": "white",
+    "type": "bernal",
+    "name": "GEOElevator Bernal",
     "hash": "c0c0a4cca694cc8c",
     "hashBytes": [
       192,
@@ -35,6 +255,8 @@
     "filename": "Bernal02-Purple-ClimateControlLab.webp",
     "cardId": "bernal-02",
     "side": "purple",
+    "type": "bernal",
+    "name": "Climate Control Lab",
     "hash": "61633ed45e83bd05",
     "hashBytes": [
       97,
@@ -51,6 +273,8 @@
     "filename": "Bernal02-White-L1ClimateControlBernal.webp",
     "cardId": "bernal-02",
     "side": "white",
+    "type": "bernal",
+    "name": "L1Climate Control Bernal",
     "hash": "e0c084ceb694cd8c",
     "hashBytes": [
       224,
@@ -67,6 +291,8 @@
     "filename": "Bernal03-Purple-CollimatorLab.webp",
     "cardId": "bernal-03",
     "side": "purple",
+    "type": "bernal",
+    "name": "Collimator Lab",
     "hash": "61733e8ea7b68b09",
     "hashBytes": [
       97,
@@ -83,6 +309,8 @@
     "filename": "Bernal03-White-L2CollimatorBernal.webp",
     "cardId": "bernal-03",
     "side": "white",
+    "type": "bernal",
+    "name": "L2Collimator Bernal",
     "hash": "e0c080c86888c78c",
     "hashBytes": [
       224,
@@ -99,6 +327,8 @@
     "filename": "Bernal04-Purple-LofstromLoopMicrogravityLab.webp",
     "cardId": "bernal-04",
     "side": "purple",
+    "type": "bernal",
+    "name": "Lofstrom Loop Microgravity Lab",
     "hash": "63633ce21e32b809",
     "hashBytes": [
       99,
@@ -115,6 +345,8 @@
     "filename": "Bernal04-White-L3LofstromLoopMicrogravity.webp",
     "cardId": "bernal-04",
     "side": "white",
+    "type": "bernal",
+    "name": "L3Lofstrom Loop Microgravity",
     "hash": "c2c080c19cf8dc88",
     "hashBytes": [
       194,
@@ -131,6 +363,8 @@
     "filename": "Bernal05-Purple-AntimatterLab.webp",
     "cardId": "bernal-05",
     "side": "purple",
+    "type": "bernal",
+    "name": "Antimatter Lab",
     "hash": "71732f8f0eae9c49",
     "hashBytes": [
       113,
@@ -147,6 +381,8 @@
     "filename": "Bernal05-White-L4AntimatterFactory.webp",
     "cardId": "bernal-05",
     "side": "white",
+    "type": "bernal",
+    "name": "L4Antimatter Factory",
     "hash": "60e088821757c48a",
     "hashBytes": [
       96,
@@ -163,6 +399,8 @@
     "filename": "Bernal06-Purple-PharmaceuticsLab.webp",
     "cardId": "bernal-06",
     "side": "purple",
+    "type": "bernal",
+    "name": "Pharmaceutics Lab",
     "hash": "716336e68baab509",
     "hashBytes": [
       113,
@@ -179,6 +417,8 @@
     "filename": "Bernal06-White-L4sPharmaceuticsBernal.webp",
     "cardId": "bernal-06",
     "side": "white",
+    "type": "bernal",
+    "name": "L4s Pharmaceutics Bernal",
     "hash": "c2c08088968eca88",
     "hashBytes": [
       194,
@@ -195,6 +435,8 @@
     "filename": "Bernal07-Purple-SolarCellLab.webp",
     "cardId": "bernal-07",
     "side": "purple",
+    "type": "bernal",
+    "name": "Solar Cell Lab",
     "hash": "7163368e8c8e9c09",
     "hashBytes": [
       113,
@@ -211,6 +453,8 @@
     "filename": "Bernal07-White-L5SolarCellFactory.webp",
     "cardId": "bernal-07",
     "side": "white",
+    "type": "bernal",
+    "name": "L5Solar Cell Factory",
     "hash": "c0c080c2b4d0c28c",
     "hashBytes": [
       192,
@@ -227,6 +471,8 @@
     "filename": "Bernal08-Purple-CancerLab.webp",
     "cardId": "bernal-08",
     "side": "purple",
+    "type": "bernal",
+    "name": "Cancer Lab",
     "hash": "63633ee4c6833509",
     "hashBytes": [
       99,
@@ -243,6 +489,8 @@
     "filename": "Bernal08-White-L5sCancerHospital.webp",
     "cardId": "bernal-08",
     "side": "white",
+    "type": "bernal",
+    "name": "L5s Cancer Hospital",
     "hash": "c0c080c132f6ca8a",
     "hashBytes": [
       192,
@@ -259,6 +507,8 @@
     "filename": "Bernal09-Purple-DiplomaticLab.webp",
     "cardId": "bernal-09",
     "side": "purple",
+    "type": "bernal",
+    "name": "Diplomatic Lab",
     "hash": "71633ea696e33a09",
     "hashBytes": [
       113,
@@ -275,6 +525,8 @@
     "filename": "Bernal09-White-SSODiplomatic.webp",
     "cardId": "bernal-09",
     "side": "white",
+    "type": "bernal",
+    "name": "SSODiplomatic",
     "hash": "e2c080cdc09cc989",
     "hashBytes": [
       226,
@@ -291,6 +543,8 @@
     "filename": "Bernal10-Purple-TourismHotel.webp",
     "cardId": "bernal-10",
     "side": "purple",
+    "type": "bernal",
+    "name": "Tourism Hotel",
     "hash": "71613ee6acadb409",
     "hashBytes": [
       113,
@@ -307,6 +561,8 @@
     "filename": "Bernal10-White-TourismCycler.webp",
     "cardId": "bernal-10",
     "side": "white",
+    "type": "bernal",
+    "name": "Tourism Cycler",
     "hash": "c0e088c1a4accc8d",
     "hashBytes": [
       192,
@@ -323,6 +579,8 @@
     "filename": "Bernal11-Purple-ForceFieldLab.webp",
     "cardId": "bernal-11",
     "side": "purple",
+    "type": "bernal",
+    "name": "Force Field Lab",
     "hash": "71722e89a596120d",
     "hashBytes": [
       113,
@@ -339,6 +597,8 @@
     "filename": "Bernal11-White-L2ForceFieldBernal.webp",
     "cardId": "bernal-11",
     "side": "white",
+    "type": "bernal",
+    "name": "L2Force Field Bernal",
     "hash": "c2c084c28890cd8e",
     "hashBytes": [
       194,
@@ -355,6 +615,8 @@
     "filename": "Bernal12-Purple-CatchersMittLab.webp",
     "cardId": "bernal-12",
     "side": "purple",
+    "type": "bernal",
+    "name": "Catchers Mitt Lab",
     "hash": "61763aae6c89310d",
     "hashBytes": [
       97,
@@ -371,6 +633,8 @@
     "filename": "Bernal12-White-CatchersMittBernal.webp",
     "cardId": "bernal-12",
     "side": "white",
+    "type": "bernal",
+    "name": "Catchers Mitt Bernal",
     "hash": "c0c084c868dac184",
     "hashBytes": [
       192,
@@ -387,6 +651,8 @@
     "filename": "Colonist01-Black-BabbageHalbonauts.webp",
     "cardId": "colonist-01",
     "side": "black",
+    "type": "colonist",
+    "name": "Babbage Halbonauts",
     "hash": "2d6f8b75755b5a97",
     "hashBytes": [
       45,
@@ -403,6 +669,8 @@
     "filename": "Colonist01-Purple-UtilityFogHalbonaut.webp",
     "cardId": "colonist-01",
     "side": "purple",
+    "type": "colonist",
+    "name": "Utility Fog Halbonaut",
     "hash": "ecef8fc7c78e9886",
     "hashBytes": [
       236,
@@ -419,6 +687,8 @@
     "filename": "Colonist02-Purple-GroupMindImmortalists.webp",
     "cardId": "colonist-02",
     "side": "purple",
+    "type": "colonist",
+    "name": "Group Mind Immortalists",
     "hash": "a8e9a7e1e787969a",
     "hashBytes": [
       168,
@@ -435,6 +705,8 @@
     "filename": "Colonist02-White-Biomechs.webp",
     "cardId": "colonist-02",
     "side": "white",
+    "type": "colonist",
+    "name": "Biomechs",
     "hash": "a8c090b0b09cec84",
     "hashBytes": [
       168,
@@ -451,6 +723,8 @@
     "filename": "Colonist03-Purple-SoldierCaste.webp",
     "cardId": "colonist-03",
     "side": "purple",
+    "type": "colonist",
+    "name": "Soldier Caste",
     "hash": "b8a5c7cbcd0d9b84",
     "hashBytes": [
       184,
@@ -467,6 +741,8 @@
     "filename": "Colonist03-White-BotanyBayConvicts.webp",
     "cardId": "colonist-03",
     "side": "white",
+    "type": "colonist",
+    "name": "Botany Bay Convicts",
     "hash": "a8c0cc74f6deda86",
     "hashBytes": [
       168,
@@ -483,6 +759,8 @@
     "filename": "Colonist04-Purple-MartianAssembly.webp",
     "cardId": "colonist-04",
     "side": "purple",
+    "type": "colonist",
+    "name": "Martian Assembly",
     "hash": "cdcdc78f8b439e94",
     "hashBytes": [
       205,
@@ -499,6 +777,8 @@
     "filename": "Colonist04-White-BoyleEngineeringCollective.webp",
     "cardId": "colonist-04",
     "side": "white",
+    "type": "colonist",
+    "name": "Boyle Engineering Collective",
     "hash": "cccc92b6f0f0969a",
     "hashBytes": [
       204,
@@ -515,6 +795,8 @@
     "filename": "Colonist05-Purple-Wet-NanoSeedSail.webp",
     "cardId": "colonist-05",
     "side": "purple",
+    "type": "colonist",
+    "name": "Wet Nano Seed Sail",
     "hash": "e4e5c3aee7823a34",
     "hashBytes": [
       228,
@@ -531,6 +813,8 @@
     "filename": "Colonist05-White-Calypso2SeedSail.webp",
     "cardId": "colonist-05",
     "side": "white",
+    "type": "colonist",
+    "name": "Calypso2Seed Sail",
     "hash": "ec8488b286cebeb0",
     "hashBytes": [
       236,
@@ -547,6 +831,8 @@
     "filename": "Colonist06-Purple-NewAtticaSecessionists.webp",
     "cardId": "colonist-06",
     "side": "purple",
+    "type": "colonist",
+    "name": "New Attica Secessionists",
     "hash": "8ccfcbc70317969a",
     "hashBytes": [
       140,
@@ -563,6 +849,8 @@
     "filename": "Colonist06-White-HeavyWaterSurvivalists.webp",
     "cardId": "colonist-06",
     "side": "white",
+    "type": "colonist",
+    "name": "Heavy Water Survivalists",
     "hash": "8cc494d4b4fccca2",
     "hashBytes": [
       140,
@@ -579,6 +867,8 @@
     "filename": "Colonist07-Purple-Iceworms.webp",
     "cardId": "colonist-07",
     "side": "purple",
+    "type": "colonist",
+    "name": "Iceworms",
     "hash": "c9c9cfc7870d9e8c",
     "hashBytes": [
       201,
@@ -595,6 +885,8 @@
     "filename": "Colonist07-White-HouseofSaud.webp",
     "cardId": "colonist-07",
     "side": "white",
+    "type": "colonist",
+    "name": "Houseof Saud",
     "hash": "c8c49030f1e0e8c4",
     "hashBytes": [
       200,
@@ -611,6 +903,8 @@
     "filename": "Colonist08-Purple-RentalBodyGuild.webp",
     "cardId": "colonist-08",
     "side": "purple",
+    "type": "colonist",
+    "name": "Rental Body Guild",
     "hash": "acad87cca9393836",
     "hashBytes": [
       172,
@@ -627,6 +921,8 @@
     "filename": "Colonist08-White-JuicedCosmonauts.webp",
     "cardId": "colonist-08",
     "side": "white",
+    "type": "colonist",
+    "name": "Juiced Cosmonauts",
     "hash": "ac88e46666ddd8b6",
     "hashBytes": [
       172,
@@ -643,6 +939,8 @@
     "filename": "Colonist09-Purple-SvalbardCaretakers.webp",
     "cardId": "colonist-09",
     "side": "purple",
+    "type": "colonist",
+    "name": "Svalbard Caretakers",
     "hash": "c4ede7edcd05d48e",
     "hashBytes": [
       196,
@@ -659,6 +957,8 @@
     "filename": "Colonist09-White-Lloyd'sSalvageCo..webp",
     "cardId": "colonist-09",
     "side": "white",
+    "type": "colonist",
+    "name": "Lloyd's Salvage Co.",
     "hash": "84c48ac3d6ceca96",
     "hashBytes": [
       132,
@@ -675,6 +975,8 @@
     "filename": "Colonist10-Purple-RenaissanceMan.webp",
     "cardId": "colonist-10",
     "side": "purple",
+    "type": "colonist",
+    "name": "Renaissance Man",
     "hash": "8ccec7cbcec69ed4",
     "hashBytes": [
       140,
@@ -691,6 +993,8 @@
     "filename": "Colonist10-White-Malcolm.webp",
     "cardId": "colonist-10",
     "side": "white",
+    "type": "colonist",
+    "name": "Malcolm",
     "hash": "ccc48379f9f9dc8e",
     "hashBytes": [
       204,
@@ -707,6 +1011,8 @@
     "filename": "Colonist11-Purple-BlueGooSybonts.webp",
     "cardId": "colonist-11",
     "side": "purple",
+    "type": "colonist",
+    "name": "Blue Goo Sybonts",
     "hash": "cced87cecf8f96d6",
     "hashBytes": [
       204,
@@ -723,6 +1029,8 @@
     "filename": "Colonist11-White-MicrogravityPantrophists.webp",
     "cardId": "colonist-11",
     "side": "white",
+    "type": "colonist",
+    "name": "Microgravity Pantrophists",
     "hash": "ccc492f8dec8fc92",
     "hashBytes": [
       204,
@@ -739,6 +1047,8 @@
     "filename": "Colonist12-Black-ProgrammableMatter.webp",
     "cardId": "colonist-12",
     "side": "black",
+    "type": "colonist",
+    "name": "Programmable Matter",
     "hash": "2f2b4b2573473135",
     "hashBytes": [
       47,
@@ -755,6 +1065,8 @@
     "filename": "Colonist12-Purple-NeumannMatter.webp",
     "cardId": "colonist-12",
     "side": "purple",
+    "type": "colonist",
+    "name": "Neumann Matter",
     "hash": "aeafcfade7ae3432",
     "hashBytes": [
       174,
@@ -771,6 +1083,8 @@
     "filename": "Colonist13-Purple-AlchemistAviatrices.webp",
     "cardId": "colonist-13",
     "side": "purple",
+    "type": "colonist",
+    "name": "Alchemist Aviatrices",
     "hash": "b8ede7e7c3059e96",
     "hashBytes": [
       184,
@@ -787,6 +1101,8 @@
     "filename": "Colonist13-White-RockRatsMiners'Union.webp",
     "cardId": "colonist-13",
     "side": "white",
+    "type": "colonist",
+    "name": "Rock Rats Miners'Union",
     "hash": "a88490eae2d2d88a",
     "hashBytes": [
       168,
@@ -803,6 +1119,8 @@
     "filename": "Colonist14-Black-SecuritySystem.webp",
     "cardId": "colonist-14",
     "side": "black",
+    "type": "colonist",
+    "name": "Security System",
     "hash": "0f6f6b706868d407",
     "hashBytes": [
       15,
@@ -819,6 +1137,8 @@
     "filename": "Colonist14-Purple-FrankensteinNavigator.webp",
     "cardId": "colonist-14",
     "side": "purple",
+    "type": "colonist",
+    "name": "Frankenstein Navigator",
     "hash": "8eafc7c7cb63d296",
     "hashBytes": [
       142,
@@ -835,6 +1155,8 @@
     "filename": "Colonist15-Purple-JosephsonImplants.webp",
     "cardId": "colonist-15",
     "side": "purple",
+    "type": "colonist",
+    "name": "Josephson Implants",
     "hash": "8dcdc78dc9cb9496",
     "hashBytes": [
       141,
@@ -851,6 +1173,8 @@
     "filename": "Colonist15-White-SirenCybernauticsInc..webp",
     "cardId": "colonist-15",
     "side": "white",
+    "type": "colonist",
+    "name": "Siren Cybernautics Inc.",
     "hash": "ccccb0f2e2e2d28e",
     "hashBytes": [
       204,
@@ -867,6 +1191,8 @@
     "filename": "Colonist16-Black-SmartPets.webp",
     "cardId": "colonist-16",
     "side": "black",
+    "type": "colonist",
+    "name": "Smart Pets",
     "hash": "2b630579795c1c0f",
     "hashBytes": [
       43,
@@ -883,6 +1209,8 @@
     "filename": "Colonist16-Purple-CreeperNeogen.webp",
     "cardId": "colonist-16",
     "side": "purple",
+    "type": "colonist",
+    "name": "Creeper Neogen",
     "hash": "aaeb8f8fcf4e9c86",
     "hashBytes": [
       170,
@@ -899,6 +1227,8 @@
     "filename": "Colonist17-Purple-KalugaNaniteers.webp",
     "cardId": "colonist-17",
     "side": "purple",
+    "type": "colonist",
+    "name": "Kaluga Naniteers",
     "hash": "cccf8fc9c71e9896",
     "hashBytes": [
       204,
@@ -915,6 +1245,8 @@
     "filename": "Colonist17-White-TransorbitalRailworkers.webp",
     "cardId": "colonist-17",
     "side": "white",
+    "type": "colonist",
+    "name": "Transorbital Railworkers",
     "hash": "8cc4c4f8b886ee8c",
     "hashBytes": [
       140,
@@ -931,6 +1263,8 @@
     "filename": "Colonist18-Purple-EugenicPilgrims.webp",
     "cardId": "colonist-18",
     "side": "purple",
+    "type": "colonist",
+    "name": "Eugenic Pilgrims",
     "hash": "8eefcf8bcbcbde96",
     "hashBytes": [
       142,
@@ -947,6 +1281,8 @@
     "filename": "Colonist18-White-VaticanObservers.webp",
     "cardId": "colonist-18",
     "side": "white",
+    "type": "colonist",
+    "name": "Vatican Observers",
     "hash": "c6cc84d8c6c6d28e",
     "hashBytes": [
       198,
@@ -963,6 +1299,8 @@
     "filename": "Colonist91-Black-BeowulfInternet.webp",
     "cardId": "colonist-91",
     "side": "black",
+    "type": "colonist",
+    "name": "Beowulf Internet",
     "hash": "ee61818f4943870e",
     "hashBytes": [
       238,
@@ -979,6 +1317,8 @@
     "filename": "Colonist91-Purple-Grendel.webp",
     "cardId": "colonist-91",
     "side": "purple",
+    "type": "colonist",
+    "name": "Grendel",
     "hash": "eeeea6e2e8869286",
     "hashBytes": [
       238,
@@ -995,6 +1335,8 @@
     "filename": "Colonist92-Black-CombatQuadrupeds.webp",
     "cardId": "colonist-92",
     "side": "black",
+    "type": "colonist",
+    "name": "Combat Quadrupeds",
     "hash": "8d4501115d695981",
     "hashBytes": [
       141,
@@ -1011,6 +1353,8 @@
     "filename": "Colonist92-Purple-LernaeanWarbots.webp",
     "cardId": "colonist-92",
     "side": "purple",
+    "type": "colonist",
+    "name": "Lernaean Warbots",
     "hash": "8ccfc58b8b2726c6",
     "hashBytes": [
       140,
@@ -1027,6 +1371,8 @@
     "filename": "Colonist93-Black-Nano3DPrinters.webp",
     "cardId": "colonist-93",
     "side": "black",
+    "type": "colonist",
+    "name": "Nano3DPrinters",
     "hash": "ce6e6e0e7e6f1f42",
     "hashBytes": [
       206,
@@ -1043,6 +1389,8 @@
     "filename": "Colonist93-Purple-OffworldReplicators.webp",
     "cardId": "colonist-93",
     "side": "purple",
+    "type": "colonist",
+    "name": "Offworld Replicators",
     "hash": "cecf85c5c5c584ca",
     "hashBytes": [
       206,
@@ -1059,6 +1407,8 @@
     "filename": "Colonist94-Black-SelfDesigningHeuristics.webp",
     "cardId": "colonist-94",
     "side": "black",
+    "type": "colonist",
+    "name": "Self Designing Heuristics",
     "hash": "ce4f0b876b779708",
     "hashBytes": [
       206,
@@ -1075,6 +1425,8 @@
     "filename": "Colonist94-Purple-ApexAlgorithms.webp",
     "cardId": "colonist-94",
     "side": "purple",
+    "type": "colonist",
+    "name": "Apex Algorithms",
     "hash": "cece86c687979682",
     "hashBytes": [
       206,
@@ -1091,6 +1443,8 @@
     "filename": "Colonist95-Black-Cobots.webp",
     "cardId": "colonist-95",
     "side": "black",
+    "type": "colonist",
+    "name": "Cobots",
     "hash": "cb4f676967171db4",
     "hashBytes": [
       203,
@@ -1107,6 +1461,8 @@
     "filename": "Colonist95-Purple-Singularity.webp",
     "cardId": "colonist-95",
     "side": "purple",
+    "type": "colonist",
+    "name": "Singularity",
     "hash": "cac787c9c958d282",
     "hashBytes": [
       202,
@@ -1123,6 +1479,8 @@
     "filename": "Colonist96-Black-SensorWebSail.webp",
     "cardId": "colonist-96",
     "side": "black",
+    "type": "colonist",
+    "name": "Sensor Web Sail",
     "hash": "8e6fcb8e4747363a",
     "hashBytes": [
       142,
@@ -1139,6 +1497,8 @@
     "filename": "Colonist96-Purple-Wisp.webp",
     "cardId": "colonist-96",
     "side": "purple",
+    "type": "colonist",
+    "name": "Wisp",
     "hash": "ceeeaee6e6473632",
     "hashBytes": [
       206,
@@ -1155,6 +1515,8 @@
     "filename": "Contract01-Blue-AvatarTourists-InnerTour.webp",
     "cardId": "contract-01",
     "side": "blue",
+    "type": "contract",
+    "name": "Avatar Tourists Inner Tour",
     "hash": "8ce8cacc9c9cce8c",
     "hashBytes": [
       140,
@@ -1171,6 +1533,8 @@
     "filename": "Contract01-Yellow-AvatarTourists-GrandTour.webp",
     "cardId": "contract-01",
     "side": "yellow",
+    "type": "contract",
+    "name": "Avatar Tourists Grand Tour",
     "hash": "8ce4c8cc8e8ac686",
     "hashBytes": [
       140,
@@ -1187,6 +1551,8 @@
     "filename": "Contract02-Blue-Trillionaire-VanityProject.webp",
     "cardId": "contract-02",
     "side": "blue",
+    "type": "contract",
+    "name": "Trillionaire Vanity Project",
     "hash": "cccccccebef6f6d4",
     "hashBytes": [
       204,
@@ -1203,6 +1569,8 @@
     "filename": "Contract02-Yellow-Trillionaire-ExtremeSports.webp",
     "cardId": "contract-02",
     "side": "yellow",
+    "type": "contract",
+    "name": "Trillionaire Extreme Sports",
     "hash": "ccc4accce62292cc",
     "hashBytes": [
       204,
@@ -1219,6 +1587,8 @@
     "filename": "Contract03-Blue-AvatarTourists-Fugitive.webp",
     "cardId": "contract-03",
     "side": "blue",
+    "type": "contract",
+    "name": "Avatar Tourists Fugitive",
     "hash": "ccecf4c4b63696cc",
     "hashBytes": [
       204,
@@ -1235,6 +1605,8 @@
     "filename": "Contract03-Yellow-AvatarTourists-Refugees.webp",
     "cardId": "contract-03",
     "side": "yellow",
+    "type": "contract",
+    "name": "Avatar Tourists Refugees",
     "hash": "ccc4c3f0f036b6cc",
     "hashBytes": [
       204,
@@ -1251,6 +1623,8 @@
     "filename": "Contract04-Blue-Trillionaire-ChironQuest.webp",
     "cardId": "contract-04",
     "side": "blue",
+    "type": "contract",
+    "name": "Trillionaire Chiron Quest",
     "hash": "cce8c886a6a6f6c6",
     "hashBytes": [
       204,
@@ -1267,6 +1641,8 @@
     "filename": "Contract04-Yellow-Trillionaire-CenTour.webp",
     "cardId": "contract-04",
     "side": "yellow",
+    "type": "contract",
+    "name": "Trillionaire Cen Tour",
     "hash": "cce4c8949cbaf6cc",
     "hashBytes": [
       204,
@@ -1283,6 +1659,8 @@
     "filename": "Contract05-Blue-AvatarTrillionaire-Hubris.webp",
     "cardId": "contract-05",
     "side": "blue",
+    "type": "contract",
+    "name": "Avatar Trillionaire Hubris",
     "hash": "cccccdd1eade968c",
     "hashBytes": [
       204,
@@ -1299,6 +1677,8 @@
     "filename": "Contract05-Yellow-Trillionaire-FulguriteHunt.webp",
     "cardId": "contract-05",
     "side": "yellow",
+    "type": "contract",
+    "name": "Trillionaire Fulgurite Hunt",
     "hash": "ccc4c8ccc6de8ede",
     "hashBytes": [
       204,
@@ -1315,6 +1695,8 @@
     "filename": "Contract06-Blue-AvatarTourists-CometAdventure.webp",
     "cardId": "contract-06",
     "side": "blue",
+    "type": "contract",
+    "name": "Avatar Tourists Comet Adventure",
     "hash": "8ccce88a83eae686",
     "hashBytes": [
       140,
@@ -1331,6 +1713,8 @@
     "filename": "Contract06-Yellow-AvatarTourists-PleasureGarden.webp",
     "cardId": "contract-06",
     "side": "yellow",
+    "type": "contract",
+    "name": "Avatar Tourists Pleasure Garden",
     "hash": "8cc4ce8eba988484",
     "hashBytes": [
       140,
@@ -1347,6 +1731,8 @@
     "filename": "Contract07-Blue-Robotic-RoboticFacility.webp",
     "cardId": "contract-07",
     "side": "blue",
+    "type": "contract",
+    "name": "Robotic Robotic Facility",
     "hash": "8ce8ee8adc3e19c6",
     "hashBytes": [
       140,
@@ -1363,6 +1749,8 @@
     "filename": "Contract07-Yellow-Robotic-GooSpores.webp",
     "cardId": "contract-07",
     "side": "yellow",
+    "type": "contract",
+    "name": "Robotic Goo Spores",
     "hash": "84ccc8cad88ca6da",
     "hashBytes": [
       132,
@@ -1379,6 +1767,8 @@
     "filename": "Contract08-Blue-Tourist-Artemis.webp",
     "cardId": "contract-08",
     "side": "blue",
+    "type": "contract",
+    "name": "Tourist Artemis",
     "hash": "908ece8d3c3e1ece",
     "hashBytes": [
       144,
@@ -1395,6 +1785,8 @@
     "filename": "Contract08-Yellow-Tourist-HAVOC.webp",
     "cardId": "contract-08",
     "side": "yellow",
+    "type": "contract",
+    "name": "Tourist HAVOC",
     "hash": "8486c0c8d86686ce",
     "hashBytes": [
       132,
@@ -1411,6 +1803,8 @@
     "filename": "Contract09-Blue-Tourist-NewHorizons.webp",
     "cardId": "contract-09",
     "side": "blue",
+    "type": "contract",
+    "name": "Tourist New Horizons",
     "hash": "8caceac999aee6d4",
     "hashBytes": [
       140,
@@ -1427,6 +1821,8 @@
     "filename": "Contract09-Yellow-Tourist-HomeOnLagrange.webp",
     "cardId": "contract-09",
     "side": "yellow",
+    "type": "contract",
+    "name": "Tourist Home On Lagrange",
     "hash": "84a4e4c89aa6e6d6",
     "hashBytes": [
       132,
@@ -1443,6 +1839,8 @@
     "filename": "Contract10-Blue-Trillionaire-MarsPolarWalk.webp",
     "cardId": "contract-10",
     "side": "blue",
+    "type": "contract",
+    "name": "Trillionaire Mars Polar Walk",
     "hash": "ccc4cbced6d296c6",
     "hashBytes": [
       204,
@@ -1459,6 +1857,8 @@
     "filename": "Contract10-Yellow-AvatarTrillionaire-ETHolyGrail.webp",
     "cardId": "contract-10",
     "side": "yellow",
+    "type": "contract",
+    "name": "Avatar Trillionaire ETHoly Grail",
     "hash": "cce2d29a9cbeb6c4",
     "hashBytes": [
       204,
@@ -1475,6 +1875,8 @@
     "filename": "Contract11-Blue-AvatarTourists-ClosestPlanet.webp",
     "cardId": "contract-11",
     "side": "blue",
+    "type": "contract",
+    "name": "Avatar Tourists Closest Planet",
     "hash": "8ccccc8abebeb696",
     "hashBytes": [
       140,
@@ -1491,6 +1893,8 @@
     "filename": "Contract11-Yellow-AvatarTourists-HighestCliff.webp",
     "cardId": "contract-11",
     "side": "yellow",
+    "type": "contract",
+    "name": "Avatar Tourists Highest Cliff",
     "hash": "8cc6c0d8bcb2f6c6",
     "hashBytes": [
       140,
@@ -1507,6 +1911,8 @@
     "filename": "Contract12-Blue-Trillionaire-FoolsGold.webp",
     "cardId": "contract-12",
     "side": "blue",
+    "type": "contract",
+    "name": "Trillionaire Fools Gold",
     "hash": "ccecc8cce6e2a6c4",
     "hashBytes": [
       204,
@@ -1523,6 +1929,8 @@
     "filename": "Contract12-Yellow-Trillionaire-Rivalry.webp",
     "cardId": "contract-12",
     "side": "yellow",
+    "type": "contract",
+    "name": "Trillionaire Rivalry",
     "hash": "ccc48cccb2b2a4cc",
     "hashBytes": [
       204,
@@ -1539,6 +1947,8 @@
     "filename": "Contract21-Blue-Megaproject-MercuryForge.webp",
     "cardId": "contract-21",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Mercury Forge",
     "hash": "8cc48c9c9e8e86c6",
     "hashBytes": [
       140,
@@ -1555,6 +1965,8 @@
     "filename": "Contract21-Yellow-Megaproject-TopographicOcean.webp",
     "cardId": "contract-21",
     "side": "yellow",
+    "type": "contract",
+    "name": "Megaproject Topographic Ocean",
     "hash": "8ec2e0ced29eb6c6",
     "hashBytes": [
       142,
@@ -1571,6 +1983,8 @@
     "filename": "Contract22-Blue-Science-PlasmaIntrusionLaboratory.webp",
     "cardId": "contract-22",
     "side": "blue",
+    "type": "contract",
+    "name": "Science Plasma Intrusion Laboratory",
     "hash": "8ecccc9c9ee6e6a6",
     "hashBytes": [
       142,
@@ -1587,6 +2001,8 @@
     "filename": "Contract22-Yellow-Science-TriggeredDecayPositrons.webp",
     "cardId": "contract-22",
     "side": "yellow",
+    "type": "contract",
+    "name": "Science Triggered Decay Positrons",
     "hash": "8ececc8dbdf2e6b6",
     "hashBytes": [
       142,
@@ -1603,6 +2019,8 @@
     "filename": "Contract23-Blue-Science-HexapodExplorer.webp",
     "cardId": "contract-23",
     "side": "blue",
+    "type": "contract",
+    "name": "Science Hexapod Explorer",
     "hash": "8ee8cc4deaf69686",
     "hashBytes": [
       142,
@@ -1619,6 +2037,8 @@
     "filename": "Contract23-Yellow-Science-AmaitheaHalbonaut.webp",
     "cardId": "contract-23",
     "side": "yellow",
+    "type": "contract",
+    "name": "Science Amaithea Halbonaut",
     "hash": "8ec4ccccfe92e696",
     "hashBytes": [
       142,
@@ -1635,6 +2055,8 @@
     "filename": "Contract24-Blue-Megaproject-EquatorialLaunchRailway.webp",
     "cardId": "contract-24",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Equatorial Launch Railway",
     "hash": "8cccc8898dcae68e",
     "hashBytes": [
       140,
@@ -1651,6 +2073,8 @@
     "filename": "Contract24-Yellow-Megaproject-FullereneCableSpinner.webp",
     "cardId": "contract-24",
     "side": "yellow",
+    "type": "contract",
+    "name": "Megaproject Fullerene Cable Spinner",
     "hash": "8cc4c4c89094a682",
     "hashBytes": [
       140,
@@ -1667,6 +2091,8 @@
     "filename": "Contract25-Blue-Science-SolarObservatory.webp",
     "cardId": "contract-25",
     "side": "blue",
+    "type": "contract",
+    "name": "Science Solar Observatory",
     "hash": "8ec4c4da7aa486c6",
     "hashBytes": [
       142,
@@ -1683,6 +2109,8 @@
     "filename": "Contract25-Yellow-Science-GoldenApplesOfTheSun.webp",
     "cardId": "contract-25",
     "side": "yellow",
+    "type": "contract",
+    "name": "Science Golden Apples Of The Sun",
     "hash": "8ec4c8c87aaaa6a6",
     "hashBytes": [
       142,
@@ -1699,6 +2127,8 @@
     "filename": "Contract26-Blue-Robotic-LargestObject.webp",
     "cardId": "contract-26",
     "side": "blue",
+    "type": "contract",
+    "name": "Robotic Largest Object",
     "hash": "8eccc68e8e8ee696",
     "hashBytes": [
       142,
@@ -1715,6 +2145,8 @@
     "filename": "Contract26-Yellow-Robotic-CyborgTranshumans.webp",
     "cardId": "contract-26",
     "side": "yellow",
+    "type": "contract",
+    "name": "Robotic Cyborg Transhumans",
     "hash": "8ec6e08fb2bab4e6",
     "hashBytes": [
       142,
@@ -1731,6 +2163,8 @@
     "filename": "Contract27-Blue-Megaproject-SubmersibleProspector.webp",
     "cardId": "contract-27",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Submersible Prospector",
     "hash": "8cc8c9c1dada848a",
     "hashBytes": [
       140,
@@ -1747,6 +2181,8 @@
     "filename": "Contract27-Yellow-Megaproject-GoldilocksLunaTerraform.webp",
     "cardId": "contract-27",
     "side": "yellow",
+    "type": "contract",
+    "name": "Megaproject Goldilocks Luna Terraform",
     "hash": "8ce4ccc8beb6b696",
     "hashBytes": [
       140,
@@ -1763,6 +2199,8 @@
     "filename": "Contract28-Blue-Megaproject-Beehive.webp",
     "cardId": "contract-28",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Beehive",
     "hash": "8ccecacc2e32b68e",
     "hashBytes": [
       140,
@@ -1779,6 +2217,8 @@
     "filename": "Contract28-Yellow-Megaproject-RingIndustrialization.webp",
     "cardId": "contract-28",
     "side": "yellow",
+    "type": "contract",
+    "name": "Megaproject Ring Industrialization",
     "hash": "8cc4c6c8f0d284a6",
     "hashBytes": [
       140,
@@ -1795,6 +2235,8 @@
     "filename": "Contract29-Blue-Megaproject-SunFiredLaser.webp",
     "cardId": "contract-29",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Sun Fired Laser",
     "hash": "8ceceaecd586e684",
     "hashBytes": [
       140,
@@ -1811,6 +2253,8 @@
     "filename": "Contract29-Yellow-Megaproject-DaedalusStarshipResearch.webp",
     "cardId": "contract-29",
     "side": "yellow",
+    "type": "contract",
+    "name": "Megaproject Daedalus Starship Research",
     "hash": "8cc4ccccbeb2b686",
     "hashBytes": [
       140,
@@ -1827,6 +2271,8 @@
     "filename": "Contract30-Blue-Megaproject-GreenMagnetosphere.webp",
     "cardId": "contract-30",
     "side": "blue",
+    "type": "contract",
+    "name": "Megaproject Green Magnetosphere",
     "hash": "8cccccc28286b686",
     "hashBytes": [
       140,
@@ -1843,6 +2289,8 @@
     "filename": "Contract30-Yellow-Robotic-IcePhaseResearch.webp",
     "cardId": "contract-30",
     "side": "yellow",
+    "type": "contract",
+    "name": "Robotic Ice Phase Research",
     "hash": "8ec4c0cc929286ce",
     "hashBytes": [
       142,
@@ -1859,6 +2307,8 @@
     "filename": "Contract31-Blue-Science-AeroverBlimpExplorer.webp",
     "cardId": "contract-31",
     "side": "blue",
+    "type": "contract",
+    "name": "Science Aerover Blimp Explorer",
     "hash": "8ecce8c83d3cb686",
     "hashBytes": [
       142,
@@ -1875,6 +2325,8 @@
     "filename": "Contract31-Yellow-Science-NuclearElectricAirship.webp",
     "cardId": "contract-31",
     "side": "yellow",
+    "type": "contract",
+    "name": "Science Nuclear Electric Airship",
     "hash": "8ec4cccdc28ea682",
     "hashBytes": [
       142,
@@ -1891,6 +2343,8 @@
     "filename": "Contract32-Blue-Science-Mosquito.webp",
     "cardId": "contract-32",
     "side": "blue",
+    "type": "contract",
+    "name": "Science Mosquito",
     "hash": "8ecc8d8cd0a2a684",
     "hashBytes": [
       142,
@@ -1907,6 +2361,8 @@
     "filename": "Contract32-Yellow-Science-SolarNebulaMafics.webp",
     "cardId": "contract-32",
     "side": "yellow",
+    "type": "contract",
+    "name": "Science Solar Nebula Mafics",
     "hash": "8ee4c4929696e686",
     "hashBytes": [
       142,
@@ -1923,6 +2379,8 @@
     "filename": "Contract51-Blue-GovernmentGrant-PlanetaryProtection.webp",
     "cardId": "contract-51",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Planetary Protection",
     "hash": "9c88c2d2b632e686",
     "hashBytes": [
       156,
@@ -1939,6 +2397,8 @@
     "filename": "Contract51-Yellow-GovernmentGrant-PlanetaryRailNetwork.webp",
     "cardId": "contract-51",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Planetary Rail Network",
     "hash": "8ce4c08ccc9e96a2",
     "hashBytes": [
       140,
@@ -1955,6 +2415,8 @@
     "filename": "Contract52-Blue-GovernmentGrant-BioInspiredRover.webp",
     "cardId": "contract-52",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Bio Inspired Rover",
     "hash": "8cccc8c4c4868686",
     "hashBytes": [
       140,
@@ -1971,6 +2433,8 @@
     "filename": "Contract52-Yellow-GovernmentGrant-SubnubilarZeppelin.webp",
     "cardId": "contract-52",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Subnubilar Zeppelin",
     "hash": "8484c8ccfa1a9e86",
     "hashBytes": [
       132,
@@ -1987,6 +2451,8 @@
     "filename": "Contract53-Blue-GovernmentGrant-Junket.webp",
     "cardId": "contract-53",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Junket",
     "hash": "9c8ecae1c382b4d2",
     "hashBytes": [
       156,
@@ -2003,6 +2469,8 @@
     "filename": "Contract53-Yellow-GovernmentGrant-SpacebornPoliticalRally.webp",
     "cardId": "contract-53",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Spaceborn Political Rally",
     "hash": "848cdc9a3c3cbccc",
     "hashBytes": [
       132,
@@ -2019,6 +2487,8 @@
     "filename": "Contract54-Blue-Military-DrugSmuggling.webp",
     "cardId": "contract-54",
     "side": "blue",
+    "type": "contract",
+    "name": "Military Drug Smuggling",
     "hash": "c8c8c6c4b83e9ec6",
     "hashBytes": [
       200,
@@ -2035,6 +2505,8 @@
     "filename": "Contract54-Yellow-Military-Chipjack.webp",
     "cardId": "contract-54",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Chipjack",
     "hash": "c4c4c8ccb7ba9e8c",
     "hashBytes": [
       196,
@@ -2051,6 +2523,8 @@
     "filename": "Contract55-Blue-Military-CancerResearchMission.webp",
     "cardId": "contract-55",
     "side": "blue",
+    "type": "contract",
+    "name": "Military Cancer Research Mission",
     "hash": "8488c8cab6e494c6",
     "hashBytes": [
       132,
@@ -2067,6 +2541,8 @@
     "filename": "Contract55-Yellow-Military-TrojanListeningPosts.webp",
     "cardId": "contract-55",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Trojan Listening Posts",
     "hash": "8484ccceb6aeb6f6",
     "hashBytes": [
       132,
@@ -2083,6 +2559,8 @@
     "filename": "Contract56-Blue-GovernmentGrant-RescueTeam.webp",
     "cardId": "contract-56",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Rescue Team",
     "hash": "94cc8ace1e3e8ec6",
     "hashBytes": [
       148,
@@ -2099,6 +2577,8 @@
     "filename": "Contract56-Yellow-GovernmentGrant-MercurySunsetConvoy.webp",
     "cardId": "contract-56",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Mercury Sunset Convoy",
     "hash": "8484c8c080928482",
     "hashBytes": [
       132,
@@ -2115,6 +2595,8 @@
     "filename": "Contract57-Blue-Military-SWIVMiner.webp",
     "cardId": "contract-57",
     "side": "blue",
+    "type": "contract",
+    "name": "Military SWIVMiner",
     "hash": "8c8ccdc9f0de9684",
     "hashBytes": [
       140,
@@ -2131,6 +2613,8 @@
     "filename": "Contract57-Yellow-Military-RefuelingTrawler.webp",
     "cardId": "contract-57",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Refueling Trawler",
     "hash": "848cc88cde9eb696",
     "hashBytes": [
       132,
@@ -2147,6 +2631,8 @@
     "filename": "Contract58-Blue-Military-TsiolkovskyElevatorLab.webp",
     "cardId": "contract-58",
     "side": "blue",
+    "type": "contract",
+    "name": "Military Tsiolkovsky Elevator Lab",
     "hash": "8c88cf8ddefa9e86",
     "hashBytes": [
       140,
@@ -2163,6 +2649,8 @@
     "filename": "Contract58-Yellow-Military-Skyhook.webp",
     "cardId": "contract-58",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Skyhook",
     "hash": "84a4e2e2b2b2f6cc",
     "hashBytes": [
       132,
@@ -2179,6 +2667,8 @@
     "filename": "Contract59-Blue-GovernmentGrant-SpinControl.webp",
     "cardId": "contract-59",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Spin Control",
     "hash": "8cacc8e2829c9484",
     "hashBytes": [
       140,
@@ -2195,6 +2685,8 @@
     "filename": "Contract59-Yellow-GovernmentGrant-RingRain.webp",
     "cardId": "contract-59",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Ring Rain",
     "hash": "84e4ca8a8e82e686",
     "hashBytes": [
       132,
@@ -2211,6 +2703,8 @@
     "filename": "Contract60-Blue-GovernmentGrant-SearchForLifeCenter.webp",
     "cardId": "contract-60",
     "side": "blue",
+    "type": "contract",
+    "name": "Government Grant Search For Life Center",
     "hash": "8484c9c5329ec6c6",
     "hashBytes": [
       132,
@@ -2227,6 +2721,8 @@
     "filename": "Contract60-Yellow-GovernmentGrant-SunriseProject.webp",
     "cardId": "contract-60",
     "side": "yellow",
+    "type": "contract",
+    "name": "Government Grant Sunrise Project",
     "hash": "84c6cccc9e8ee6d6",
     "hashBytes": [
       132,
@@ -2243,6 +2739,8 @@
     "filename": "Contract61-Blue-Military-YarkovskyResearch.webp",
     "cardId": "contract-61",
     "side": "blue",
+    "type": "contract",
+    "name": "Military Yarkovsky Research",
     "hash": "8484c80cb282c6a6",
     "hashBytes": [
       132,
@@ -2259,6 +2757,8 @@
     "filename": "Contract61-Yellow-Military-DeepSpaceOne.webp",
     "cardId": "contract-61",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Deep Space One",
     "hash": "a086ce0b079e96c4",
     "hashBytes": [
       160,
@@ -2275,6 +2775,8 @@
     "filename": "Contract62-Blue-Military-HardenedBase.webp",
     "cardId": "contract-62",
     "side": "blue",
+    "type": "contract",
+    "name": "Military Hardened Base",
     "hash": "8cecc88e9782c68c",
     "hashBytes": [
       140,
@@ -2291,6 +2793,8 @@
     "filename": "Contract62-Yellow-Military-ClassifiedSecurityPayload.webp",
     "cardId": "contract-62",
     "side": "yellow",
+    "type": "contract",
+    "name": "Military Classified Security Payload",
     "hash": "8ca4c8c6a6aee692",
     "hashBytes": [
       140,
@@ -2307,6 +2811,8 @@
     "filename": "CrewA-Yellow-UnitedNationsCosmonauts.webp",
     "cardId": "crew-A",
     "side": "yellow",
+    "type": "crew",
+    "name": "United Nations Cosmonauts",
     "hash": "808aca861242ca88",
     "hashBytes": [
       128,
@@ -2323,6 +2829,8 @@
     "filename": "CrewB-Purple-ROSCOSMOS.webp",
     "cardId": "crew-B",
     "side": "purple",
+    "type": "crew",
+    "name": "ROSCOSMOS",
     "hash": "8888888232c2c288",
     "hashBytes": [
       136,
@@ -2339,6 +2847,8 @@
     "filename": "CrewC-Purple-Taikonauts.webp",
     "cardId": "crew-C",
     "side": "purple",
+    "type": "crew",
+    "name": "Taikonauts",
     "hash": "9088c8763e46c6a8",
     "hashBytes": [
       144,
@@ -2355,6 +2865,8 @@
     "filename": "CrewD-White-Nasa.webp",
     "cardId": "crew-D",
     "side": "white",
+    "type": "crew",
+    "name": "Nasa",
     "hash": "8a88c8ca3a56c684",
     "hashBytes": [
       138,
@@ -2371,6 +2883,8 @@
     "filename": "CrewE-Green-AnonymousP2P.webp",
     "cardId": "crew-E",
     "side": "green",
+    "type": "crew",
+    "name": "Anonymous P2P",
     "hash": "8888804c7059c986",
     "hashBytes": [
       136,
@@ -2387,6 +2901,8 @@
     "filename": "CrewF-Green-ESASpaceUnionists.webp",
     "cardId": "crew-F",
     "side": "green",
+    "type": "crew",
+    "name": "ESASpace Unionists",
     "hash": "8888c8c23246ce8c",
     "hashBytes": [
       136,
@@ -2403,6 +2919,8 @@
     "filename": "CrewG-White-ISRO-Glavcosmonauts.webp",
     "cardId": "crew-G",
     "side": "white",
+    "type": "crew",
+    "name": "ISRO Glavcosmonauts",
     "hash": "928ac8c4345ccc88",
     "hashBytes": [
       146,
@@ -2419,6 +2937,8 @@
     "filename": "CrewH-Yellow-B612Foundation.webp",
     "cardId": "crew-H",
     "side": "yellow",
+    "type": "crew",
+    "name": "B612Foundation",
     "hash": "8088c8821a42c28e",
     "hashBytes": [
       128,
@@ -2435,6 +2955,8 @@
     "filename": "CrewJ-Grey-SpaceX.webp",
     "cardId": "crew-J",
     "side": "grey",
+    "type": "crew",
+    "name": "Space X",
     "hash": "8080c2163a42ca88",
     "hashBytes": [
       128,
@@ -2451,6 +2973,8 @@
     "filename": "CrewK-Grey-NorseAstronauts.webp",
     "cardId": "crew-K",
     "side": "grey",
+    "type": "crew",
+    "name": "Norse Astronauts",
     "hash": "8488caca1246c284",
     "hashBytes": [
       132,
@@ -2467,6 +2991,8 @@
     "filename": "CrewL-Red-NASRDA Astronauts.webp",
     "cardId": "crew-L",
     "side": "red",
+    "type": "crew",
+    "name": "NASRDA Astronauts",
     "hash": "ac8885ca8c4cca9c",
     "hashBytes": [
       172,
@@ -2483,6 +3009,8 @@
     "filename": "CrewM-Red-ShimizuCorpEntrepreneurs.webp",
     "cardId": "crew-M",
     "side": "red",
+    "type": "crew",
+    "name": "Shimizu Corp Entrepreneurs",
     "hash": "c48a88cc1c1cacaa",
     "hashBytes": [
       196,
@@ -2496,9 +3024,227 @@
     ]
   },
   {
+    "filename": "Exodus01-DecantingNetwork.webp",
+    "cardId": "Exodus01-DecantingNetwork",
+    "side": null,
+    "type": "exodus01-decantingnetwork.webp",
+    "name": "",
+    "hash": "8ec6ccce6664e696",
+    "hashBytes": [
+      142,
+      198,
+      204,
+      206,
+      102,
+      100,
+      230,
+      150
+    ]
+  },
+  {
+    "filename": "Exodus02-LifeSupportTestProtocol.webp",
+    "cardId": "Exodus02-LifeSupportTestProtocol",
+    "side": null,
+    "type": "exodus02-lifesupporttestprotocol.webp",
+    "name": "",
+    "hash": "8efcecc2a2b6b686",
+    "hashBytes": [
+      142,
+      252,
+      236,
+      194,
+      162,
+      182,
+      182,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus03-LifeSupportReconfigTeam.webp",
+    "cardId": "Exodus03-LifeSupportReconfigTeam",
+    "side": null,
+    "type": "exodus03-lifesupportreconfigteam.webp",
+    "name": "",
+    "hash": "8ecccae2beb8b6c6",
+    "hashBytes": [
+      142,
+      204,
+      202,
+      226,
+      190,
+      184,
+      182,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus04-IsotypeFuelingStation.webp",
+    "cardId": "Exodus04-IsotypeFuelingStation",
+    "side": null,
+    "type": "exodus04-isotypefuelingstation.webp",
+    "name": "",
+    "hash": "8eecc6c1b2b2a692",
+    "hashBytes": [
+      142,
+      236,
+      198,
+      193,
+      178,
+      178,
+      166,
+      146
+    ]
+  },
+  {
+    "filename": "Exodus05-WardenProvingGround.webp",
+    "cardId": "Exodus05-WardenProvingGround",
+    "side": null,
+    "type": "exodus05-wardenprovingground.webp",
+    "name": "",
+    "hash": "8edcecae3e3bb686",
+    "hashBytes": [
+      142,
+      220,
+      236,
+      174,
+      62,
+      59,
+      182,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus06-TWEvaluationCommittee.webp",
+    "cardId": "Exodus06-TWEvaluationCommittee",
+    "side": null,
+    "type": "exodus06-twevaluationcommittee.webp",
+    "name": "",
+    "hash": "86fcce8ebabef686",
+    "hashBytes": [
+      134,
+      252,
+      206,
+      142,
+      186,
+      190,
+      246,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus07-RadiationShieldPrototype.webp",
+    "cardId": "Exodus07-RadiationShieldPrototype",
+    "side": null,
+    "type": "exodus07-radiationshieldprototype.webp",
+    "name": "",
+    "hash": "8edce8ecc692a6c2",
+    "hashBytes": [
+      142,
+      220,
+      232,
+      236,
+      198,
+      146,
+      166,
+      194
+    ]
+  },
+  {
+    "filename": "Exodus08-RivalIsobank.webp",
+    "cardId": "Exodus08-RivalIsobank",
+    "side": null,
+    "type": "exodus08-rivalisobank.webp",
+    "name": "",
+    "hash": "8edceccc82a6f6c6",
+    "hashBytes": [
+      142,
+      220,
+      236,
+      204,
+      130,
+      166,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus09-TWStressTest.webp",
+    "cardId": "Exodus09-TWStressTest",
+    "side": null,
+    "type": "exodus09-twstresstest.webp",
+    "name": "",
+    "hash": "8ec4cec8babef6c6",
+    "hashBytes": [
+      142,
+      196,
+      206,
+      200,
+      186,
+      190,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus10-IsoExchange.webp",
+    "cardId": "Exodus10-IsoExchange",
+    "side": null,
+    "type": "exodus10-isoexchange.webp",
+    "name": "",
+    "hash": "8efcc8cc9eb6f6c6",
+    "hashBytes": [
+      142,
+      252,
+      200,
+      204,
+      158,
+      182,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus11-DeepFreeze.webp",
+    "cardId": "Exodus11-DeepFreeze",
+    "side": null,
+    "type": "exodus11-deepfreeze.webp",
+    "name": "",
+    "hash": "8ecece8c6c23869e",
+    "hashBytes": [
+      142,
+      206,
+      206,
+      140,
+      108,
+      35,
+      134,
+      158
+    ]
+  },
+  {
+    "filename": "Exodus12-AtmosphericIsoRefinery.webp",
+    "cardId": "Exodus12-AtmosphericIsoRefinery",
+    "side": null,
+    "type": "exodus12-atmosphericisorefinery.webp",
+    "name": "",
+    "hash": "8ececcc8c8b1b4be",
+    "hashBytes": [
+      142,
+      206,
+      204,
+      200,
+      200,
+      177,
+      180,
+      190
+    ]
+  },
+  {
     "filename": "Freighter01-Black-Fission-HeatedSteam.webp",
     "cardId": "freighter-01",
     "side": "black",
+    "type": "freighter",
+    "name": "Fission Heated Steam",
     "hash": "0d2f358343664d09",
     "hashBytes": [
       13,
@@ -2515,6 +3261,8 @@
     "filename": "Freighter01-Purple-FissionGCR.webp",
     "cardId": "freighter-01",
     "side": "purple",
+    "type": "freighter",
+    "name": "Fission GCR",
     "hash": "0f2f8fefcb9a4c65",
     "hashBytes": [
       15,
@@ -2531,6 +3279,8 @@
     "filename": "Freighter02-Black-FusionFragmentSail.webp",
     "cardId": "freighter-02",
     "side": "black",
+    "type": "freighter",
+    "name": "Fusion Fragment Sail",
     "hash": "477731616371090f",
     "hashBytes": [
       71,
@@ -2547,6 +3297,8 @@
     "filename": "Freighter02-Purple-AntiprotonSailandHarvester.webp",
     "cardId": "freighter-02",
     "side": "purple",
+    "type": "freighter",
+    "name": "Antiproton Sailand Harvester",
     "hash": "436787e7cd895f13",
     "hashBytes": [
       67,
@@ -2563,6 +3315,8 @@
     "filename": "Freighter03-Black-HIIPERBeamRider.webp",
     "cardId": "freighter-03",
     "side": "black",
+    "type": "freighter",
+    "name": "HIIPERBeam Rider",
     "hash": "0d6726a56363434d",
     "hashBytes": [
       13,
@@ -2579,6 +3333,8 @@
     "filename": "Freighter03-Purple-MagneticMirrorBeamRider.webp",
     "cardId": "freighter-03",
     "side": "purple",
+    "type": "freighter",
+    "name": "Magnetic Mirror Beam Rider",
     "hash": "4767a7ebc7c74707",
     "hashBytes": [
       71,
@@ -2595,6 +3351,8 @@
     "filename": "Freighter04-Black-InflatableSolar-Heated.webp",
     "cardId": "freighter-04",
     "side": "black",
+    "type": "freighter",
+    "name": "Inflatable Solar Heated",
     "hash": "4d6d2571455e1125",
     "hashBytes": [
       77,
@@ -2611,6 +3369,8 @@
     "filename": "Freighter04-Purple-ArchimedesPalmerLens.webp",
     "cardId": "freighter-04",
     "side": "purple",
+    "type": "freighter",
+    "name": "Archimedes Palmer Lens",
     "hash": "0b4f8dc7cf8f0727",
     "hashBytes": [
       11,
@@ -2627,6 +3387,8 @@
     "filename": "Freighter05-Black-PoodleSteam.webp",
     "cardId": "freighter-05",
     "side": "black",
+    "type": "freighter",
+    "name": "Poodle Steam",
     "hash": "4d2b3e666764480f",
     "hashBytes": [
       77,
@@ -2643,6 +3405,8 @@
     "filename": "Freighter05-Purple-D-NanotubeDirtLauncher.webp",
     "cardId": "freighter-05",
     "side": "purple",
+    "type": "freighter",
+    "name": "D Nanotube Dirt Launcher",
     "hash": "4b6fc7cf8f870b07",
     "hashBytes": [
       75,
@@ -2659,6 +3423,8 @@
     "filename": "Freighter06-Black-RotaryDirtLauncher.webp",
     "cardId": "freighter-06",
     "side": "black",
+    "type": "freighter",
+    "name": "Rotary Dirt Launcher",
     "hash": "0d6f333969735d05",
     "hashBytes": [
       13,
@@ -2675,6 +3441,8 @@
     "filename": "Freighter06-Purple-KESTSHoopDirtLauncher.webp",
     "cardId": "freighter-06",
     "side": "purple",
+    "type": "freighter",
+    "name": "KESTSHoop Dirt Launcher",
     "hash": "0b6fcdc50f8b3e03",
     "hashBytes": [
       11,
@@ -2691,6 +3459,8 @@
     "filename": "Freighter07-Black-Z-PinchD-T:6LiFusion.webp",
     "cardId": "freighter-07",
     "side": "black",
+    "type": "freighter",
+    "name": "Z Pinch D T:6Li Fusion",
     "hash": "0d2727274763433d",
     "hashBytes": [
       13,
@@ -2707,6 +3477,8 @@
     "filename": "Freighter07-Purple-Z-Pinch3He-DTargetFusion.webp",
     "cardId": "freighter-07",
     "side": "purple",
+    "type": "freighter",
+    "name": "Z Pinch3He DTarget Fusion",
     "hash": "032fa3a73871ed13",
     "hashBytes": [
       3,
@@ -2723,6 +3495,8 @@
     "filename": "GWThruster01-Black-Amat-CatalyzedFission-Fusion.webp",
     "cardId": "gw-thruster-01",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Amat Catalyzed Fission Fusion",
     "hash": "47312fa761613533",
     "hashBytes": [
       71,
@@ -2739,6 +3513,8 @@
     "filename": "GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.webp",
     "cardId": "gw-thruster-01",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Amat Initiated H BMagnetic Inertial",
     "hash": "4f2726cdcb891937",
     "hashBytes": [
       79,
@@ -2755,6 +3531,8 @@
     "filename": "GWThruster02-Black-DensePlasmaH-BFocusFusion.webp",
     "cardId": "gw-thruster-02",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Dense Plasma H BFocus Fusion",
     "hash": "47373f890d673333",
     "hashBytes": [
       71,
@@ -2771,6 +3549,8 @@
     "filename": "GWThruster02-Purple-CrossfireH-BFocusFusion.webp",
     "cardId": "gw-thruster-02",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Crossfire H BFocus Fusion",
     "hash": "47272fcb48363533",
     "hashBytes": [
       71,
@@ -2787,6 +3567,8 @@
     "filename": "GWThruster03-Black-LevitatedDipole6Li-HFusion.webp",
     "cardId": "gw-thruster-03",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Levitated Dipole6Li HFusion",
     "hash": "4779370703673733",
     "hashBytes": [
       71,
@@ -2803,6 +3585,8 @@
     "filename": "GWThruster03-Purple-DustyPlasma.webp",
     "cardId": "gw-thruster-03",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Dusty Plasma",
     "hash": "47272fcf87033335",
     "hashBytes": [
       71,
@@ -2819,6 +3603,8 @@
     "filename": "GWThruster04-Black-Mini-MagOrionZ-PinchFission.webp",
     "cardId": "gw-thruster-04",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Mini Mag Orion Z Pinch Fission",
     "hash": "4937270d65672b37",
     "hashBytes": [
       73,
@@ -2835,6 +3621,8 @@
     "filename": "GWThruster04-Purple-SolemMedusaTuggedOrion.webp",
     "cardId": "gw-thruster-04",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Solem Medusa Tugged Orion",
     "hash": "4f2f2fc78f173733",
     "hashBytes": [
       79,
@@ -2851,6 +3639,8 @@
     "filename": "GWThruster05-Black-Salt-WaterZubrin.webp",
     "cardId": "gw-thruster-05",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Salt Water Zubrin",
     "hash": "0d26228666642f37",
     "hashBytes": [
       13,
@@ -2867,6 +3657,8 @@
     "filename": "GWThruster05-Purple-Zubrin-GDM.webp",
     "cardId": "gw-thruster-05",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Zubrin GDM",
     "hash": "4f2d33c84c762733",
     "hashBytes": [
       79,
@@ -2883,6 +3675,8 @@
     "filename": "GWThruster06-Black-Spheromak3He-DMagneticFusion.webp",
     "cardId": "gw-thruster-06",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "Spheromak3He DMagnetic Fusion",
     "hash": "456737a747472735",
     "hashBytes": [
       69,
@@ -2899,6 +3693,8 @@
     "filename": "GWThruster06-Purple-CollidingFRC3He-DFusion.webp",
     "cardId": "gw-thruster-06",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Colliding FRC3He DFusion",
     "hash": "472f0bc70f2b3133",
     "hashBytes": [
       71,
@@ -2915,6 +3711,8 @@
     "filename": "GWThruster07-Black-VISTAD-TInertialFusion.webp",
     "cardId": "gw-thruster-07",
     "side": "black",
+    "type": "gw-thruster",
+    "name": "VISTAD TInertial Fusion",
     "hash": "477f3e030f6e3135",
     "hashBytes": [
       71,
@@ -2931,6 +3729,8 @@
     "filename": "GWThruster07-Purple-Daedalus3He-DInertialFusion.webp",
     "cardId": "gw-thruster-07",
     "side": "purple",
+    "type": "gw-thruster",
+    "name": "Daedalus3He DInertial Fusion",
     "hash": "476625eece862631",
     "hashBytes": [
       71,
@@ -2947,6 +3747,8 @@
     "filename": "Generator01-Black-JTECH2Thermoelectric.webp",
     "cardId": "generator-01",
     "side": "black",
+    "type": "generator",
+    "name": "JTECH2Thermoelectric",
     "hash": "677b7123464d2f81",
     "hashBytes": [
       103,
@@ -2963,6 +3765,8 @@
     "filename": "Generator01-White-AMTECThermoelectric.webp",
     "cardId": "generator-01",
     "side": "white",
+    "type": "generator",
+    "name": "AMTECThermoelectric",
     "hash": "c480ace8ee8a89c6",
     "hashBytes": [
       196,
@@ -2979,6 +3783,8 @@
     "filename": "Generator02-Black-OMearaLSPParalens.webp",
     "cardId": "generator-02",
     "side": "black",
+    "type": "generator",
+    "name": "OMeara LSPParalens",
     "hash": "47650e9f47662547",
     "hashBytes": [
       71,
@@ -2995,6 +3801,8 @@
     "filename": "Generator02-White-BraytonTurbine.webp",
     "cardId": "generator-02",
     "side": "white",
+    "type": "generator",
+    "name": "Brayton Turbine",
     "hash": "ec8c92cebab2b0c4",
     "hashBytes": [
       236,
@@ -3011,6 +3819,8 @@
     "filename": "Generator03-Black-BuckyballC60Photovoltaic.webp",
     "cardId": "generator-03",
     "side": "black",
+    "type": "generator",
+    "name": "Buckyball C60Photovoltaic",
     "hash": "5d65212567672243",
     "hashBytes": [
       93,
@@ -3027,6 +3837,8 @@
     "filename": "Generator03-White-CascadePhotovoltaic.webp",
     "cardId": "generator-03",
     "side": "white",
+    "type": "generator",
+    "name": "Cascade Photovoltaic",
     "hash": "c6c89830a390c080",
     "hashBytes": [
       198,
@@ -3043,6 +3855,8 @@
     "filename": "Generator04-Black-DustyPlasmaMHD.webp",
     "cardId": "generator-04",
     "side": "black",
+    "type": "generator",
+    "name": "Dusty Plasma MHD",
     "hash": "4561470f4a634713",
     "hashBytes": [
       69,
@@ -3059,6 +3873,8 @@
     "filename": "Generator04-White-CascadeThermoacoustic.webp",
     "cardId": "generator-04",
     "side": "white",
+    "type": "generator",
+    "name": "Cascade Thermoacoustic",
     "hash": "cc8889c89a9a9bd6",
     "hashBytes": [
       204,
@@ -3075,6 +3891,8 @@
     "filename": "Generator05-Black-DiamonoidElectro-DynamicTether.webp",
     "cardId": "generator-05",
     "side": "black",
+    "type": "generator",
+    "name": "Diamonoid Electro Dynamic Tether",
     "hash": "6d4f5f3c63621103",
     "hashBytes": [
       109,
@@ -3091,6 +3909,8 @@
     "filename": "Generator05-White-CatalyzedFissionScintillator.webp",
     "cardId": "generator-05",
     "side": "white",
+    "type": "generator",
+    "name": "Catalyzed Fission Scintillator",
     "hash": "ec808edcbcac64a2",
     "hashBytes": [
       236,
@@ -3107,6 +3927,8 @@
     "filename": "Generator06-Black-NanocompositeThermoelectric.webp",
     "cardId": "generator-06",
     "side": "black",
+    "type": "generator",
+    "name": "Nanocomposite Thermoelectric",
     "hash": "45671e0f135d6b43",
     "hashBytes": [
       69,
@@ -3123,6 +3945,8 @@
     "filename": "Generator06-White-EricssonEngine.webp",
     "cardId": "generator-06",
     "side": "white",
+    "type": "generator",
+    "name": "Ericsson Engine",
     "hash": "c4c0cad696ace7c4",
     "hashBytes": [
       196,
@@ -3139,6 +3963,8 @@
     "filename": "Generator07-Black-SuperconductingAdductor.webp",
     "cardId": "generator-07",
     "side": "black",
+    "type": "generator",
+    "name": "Superconducting Adductor",
     "hash": "6d73835757472707",
     "hashBytes": [
       109,
@@ -3155,6 +3981,8 @@
     "filename": "Generator07-White-FlywheelCompulsator.webp",
     "cardId": "generator-07",
     "side": "white",
+    "type": "generator",
+    "name": "Flywheel Compulsator",
     "hash": "ccc7c9e4e6a6c180",
     "hashBytes": [
       204,
@@ -3171,6 +3999,8 @@
     "filename": "Generator08-Black-MicrobialFuelCell.webp",
     "cardId": "generator-08",
     "side": "black",
+    "type": "generator",
+    "name": "Microbial Fuel Cell",
     "hash": "6970753b776c2f45",
     "hashBytes": [
       105,
@@ -3187,6 +4017,8 @@
     "filename": "Generator08-White-H2-O2FuelCell.webp",
     "cardId": "generator-08",
     "side": "white",
+    "type": "generator",
+    "name": "H2 O2Fuel Cell",
     "hash": "c4c09151b8b0d886",
     "hashBytes": [
       196,
@@ -3203,6 +4035,8 @@
     "filename": "Generator09-Black-Z-PinchMicrofission.webp",
     "cardId": "generator-09",
     "side": "black",
+    "type": "generator",
+    "name": "Z Pinch Microfission",
     "hash": "657f3323656d6843",
     "hashBytes": [
       101,
@@ -3219,6 +4053,8 @@
     "filename": "Generator09-White-In-CoreThermionic.webp",
     "cardId": "generator-09",
     "side": "white",
+    "type": "generator",
+    "name": "In Core Thermionic",
     "hash": "e48ea838f0c1d0b6",
     "hashBytes": [
       228,
@@ -3235,6 +4071,8 @@
     "filename": "Generator10-Black-GranularRainbowCorral.webp",
     "cardId": "generator-10",
     "side": "black",
+    "type": "generator",
+    "name": "Granular Rainbow Corral",
     "hash": "456f638f4f632987",
     "hashBytes": [
       69,
@@ -3251,6 +4089,8 @@
     "filename": "Generator10-White-MagnetoshellPlasmaParachute.webp",
     "cardId": "generator-10",
     "side": "white",
+    "type": "generator",
+    "name": "Magnetoshell Plasma Parachute",
     "hash": "ccc4c8c9b98acac6",
     "hashBytes": [
       204,
@@ -3267,6 +4107,8 @@
     "filename": "Generator11-Black-CasimirBattery.webp",
     "cardId": "generator-11",
     "side": "black",
+    "type": "generator",
+    "name": "Casimir Battery",
     "hash": "477f368f4b63874d",
     "hashBytes": [
       71,
@@ -3283,6 +4125,8 @@
     "filename": "Generator11-White-MarxCapacitorBank.webp",
     "cardId": "generator-11",
     "side": "white",
+    "type": "generator",
+    "name": "Marx Capacitor Bank",
     "hash": "c486a8e8d4d45a86",
     "hashBytes": [
       196,
@@ -3299,6 +4143,8 @@
     "filename": "Generator12-Black-Nuclear-PumpedExcimerFlashlamp.webp",
     "cardId": "generator-12",
     "side": "black",
+    "type": "generator",
+    "name": "Nuclear Pumped Excimer Flashlamp",
     "hash": "4d73338d156b6741",
     "hashBytes": [
       77,
@@ -3315,6 +4161,8 @@
     "filename": "Generator12-White-OptoelectricNuclearBattery.webp",
     "cardId": "generator-12",
     "side": "white",
+    "type": "generator",
+    "name": "Optoelectric Nuclear Battery",
     "hash": "cee4a374b4949ad2",
     "hashBytes": [
       206,
@@ -3331,6 +4179,8 @@
     "filename": "Generator13-Black-PalmerLSPAerosolLens.webp",
     "cardId": "generator-13",
     "side": "black",
+    "type": "generator",
+    "name": "Palmer LSPAerosol Lens",
     "hash": "6567480f47432343",
     "hashBytes": [
       101,
@@ -3347,6 +4197,8 @@
     "filename": "Generator13-White-PhotonTetherRectenna.webp",
     "cardId": "generator-13",
     "side": "white",
+    "type": "generator",
+    "name": "Photon Tether Rectenna",
     "hash": "ccc0a06ca089c9c4",
     "hashBytes": [
       204,
@@ -3363,6 +4215,8 @@
     "filename": "Generator14-Black-TriggeredDecayNuclearBattery.webp",
     "cardId": "generator-14",
     "side": "black",
+    "type": "generator",
+    "name": "Triggered Decay Nuclear Battery",
     "hash": "6d6f8f9346468635",
     "hashBytes": [
       109,
@@ -3379,6 +4233,8 @@
     "filename": "Generator14-White-RadioisotopeStirling.webp",
     "cardId": "generator-14",
     "side": "white",
+    "type": "generator",
+    "name": "Radioisotope Stirling",
     "hash": "c2ccbc908292c6c0",
     "hashBytes": [
       194,
@@ -3395,6 +4251,8 @@
     "filename": "Generator15-Black-MHDOpen-Cycle.webp",
     "cardId": "generator-15",
     "side": "black",
+    "type": "generator",
+    "name": "MHDOpen Cycle",
     "hash": "6d37270675654d43",
     "hashBytes": [
       109,
@@ -3411,6 +4269,8 @@
     "filename": "Generator15-White-RankineMHD.webp",
     "cardId": "generator-15",
     "side": "white",
+    "type": "generator",
+    "name": "Rankine MHD",
     "hash": "cccea8708496a7c6",
     "hashBytes": [
       204,
@@ -3427,6 +4287,8 @@
     "filename": "Generator16-Black-RankineMultiphase.webp",
     "cardId": "generator-16",
     "side": "black",
+    "type": "generator",
+    "name": "Rankine Multiphase",
     "hash": "6d77692d194d0d57",
     "hashBytes": [
       109,
@@ -3443,6 +4305,8 @@
     "filename": "Generator16-White-RankineSolarDynamic.webp",
     "cardId": "generator-16",
     "side": "white",
+    "type": "generator",
+    "name": "Rankine Solar Dynamic",
     "hash": "c4caaaceba9aca80",
     "hashBytes": [
       196,
@@ -3459,6 +4323,8 @@
     "filename": "Generator17-Black-Thermo-Photovoltaic.webp",
     "cardId": "generator-17",
     "side": "black",
+    "type": "generator",
+    "name": "Thermo Photovoltaic",
     "hash": "47672b0f1f59214d",
     "hashBytes": [
       71,
@@ -3475,6 +4341,8 @@
     "filename": "Generator17-White-SolarStirling.webp",
     "cardId": "generator-17",
     "side": "white",
+    "type": "generator",
+    "name": "Solar Stirling",
     "hash": "c4c8b874e4c2c082",
     "hashBytes": [
       196,
@@ -3491,6 +4359,8 @@
     "filename": "Radiator01-Black-ElectrostaticMembrane.webp",
     "cardId": "radiator-01",
     "side": "black",
+    "type": "radiator",
+    "name": "Electrostatic Membrane",
     "hash": "4d7f0f69696c3169",
     "hashBytes": [
       77,
@@ -3507,6 +4377,8 @@
     "filename": "Radiator01-White-BubbleMembrane.webp",
     "cardId": "radiator-01",
     "side": "white",
+    "type": "radiator",
+    "name": "Bubble Membrane",
     "hash": "ccc88352f0b88c9c",
     "hashBytes": [
       204,
@@ -3523,6 +4395,8 @@
     "filename": "Radiator02-Black-GrapheneCrystalX-RayMirror.webp",
     "cardId": "radiator-02",
     "side": "black",
+    "type": "radiator",
+    "name": "Graphene Crystal X Ray Mirror",
     "hash": "4d652686476d0155",
     "hashBytes": [
       77,
@@ -3539,6 +4413,8 @@
     "filename": "Radiator02-White-DielectricX-RayWindow.webp",
     "cardId": "radiator-02",
     "side": "white",
+    "type": "radiator",
+    "name": "Dielectric X Ray Window",
     "hash": "ccc080f4e6e6accc",
     "hashBytes": [
       204,
@@ -3555,6 +4431,8 @@
     "filename": "Radiator03-Black-CuriePoint.webp",
     "cardId": "radiator-03",
     "side": "black",
+    "type": "radiator",
+    "name": "Curie Point",
     "hash": "4d6b0f2b65611121",
     "hashBytes": [
       77,
@@ -3571,6 +4449,8 @@
     "filename": "Radiator03-White-ETHERChargedDust.webp",
     "cardId": "radiator-03",
     "side": "white",
+    "type": "radiator",
+    "name": "ETHERCharged Dust",
     "hash": "cec0816ca49ecc8c",
     "hashBytes": [
       206,
@@ -3587,6 +4467,8 @@
     "filename": "Radiator04-Black-ThermochemicalHeatsinkFountain.webp",
     "cardId": "radiator-04",
     "side": "black",
+    "type": "radiator",
+    "name": "Thermochemical Heatsink Fountain",
     "hash": "596d8f0f6d6d1151",
     "hashBytes": [
       89,
@@ -3603,6 +4485,8 @@
     "filename": "Radiator04-White-LiHeatsinkFountain.webp",
     "cardId": "radiator-04",
     "side": "white",
+    "type": "radiator",
+    "name": "Li Heatsink Fountain",
     "hash": "ccc0ccfeb0bc6c98",
     "hashBytes": [
       204,
@@ -3619,6 +4503,8 @@
     "filename": "Radiator05-Black-NuclearFuelSpinPolarizer.webp",
     "cardId": "radiator-05",
     "side": "black",
+    "type": "radiator",
+    "name": "Nuclear Fuel Spin Polarizer",
     "hash": "6d71392d757a3955",
     "hashBytes": [
       109,
@@ -3635,6 +4521,8 @@
     "filename": "Radiator05-White-MagnetocaloricRefrigerator.webp",
     "cardId": "radiator-05",
     "side": "white",
+    "type": "radiator",
+    "name": "Magnetocaloric Refrigerator",
     "hash": "ccc08ce4b4acfcbc",
     "hashBytes": [
       204,
@@ -3651,6 +4539,8 @@
     "filename": "Radiator06-Black-MarangoniFlow.webp",
     "cardId": "radiator-06",
     "side": "black",
+    "type": "radiator",
+    "name": "Marangoni Flow",
     "hash": "4d730f0f4d673171",
     "hashBytes": [
       77,
@@ -3667,6 +4557,8 @@
     "filename": "Radiator06-White-MicrotubeArray.webp",
     "cardId": "radiator-06",
     "side": "white",
+    "type": "radiator",
+    "name": "Microtube Array",
     "hash": "cac4f5f5b5b0bc9c",
     "hashBytes": [
       202,
@@ -3683,6 +4575,8 @@
     "filename": "Radiator07-Black-TinDroplet.webp",
     "cardId": "radiator-07",
     "side": "black",
+    "type": "radiator",
+    "name": "Tin Droplet",
     "hash": "4b6f6dbc264e0971",
     "hashBytes": [
       75,
@@ -3699,6 +4593,8 @@
     "filename": "Radiator07-White-Mo:LiHeatPipe.webp",
     "cardId": "radiator-07",
     "side": "white",
+    "type": "radiator",
+    "name": "Mo:Li Heat Pipe",
     "hash": "cacc8c78b1a6cc9c",
     "hashBytes": [
       202,
@@ -3715,6 +4611,8 @@
     "filename": "Radiator08-Black-ANDR:InDreamPipe.webp",
     "cardId": "radiator-08",
     "side": "black",
+    "type": "radiator",
+    "name": "ANDR:In Dream Pipe",
     "hash": "4f6933264e3a3149",
     "hashBytes": [
       79,
@@ -3731,6 +4629,8 @@
     "filename": "Radiator08-White-QuTube.webp",
     "cardId": "radiator-08",
     "side": "white",
+    "type": "radiator",
+    "name": "Qu Tube",
     "hash": "c8cc8c71a2cc9cac",
     "hashBytes": [
       200,
@@ -3747,6 +4647,8 @@
     "filename": "Radiator09-Black-Hula-Hoop.webp",
     "cardId": "radiator-09",
     "side": "black",
+    "type": "radiator",
+    "name": "Hula Hoop",
     "hash": "4d679e9b4d6d3969",
     "hashBytes": [
       77,
@@ -3763,6 +4665,8 @@
     "filename": "Radiator09-White-SS:NaKPumpedLoop.webp",
     "cardId": "radiator-09",
     "side": "white",
+    "type": "radiator",
+    "name": "SS:Na KPumped Loop",
     "hash": "cccbc4ce8cbccc9c",
     "hashBytes": [
       204,
@@ -3779,6 +4683,8 @@
     "filename": "Radiator10-Black-BuckytubeFilament.webp",
     "cardId": "radiator-10",
     "side": "black",
+    "type": "radiator",
+    "name": "Buckytube Filament",
     "hash": "4d75252767641979",
     "hashBytes": [
       77,
@@ -3795,6 +4701,8 @@
     "filename": "Radiator10-White-Salt-CooledRefluxTube.webp",
     "cardId": "radiator-10",
     "side": "white",
+    "type": "radiator",
+    "name": "Salt Cooled Reflux Tube",
     "hash": "c4cc8e31b18c9cbc",
     "hashBytes": [
       196,
@@ -3811,6 +4719,8 @@
     "filename": "Radiator11-Black-PulsatingHeatPipe.webp",
     "cardId": "radiator-11",
     "side": "black",
+    "type": "radiator",
+    "name": "Pulsating Heat Pipe",
     "hash": "4d2f4589476f8971",
     "hashBytes": [
       77,
@@ -3827,6 +4737,8 @@
     "filename": "Radiator11-White-Steel:Pb-BiPumpedLoop.webp",
     "cardId": "radiator-11",
     "side": "white",
+    "type": "radiator",
+    "name": "Steel:Pb Bi Pumped Loop",
     "hash": "ccc08a34a4b04cac",
     "hashBytes": [
       204,
@@ -3843,6 +4755,8 @@
     "filename": "Radiator12-Black-Flux-PinnedSuperthermal.webp",
     "cardId": "radiator-12",
     "side": "black",
+    "type": "radiator",
+    "name": "Flux Pinned Superthermal",
     "hash": "4d6bc69f07658161",
     "hashBytes": [
       77,
@@ -3859,6 +4773,8 @@
     "filename": "Radiator12-White-Ti:KHeatPipe.webp",
     "cardId": "radiator-12",
     "side": "white",
+    "type": "radiator",
+    "name": "Ti:KHeat Pipe",
     "hash": "c6cc8c79a1a6cc9c",
     "hashBytes": [
       198,
@@ -3875,6 +4791,8 @@
     "filename": "Reactor01-Black-PulsedNTRFission.webp",
     "cardId": "reactor-01",
     "side": "black",
+    "type": "reactor",
+    "name": "Pulsed NTRFission",
     "hash": "6d733c0b52682641",
     "hashBytes": [
       109,
@@ -3891,6 +4809,8 @@
     "filename": "Reactor01-White-CermetNERVAFission.webp",
     "cardId": "reactor-01",
     "side": "white",
+    "type": "reactor",
+    "name": "Cermet NERVAFission",
     "hash": "cecc987cbd89c3c2",
     "hashBytes": [
       206,
@@ -3907,6 +4827,8 @@
     "filename": "Reactor02-Black-H-BFusionReciprocatingPlasmoid.webp",
     "cardId": "reactor-02",
     "side": "black",
+    "type": "reactor",
+    "name": "H BFusion Reciprocating Plasmoid",
     "hash": "4b6b3b2766682a43",
     "hashBytes": [
       75,
@@ -3923,6 +4845,8 @@
     "filename": "Reactor02-White-D-DFusionMagneto-Inertial.webp",
     "cardId": "reactor-02",
     "side": "white",
+    "type": "reactor",
+    "name": "D DFusion Magneto Inertial",
     "hash": "ccc486d0cce6c6c2",
     "hashBytes": [
       204,
@@ -3939,6 +4863,8 @@
     "filename": "Reactor03-Black-AntimatterGDM.webp",
     "cardId": "reactor-03",
     "side": "black",
+    "type": "reactor",
+    "name": "Antimatter GDM",
     "hash": "7b27372a686e3543",
     "hashBytes": [
       123,
@@ -3955,6 +4881,8 @@
     "filename": "Reactor03-White-D-TFusionTokamak.webp",
     "cardId": "reactor-03",
     "side": "white",
+    "type": "reactor",
+    "name": "D TFusion Tokamak",
     "hash": "ccccb4f4bc98d4c2",
     "hashBytes": [
       204,
@@ -3971,6 +4899,8 @@
     "filename": "Reactor04-Black-MacronBlowpipeFusion.webp",
     "cardId": "reactor-04",
     "side": "black",
+    "type": "reactor",
+    "name": "Macron Blowpipe Fusion",
     "hash": "3d6d3f2767632747",
     "hashBytes": [
       61,
@@ -3987,6 +4917,8 @@
     "filename": "Reactor04-White-D-TGunFusion.webp",
     "cardId": "reactor-04",
     "side": "white",
+    "type": "reactor",
+    "name": "D TGun Fusion",
     "hash": "cc88a1f29c96c2c2",
     "hashBytes": [
       204,
@@ -4003,6 +4935,8 @@
     "filename": "Reactor05-Black-FreeRadicalHydrogenTrap.webp",
     "cardId": "reactor-05",
     "side": "black",
+    "type": "reactor",
+    "name": "Free Radical Hydrogen Trap",
     "hash": "6d6f3b8b0b713443",
     "hashBytes": [
       109,
@@ -4019,6 +4953,8 @@
     "filename": "Reactor05-White-LymanAlphaTrap.webp",
     "cardId": "reactor-05",
     "side": "white",
+    "type": "reactor",
+    "name": "Lyman Alpha Trap",
     "hash": "eec494d59c9cccc8",
     "hashBytes": [
       238,
@@ -4035,6 +4971,8 @@
     "filename": "Reactor06-Black-Fission-AugmentedD-TInertialFusion.webp",
     "cardId": "reactor-06",
     "side": "black",
+    "type": "reactor",
+    "name": "Fission Augmented D TInertial Fusion",
     "hash": "4d7f398f0b692647",
     "hashBytes": [
       77,
@@ -4051,6 +4989,8 @@
     "filename": "Reactor06-White-MetallicHydrogen.webp",
     "cardId": "reactor-06",
     "side": "white",
+    "type": "reactor",
+    "name": "Metallic Hydrogen",
     "hash": "cccca6d696b2c2c0",
     "hashBytes": [
       204,
@@ -4067,6 +5007,8 @@
     "filename": "Reactor07-Black-UltracoldNeutrons.webp",
     "cardId": "reactor-07",
     "side": "black",
+    "type": "reactor",
+    "name": "Ultracold Neutrons",
     "hash": "6f6d27676366c40f",
     "hashBytes": [
       111,
@@ -4083,6 +5025,8 @@
     "filename": "Reactor07-White-Mini-MagRFPaulTrap.webp",
     "cardId": "reactor-07",
     "side": "white",
+    "type": "reactor",
+    "name": "Mini Mag RFPaul Trap",
     "hash": "ccc489d8b89adac0",
     "hashBytes": [
       204,
@@ -4099,6 +5043,8 @@
     "filename": "Reactor08-Black-VCRLightBulbFission.webp",
     "cardId": "reactor-08",
     "side": "black",
+    "type": "reactor",
+    "name": "VCRLight Bulb Fission",
     "hash": "4f7533a362632545",
     "hashBytes": [
       79,
@@ -4115,6 +5061,8 @@
     "filename": "Reactor08-White-PebbleBedFission.webp",
     "cardId": "reactor-08",
     "side": "white",
+    "type": "reactor",
+    "name": "Pebble Bed Fission",
     "hash": "cce8b8dc9c9ccdc6",
     "hashBytes": [
       204,
@@ -4131,6 +5079,8 @@
     "filename": "Reactor09-Black-3He-DFusionMirrorCell.webp",
     "cardId": "reactor-09",
     "side": "black",
+    "type": "reactor",
+    "name": "3He DFusion Mirror Cell",
     "hash": "456b2b4a4b6b0b43",
     "hashBytes": [
       69,
@@ -4147,6 +5097,8 @@
     "filename": "Reactor09-White-PenningTrap.webp",
     "cardId": "reactor-09",
     "side": "white",
+    "type": "reactor",
+    "name": "Penning Trap",
     "hash": "e4cab8749abafa8a",
     "hashBytes": [
       228,
@@ -4163,6 +5115,8 @@
     "filename": "Reactor10-Black-ProjectValkyrie.webp",
     "cardId": "reactor-10",
     "side": "black",
+    "type": "reactor",
+    "name": "Project Valkyrie",
     "hash": "4d3f3f756f657243",
     "hashBytes": [
       77,
@@ -4179,6 +5133,8 @@
     "filename": "Reactor10-White-ProjectOrion.webp",
     "cardId": "reactor-10",
     "side": "white",
+    "type": "reactor",
+    "name": "Project Orion",
     "hash": "ccc8a6d4c696c6c6",
     "hashBytes": [
       204,
@@ -4195,6 +5151,8 @@
     "filename": "Reactor11-Black-PositroniumBottle.webp",
     "cardId": "reactor-11",
     "side": "black",
+    "type": "reactor",
+    "name": "Positronium Bottle",
     "hash": "6f7f378363632347",
     "hashBytes": [
       111,
@@ -4211,6 +5169,8 @@
     "filename": "Reactor11-White-RubbiaThinFilmFissionHohlraum.webp",
     "cardId": "reactor-11",
     "side": "white",
+    "type": "reactor",
+    "name": "Rubbia Thin Film Fission Hohlraum",
     "hash": "ccccaa5ab898dac2",
     "hashBytes": [
       204,
@@ -4227,6 +5187,8 @@
     "filename": "Reactor12-Black-H-6LiFusor.webp",
     "cardId": "reactor-12",
     "side": "black",
+    "type": "reactor",
+    "name": "H 6Li Fusor",
     "hash": "6d6967674b672743",
     "hashBytes": [
       109,
@@ -4243,6 +5205,8 @@
     "filename": "Reactor12-White-SupercriticalWaterFission.webp",
     "cardId": "reactor-12",
     "side": "white",
+    "type": "reactor",
+    "name": "Supercritical Water Fission",
     "hash": "cccaa878b4b5d0c2",
     "hashBytes": [
       204,
@@ -4259,6 +5223,8 @@
     "filename": "Refinery01-Black-IlmeniteSemiconductorFilm.webp",
     "cardId": "refinery-01",
     "side": "black",
+    "type": "refinery",
+    "name": "Ilmenite Semiconductor Film",
     "hash": "316b69096f515165",
     "hashBytes": [
       49,
@@ -4275,6 +5241,8 @@
     "filename": "Refinery01-White-AtomicLayerDeposition.webp",
     "cardId": "refinery-01",
     "side": "white",
+    "type": "refinery",
+    "name": "Atomic Layer Deposition",
     "hash": "c082a578b4a464e4",
     "hashBytes": [
       192,
@@ -4291,6 +5259,8 @@
     "filename": "Refinery02-Black-VonNeumannSantaClausMachine.webp",
     "cardId": "refinery-02",
     "side": "black",
+    "type": "refinery",
+    "name": "Von Neumann Santa Claus Machine",
     "hash": "316366454f4f576d",
     "hashBytes": [
       49,
@@ -4307,6 +5277,8 @@
     "filename": "Refinery02-White-BasaltFiberSpinning.webp",
     "cardId": "refinery-02",
     "side": "white",
+    "type": "refinery",
+    "name": "Basalt Fiber Spinning",
     "hash": "c0c0ad7c969e76e8",
     "hashBytes": [
       192,
@@ -4323,6 +5295,8 @@
     "filename": "Refinery03-Black-CarbonylVolatilization.webp",
     "cardId": "refinery-03",
     "side": "black",
+    "type": "refinery",
+    "name": "Carbonyl Volatilization",
     "hash": "31636988585a0161",
     "hashBytes": [
       49,
@@ -4339,6 +5313,8 @@
     "filename": "Refinery03-White-CVDMolding.webp",
     "cardId": "refinery-03",
     "side": "white",
+    "type": "refinery",
+    "name": "CVDMolding",
     "hash": "e0c8c178918cd2b0",
     "hashBytes": [
       224,
@@ -4355,6 +5331,8 @@
     "filename": "Refinery04-Black-SolarCarbotherm.webp",
     "cardId": "refinery-04",
     "side": "black",
+    "type": "refinery",
+    "name": "Solar Carbotherm",
     "hash": "31712426634d2429",
     "hashBytes": [
       49,
@@ -4371,6 +5349,8 @@
     "filename": "Refinery04-White-Carbo-Chlorination.webp",
     "cardId": "refinery-04",
     "side": "white",
+    "type": "refinery",
+    "name": "Carbo Chlorination",
     "hash": "c080a0f6b4b8b8a0",
     "hashBytes": [
       192,
@@ -4387,6 +5367,8 @@
     "filename": "Refinery05-Black-ImpactMoldSinter.webp",
     "cardId": "refinery-05",
     "side": "black",
+    "type": "refinery",
+    "name": "Impact Mold Sinter",
     "hash": "7171672369119369",
     "hashBytes": [
       113,
@@ -4403,6 +5385,8 @@
     "filename": "Refinery05-White-Electroforming.webp",
     "cardId": "refinery-05",
     "side": "white",
+    "type": "refinery",
+    "name": "Electroforming",
     "hash": "c080a2ceecf07eba",
     "hashBytes": [
       192,
@@ -4419,6 +5403,8 @@
     "filename": "Refinery06-Black-AtmosphericScoop.webp",
     "cardId": "refinery-06",
     "side": "black",
+    "type": "refinery",
+    "name": "Atmospheric Scoop",
     "hash": "712323226363b361",
     "hashBytes": [
       113,
@@ -4435,6 +5421,8 @@
     "filename": "Refinery06-White-FluidizedBed.webp",
     "cardId": "refinery-06",
     "side": "white",
+    "type": "refinery",
+    "name": "Fluidized Bed",
     "hash": "c080a26ab2b230b0",
     "hashBytes": [
       192,
@@ -4451,6 +5439,8 @@
     "filename": "Refinery07-Black-Laser-HeatedPedestalGrowth.webp",
     "cardId": "refinery-07",
     "side": "black",
+    "type": "refinery",
+    "name": "Laser Heated Pedestal Growth",
     "hash": "513b32624b46974d",
     "hashBytes": [
       81,
@@ -4467,6 +5457,8 @@
     "filename": "Refinery07-White-FoamglassSintering.webp",
     "cardId": "refinery-07",
     "side": "white",
+    "type": "refinery",
+    "name": "Foamglass Sintering",
     "hash": "c0808ad4c4c2b2e8",
     "hashBytes": [
       192,
@@ -4483,6 +5475,8 @@
     "filename": "Refinery08-Black-Femtochemistry.webp",
     "cardId": "refinery-08",
     "side": "black",
+    "type": "refinery",
+    "name": "Femtochemistry",
     "hash": "3161630d65630b61",
     "hashBytes": [
       49,
@@ -4499,6 +5493,8 @@
     "filename": "Refinery08-White-FrothFlotation.webp",
     "cardId": "refinery-08",
     "side": "white",
+    "type": "refinery",
+    "name": "Froth Flotation",
     "hash": "c080a779e9ccf0b0",
     "hashBytes": [
       192,
@@ -4515,6 +5511,8 @@
     "filename": "Refinery09-Black-BiophytolyticAlgalFarm.webp",
     "cardId": "refinery-09",
     "side": "black",
+    "type": "refinery",
+    "name": "Biophytolytic Algal Farm",
     "hash": "31676b9351519155",
     "hashBytes": [
       49,
@@ -4531,6 +5529,8 @@
     "filename": "Refinery09-White-ISRUSabatier.webp",
     "cardId": "refinery-09",
     "side": "white",
+    "type": "refinery",
+    "name": "ISRUSabatier",
     "hash": "c080ae56b9e8e1b0",
     "hashBytes": [
       192,
@@ -4547,6 +5547,8 @@
     "filename": "Refinery10-Black-TermiteNest.webp",
     "cardId": "refinery-10",
     "side": "black",
+    "type": "refinery",
+    "name": "Termite Nest",
     "hash": "7133302545530931",
     "hashBytes": [
       113,
@@ -4563,6 +5565,8 @@
     "filename": "Refinery10-White-In-SituLeaching.webp",
     "cardId": "refinery-10",
     "side": "white",
+    "type": "refinery",
+    "name": "In Situ Leaching",
     "hash": "c0c084b59baafab0",
     "hashBytes": [
       192,
@@ -4579,6 +5583,8 @@
     "filename": "Refinery11-Black-IonosphereLasing.webp",
     "cardId": "refinery-11",
     "side": "black",
+    "type": "refinery",
+    "name": "Ionosphere Lasing",
     "hash": "316733a7474b0767",
     "hashBytes": [
       49,
@@ -4595,6 +5601,8 @@
     "filename": "Refinery11-White-MagmaElectrolysis.webp",
     "cardId": "refinery-11",
     "side": "white",
+    "type": "refinery",
+    "name": "Magma Electrolysis",
     "hash": "c088ac7b94e0c0a8",
     "hashBytes": [
       192,
@@ -4611,6 +5619,8 @@
     "filename": "Refinery12-Black-SolidFlame.webp",
     "cardId": "refinery-12",
     "side": "black",
+    "type": "refinery",
+    "name": "Solid Flame",
     "hash": "713136474e5a1233",
     "hashBytes": [
       113,
@@ -4627,6 +5637,8 @@
     "filename": "Refinery12-White-SupercriticalDrying.webp",
     "cardId": "refinery-12",
     "side": "white",
+    "type": "refinery",
+    "name": "Supercritical Drying",
     "hash": "c080ab71b4a8e8e0",
     "hashBytes": [
       192,
@@ -4643,6 +5655,8 @@
     "filename": "Robonaut01-Black-FissileAerosolLaser.webp",
     "cardId": "robonaut-01",
     "side": "black",
+    "type": "robonaut",
+    "name": "Fissile Aerosol Laser",
     "hash": "01333f8b47539d69",
     "hashBytes": [
       1,
@@ -4659,6 +5673,8 @@
     "filename": "Robonaut01-White-Blackbody-PumpedLaser.webp",
     "cardId": "robonaut-01",
     "side": "white",
+    "type": "robonaut",
+    "name": "Blackbody Pumped Laser",
     "hash": "8080805ca2acecc0",
     "hashBytes": [
       128,
@@ -4675,6 +5691,8 @@
     "filename": "Robonaut02-Black-H-BCatInertial.webp",
     "cardId": "robonaut-02",
     "side": "black",
+    "type": "robonaut",
+    "name": "H BCat Inertial",
     "hash": "0135352765632735",
     "hashBytes": [
       1,
@@ -4691,6 +5709,8 @@
     "filename": "Robonaut02-White-CatFusionZ-pinchTorch.webp",
     "cardId": "robonaut-02",
     "side": "white",
+    "type": "robonaut",
+    "name": "Cat Fusion Z pinch Torch",
     "hash": "8480a8748b99c6ca",
     "hashBytes": [
       132,
@@ -4707,6 +5727,8 @@
     "filename": "Robonaut03-Black-ElectrophoreticSandworm.webp",
     "cardId": "robonaut-03",
     "side": "black",
+    "type": "robonaut",
+    "name": "Electrophoretic Sandworm",
     "hash": "15786d4b5b6d8f71",
     "hashBytes": [
       21,
@@ -4723,6 +5745,8 @@
     "filename": "Robonaut03-White-FlywheelTractor.webp",
     "cardId": "robonaut-03",
     "side": "white",
+    "type": "robonaut",
+    "name": "Flywheel Tractor",
     "hash": "8480a959b8c8c8a0",
     "hashBytes": [
       132,
@@ -4739,6 +5763,8 @@
     "filename": "Robonaut04-Black-Wakefielde-Beam.webp",
     "cardId": "robonaut-04",
     "side": "black",
+    "type": "robonaut",
+    "name": "Wakefielde Beam",
     "hash": "113d3b8b4b4f2739",
     "hashBytes": [
       17,
@@ -4755,6 +5781,8 @@
     "filename": "Robonaut04-White-FreeElectronLaser.webp",
     "cardId": "robonaut-04",
     "side": "white",
+    "type": "robonaut",
+    "name": "Free Electron Laser",
     "hash": "8484acdc9d9cfce8",
     "hashBytes": [
       132,
@@ -4771,6 +5799,8 @@
     "filename": "Robonaut05-Black-AblativeLaser.webp",
     "cardId": "robonaut-05",
     "side": "black",
+    "type": "robonaut",
+    "name": "Ablative Laser",
     "hash": "152b668525693939",
     "hashBytes": [
       21,
@@ -4787,6 +5817,8 @@
     "filename": "Robonaut05-White-KuckMosquito.webp",
     "cardId": "robonaut-05",
     "side": "white",
+    "type": "robonaut",
+    "name": "Kuck Mosquito",
     "hash": "808ca1f8e8c4cc98",
     "hashBytes": [
       128,
@@ -4803,6 +5835,8 @@
     "filename": "Robonaut06-Black-Nanobot.webp",
     "cardId": "robonaut-06",
     "side": "black",
+    "type": "robonaut",
+    "name": "Nanobot",
     "hash": "116b9793531f9371",
     "hashBytes": [
       17,
@@ -4819,6 +5853,8 @@
     "filename": "Robonaut06-White-METSteamer.webp",
     "cardId": "robonaut-06",
     "side": "white",
+    "type": "robonaut",
+    "name": "METSteamer",
     "hash": "8080aa78b2d8d8bc",
     "hashBytes": [
       128,
@@ -4835,6 +5871,8 @@
     "filename": "Robonaut07-Black-D-DInertialFusion.webp",
     "cardId": "robonaut-07",
     "side": "black",
+    "type": "robonaut",
+    "name": "D DInertial Fusion",
     "hash": "113f338759753739",
     "hashBytes": [
       17,
@@ -4851,6 +5889,8 @@
     "filename": "Robonaut07-White-NeutralBeam.webp",
     "cardId": "robonaut-07",
     "side": "white",
+    "type": "robonaut",
+    "name": "Neutral Beam",
     "hash": "8480ac58b1e1c3b0",
     "hashBytes": [
       132,
@@ -4867,6 +5907,8 @@
     "filename": "Robonaut08-Black-HelicalRailgun.webp",
     "cardId": "robonaut-08",
     "side": "black",
+    "type": "robonaut",
+    "name": "Helical Railgun",
     "hash": "0535308f04682c1d",
     "hashBytes": [
       5,
@@ -4883,6 +5925,8 @@
     "filename": "Robonaut08-White-NuclearDrill.webp",
     "cardId": "robonaut-08",
     "side": "white",
+    "type": "robonaut",
+    "name": "Nuclear Drill",
     "hash": "8488a4d0b092d298",
     "hashBytes": [
       132,
@@ -4899,6 +5943,8 @@
     "filename": "Robonaut09-Black-Lorentz-PropelledMicroprobe.webp",
     "cardId": "robonaut-09",
     "side": "black",
+    "type": "robonaut",
+    "name": "Lorentz Propelled Microprobe",
     "hash": "15656ba647470769",
     "hashBytes": [
       21,
@@ -4915,6 +5961,8 @@
     "filename": "Robonaut09-White-Phase-LockedDiodeLaser.webp",
     "cardId": "robonaut-09",
     "side": "white",
+    "type": "robonaut",
+    "name": "Phase Locked Diode Laser",
     "hash": "8484aa70b8b8d8e0",
     "hashBytes": [
       132,
@@ -4931,6 +5979,8 @@
     "filename": "Robonaut10-Black-MagBeam.webp",
     "cardId": "robonaut-10",
     "side": "black",
+    "type": "robonaut",
+    "name": "Mag Beam",
     "hash": "112d640b47632b39",
     "hashBytes": [
       17,
@@ -4947,6 +5997,8 @@
     "filename": "Robonaut10-White-RockSplitter.webp",
     "cardId": "robonaut-10",
     "side": "white",
+    "type": "robonaut",
+    "name": "Rock Splitter",
     "hash": "808cacf4b4b4dcb2",
     "hashBytes": [
       128,
@@ -4963,6 +6015,8 @@
     "filename": "Robonaut11-Black-QuantumCascadeLaser.webp",
     "cardId": "robonaut-11",
     "side": "black",
+    "type": "robonaut",
+    "name": "Quantum Cascade Laser",
     "hash": "1134350b6b668f69",
     "hashBytes": [
       17,
@@ -4979,6 +6033,8 @@
     "filename": "Robonaut11-White-Solar-PumpedMHDExciplexLaser.webp",
     "cardId": "robonaut-11",
     "side": "white",
+    "type": "robonaut",
+    "name": "Solar Pumped MHDExciplex Laser",
     "hash": "8088a870b6bb7be4",
     "hashBytes": [
       128,
@@ -4995,6 +6051,8 @@
     "filename": "Robonaut12-Black-MITEEArcjet.webp",
     "cardId": "robonaut-12",
     "side": "black",
+    "type": "robonaut",
+    "name": "MITEEArcjet",
     "hash": "112f2e8d67642c39",
     "hashBytes": [
       17,
@@ -5011,6 +6069,8 @@
     "filename": "Robonaut12-White-TungstenResistojet.webp",
     "cardId": "robonaut-12",
     "side": "white",
+    "type": "robonaut",
+    "name": "Tungsten Resistojet",
     "hash": "8080a858b88ad9b6",
     "hashBytes": [
       128,
@@ -5027,6 +6087,8 @@
     "filename": "Spaceborn01-Purple-ThePresence.webp",
     "cardId": "spaceborn-01",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "The Presence",
     "hash": "8ccd81c1c36321c2",
     "hashBytes": [
       140,
@@ -5043,6 +6105,8 @@
     "filename": "Spaceborn01-White-VRSimulcasters.webp",
     "cardId": "spaceborn-01",
     "side": "white",
+    "type": "spaceborn",
+    "name": "VRSimulcasters",
     "hash": "aceed6e2e8e8c882",
     "hashBytes": [
       172,
@@ -5059,6 +6123,8 @@
     "filename": "Spaceborn02-Purple-Shipbrain.webp",
     "cardId": "spaceborn-02",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Shipbrain",
     "hash": "cccc8b83c34e3736",
     "hashBytes": [
       204,
@@ -5075,6 +6141,8 @@
     "filename": "Spaceborn02-White-NeuralPilots.webp",
     "cardId": "spaceborn-02",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Neural Pilots",
     "hash": "8cc4c0f0f0b6b6b2",
     "hashBytes": [
       140,
@@ -5091,6 +6159,8 @@
     "filename": "Spaceborn03-Purple-ZombieWanderers.webp",
     "cardId": "spaceborn-03",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Zombie Wanderers",
     "hash": "8cec8ac9864c3434",
     "hashBytes": [
       140,
@@ -5107,6 +6177,8 @@
     "filename": "Spaceborn03-White-BostonHexapods.webp",
     "cardId": "spaceborn-03",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Boston Hexapods",
     "hash": "8c8cc88c86c4a4b4",
     "hashBytes": [
       140,
@@ -5123,6 +6195,8 @@
     "filename": "Spaceborn04-Purple-SunburnLeague.webp",
     "cardId": "spaceborn-04",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Sunburn League",
     "hash": "ac8e82c1c2883832",
     "hashBytes": [
       172,
@@ -5139,6 +6213,8 @@
     "filename": "Spaceborn04-White-LavaLampEvangelists.webp",
     "cardId": "spaceborn-04",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Lava Lamp Evangelists",
     "hash": "8ca6c2e2f0e6a2b0",
     "hashBytes": [
       140,
@@ -5155,6 +6231,8 @@
     "filename": "Spaceborn05-Purple-DeathInsurers.webp",
     "cardId": "spaceborn-05",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Death Insurers",
     "hash": "adee8ccccd0727e6",
     "hashBytes": [
       173,
@@ -5171,6 +6249,8 @@
     "filename": "Spaceborn05-White-CloneEntrepreneurs.webp",
     "cardId": "spaceborn-05",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Clone Entrepreneurs",
     "hash": "acecb2b268fe8ea2",
     "hashBytes": [
       172,
@@ -5187,6 +6267,8 @@
     "filename": "Spaceborn06-Purple-Transplaneteers.webp",
     "cardId": "spaceborn-06",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Transplaneteers",
     "hash": "adaca6c6e2ce9c82",
     "hashBytes": [
       173,
@@ -5203,6 +6285,8 @@
     "filename": "Spaceborn06-White-Prehensilists.webp",
     "cardId": "spaceborn-06",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Prehensilists",
     "hash": "acacc28e8ecc9a82",
     "hashBytes": [
       172,
@@ -5219,6 +6303,8 @@
     "filename": "Spaceborn07-Purple-DroneQueen.webp",
     "cardId": "spaceborn-07",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Drone Queen",
     "hash": "89cc8ecaa29b8986",
     "hashBytes": [
       137,
@@ -5235,6 +6321,8 @@
     "filename": "Spaceborn07-White-Teleoperators.webp",
     "cardId": "spaceborn-07",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Teleoperators",
     "hash": "c8c0868ccac3d2a6",
     "hashBytes": [
       200,
@@ -5251,6 +6339,8 @@
     "filename": "Spaceborn08-Purple-JarheadInsurgents.webp",
     "cardId": "spaceborn-08",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Jarhead Insurgents",
     "hash": "a9a68acec5918a82",
     "hashBytes": [
       169,
@@ -5267,6 +6357,8 @@
     "filename": "Spaceborn08-White-TranshumanActivists.webp",
     "cardId": "spaceborn-08",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Transhuman Activists",
     "hash": "a8a28e8ea6cecc82",
     "hashBytes": [
       168,
@@ -5283,6 +6375,8 @@
     "filename": "Spaceborn09-Purple-SpaceJokeys.webp",
     "cardId": "spaceborn-09",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Space Jokeys",
     "hash": "ad8d8f8dc16d6182",
     "hashBytes": [
       173,
@@ -5299,6 +6393,8 @@
     "filename": "Spaceborn09-White-Exoskeletalists.webp",
     "cardId": "spaceborn-09",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Exoskeletalists",
     "hash": "ac8c82d0c8d09ac2",
     "hashBytes": [
       172,
@@ -5315,6 +6411,8 @@
     "filename": "Spaceborn10-Purple-Bubbleopolis.webp",
     "cardId": "spaceborn-10",
     "side": "purple",
+    "type": "spaceborn",
+    "name": "Bubbleopolis",
     "hash": "8cacaac6c3823836",
     "hashBytes": [
       140,
@@ -5331,6 +6429,8 @@
     "filename": "Spaceborn10-White-GaboneseMiningConsortium.webp",
     "cardId": "spaceborn-10",
     "side": "white",
+    "type": "spaceborn",
+    "name": "Gabonese Mining Consortium",
     "hash": "8cc88a8c8cc8beb2",
     "hashBytes": [
       140,
@@ -5347,6 +6447,8 @@
     "filename": "Thruster01-Black-AblativeNozzle.webp",
     "cardId": "thruster-01",
     "side": "black",
+    "type": "thruster",
+    "name": "Ablative Nozzle",
     "hash": "596b348b19653539",
     "hashBytes": [
       89,
@@ -5363,6 +6465,8 @@
     "filename": "Thruster01-White-AblativePlate.webp",
     "cardId": "thruster-01",
     "side": "white",
+    "type": "thruster",
+    "name": "Ablative Plate",
     "hash": "c8808ce2e2eec088",
     "hashBytes": [
       200,
@@ -5379,6 +6483,8 @@
     "filename": "Thruster02-Black-MagneticNozzle.webp",
     "cardId": "thruster-02",
     "side": "black",
+    "type": "thruster",
+    "name": "Magnetic Nozzle",
     "hash": "713f35a16a763239",
     "hashBytes": [
       113,
@@ -5395,6 +6501,8 @@
     "filename": "Thruster02-White-DeLavalNozzle.webp",
     "cardId": "thruster-02",
     "side": "white",
+    "type": "thruster",
+    "name": "De Laval Nozzle",
     "hash": "e8c0887bbe96d788",
     "hashBytes": [
       232,
@@ -5411,6 +6519,8 @@
     "filename": "Thruster03-Black-Timberwind.webp",
     "cardId": "thruster-03",
     "side": "black",
+    "type": "thruster",
+    "name": "Timberwind",
     "hash": "79773e8f474d3839",
     "hashBytes": [
       121,
@@ -5427,6 +6537,8 @@
     "filename": "Thruster03-White-Dumbo.webp",
     "cardId": "thruster-03",
     "side": "white",
+    "type": "thruster",
+    "name": "Dumbo",
     "hash": "c8808cd8989bd98c",
     "hashBytes": [
       200,
@@ -5443,6 +6555,8 @@
     "filename": "Thruster04-Black-IonDrive.webp",
     "cardId": "thruster-04",
     "side": "black",
+    "type": "thruster",
+    "name": "Ion Drive",
     "hash": "593f3dc94b63293d",
     "hashBytes": [
       89,
@@ -5459,6 +6573,8 @@
     "filename": "Thruster04-White-HallEffect.webp",
     "cardId": "thruster-04",
     "side": "white",
+    "type": "thruster",
+    "name": "Hall Effect",
     "hash": "c888a2f0f8a4d08c",
     "hashBytes": [
       200,
@@ -5475,6 +6591,8 @@
     "filename": "Thruster05-Black-MPDT-wave.webp",
     "cardId": "thruster-05",
     "side": "black",
+    "type": "thruster",
+    "name": "MPDT wave",
     "hash": "593536376666270f",
     "hashBytes": [
       89,
@@ -5491,6 +6609,8 @@
     "filename": "Thruster05-White-MassDriver.webp",
     "cardId": "thruster-05",
     "side": "white",
+    "type": "thruster",
+    "name": "Mass Driver",
     "hash": "c880ac78a8d8c088",
     "hashBytes": [
       200,
@@ -5507,6 +6627,8 @@
     "filename": "Thruster06-Black-n-6LiMicrofission.webp",
     "cardId": "thruster-06",
     "side": "black",
+    "type": "thruster",
+    "name": "n 6Li Microfission",
     "hash": "59331b9954663539",
     "hashBytes": [
       89,
@@ -5523,6 +6645,8 @@
     "filename": "Thruster06-White-MetastableHelium.webp",
     "cardId": "thruster-06",
     "side": "white",
+    "type": "thruster",
+    "name": "Metastable Helium",
     "hash": "c884acdc9c9ad288",
     "hashBytes": [
       200,
@@ -5539,6 +6663,8 @@
     "filename": "Thruster07-Black-VortexConfinedNozzle.webp",
     "cardId": "thruster-07",
     "side": "black",
+    "type": "thruster",
+    "name": "Vortex Confined Nozzle",
     "hash": "513934831b693137",
     "hashBytes": [
       81,
@@ -5555,6 +6681,8 @@
     "filename": "Thruster07-White-MonoatomicPlugNozzle.webp",
     "cardId": "thruster-07",
     "side": "white",
+    "type": "thruster",
+    "name": "Monoatomic Plug Nozzle",
     "hash": "c888a250b98bc8a4",
     "hashBytes": [
       200,
@@ -5571,6 +6699,8 @@
     "filename": "Thruster08-Black-ElectricSail.webp",
     "cardId": "thruster-08",
     "side": "black",
+    "type": "thruster",
+    "name": "Electric Sail",
     "hash": "71696b87476a2a3d",
     "hashBytes": [
       113,
@@ -5587,6 +6717,8 @@
     "filename": "Thruster08-White-PhotonHeliogyro.webp",
     "cardId": "thruster-08",
     "side": "white",
+    "type": "thruster",
+    "name": "Photon Heliogyro",
     "hash": "c8c482ccbc9ac88c",
     "hashBytes": [
       200,
@@ -5603,6 +6735,8 @@
     "filename": "Thruster09-Black-MagSail.webp",
     "cardId": "thruster-09",
     "side": "black",
+    "type": "thruster",
+    "name": "Mag Sail",
     "hash": "7179376763672935",
     "hashBytes": [
       113,
@@ -5619,6 +6753,8 @@
     "filename": "Thruster09-White-PhotonKiteSail.webp",
     "cardId": "thruster-09",
     "side": "white",
+    "type": "thruster",
+    "name": "Photon Kite Sail",
     "hash": "f8c0c0f2b8b0d28c",
     "hashBytes": [
       248,
@@ -5635,6 +6771,8 @@
     "filename": "Thruster10-Black-PulsedPlasmoid.webp",
     "cardId": "thruster-10",
     "side": "black",
+    "type": "thruster",
+    "name": "Pulsed Plasmoid",
     "hash": "71792db572632f09",
     "hashBytes": [
       113,
@@ -5651,6 +6789,8 @@
     "filename": "Thruster10-White-PonderomotiveVASIMR.webp",
     "cardId": "thruster-10",
     "side": "white",
+    "type": "thruster",
+    "name": "Ponderomotive VASIMR",
     "hash": "c88cacdcac8cca82",
     "hashBytes": [
       200,
@@ -5667,6 +6807,8 @@
     "filename": "Thruster11-Black-Dual-Stage4-Grid.webp",
     "cardId": "thruster-11",
     "side": "black",
+    "type": "thruster",
+    "name": "Dual Stage4 Grid",
     "hash": "51383a13516a2f3d",
     "hashBytes": [
       81,
@@ -5683,6 +6825,8 @@
     "filename": "Thruster11-White-PulsedInductive.webp",
     "cardId": "thruster-11",
     "side": "white",
+    "type": "thruster",
+    "name": "Pulsed Inductive",
     "hash": "c080a8c8999bcb8c",
     "hashBytes": [
       192,
@@ -5699,6 +6843,8 @@
     "filename": "Thruster12-Black-CollidingBeamH-BFusion.webp",
     "cardId": "thruster-12",
     "side": "black",
+    "type": "thruster",
+    "name": "Colliding Beam H BFusion",
     "hash": "713f3f3f777a383d",
     "hashBytes": [
       113,
@@ -5715,6 +6861,8 @@
     "filename": "Thruster12-White-ReSolarMoth.webp",
     "cardId": "thruster-12",
     "side": "white",
+    "type": "thruster",
+    "name": "Re Solar Moth",
     "hash": "e0c2cec6aec6d288",
     "hashBytes": [
       224,
@@ -5725,6 +6873,186 @@
       198,
       210,
       136
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc16612272734524402827EA16954D032D5AFC457E2A8BFF06E0AA9F3C4E4.webp",
+    "cardId": "httpcloud3steamusercontentcomugc16612272734524402827EA16954D032D5AFC457E2A8BFF06E0AA9F3C4E4",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc16612272734524402827ea16954d032d5afc457e2a8bff06e0aa9f3c4e4.webp",
+    "name": "",
+    "hash": "024ea5b5a54aa808",
+    "hashBytes": [
+      2,
+      78,
+      165,
+      181,
+      165,
+      74,
+      168,
+      8
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc16612272734524408757DA5A22D49C6325B2E5C945444811B797F0149F6.webp",
+    "cardId": "httpcloud3steamusercontentcomugc16612272734524408757DA5A22D49C6325B2E5C945444811B797F0149F6",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc16612272734524408757da5a22d49c6325b2e5c945444811b797f0149f6.webp",
+    "name": "",
+    "hash": "3c51baaa324d0000",
+    "hashBytes": [
+      60,
+      81,
+      186,
+      170,
+      50,
+      77,
+      0,
+      0
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc1669106010808738084F044E9425186A8A27F1BF0C0FA574854B658F723.webp",
+    "cardId": "httpcloud3steamusercontentcomugc1669106010808738084F044E9425186A8A27F1BF0C0FA574854B658F723",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc1669106010808738084f044e9425186a8a27f1bf0c0fa574854b658f723.webp",
+    "name": "",
+    "hash": "ac65c0b845ab6363",
+    "hashBytes": [
+      172,
+      101,
+      192,
+      184,
+      69,
+      171,
+      99,
+      99
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc16691060108087382846EA220BA8FAFAC2A775A3942FCCB8EAED2AA4053.webp",
+    "cardId": "httpcloud3steamusercontentcomugc16691060108087382846EA220BA8FAFAC2A775A3942FCCB8EAED2AA4053",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc16691060108087382846ea220ba8fafac2a775a3942fccb8eaed2aa4053.webp",
+    "name": "",
+    "hash": "54caf4d090a46363",
+    "hashBytes": [
+      84,
+      202,
+      244,
+      208,
+      144,
+      164,
+      99,
+      99
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc1818901417401148137DF11D5F63679A3D30B3DA3E79B7806DC806658EA.webp",
+    "cardId": "httpcloud3steamusercontentcomugc1818901417401148137DF11D5F63679A3D30B3DA3E79B7806DC806658EA",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc1818901417401148137df11d5f63679a3d30b3da3e79b7806dc806658ea.webp",
+    "name": "",
+    "hash": "145c6743697ba424",
+    "hashBytes": [
+      20,
+      92,
+      103,
+      67,
+      105,
+      123,
+      164,
+      36
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc18189014174011492691B851A71E10C3D2008BD7B150729221155BB7155.webp",
+    "cardId": "httpcloud3steamusercontentcomugc18189014174011492691B851A71E10C3D2008BD7B150729221155BB7155",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc18189014174011492691b851a71e10c3d2008bd7b150729221155bb7155.webp",
+    "name": "",
+    "hash": "242cc9db6ce924bc",
+    "hashBytes": [
+      36,
+      44,
+      201,
+      219,
+      108,
+      233,
+      36,
+      188
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc1818901417401150936A2A9DBA6DA1C8BAFEAD7A07F7FDFF072327877AF.webp",
+    "cardId": "httpcloud3steamusercontentcomugc1818901417401150936A2A9DBA6DA1C8BAFEAD7A07F7FDFF072327877AF",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc1818901417401150936a2a9dba6da1c8bafead7a07f7fdff072327877af.webp",
+    "name": "",
+    "hash": "14178a2a68484b00",
+    "hashBytes": [
+      20,
+      23,
+      138,
+      42,
+      104,
+      72,
+      75,
+      0
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc1818901417401151418BFFA214D3466D2D848DF4A65065B859C0E9D2A9A.webp",
+    "cardId": "httpcloud3steamusercontentcomugc1818901417401151418BFFA214D3466D2D848DF4A65065B859C0E9D2A9A",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc1818901417401151418bffa214d3466d2d848df4a65065b859c0e9d2a9a.webp",
+    "name": "",
+    "hash": "c8cb86ca32584900",
+    "hashBytes": [
+      200,
+      203,
+      134,
+      202,
+      50,
+      88,
+      73,
+      0
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc18290256580439161477BF607E643D70E186C0075559EE5CDAD4BF6309E.webp",
+    "cardId": "httpcloud3steamusercontentcomugc18290256580439161477BF607E643D70E186C0075559EE5CDAD4BF6309E",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc18290256580439161477bf607e643d70e186c0075559ee5cdad4bf6309e.webp",
+    "name": "",
+    "hash": "3f1d5d1555551757",
+    "hashBytes": [
+      63,
+      29,
+      93,
+      21,
+      85,
+      85,
+      23,
+      87
+    ]
+  },
+  {
+    "filename": "httpcloud3steamusercontentcomugc18290256580439164183CD308EFA3C352F7AD31223D002846EE98528F1B.webp",
+    "cardId": "httpcloud3steamusercontentcomugc18290256580439164183CD308EFA3C352F7AD31223D002846EE98528F1B",
+    "side": null,
+    "type": "httpcloud3steamusercontentcomugc18290256580439164183cd308efa3c352f7ad31223d002846ee98528f1b.webp",
+    "name": "",
+    "hash": "6d3f5b7f4f1e5f7f",
+    "hashBytes": [
+      109,
+      63,
+      91,
+      127,
+      79,
+      30,
+      95,
+      127
     ]
   }
 ]

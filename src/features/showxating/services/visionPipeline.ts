@@ -266,8 +266,8 @@ function orderCorners(points: Point[]): Point[] {
 export function warpCardToRectangle(
   sourceCanvas: HTMLCanvasElement,
   corners: Point[],
-  outputWidth: number = 200,
-  outputHeight: number = 280
+  outputWidth: number = 630,
+  outputHeight: number = 880
 ): HTMLCanvasElement | null {
   const cv = window.cv;
 
@@ -335,4 +335,254 @@ export function warpCardToRectangle(
     dstPoints?.delete();
     transform?.delete();
   }
+}
+
+// ============================================================================
+// NEW PIPELINE: Warp-Then-Detect (v0.3.0)
+// ============================================================================
+
+/**
+ * Skew analysis result from pre-detection
+ */
+export interface SkewAnalysis {
+  angle: number;              // Rotation angle in degrees
+  corners: Point[] | null;    // The corners used for skew detection
+  hasSkew: boolean;           // Whether significant skew was detected
+}
+
+/**
+ * Corrected frame result after perspective warp
+ */
+export interface CorrectedFrameResult {
+  canvas: HTMLCanvasElement;
+  skewAnalysis: SkewAnalysis;
+}
+
+// Tighter tolerances for post-warp detection (cards should be upright)
+const CORRECTED_ASPECT_RATIO_TOLERANCE = 0.25; // Tighter than pre-warp
+const CORRECTED_SIZE_TOLERANCE = 0.35;          // Cards should be more uniform
+
+/**
+ * Phase A2: Detect frame skew from the largest quadrilateral
+ * Used to determine perspective correction parameters
+ */
+export function detectFrameSkew(
+  imageData: ImageData,
+  frameWidth: number,
+  frameHeight: number
+): SkewAnalysis {
+  // Use existing detection to find the largest card
+  const result = detectAllCards(imageData, frameWidth, frameHeight);
+
+  if (result.cards.length === 0) {
+    return { angle: 0, corners: null, hasSkew: false };
+  }
+
+  // Use the largest card (first after sorting) for skew reference
+  const largestCard = result.cards[0];
+  const angle = result.skewAngle;
+
+  // Consider skew significant if > 2 degrees
+  const hasSkew = Math.abs(angle) > 2;
+
+  console.log(`[detectFrameSkew] Detected skew: ${angle.toFixed(1)}° from ${result.cards.length} cards`);
+
+  return {
+    angle,
+    corners: largestCard.corners,
+    hasSkew,
+  };
+}
+
+/**
+ * Phase A3: Apply perspective correction to entire frame
+ * Returns a new canvas with the corrected image
+ */
+export function warpFullFrame(
+  sourceCanvas: HTMLCanvasElement,
+  skewAnalysis: SkewAnalysis
+): CorrectedFrameResult {
+  const cv = window.cv;
+
+  // If no significant skew or no OpenCV, return original
+  if (!skewAnalysis.hasSkew || !skewAnalysis.corners || !cv || !cv.Mat) {
+    console.log('[warpFullFrame] No warp needed, returning original');
+    return { canvas: sourceCanvas, skewAnalysis };
+  }
+
+  let src: any = null;
+  let dst: any = null;
+  let rotationMatrix: any = null;
+
+  try {
+    const ctx = sourceCanvas.getContext('2d');
+    if (!ctx) {
+      return { canvas: sourceCanvas, skewAnalysis };
+    }
+
+    const imageData = ctx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
+    src = cv.matFromImageData(imageData);
+
+    // Calculate rotation center (center of frame)
+    const centerX = sourceCanvas.width / 2;
+    const centerY = sourceCanvas.height / 2;
+
+    // Create rotation matrix (negative angle to correct the skew)
+    const center = new cv.Point(centerX, centerY);
+    rotationMatrix = cv.getRotationMatrix2D(center, -skewAnalysis.angle, 1.0);
+
+    // Apply rotation
+    dst = new cv.Mat();
+    const dsize = new cv.Size(sourceCanvas.width, sourceCanvas.height);
+    cv.warpAffine(src, dst, rotationMatrix, dsize);
+
+    // Convert result to canvas
+    const outputCanvas = document.createElement('canvas');
+    outputCanvas.width = sourceCanvas.width;
+    outputCanvas.height = sourceCanvas.height;
+    cv.imshow(outputCanvas, dst);
+
+    console.log(`[warpFullFrame] Applied ${(-skewAnalysis.angle).toFixed(1)}° rotation correction`);
+
+    return { canvas: outputCanvas, skewAnalysis };
+  } catch (err) {
+    console.error('[warpFullFrame] Error:', err);
+    return { canvas: sourceCanvas, skewAnalysis };
+  } finally {
+    src?.delete();
+    dst?.delete();
+    rotationMatrix?.delete();
+  }
+}
+
+/**
+ * Phase A4: Detect cards in a perspective-corrected frame
+ * Uses tighter tolerances since cards should now be upright rectangles
+ */
+export function detectCardsInCorrectedFrame(
+  imageData: ImageData,
+  frameWidth: number,
+  frameHeight: number
+): DetectionResult[] {
+  const cv = window.cv;
+
+  if (!cv || !cv.Mat) {
+    return [];
+  }
+
+  const frameArea = frameWidth * frameHeight;
+  const minArea = frameArea * MIN_AREA_RATIO;
+  const maxArea = frameArea * MAX_AREA_RATIO;
+
+  let src: any = null;
+  let gray: any = null;
+  let blurred: any = null;
+  let edges: any = null;
+  let contours: any = null;
+  let hierarchy: any = null;
+
+  try {
+    src = cv.matFromImageData(imageData);
+    gray = new cv.Mat();
+    blurred = new cv.Mat();
+    edges = new cv.Mat();
+    contours = new cv.MatVector();
+    hierarchy = new cv.Mat();
+
+    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+    cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+    cv.Canny(blurred, edges, 50, 150);
+    cv.findContours(edges, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+    const candidates: DetectionResult[] = [];
+
+    for (let i = 0; i < contours.size(); i++) {
+      const contour = contours.get(i);
+      const area = cv.contourArea(contour);
+
+      if (area < minArea || area > maxArea) {
+        continue;
+      }
+
+      const approx = new cv.Mat();
+      const epsilon = 0.04 * cv.arcLength(contour, true);
+      cv.approxPolyDP(contour, approx, epsilon, true);
+
+      if (approx.rows === 4) {
+        // Relaxed convexity check for corrected frame
+        // (convexity issues may come from lighting, not actual card shape)
+        const isConvex = cv.isContourConvex(approx);
+
+        const rect = cv.boundingRect(approx);
+        const aspectRatio = rect.height / rect.width;
+
+        // Use tighter aspect ratio tolerance for corrected frame
+        const aspectDiff = Math.abs(aspectRatio - CARD_ASPECT_RATIO);
+        const invertedAspectDiff = Math.abs(1 / aspectRatio - CARD_ASPECT_RATIO);
+        const minAspectDiff = Math.min(aspectDiff, invertedAspectDiff);
+
+        if (minAspectDiff < CORRECTED_ASPECT_RATIO_TOLERANCE) {
+          const areaConfidence = Math.min(area / (frameArea * 0.1), 1);
+          const aspectConfidence = 1 - (minAspectDiff / CORRECTED_ASPECT_RATIO_TOLERANCE);
+          // Slight penalty for non-convex, but don't reject
+          const convexPenalty = isConvex ? 0 : 0.1;
+          const confidence = (areaConfidence * 0.4 + aspectConfidence * 0.6) - convexPenalty;
+
+          if (confidence > 0.1) {
+            candidates.push({
+              found: true,
+              corners: extractCorners(approx),
+              confidence,
+              aspectRatio,
+              area,
+            });
+          }
+        }
+      }
+
+      approx.delete();
+    }
+
+    if (candidates.length === 0) {
+      return [];
+    }
+
+    // Sort by area (largest first)
+    candidates.sort((a, b) => b.area - a.area);
+
+    // Size consistency filter with tighter tolerance
+    const areas = candidates.map(c => c.area);
+    const medianArea = areas[Math.floor(areas.length / 2)];
+
+    const filteredCards = candidates.filter(c => {
+      const sizeRatio = c.area / medianArea;
+      return sizeRatio >= (1 - CORRECTED_SIZE_TOLERANCE) && sizeRatio <= (1 + CORRECTED_SIZE_TOLERANCE);
+    });
+
+    console.log(`[detectCardsInCorrectedFrame] Found ${candidates.length} candidates, ${filteredCards.length} after filtering`);
+
+    return filteredCards;
+  } catch (err) {
+    console.error('[detectCardsInCorrectedFrame] Error:', err);
+    return [];
+  } finally {
+    src?.delete();
+    gray?.delete();
+    blurred?.delete();
+    edges?.delete();
+    contours?.delete();
+    hierarchy?.delete();
+  }
+}
+
+/**
+ * Crop a card region from a canvas
+ * Returns a new canvas with just the card image at high resolution
+ */
+export function cropCardFromCanvas(
+  sourceCanvas: HTMLCanvasElement,
+  corners: Point[]
+): HTMLCanvasElement | null {
+  // Use perspective warp to get a clean rectangular card image
+  return warpCardToRectangle(sourceCanvas, corners);
 }
