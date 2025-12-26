@@ -71,7 +71,7 @@ function boxToRect(box: number[][] | undefined): { top: number; left: number; wi
 
 // Region boundaries (as percentage of card height)
 const TYPE_REGION_MAX_Y = 0.15;   // Top 15% of card
-const TITLE_REGION_MIN_Y = 0.80;  // Bottom 20% of card
+const TITLE_REGION_MIN_Y = 0.85;  // Bottom 15% of card (was 80%, tighter to avoid stats)
 
 /**
  * Extract text from a card image using local OCR

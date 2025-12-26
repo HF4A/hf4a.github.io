@@ -139,7 +139,57 @@ export async function matchByText(
 }
 
 /**
+ * Clean OCR text for better matching
+ * Removes garbage characters, numbers, and short fragments that confuse fuzzy matching
+ */
+function cleanOcrText(text: string): string[] {
+  if (!text) return [];
+
+  // Split on quotes, parentheses, and other delimiters
+  const fragments = text
+    .replace(/["""()[\]{}]/g, ' ')  // Replace delimiters with spaces
+    .replace(/\d+/g, ' ')            // Remove numbers
+    .replace(/\s+/g, ' ')            // Normalize whitespace
+    .trim()
+    .split(/\s{2,}/);                // Split on multiple spaces
+
+  // Also try the full cleaned text and word combinations
+  const cleaned = text
+    .replace(/["""()[\]{}]/g, ' ')
+    .replace(/\d+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Build candidates: full text, fragments >= 3 chars, and last N words
+  const candidates: string[] = [];
+
+  if (cleaned.length >= 3) {
+    candidates.push(cleaned);
+  }
+
+  // Add individual fragments
+  for (const frag of fragments) {
+    if (frag.length >= 3) {
+      candidates.push(frag.trim());
+    }
+  }
+
+  // Try last 2-4 words (card names often at end)
+  const words = cleaned.split(' ').filter(w => w.length >= 2);
+  for (let n = 2; n <= Math.min(4, words.length); n++) {
+    const lastN = words.slice(-n).join(' ');
+    if (lastN.length >= 3) {
+      candidates.push(lastN);
+    }
+  }
+
+  // Dedupe while preserving order
+  return [...new Set(candidates)];
+}
+
+/**
  * Fuzzy search cards by name
+ * Tries multiple cleaned variants of the search text
  */
 function fuzzySearchByName(
   cards: CardIndexEntry[],
@@ -157,7 +207,28 @@ function fuzzySearchByName(
     minMatchCharLength: 2,
   });
 
-  const results = fuse.search(searchText);
+  // Try raw text first
+  let results = fuse.search(searchText);
+  let bestScore = results[0]?.score ?? 1;
+  let bestMatchedText = searchText;
+
+  // If score is bad, try cleaned variants
+  if (bestScore > 0.3) {
+    const candidates = cleanOcrText(searchText);
+    log.debug(`[TextMatcher] Trying ${candidates.length} cleaned variants`);
+
+    for (const candidate of candidates) {
+      const candidateResults = fuse.search(candidate);
+      if (candidateResults.length > 0 && (candidateResults[0].score ?? 1) < bestScore) {
+        results = candidateResults;
+        bestScore = candidateResults[0].score ?? 1;
+        bestMatchedText = candidate;
+        log.debug(`[TextMatcher] Better match with "${candidate}": score ${bestScore.toFixed(3)}`);
+      }
+    }
+  }
+
+  log.debug(`[TextMatcher] Searching ${cards.length} cards of type for: ${bestMatchedText}`);
 
   return results.slice(0, 10).map(result => ({
     cardId: result.item.cardId,
@@ -167,7 +238,7 @@ function fuzzySearchByName(
     name: result.item.name,
     score: result.score || 1,
     matchedOn: 'title' as const,
-    matchedText: searchText,
+    matchedText: bestMatchedText,
   }));
 }
 
