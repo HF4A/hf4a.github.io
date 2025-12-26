@@ -1,226 +1,11 @@
 [
   {
-    "filename": "01a.webp",
-    "cardId": "01a",
-    "side": null,
-    "type": "01a.webp",
-    "name": "",
-    "hash": "bbd36ce2624cda66",
-    "hashBytes": [
-      187,
-      211,
-      108,
-      226,
-      98,
-      76,
-      218,
-      102
-    ]
-  },
-  {
-    "filename": "01b.webp",
-    "cardId": "01b",
-    "side": null,
-    "type": "01b.webp",
-    "name": "",
-    "hash": "c9ca994a90526269",
-    "hashBytes": [
-      201,
-      202,
-      153,
-      74,
-      144,
-      82,
-      98,
-      105
-    ]
-  },
-  {
-    "filename": "03a.webp",
-    "cardId": "03a",
-    "side": null,
-    "type": "03a.webp",
-    "name": "",
-    "hash": "cdd92e51294a640b",
-    "hashBytes": [
-      205,
-      217,
-      46,
-      81,
-      41,
-      74,
-      100,
-      11
-    ]
-  },
-  {
-    "filename": "03b.webp",
-    "cardId": "03b",
-    "side": null,
-    "type": "03b.webp",
-    "name": "",
-    "hash": "73b24aa86b4f6b15",
-    "hashBytes": [
-      115,
-      178,
-      74,
-      168,
-      107,
-      79,
-      107,
-      21
-    ]
-  },
-  {
-    "filename": "04a.webp",
-    "cardId": "04a",
-    "side": null,
-    "type": "04a.webp",
-    "name": "",
-    "hash": "6c92481818969825",
-    "hashBytes": [
-      108,
-      146,
-      72,
-      24,
-      24,
-      150,
-      152,
-      37
-    ]
-  },
-  {
-    "filename": "04b.webp",
-    "cardId": "04b",
-    "side": null,
-    "type": "04b.webp",
-    "name": "",
-    "hash": "4c35e23964000000",
-    "hashBytes": [
-      76,
-      53,
-      226,
-      57,
-      100,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "filename": "07a.webp",
-    "cardId": "07a",
-    "side": null,
-    "type": "07a.webp",
-    "name": "",
-    "hash": "a22662a7775975e6",
-    "hashBytes": [
-      162,
-      38,
-      98,
-      167,
-      119,
-      89,
-      117,
-      230
-    ]
-  },
-  {
-    "filename": "07b.webp",
-    "cardId": "07b",
-    "side": null,
-    "type": "07b.webp",
-    "name": "",
-    "hash": "265a296f674a46c6",
-    "hashBytes": [
-      38,
-      90,
-      41,
-      111,
-      103,
-      74,
-      70,
-      198
-    ]
-  },
-  {
-    "filename": "09a.webp",
-    "cardId": "09a",
-    "side": null,
-    "type": "09a.webp",
-    "name": "",
-    "hash": "0040004000000000",
-    "hashBytes": [
-      0,
-      64,
-      0,
-      64,
-      0,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "filename": "09b.webp",
-    "cardId": "09b",
-    "side": null,
-    "type": "09b.webp",
-    "name": "",
-    "hash": "c0c000c000000000",
-    "hashBytes": [
-      192,
-      192,
-      0,
-      192,
-      0,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "filename": "10a.webp",
-    "cardId": "10a",
-    "side": null,
-    "type": "10a.webp",
-    "name": "",
-    "hash": "e4e7256169e8a800",
-    "hashBytes": [
-      228,
-      231,
-      37,
-      97,
-      105,
-      232,
-      168,
-      0
-    ]
-  },
-  {
-    "filename": "10b.webp",
-    "cardId": "10b",
-    "side": null,
-    "type": "10b.webp",
-    "name": "",
-    "hash": "5646242421a0e100",
-    "hashBytes": [
-      86,
-      70,
-      36,
-      36,
-      33,
-      160,
-      225,
-      0
-    ]
-  },
-  {
     "filename": "Bernal01-Purple-SpaceElevatorLab.webp",
     "cardId": "bernal-01",
     "side": "purple",
     "type": "bernal",
     "name": "Space Elevator Lab",
+    "searchableText": "Space Elevator Lab Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces.",
     "hash": "71613ee3c66a700d",
     "hashBytes": [
       113,
@@ -238,7 +23,8 @@
     "cardId": "bernal-01",
     "side": "white",
     "type": "bernal",
-    "name": "GEOElevator Bernal",
+    "name": "GEO Elevator Bernal",
+    "searchableText": "GEO Elevator Bernal HOME: Boost direct to Home Bernal in GEO without doubling boost costs.",
     "hash": "c0c0a4cca694cc8c",
     "hashBytes": [
       192,
@@ -257,6 +43,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Climate Control Lab",
+    "searchableText": "Climate Control Lab +2 VP per Dirtside for this Bernal.",
     "hash": "61633ed45e83bd05",
     "hashBytes": [
       97,
@@ -274,7 +61,8 @@
     "cardId": "bernal-02",
     "side": "white",
     "type": "bernal",
-    "name": "L1Climate Control Bernal",
+    "name": "L1 Climate Control Bernal",
+    "searchableText": "L1 Climate Control Bernal HOME: You are always the 1st player, superseding all other claimants.",
     "hash": "e0c084ceb694cd8c",
     "hashBytes": [
       224,
@@ -293,6 +81,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Collimator Lab",
+    "searchableText": "Collimator Lab Gain the Powersat faction privilege. Powersat push includes a Bonus Pivot.",
     "hash": "61733e8ea7b68b09",
     "hashBytes": [
       97,
@@ -310,7 +99,8 @@
     "cardId": "bernal-03",
     "side": "white",
     "type": "bernal",
-    "name": "L2Collimator Bernal",
+    "name": "L2 Collimator Bernal",
+    "searchableText": "L2 Collimator Bernal HOME: Gain the Powersat faction privilege.",
     "hash": "e0c080c86888c78c",
     "hashBytes": [
       224,
@@ -329,6 +119,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Lofstrom Loop Microgravity Lab",
+    "searchableText": "Lofstrom Loop Microgravity Lab Your factory-assisted landings/liftoffs anywhere treat lander burns as normal Burn Spaces.",
     "hash": "63633ce21e32b809",
     "hashBytes": [
       99,
@@ -346,7 +137,8 @@
     "cardId": "bernal-04",
     "side": "white",
     "type": "bernal",
-    "name": "L3Lofstrom Loop Microgravity",
+    "name": "L3 Lofstrom Loop Microgravity",
+    "searchableText": "L3 Lofstrom Loop Microgravity HOME: Boost direct to Home Bernal without doubling boost costs.",
     "hash": "c2c080c19cf8dc88",
     "hashBytes": [
       194,
@@ -365,6 +157,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Antimatter Lab",
+    "searchableText": "Antimatter Lab Your Crew has an On-Board Nuclear \"ANY\" reactor.",
     "hash": "71732f8f0eae9c49",
     "hashBytes": [
       113,
@@ -382,7 +175,8 @@
     "cardId": "bernal-05",
     "side": "white",
     "type": "bernal",
-    "name": "L4Antimatter Factory",
+    "name": "L4 Antimatter Factory",
+    "searchableText": "L4 Antimatter Factory HOME: Your Crew has an On-Board Nuclear X reactor.",
     "hash": "60e088821757c48a",
     "hashBytes": [
       96,
@@ -401,6 +195,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Pharmaceutics Lab",
+    "searchableText": "Pharmaceutics Lab Gain the Skunkworks faction privilege & impose academia hand limit on all opponents.",
     "hash": "716336e68baab509",
     "hashBytes": [
       113,
@@ -419,6 +214,7 @@
     "side": "white",
     "type": "bernal",
     "name": "L4s Pharmaceutics Bernal",
+    "searchableText": "L4s Pharmaceutics Bernal HOME: Gain the Skunkworks faction privilege.",
     "hash": "c2c08088968eca88",
     "hashBytes": [
       194,
@@ -437,6 +233,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Solar Cell Lab",
+    "searchableText": "Solar Cell Lab +2 to the Net Thrust of your Spacecraft that use Solar-Power.",
     "hash": "7163368e8c8e9c09",
     "hashBytes": [
       113,
@@ -454,7 +251,8 @@
     "cardId": "bernal-07",
     "side": "white",
     "type": "bernal",
-    "name": "L5Solar Cell Factory",
+    "name": "L5 Solar Cell Factory",
+    "searchableText": "L5 Solar Cell Factory HOME: +1 to the Net Thrust of your Spacecraft that use Solar-Power.",
     "hash": "c0c080c2b4d0c28c",
     "hashBytes": [
       192,
@@ -473,6 +271,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Cancer Lab",
+    "searchableText": "Cancer Lab Gain +1 Token VP for each Colony Dome. Your Crew and Human Colonists have a rad-hard of at least 7.",
     "hash": "63633ee4c6833509",
     "hashBytes": [
       99,
@@ -491,6 +290,7 @@
     "side": "white",
     "type": "bernal",
     "name": "L5s Cancer Hospital",
+    "searchableText": "L5s Cancer Hospital HOME: You are immune to to budget cuts.",
     "hash": "c0c080c132f6ca8a",
     "hashBytes": [
       192,
@@ -509,6 +309,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Diplomatic Lab",
+    "searchableText": "Diplomatic Lab (Module 0) Your delegates in the assembly are +1 VP each.",
     "hash": "71633ea696e33a09",
     "hashBytes": [
       113,
@@ -526,7 +327,8 @@
     "cardId": "bernal-09",
     "side": "white",
     "type": "bernal",
-    "name": "SSODiplomatic",
+    "name": "SSO Diplomatic",
+    "searchableText": "SSO Diplomatic HOME: (Module 0) Your delegates in the Ideology of your Faction color are +1 VP each.",
     "hash": "e2c080cdc09cc989",
     "hashBytes": [
       226,
@@ -545,6 +347,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Tourism Hotel",
+    "searchableText": "Tourism Hotel +2 VP per Dirtside for this Bernal.",
     "hash": "71613ee6acadb409",
     "hashBytes": [
       113,
@@ -563,6 +366,7 @@
     "side": "white",
     "type": "bernal",
     "name": "Tourism Cycler",
+    "searchableText": "Tourism Cycler HOME: Can designate any Spacecraft to forgo Belt Rolls in the Radiation Belts near Earth.",
     "hash": "c0e088c1a4accc8d",
     "hashBytes": [
       192,
@@ -581,6 +385,7 @@
     "side": "purple",
     "type": "bernal",
     "name": "Force Field Lab",
+    "searchableText": "Force Field Lab All your other cards have +3 rad-hardness.",
     "hash": "71722e89a596120d",
     "hashBytes": [
       113,
@@ -598,7 +403,8 @@
     "cardId": "bernal-11",
     "side": "white",
     "type": "bernal",
-    "name": "L2Force Field Bernal",
+    "name": "L2 Force Field Bernal",
+    "searchableText": "L2 Force Field Bernal All your other cards have +1 rad-hardness.",
     "hash": "c2c084c28890cd8e",
     "hashBytes": [
       194,
@@ -616,7 +422,8 @@
     "cardId": "bernal-12",
     "side": "purple",
     "type": "bernal",
-    "name": "Catchers Mitt Lab",
+    "name": "Catcher's Mitt Lab",
+    "searchableText": "Catcher's Mitt Lab Gain the Powersat faction privilege. Powersat push includes a Bonus Pivot.",
     "hash": "61763aae6c89310d",
     "hashBytes": [
       97,
@@ -634,7 +441,8 @@
     "cardId": "bernal-12",
     "side": "white",
     "type": "bernal",
-    "name": "Catchers Mitt Bernal",
+    "name": "Catcher's Mitt Bernal",
+    "searchableText": "Catcher's Mitt Bernal HOME: Gain the Powersat faction privilege.",
     "hash": "c0c084c868dac184",
     "hashBytes": [
       192,
@@ -653,6 +461,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Babbage Halbonauts",
+    "searchableText": "Babbage Halbonauts A Halbonaut is guided by a HAL Turing or other central controller. Its Babbage-circuitry withstands high radiation and temperature.",
     "hash": "2d6f8b75755b5a97",
     "hashBytes": [
       45,
@@ -671,6 +480,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Utility Fog Halbonaut",
+    "searchableText": "Utility Fog Halbonaut UPLIFT FUTURE: Req = Robots not Emancipated, Human at a promoted Bernal & spend 20 Aqua. Effects = Every Robot becomes Emancipated, Casus belli for War, 12 VP. All of your stacks are Glitch-free.",
     "hash": "ecef8fc7c78e9886",
     "hashBytes": [
       236,
@@ -689,6 +499,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Group Mind Immortalists",
+    "searchableText": "Group Mind Immortalists PAN SAPIENS FUTURE: Req = Have 3 Factories connected to Space Elevators. Effect = Casus belli for War. +2 VP for each glory chit owned.",
     "hash": "a8e9a7e1e787969a",
     "hashBytes": [
       168,
@@ -707,6 +518,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Biomechs",
+    "searchableText": "Biomechs Biomechatronics integrates biology, mechanics, and electronics for improved respiration, vision, metabolism, and artificial limbs.",
     "hash": "a8c090b0b09cec84",
     "hashBytes": [
       168,
@@ -725,6 +537,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Soldier Caste",
+    "searchableText": "Soldier Caste SECESSION FUTURE: Req = 2 Promoted Human Colonists at an Anchored Bernal with Dirtside 5+. Effects = Casus belli for War, 10 VP. All your Humans can commit Felonies.",
     "hash": "b8a5c7cbcd0d9b84",
     "hashBytes": [
       184,
@@ -743,6 +556,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Botany Bay Convicts",
+    "searchableText": "Botany Bay Convicts The New Botany Bay Penal Colony is the answer to severe labor shortages in space.",
     "hash": "a8c0cc74f6deda86",
     "hashBytes": [
       168,
@@ -761,6 +575,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Martian Assembly",
+    "searchableText": "Martian Assembly BEANSTALK FUTURE: Req = Have 3+ Space Elevators built by any player. Effect = +3 VP for each Factory connected to a Space Elevator.",
     "hash": "cdcdc78f8b439e94",
     "hashBytes": [
       205,
@@ -779,6 +594,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Boyle Engineering Collective",
+    "searchableText": "Boyle Engineering Collective Mars Nativism protects the rights of the First Hundred and native-born against those born on Earth.",
     "hash": "cccc92b6f0f0969a",
     "hashBytes": [
       204,
@@ -796,7 +612,8 @@
     "cardId": "colonist-05",
     "side": "purple",
     "type": "colonist",
-    "name": "Wet Nano Seed Sail",
+    "name": "Wet-Nano Seed Sail",
+    "searchableText": "Wet-Nano Seed Sail NEW VENUS FUTURE: Req = Decom. oper. 7+ net thrust thruster on Indust. Synodic Comet. 12 VP. Can't enter aerobrake.",
     "hash": "e4e5c3aee7823a34",
     "hashBytes": [
       228,
@@ -814,7 +631,8 @@
     "cardId": "colonist-05",
     "side": "white",
     "type": "colonist",
-    "name": "Calypso2Seed Sail",
+    "name": "Calypso 2 Seed Sail",
+    "searchableText": "Calypso 2 Seed Sail Named after the legendary oceanographic research vessel. A closed eco-system allows low mass. Can't enter aerobrake.",
     "hash": "ec8488b286cebeb0",
     "hashBytes": [
       236,
@@ -833,6 +651,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "New Attica Secessionists",
+    "searchableText": "New Attica Secessionists SECESSION FUTURE: Req = 2 Promoted Human Colonists at a promoted Anchored Bernal. Effects = Casus belli for War, 7 VP. Boost costs are doubled for all your opponents.",
     "hash": "8ccfcbc70317969a",
     "hashBytes": [
       140,
@@ -851,6 +670,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Heavy Water Survivalists",
+    "searchableText": "Heavy Water Survivalists Libertarians, survivalists, and doomsayers convinced that the Earth is kaput. They drink heavy water (D2O) to improve radiation resistance.",
     "hash": "8cc494d4b4fccca2",
     "hashBytes": [
       140,
@@ -869,6 +689,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Iceworms",
+    "searchableText": "Iceworms SUBMARINER FUTURE: Req = Build 3 Submarines. Effect = Doubles your dirtside hydration.",
     "hash": "c9c9cfc7870d9e8c",
     "hashBytes": [
       201,
@@ -886,7 +707,8 @@
     "cardId": "colonist-07",
     "side": "white",
     "type": "colonist",
-    "name": "Houseof Saud",
+    "name": "House of Saud",
+    "searchableText": "House of Saud The ruling royal family of Saudi Arabia is the richest dynasty in the world.",
     "hash": "c8c49030f1e0e8c4",
     "hashBytes": [
       200,
@@ -905,6 +727,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Rental Body Guild",
+    "searchableText": "Rental Body Guild ET LIFE FUTURE: Req = Have 2 or more Astrobiological Colonies. Effect = +2 VP per Astrobiological Colony.",
     "hash": "acad87cca9393836",
     "hashBytes": [
       172,
@@ -923,6 +746,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Juiced Cosmonauts",
+    "searchableText": "Juiced Cosmonauts The right stuff with nothing to lose. Drugs help against the harsh conditions.",
     "hash": "ac88e46666ddd8b6",
     "hashBytes": [
       172,
@@ -941,6 +765,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Svalbard Caretakers",
+    "searchableText": "Svalbard Caretakers DYSON BUBBLE FUTURE: Req = Both Sites of Mercury industrialized by any player. Effects = 5 VP per Factory owned on Mercury.",
     "hash": "c4ede7edcd05d48e",
     "hashBytes": [
       196,
@@ -959,6 +784,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Lloyd's Salvage Co.",
+    "searchableText": "Lloyd's Salvage Co. Policy of replacing corporate transactions with individual ones, enabled by reputation tracking.",
     "hash": "84c48ac3d6ceca96",
     "hashBytes": [
       132,
@@ -977,6 +803,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Renaissance Man",
+    "searchableText": "Renaissance Man ARTIFICIAL CONSCIOUSNESS FUTURE: Req = 2 promoted Colonists at an Astrobiology Dirtside. Effects = May free market any number of cards, 10 VP.",
     "hash": "8ccec7cbcec69ed4",
     "hashBytes": [
       140,
@@ -995,6 +822,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Malcolm",
+    "searchableText": "Malcolm An eccentric tycoon determined to make his mark in the High Frontier.",
     "hash": "ccc48379f9f9dc8e",
     "hashBytes": [
       204,
@@ -1013,6 +841,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Blue Goo Sybonts",
+    "searchableText": "Blue Goo Sybonts SETI FUTURE: Req = Industrialize 2 jovian trojans, 1 each in the greek & trojan camps. Effects = As a free action perform 1 inspiration + 1 homestead, 10 VP.",
     "hash": "cced87cecf8f96d6",
     "hashBytes": [
       204,
@@ -1031,6 +860,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Microgravity Pantrophists",
+    "searchableText": "Microgravity Pantrophists Pantropy is the practice of adapting to an environment rather than altering it.",
     "hash": "ccc492f8dec8fc92",
     "hashBytes": [
       204,
@@ -1049,6 +879,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Programmable Matter",
+    "searchableText": "Programmable Matter Changes its physical properties in accordance with autonomous programming.",
     "hash": "2f2b4b2573473135",
     "hashBytes": [
       47,
@@ -1067,6 +898,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Neumann Matter",
+    "searchableText": "Neumann Matter UPLIFT FUTURE: Req = Robots not Emancipated, Human at a promoted Bernal & spend 20 Aqua. Effects = Every Robot becomes Emancipated, 12 VP. All of your stacks are Glitch-free.",
     "hash": "aeafcfade7ae3432",
     "hashBytes": [
       174,
@@ -1085,6 +917,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Alchemist Aviatrices",
+    "searchableText": "Alchemist Aviatrices AEROSTAT FUTURE: Req = Promoted Bernal with Aerostat Dirtside. Effects = Can homestead as a free action, 14 VP. Double isotope fuel during Factory Refuel.",
     "hash": "b8ede7e7c3059e96",
     "hashBytes": [
       184,
@@ -1102,7 +935,8 @@
     "cardId": "colonist-13",
     "side": "white",
     "type": "colonist",
-    "name": "Rock Rats Miners'Union",
+    "name": "Rock Rats Miners' Union",
+    "searchableText": "Rock Rats Miners' Union Human-cobot teams optimize productivity in extreme conditions.",
     "hash": "a88490eae2d2d88a",
     "hashBytes": [
       168,
@@ -1121,6 +955,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Security System",
+    "searchableText": "Security System Provides collision protection using radar-guided lasers that nudge incoming debris off course.",
     "hash": "0f6f6b706868d407",
     "hashBytes": [
       15,
@@ -1139,6 +974,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Frankenstein Navigator",
+    "searchableText": "Frankenstein Navigator UPLIFT FUTURE: Req = Robots not Emancipated, Human at a promoted Bernal & spend 20 Aqua. Effects = Every Robot becomes Emancipated, 12 VP. FINAO costs are halved.",
     "hash": "8eafc7c7cb63d296",
     "hashBytes": [
       142,
@@ -1157,6 +993,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Josephson Implants",
+    "searchableText": "Josephson Implants SUPREME CULT FUTURE: Req = Active Law in authority. Effects = May lobby w/o removing the delegate used. 10 VP. FINAO costs are halved.",
     "hash": "8dcdc78dc9cb9496",
     "hashBytes": [
       141,
@@ -1175,6 +1012,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Siren Cybernautics Inc.",
+    "searchableText": "Siren Cybernautics Inc. Space employees work immersed in a solution of high-oxygen PFCs, breathing with liquid-filled lungs.",
     "hash": "ccccb0f2e2e2d28e",
     "hashBytes": [
       204,
@@ -1193,6 +1031,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Smart Pets",
+    "searchableText": "Smart Pets Lab animals enhanced with brain-computer interface technology.",
     "hash": "2b630579795c1c0f",
     "hashBytes": [
       43,
@@ -1211,6 +1050,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Creeper Neogen",
+    "searchableText": "Creeper Neogen UPLIFT FUTURE: Req = Robots not Emancipated, Human at a promoted Bernal & spend 20 Aqua. Effects = Every Robot becomes Emancipated, 12 VP. All of your stacks are Glitch-free.",
     "hash": "aaeb8f8fcf4e9c86",
     "hashBytes": [
       170,
@@ -1229,6 +1069,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Kaluga Naniteers",
+    "searchableText": "Kaluga Naniteers TNO FUTURE: Req = Industrialize 2 Sites in the Neptune Zone. Effects = Can homestead as a free action, 12 VP. Your Aqua from a Free Market is doubled.",
     "hash": "cccf8fc9c71e9896",
     "hashBytes": [
       204,
@@ -1247,6 +1088,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Transorbital Railworkers",
+    "searchableText": "Transorbital Railworkers Started from a small federally-subsidized launching operation.",
     "hash": "8cc4c4f8b886ee8c",
     "hashBytes": [
       140,
@@ -1265,6 +1107,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Eugenic Pilgrims",
+    "searchableText": "Eugenic Pilgrims FOOTFALL FUTURE: Req = Decom. oper. 7+ net thrust thruster on Indust. Synodic Comet. Effects = 10 VP + Casus belli.",
     "hash": "8eefcf8bcbcbde96",
     "hashBytes": [
       142,
@@ -1283,6 +1126,7 @@
     "side": "white",
     "type": "colonist",
     "name": "Vatican Observers",
+    "searchableText": "Vatican Observers The Jesuit Orbiting Observatory is the Vatican's attempt to oversee the directions of technology and science.",
     "hash": "c6cc84d8c6c6d28e",
     "hashBytes": [
       198,
@@ -1301,6 +1145,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Beowulf Internet",
+    "searchableText": "Beowulf Internet The exoglobal network of commodity computing used by all AI's from robots to ship's computers.",
     "hash": "ee61818f4943870e",
     "hashBytes": [
       238,
@@ -1319,6 +1164,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Grendel",
+    "searchableText": "Grendel EXONET FUTURE: Req = Colonies in 4 Heliocentric Zones. Effects = choose any contract deck when fundraising, 11 VP. +1 Aqua from Pool after you do a free market op.",
     "hash": "eeeea6e2e8869286",
     "hashBytes": [
       238,
@@ -1337,6 +1183,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Combat Quadrupeds",
+    "searchableText": "Combat Quadrupeds Predatory quadrupeds have long haunted the primal fears of Humans. Four legs have highly efficient mobility over almost any terrain.",
     "hash": "8d4501115d695981",
     "hashBytes": [
       141,
@@ -1355,6 +1202,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Lernaean Warbots",
+    "searchableText": "Lernaean Warbots UNION WAR FUTURE: Req = 2 Promoted augmented Robots at your Colony on Size 7+ Site. Effect = Casus belli, 9 VP. All your Stacks are Glitch-free.",
     "hash": "8ccfc58b8b2726c6",
     "hashBytes": [
       140,
@@ -1372,7 +1220,8 @@
     "cardId": "colonist-93",
     "side": "black",
     "type": "colonist",
-    "name": "Nano3DPrinters",
+    "name": "Nano-3D Printers",
+    "searchableText": "Nano-3D Printers With a sufficiently powerful boost of microwave power, a probe that masses only a few grams can perform interstellar reconnaissance.",
     "hash": "ce6e6e0e7e6f1f42",
     "hashBytes": [
       206,
@@ -1391,6 +1240,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Offworld Replicators",
+    "searchableText": "Offworld Replicators VON NEUMANN FUTURE: Req = Decom. this card & Operational refinery at your Synodic Comet Factory. Effects = Your Robots are always Promoted, 9 VP.",
     "hash": "cecf85c5c5c584ca",
     "hashBytes": [
       206,
@@ -1408,7 +1258,8 @@
     "cardId": "colonist-94",
     "side": "black",
     "type": "colonist",
-    "name": "Self Designing Heuristics",
+    "name": "Self-designing Heuristics",
+    "searchableText": "Self-designing Heuristics With fusion of convolutional neural networks and genetic algorithms, it is possible to create self-sustaining source code.",
     "hash": "ce4f0b876b779708",
     "hashBytes": [
       206,
@@ -1427,6 +1278,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Apex Algorithms",
+    "searchableText": "Apex Algorithms SPACE SURVEILLANCE FUTURE: Req = Active Law in Freedom. Effects = Space Republic established, 9 VP. Insight. FINAO cost for Epic Hazard Rolls halved.",
     "hash": "cece86c687979682",
     "hashBytes": [
       206,
@@ -1445,6 +1297,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Cobots",
+    "searchableText": "Cobots Intelligent humaniform robots optimized to protect and serve the interests of a collective.",
     "hash": "cb4f676967171db4",
     "hashBytes": [
       203,
@@ -1463,6 +1316,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Singularity",
+    "searchableText": "Singularity VINGE FUTURE: Req = This card at Promoted Bernal and have completed an Exodus contract. Effects = Space Empire established, emancipate Robots, 10 VP.",
     "hash": "cac787c9c958d282",
     "hashBytes": [
       202,
@@ -1481,6 +1335,7 @@
     "side": "black",
     "type": "colonist",
     "name": "Sensor Web Sail",
+    "searchableText": "Sensor Web Sail A mesh of fine wires with integrated circuits is propelled by and powered by a beam of microwaves. Can't enter aerobrake.",
     "hash": "8e6fcb8e4747363a",
     "hashBytes": [
       142,
@@ -1499,6 +1354,7 @@
     "side": "purple",
     "type": "colonist",
     "name": "Wisp",
+    "searchableText": "Wisp TNO LAB FUTURE: Req = This card and 2 other Promoted Colonists at your Colony in the Outer Zone. Endgame Effect = +4 VP per Factory in the Outer Zone. Cannot enter aerobrake.",
     "hash": "ceeeaee6e6473632",
     "hashBytes": [
       206,
@@ -1516,7 +1372,8 @@
     "cardId": "contract-01",
     "side": "blue",
     "type": "contract",
-    "name": "Avatar Tourists Inner Tour",
+    "name": "Inner Tour",
+    "searchableText": "Inner Tour Fulfilled Ability: Free Aqua when entering Aerobrake Hazards leading to LEO. Destination: Enter 4 different flyby Spaces in the same Turn.",
     "hash": "8ce8cacc9c9cce8c",
     "hashBytes": [
       140,
@@ -1534,7 +1391,8 @@
     "cardId": "contract-01",
     "side": "yellow",
     "type": "contract",
-    "name": "Avatar Tourists Grand Tour",
+    "name": "Grand Tour",
+    "searchableText": "Grand Tour Fulfilled Ability: Bailout. Destination: Enter 2 flyby Spaces beyond Ceres zone in the same Turn.",
     "hash": "8ce4c8cc8e8ac686",
     "hashBytes": [
       140,
@@ -1552,7 +1410,8 @@
     "cardId": "contract-02",
     "side": "blue",
     "type": "contract",
-    "name": "Trillionaire Vanity Project",
+    "name": "Vanity Project",
+    "searchableText": "Vanity Project Fulfilled Ability: Connections. Destination: Enter Solar Oberth & Return.",
     "hash": "cccccccebef6f6d4",
     "hashBytes": [
       204,
@@ -1570,7 +1429,8 @@
     "cardId": "contract-02",
     "side": "yellow",
     "type": "contract",
-    "name": "Trillionaire Extreme Sports",
+    "name": "Extreme Sports",
+    "searchableText": "Extreme Sports Fulfilled Ability: +1 VP per glory chit. When Fulfilling: Flip one of your glory chits on your playmat face-up. Destination: With Human, enter Hazard, make a Hazard Roll, and land at your Factory in the same Turn.",
     "hash": "ccc4accce62292cc",
     "hashBytes": [
       204,
@@ -1588,7 +1448,8 @@
     "cardId": "contract-03",
     "side": "blue",
     "type": "contract",
-    "name": "Avatar Tourists Fugitive",
+    "name": "Fugitive",
+    "searchableText": "Fugitive When Fulfilling: Owner of destination Colony suffers immediate budget cuts. Destination: Any player's BEO Colony.",
     "hash": "ccecf4c4b63696cc",
     "hashBytes": [
       204,
@@ -1606,7 +1467,8 @@
     "cardId": "contract-03",
     "side": "yellow",
     "type": "contract",
-    "name": "Avatar Tourists Refugees",
+    "name": "Refugees",
+    "searchableText": "Refugees When Fulfilling: Isobanker suffers immediate budget cuts. Destination: Isobank.",
     "hash": "ccc4c3f0f036b6cc",
     "hashBytes": [
       204,
@@ -1624,7 +1486,8 @@
     "cardId": "contract-04",
     "side": "blue",
     "type": "contract",
-    "name": "Trillionaire Chiron Quest",
+    "name": "Chiron Quest",
+    "searchableText": "Chiron Quest Fulfilled Ability: Bailout. When Fulfilling: Gain 8 Aquas. Destination: Chiron.",
     "hash": "cce8c886a6a6f6c6",
     "hashBytes": [
       204,
@@ -1642,7 +1505,8 @@
     "cardId": "contract-04",
     "side": "yellow",
     "type": "contract",
-    "name": "Trillionaire Cen Tour",
+    "name": "Cen Tour",
+    "searchableText": "Cen Tour Fulfilled Ability: Bailout. When Fulfilling: Gain 4 Aquas. Destination: Okyrhoe & Return.",
     "hash": "cce4c8949cbaf6cc",
     "hashBytes": [
       204,
@@ -1660,7 +1524,8 @@
     "cardId": "contract-05",
     "side": "blue",
     "type": "contract",
-    "name": "Avatar Trillionaire Hubris",
+    "name": "Hubris",
+    "searchableText": "Hubris Fulfilled Ability: Bailout. Destination: Site in a zone with an unclaimed glory chit.",
     "hash": "cccccdd1eade968c",
     "hashBytes": [
       204,
@@ -1678,7 +1543,8 @@
     "cardId": "contract-05",
     "side": "yellow",
     "type": "contract",
-    "name": "Trillionaire Fulgurite Hunt",
+    "name": "Fulgurite Hunt",
+    "searchableText": "Fulgurite Hunt Fulfilled Ability: Bailout. Destination: Triton, Io, or Ganymede Site (Neptune/Jupiter zones), & Return.",
     "hash": "ccc4c8ccc6de8ede",
     "hashBytes": [
       204,
@@ -1696,7 +1562,8 @@
     "cardId": "contract-06",
     "side": "blue",
     "type": "contract",
-    "name": "Avatar Tourists Comet Adventure",
+    "name": "Comet Adventure",
+    "searchableText": "Comet Adventure Fulfilled Ability: Connections. Destination: Unexplored Synodic Site.",
     "hash": "8ccce88a83eae686",
     "hashBytes": [
       140,
@@ -1714,7 +1581,8 @@
     "cardId": "contract-06",
     "side": "yellow",
     "type": "contract",
-    "name": "Avatar Tourists Pleasure Garden",
+    "name": "Pleasure Garden",
+    "searchableText": "Pleasure Garden Fulfilled Ability: Connections. Destination: Any Submarine Site beyond Ceres zone.",
     "hash": "8cc4ce8eba988484",
     "hashBytes": [
       140,
@@ -1732,7 +1600,8 @@
     "cardId": "contract-07",
     "side": "blue",
     "type": "contract",
-    "name": "Robotic Robotic Facility",
+    "name": "Robotic Facility",
+    "searchableText": "Robotic Facility Fulfilled Ability: Secured. Destination: Unexplored Synodic Site.",
     "hash": "8ce8ee8adc3e19c6",
     "hashBytes": [
       140,
@@ -1750,7 +1619,8 @@
     "cardId": "contract-07",
     "side": "yellow",
     "type": "contract",
-    "name": "Robotic Goo Spores",
+    "name": "Goo Spores",
+    "searchableText": "Goo Spores Fulfilled Ability: Secured. Destination: Your augmented Colonist at a Submarine Site.",
     "hash": "84ccc8cad88ca6da",
     "hashBytes": [
       132,
@@ -1768,7 +1638,8 @@
     "cardId": "contract-08",
     "side": "blue",
     "type": "contract",
-    "name": "Tourist Artemis",
+    "name": "Artemis",
+    "searchableText": "Artemis Fulfilled Ability: You may prospect Luna without permission from the 1st player. Destination: Unexplored Lunar Site & Return.",
     "hash": "908ece8d3c3e1ece",
     "hashBytes": [
       144,
@@ -1786,7 +1657,8 @@
     "cardId": "contract-08",
     "side": "yellow",
     "type": "contract",
-    "name": "Tourist HAVOC",
+    "name": "HAVOC",
+    "searchableText": "HAVOC Fulfilled Ability: Free Aqua in Venus zone. Destination: Venus Site & Return.",
     "hash": "8486c0c8d86686ce",
     "hashBytes": [
       132,
@@ -1804,7 +1676,8 @@
     "cardId": "contract-09",
     "side": "blue",
     "type": "contract",
-    "name": "Tourist New Horizons",
+    "name": "New Horizons",
+    "searchableText": "New Horizons Fulfilled Ability: Adjacent to industrialized Sites (1/Spacecraft/Turn). Destination: Unexplored Size 2+ Site & Return.",
     "hash": "8caceac999aee6d4",
     "hashBytes": [
       140,
@@ -1822,7 +1695,8 @@
     "cardId": "contract-09",
     "side": "yellow",
     "type": "contract",
-    "name": "Tourist Home On Lagrange",
+    "name": "Home on Lagrange",
+    "searchableText": "Home on Lagrange Fulfilled Ability: Connections. Destination: Your Anchored Bernal not in Venus/Earth/Mars zones.",
     "hash": "84a4e4c89aa6e6d6",
     "hashBytes": [
       132,
@@ -1840,7 +1714,8 @@
     "cardId": "contract-10",
     "side": "blue",
     "type": "contract",
-    "name": "Trillionaire Mars Polar Walk",
+    "name": "Mars Polar Walk",
+    "searchableText": "Mars Polar Walk Fulfilled Ability: Connections. Destination: Mars North Pole & Return.",
     "hash": "ccc4cbced6d296c6",
     "hashBytes": [
       204,
@@ -1858,7 +1733,8 @@
     "cardId": "contract-10",
     "side": "yellow",
     "type": "contract",
-    "name": "Avatar Trillionaire ETHoly Grail",
+    "name": "ET Holy Grail",
+    "searchableText": "ET Holy Grail When Fulfilling: If Bee-Zed is unexplored, place a Claim there. Destination: Bee-Zed (Season Red).",
     "hash": "cce2d29a9cbeb6c4",
     "hashBytes": [
       204,
@@ -1876,7 +1752,8 @@
     "cardId": "contract-11",
     "side": "blue",
     "type": "contract",
-    "name": "Avatar Tourists Closest Planet",
+    "name": "Closest Planet",
+    "searchableText": "Closest Planet Fulfilled Ability: -1 ISRU when prospecting Mercury. Destination: Unexplored Mercury Site.",
     "hash": "8ccccc8abebeb696",
     "hashBytes": [
       140,
@@ -1894,7 +1771,8 @@
     "cardId": "contract-11",
     "side": "yellow",
     "type": "contract",
-    "name": "Avatar Tourists Highest Cliff",
+    "name": "Highest Cliff",
+    "searchableText": "Highest Cliff Fulfilled Ability: Connections. When Fulfilling: Gain 20 Aquas. Destination: Miranda.",
     "hash": "8cc6c0d8bcb2f6c6",
     "hashBytes": [
       140,
@@ -1912,7 +1790,8 @@
     "cardId": "contract-12",
     "side": "blue",
     "type": "contract",
-    "name": "Trillionaire Fools Gold",
+    "name": "Fool's Gold",
+    "searchableText": "Fool's Gold Fulfilled Ability: Bailout. Destination: Site Adjacent to Hazard Space & Return.",
     "hash": "ccecc8cce6e2a6c4",
     "hashBytes": [
       204,
@@ -1930,7 +1809,8 @@
     "cardId": "contract-12",
     "side": "yellow",
     "type": "contract",
-    "name": "Trillionaire Rivalry",
+    "name": "Rivalry",
+    "searchableText": "Rivalry Fulfilled Ability: Gain 1 additional Aqua when fundraising. Destination: Site in farthest zone with a claimed glory chit & Return.",
     "hash": "ccc48cccb2b2a4cc",
     "hashBytes": [
       204,
@@ -1948,7 +1828,8 @@
     "cardId": "contract-21",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Mercury Forge",
+    "name": "Mercury Forge",
+    "searchableText": "Mercury Forge Fulfilled Ability: Shielded. Destination: Mercury Site.",
     "hash": "8cc48c9c9e8e86c6",
     "hashBytes": [
       140,
@@ -1966,7 +1847,8 @@
     "cardId": "contract-21",
     "side": "yellow",
     "type": "contract",
-    "name": "Megaproject Topographic Ocean",
+    "name": "Topographic Ocean",
+    "searchableText": "Topographic Ocean Fulfilled Ability: Gain 4 Aquas when any Colony is built on a Submarine Site. Destination: Unexplored Submarine Site beyond Ceres Zone & Return.",
     "hash": "8ec2e0ced29eb6c6",
     "hashBytes": [
       142,
@@ -1984,7 +1866,8 @@
     "cardId": "contract-22",
     "side": "blue",
     "type": "contract",
-    "name": "Science Plasma Intrusion Laboratory",
+    "name": "Plasma Intrusion Laboratory",
+    "searchableText": "Plasma Intrusion Laboratory Fulfilled Ability: +1 flyby bonus from Radiation Belt (once/Spacecraft/Turn). Destination: Hyperion.",
     "hash": "8ecccc9c9ee6e6a6",
     "hashBytes": [
       142,
@@ -2002,7 +1885,8 @@
     "cardId": "contract-22",
     "side": "yellow",
     "type": "contract",
-    "name": "Science Triggered Decay Positrons",
+    "name": "Triggered Decay Positrons",
+    "searchableText": "Triggered Decay Positrons Fulfilled Ability: +1 flyby bonus from Radiation Belt (twice/Spacecraft/Turn). Destination: Saturn aerostat.",
     "hash": "8ececc8dbdf2e6b6",
     "hashBytes": [
       142,
@@ -2020,7 +1904,8 @@
     "cardId": "contract-23",
     "side": "blue",
     "type": "contract",
-    "name": "Science Hexapod Explorer",
+    "name": "Hexapod Explorer",
+    "searchableText": "Hexapod Explorer Fulfilled Ability: Insight. Destination: Unexplored Size 2+ Site.",
     "hash": "8ee8cc4deaf69686",
     "hashBytes": [
       142,
@@ -2034,21 +1919,22 @@
     ]
   },
   {
-    "filename": "Contract23-Yellow-Science-AmaitheaHalbonaut.webp",
+    "filename": "Contract23-Yellow-Science-AmaltheaHalbonaut.webp",
     "cardId": "contract-23",
     "side": "yellow",
     "type": "contract",
-    "name": "Science Amaithea Halbonaut",
-    "hash": "8ec4ccccfe92e696",
+    "name": "Amalthea Halbonaut",
+    "searchableText": "Amalthea Halbonaut Fulfilled Ability: Shielded. Destination: Unexplored Size 7+ Site not in Earth zone.",
+    "hash": "0d968e8c848c840f",
     "hashBytes": [
+      13,
+      150,
       142,
-      196,
-      204,
-      204,
-      254,
-      146,
-      230,
-      150
+      140,
+      132,
+      140,
+      132,
+      15
     ]
   },
   {
@@ -2056,7 +1942,8 @@
     "cardId": "contract-24",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Equatorial Launch Railway",
+    "name": "Equatorial Launch Railway",
+    "searchableText": "Equatorial Launch Railway Fulfilled Ability: Acetylene rocketplane liftoff is possible from all your Factories. It is half cost (round up) if the Site is Atmospheric. Destination: Unexplored Size 6+ Site, then liftoff from that Site.",
     "hash": "8cccc8898dcae68e",
     "hashBytes": [
       140,
@@ -2074,7 +1961,8 @@
     "cardId": "contract-24",
     "side": "yellow",
     "type": "contract",
-    "name": "Megaproject Fullerene Cable Spinner",
+    "name": "Fullerene Cable Spinner",
+    "searchableText": "Fullerene Cable Spinner Fulfilled Ability: Insight. Destination: Unexplored Synodic D Site, then Vesta.",
     "hash": "8cc4c4c89094a682",
     "hashBytes": [
       140,
@@ -2092,7 +1980,8 @@
     "cardId": "contract-25",
     "side": "blue",
     "type": "contract",
-    "name": "Science Solar Observatory",
+    "name": "Solar Observatory",
+    "searchableText": "Solar Observatory Fulfilled Ability: Shielded. Destination: Icarus (Season Red).",
     "hash": "8ec4c4da7aa486c6",
     "hashBytes": [
       142,
@@ -2110,7 +1999,8 @@
     "cardId": "contract-25",
     "side": "yellow",
     "type": "contract",
-    "name": "Science Golden Apples Of The Sun",
+    "name": "Golden Apples of the Sun",
+    "searchableText": "Golden Apples of the Sun Fulfilled Ability: Shielded. Destination: Kreutz Sungrazer (Season Yellow).",
     "hash": "8ec4c8c87aaaa6a6",
     "hashBytes": [
       142,
@@ -2128,7 +2018,8 @@
     "cardId": "contract-26",
     "side": "blue",
     "type": "contract",
-    "name": "Robotic Largest Object",
+    "name": "Largest Object",
+    "searchableText": "Largest Object Fulfilled Ability: 'outburst', 'ice'. Destination: Comet Holmes (Season Red).",
     "hash": "8eccc68e8e8ee696",
     "hashBytes": [
       142,
@@ -2146,7 +2037,8 @@
     "cardId": "contract-26",
     "side": "yellow",
     "type": "contract",
-    "name": "Robotic Cyborg Transhumans",
+    "name": "Cyborg Transhumans",
+    "searchableText": "Cyborg Transhumans When Fulfilling: Decommission a Colocated augmented Colonist. Destination: Isobank with an augmented Colonist.",
     "hash": "8ec6e08fb2bab4e6",
     "hashBytes": [
       142,
@@ -2164,7 +2056,8 @@
     "cardId": "contract-27",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Submersible Prospector",
+    "name": "Submersible Prospector",
+    "searchableText": "Submersible Prospector Fulfilled Ability: Insight. Destination: Unexplored Submarine Site.",
     "hash": "8cc8c9c1dada848a",
     "hashBytes": [
       140,
@@ -2182,7 +2075,8 @@
     "cardId": "contract-27",
     "side": "yellow",
     "type": "contract",
-    "name": "Megaproject Goldilocks Luna Terraform",
+    "name": "Goldilocks Luna Terraform",
+    "searchableText": "Goldilocks Luna Terraform Fulfilled Ability: You do not need permission to Prospect or use Factories on Luna. When Fulfilling: Discard Factories & Colonies on Luna; owners receive 8 Aquas/token removed. Destination: Icarus (Season Red).",
     "hash": "8ce4ccc8beb6b696",
     "hashBytes": [
       140,
@@ -2200,7 +2094,8 @@
     "cardId": "contract-28",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Beehive",
+    "name": "Beehive",
+    "searchableText": "Beehive When Fulfilling: Remove Busted disk; prospect here at ISRU 0 w/reroll. Destination: Operational robonaut & refinery at Busted Size 1 Site.",
     "hash": "8ccecacc2e32b68e",
     "hashBytes": [
       140,
@@ -2218,7 +2113,8 @@
     "cardId": "contract-28",
     "side": "yellow",
     "type": "contract",
-    "name": "Megaproject Ring Industrialization",
+    "name": "Ring Industrialization",
+    "searchableText": "Ring Industrialization Fulfilled Ability: 'ring'; your Mobile Factories on 'ring' Hazards are C Factories. Destination: Using your freighter, enter Saturn flyby, & stop on crash Hazard on the same Turn.",
     "hash": "8cc4c6c8f0d284a6",
     "hashBytes": [
       140,
@@ -2236,7 +2132,8 @@
     "cardId": "contract-29",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Sun Fired Laser",
+    "name": "Sun-fired Laser",
+    "searchableText": "Sun-fired Laser Fulfilled Ability: Negotiable. Destination: Mercury L1 to Mercury L3 in 1 Turn.",
     "hash": "8ceceaecd586e684",
     "hashBytes": [
       140,
@@ -2254,7 +2151,8 @@
     "cardId": "contract-29",
     "side": "yellow",
     "type": "contract",
-    "name": "Megaproject Daedalus Starship Research",
+    "name": "Daedalus Starship Research",
+    "searchableText": "Daedalus Starship Research Fulfilled Ability: Insight. When Fulfilling: Decommission Colocated GW/TW thruster, supports; gain 12 Aquas. Destination: Operational GW/TW thruster at Comet Neujmin I (Season Blue).",
     "hash": "8cc4ccccbeb2b686",
     "hashBytes": [
       140,
@@ -2272,7 +2170,8 @@
     "cardId": "contract-30",
     "side": "blue",
     "type": "contract",
-    "name": "Megaproject Green Magnetosphere",
+    "name": "Green Magnetosphere",
+    "searchableText": "Green Magnetosphere Fulfilled Ability: Shielded. Destination: Mars Site, then Sol-Mars L1.",
     "hash": "8cccccc28286b686",
     "hashBytes": [
       140,
@@ -2290,7 +2189,8 @@
     "cardId": "contract-30",
     "side": "yellow",
     "type": "contract",
-    "name": "Robotic Ice Phase Research",
+    "name": "Ice Phase Research",
+    "searchableText": "Ice Phase Research Fulfilled Ability: Insight. Destination: Unexplored Ganymede, Quaoar, or Comet Holmes Site.",
     "hash": "8ec4c0cc929286ce",
     "hashBytes": [
       142,
@@ -2308,7 +2208,8 @@
     "cardId": "contract-31",
     "side": "blue",
     "type": "contract",
-    "name": "Science Aerover Blimp Explorer",
+    "name": "Aerover Blimp Explorer",
+    "searchableText": "Aerover Blimp Explorer Fulfilled Ability: Transport. Destination: Unexplored Atmospheric Site.",
     "hash": "8ecce8c83d3cb686",
     "hashBytes": [
       142,
@@ -2326,7 +2227,8 @@
     "cardId": "contract-31",
     "side": "yellow",
     "type": "contract",
-    "name": "Science Nuclear Electric Airship",
+    "name": "Nuclear-Electric Airship",
+    "searchableText": "Nuclear-Electric Airship Fulfilled Ability: Transport. Destination: Unexplored Atmospheric Site & a different unexplored Atmospheric Site.",
     "hash": "8ec4cccdc28ea682",
     "hashBytes": [
       142,
@@ -2344,7 +2246,8 @@
     "cardId": "contract-32",
     "side": "blue",
     "type": "contract",
-    "name": "Science Mosquito",
+    "name": "Mosquito",
+    "searchableText": "Mosquito Fulfilled Ability: Insight. Destination: Unexplored Size 2+ S Site.",
     "hash": "8ecc8d8cd0a2a684",
     "hashBytes": [
       142,
@@ -2362,7 +2265,8 @@
     "cardId": "contract-32",
     "side": "yellow",
     "type": "contract",
-    "name": "Science Solar Nebula Mafics",
+    "name": "Solar Nebula Mafics",
+    "searchableText": "Solar Nebula Mafics Fulfilled Ability: Shielded. Destination: Phoebe.",
     "hash": "8ee4c4929696e686",
     "hashBytes": [
       142,
@@ -2380,7 +2284,8 @@
     "cardId": "contract-51",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Planetary Protection",
+    "name": "Planetary Protection",
+    "searchableText": "Planetary Protection When Fulfilling: Bust the destination Site & place up to 2 delegates in any 1 Ideology. Destination: Unexplored Signposted (4A7d) Site.",
     "hash": "9c88c2d2b632e686",
     "hashBytes": [
       156,
@@ -2398,7 +2303,8 @@
     "cardId": "contract-51",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Planetary Rail Network",
+    "name": "Planetary Rail Network",
+    "searchableText": "Planetary Rail Network Fulfilled Ability: Transport. Destination: Your Colony connected by buggy road to any Colony.",
     "hash": "8ce4c08ccc9e96a2",
     "hashBytes": [
       140,
@@ -2416,7 +2322,8 @@
     "cardId": "contract-52",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Bio Inspired Rover",
+    "name": "Bio-Inspired Rover",
+    "searchableText": "Bio-Inspired Rover Fulfilled Ability: Transport. Destination: Unexplored Astrobiology Site.",
     "hash": "8cccc8c4c4868686",
     "hashBytes": [
       140,
@@ -2434,7 +2341,8 @@
     "cardId": "contract-52",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Subnubilar Zeppelin",
+    "name": "Subnubilar Zeppelin",
+    "searchableText": "Subnubilar Zeppelin Fulfilled Ability: Transport. Destination: Any player's Colony at an Atmospheric Site not in Mars zone.",
     "hash": "8484c8ccfa1a9e86",
     "hashBytes": [
       132,
@@ -2452,7 +2360,8 @@
     "cardId": "contract-53",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Junket",
+    "name": "Junket",
+    "searchableText": "Junket Fulfilled Ability: Transport. Destination: 2 different BEO Colonies (any Players') & Return.",
     "hash": "9c8ecae1c382b4d2",
     "hashBytes": [
       156,
@@ -2470,7 +2379,8 @@
     "cardId": "contract-53",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Spaceborn Political Rally",
+    "name": "Spaceborn Political Rally",
+    "searchableText": "Spaceborn Political Rally When Fulfilling: Exomigrate to isobank; Discard a different Colonist. Destination: Isobank with a spaceborn or Promoted Colonist.",
     "hash": "848cdc9a3c3cbccc",
     "hashBytes": [
       132,
@@ -2488,7 +2398,8 @@
     "cardId": "contract-54",
     "side": "blue",
     "type": "contract",
-    "name": "Military Drug Smuggling",
+    "name": "Drug Smuggling",
+    "searchableText": "Drug Smuggling When Fulfilling: Owner of destination Colony Discards 4 Aquas or the Colony. Destination: Any player's BEO Colony.",
     "hash": "c8c8c6c4b83e9ec6",
     "hashBytes": [
       200,
@@ -2506,7 +2417,8 @@
     "cardId": "contract-54",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Chipjack",
+    "name": "Chipjack",
+    "searchableText": "Chipjack Fulfilled Ability: You may perform implant Operations at your Colonies. When Fulfilling: 'Target' Colonist moves to LEO unless owner Discards 8 Aqua. Destination: Your Colonist Colocated with a 'target' augmented Colonist beyond Ceres zone.",
     "hash": "c4c4c8ccb7ba9e8c",
     "hashBytes": [
       196,
@@ -2524,7 +2436,8 @@
     "cardId": "contract-55",
     "side": "blue",
     "type": "contract",
-    "name": "Military Cancer Research Mission",
+    "name": "Cancer Research Mission",
+    "searchableText": "Cancer Research Mission Fulfilled Ability: Shielded. Destination: Comet Phaethon & Return (Season Yellow).",
     "hash": "8488c8cab6e494c6",
     "hashBytes": [
       132,
@@ -2542,7 +2455,8 @@
     "cardId": "contract-55",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Trojan Listening Posts",
+    "name": "Trojan Listening Posts",
+    "searchableText": "Trojan Listening Posts Fulfilled Ability: Secured. Destination: Agamemnon/Aeneas & Return.",
     "hash": "8484ccceb6aeb6f6",
     "hashBytes": [
       132,
@@ -2560,7 +2474,8 @@
     "cardId": "contract-56",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Rescue Team",
+    "name": "Rescue Team",
+    "searchableText": "Rescue Team Fulfilled Ability: You are allowed Murder/Suicide. Destination: Human Crew/Colonist at Site beyond Mars zone or Size 9+.",
     "hash": "94cc8ace1e3e8ec6",
     "hashBytes": [
       148,
@@ -2578,7 +2493,8 @@
     "cardId": "contract-56",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Mercury Sunset Convoy",
+    "name": "Mercury Sunset Convoy",
+    "searchableText": "Mercury Sunset Convoy Fulfilled Ability: Transport. Destination: Any player's Mercury Colony with augmented Colonist and Operational buggy robonaut.",
     "hash": "8484c8c080928482",
     "hashBytes": [
       132,
@@ -2596,7 +2512,8 @@
     "cardId": "contract-57",
     "side": "blue",
     "type": "contract",
-    "name": "Military SWIVMiner",
+    "name": "SWIV Miner",
+    "searchableText": "SWIV Miner Fulfilled Ability: Secured. Destination: Unexplored Size 2+ zero Hydration Site & Return.",
     "hash": "8c8ccdc9f0de9684",
     "hashBytes": [
       140,
@@ -2614,7 +2531,8 @@
     "cardId": "contract-57",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Refueling Trawler",
+    "name": "Refueling Trawler",
+    "searchableText": "Refueling Trawler Fulfilled Ability: Aqua gained. Air-eater refueling is a 1/Turn free action. Destination: Aerobrake Space beyond Jupiter zone.",
     "hash": "848cc88cde9eb696",
     "hashBytes": [
       132,
@@ -2632,7 +2550,8 @@
     "cardId": "contract-58",
     "side": "blue",
     "type": "contract",
-    "name": "Military Tsiolkovsky Elevator Lab",
+    "name": "Tsiolkovsky Elevator Lab",
+    "searchableText": "Tsiolkovsky Elevator Lab Fulfilled Ability: Your factory-assist landings/liftoffs at Elevator Sites treat lander burns as normal Burn Spaces. Destination: Unexplored Size 2+ Space Elevator Site, then liftoff from that Site.",
     "hash": "8c88cf8ddefa9e86",
     "hashBytes": [
       140,
@@ -2650,7 +2569,8 @@
     "cardId": "contract-58",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Skyhook",
+    "name": "Skyhook",
+    "searchableText": "Skyhook When Fulfilling: Build a Space Elevator at this Site (no Hazard Roll). Destination: Your Factory Site at one end of a Space Elevator icon.",
     "hash": "84a4e2e2b2b2f6cc",
     "hashBytes": [
       132,
@@ -2668,7 +2588,8 @@
     "cardId": "contract-59",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Spin Control",
+    "name": "Spin Control",
+    "searchableText": "Spin Control Fulfilled Ability: 'spin'. Destination: Hazard Space adjacent to Comet Phaethon (Season Yellow).",
     "hash": "8cacc8e2829c9484",
     "hashBytes": [
       140,
@@ -2686,7 +2607,8 @@
     "cardId": "contract-59",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Ring Rain",
+    "name": "Ring Rain",
+    "searchableText": "Ring Rain Fulfilled Ability: 'ring'. Destination: Rhea.",
     "hash": "84e4ca8a8e82e686",
     "hashBytes": [
       132,
@@ -2704,7 +2626,8 @@
     "cardId": "contract-60",
     "side": "blue",
     "type": "contract",
-    "name": "Government Grant Search For Life Center",
+    "name": "Search for Life Center",
+    "searchableText": "Search for Life Center Fulfilled Ability: Transport. Destination: Echeclus & Return.",
     "hash": "8484c9c5329ec6c6",
     "hashBytes": [
       132,
@@ -2722,7 +2645,8 @@
     "cardId": "contract-60",
     "side": "yellow",
     "type": "contract",
-    "name": "Government Grant Sunrise Project",
+    "name": "Sunrise Project",
+    "searchableText": "Sunrise Project Fulfilled Ability: Shielded. Destination: Unexplored Atmospheric Site beyond Jupiter zone & Return.",
     "hash": "84c6cccc9e8ee6d6",
     "hashBytes": [
       132,
@@ -2740,7 +2664,8 @@
     "cardId": "contract-61",
     "side": "blue",
     "type": "contract",
-    "name": "Military Yarkovsky Research",
+    "name": "Yarkovsky Research",
+    "searchableText": "Yarkovsky Research Fulfilled Ability: Secured. Destination: Davida.",
     "hash": "8484c80cb282c6a6",
     "hashBytes": [
       132,
@@ -2758,7 +2683,8 @@
     "cardId": "contract-61",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Deep Space One",
+    "name": "Deep Space One",
+    "searchableText": "Deep Space One Fulfilled Ability: Secured. Destination: Sycorax.",
     "hash": "a086ce0b079e96c4",
     "hashBytes": [
       160,
@@ -2776,7 +2702,8 @@
     "cardId": "contract-62",
     "side": "blue",
     "type": "contract",
-    "name": "Military Hardened Base",
+    "name": "Hardened Base",
+    "searchableText": "Hardened Base Fulfilled Ability: Secured. Destination: Cruithne.",
     "hash": "8cecc88e9782c68c",
     "hashBytes": [
       140,
@@ -2794,7 +2721,8 @@
     "cardId": "contract-62",
     "side": "yellow",
     "type": "contract",
-    "name": "Military Classified Security Payload",
+    "name": "Classified Security Payload",
+    "searchableText": "Classified Security Payload Fulfilled Ability: Secured. Destination: Comet Crommelin (Season Yellow).",
     "hash": "8ca4c8c6a6aee692",
     "hashBytes": [
       140,
@@ -2812,7 +2740,27 @@
     "cardId": "crew-A",
     "side": "yellow",
     "type": "crew",
-    "name": "United Nations Cosmonauts",
+    "name": "United Nations Cosmonauts (A)",
+    "searchableText": "United Nations Cosmonauts (A) SECRETARY GENERAL: Start the game with +2 Aqua.",
+    "hash": "808aca861242ca88",
+    "hashBytes": [
+      128,
+      138,
+      202,
+      134,
+      18,
+      66,
+      202,
+      136
+    ]
+  },
+  {
+    "filename": "CrewA-Yellow-UnitedNationsCosmonauts.webp",
+    "cardId": "crew-A",
+    "side": "yellow",
+    "type": "crew",
+    "name": "United Nations Cosmonauts (A)",
+    "searchableText": "United Nations Cosmonauts (A) SECRETARY GENERAL: Start the game with +2 Aqua.",
     "hash": "808aca861242ca88",
     "hashBytes": [
       128,
@@ -2830,7 +2778,27 @@
     "cardId": "crew-B",
     "side": "purple",
     "type": "crew",
-    "name": "ROSCOSMOS",
+    "name": "ROSCOSMOS (B)",
+    "searchableText": "ROSCOSMOS (B) TAXES: +1 Aqua after any player places a Claim or industrializes.",
+    "hash": "8888888232c2c288",
+    "hashBytes": [
+      136,
+      136,
+      136,
+      130,
+      50,
+      194,
+      194,
+      136
+    ]
+  },
+  {
+    "filename": "CrewB-Purple-ROSCOSMOS.webp",
+    "cardId": "crew-B",
+    "side": "purple",
+    "type": "crew",
+    "name": "ROSCOSMOS (B)",
+    "searchableText": "ROSCOSMOS (B) TAXES: +1 Aqua after any player places a Claim or industrializes.",
     "hash": "8888888232c2c288",
     "hashBytes": [
       136,
@@ -2848,7 +2816,27 @@
     "cardId": "crew-C",
     "side": "purple",
     "type": "crew",
-    "name": "Taikonauts",
+    "name": "Taikonauts (C)",
+    "searchableText": "Taikonauts (C) FELONIOUS: May perform Felonious actions.",
+    "hash": "9088c8763e46c6a8",
+    "hashBytes": [
+      144,
+      136,
+      200,
+      118,
+      62,
+      70,
+      198,
+      168
+    ]
+  },
+  {
+    "filename": "CrewC-Purple-Taikonauts.webp",
+    "cardId": "crew-C",
+    "side": "purple",
+    "type": "crew",
+    "name": "Taikonauts (C)",
+    "searchableText": "Taikonauts (C) FELONIOUS: May perform Felonious actions.",
     "hash": "9088c8763e46c6a8",
     "hashBytes": [
       144,
@@ -2866,7 +2854,27 @@
     "cardId": "crew-D",
     "side": "white",
     "type": "crew",
-    "name": "Nasa",
+    "name": "NASA Astronauts (D)",
+    "searchableText": "NASA Astronauts (D) LAUNCH FEES: +1 Aqua from the Pool after any player performs a boost operation.",
+    "hash": "8a88c8ca3a56c684",
+    "hashBytes": [
+      138,
+      136,
+      200,
+      202,
+      58,
+      86,
+      198,
+      132
+    ]
+  },
+  {
+    "filename": "CrewD-White-Nasa.webp",
+    "cardId": "crew-D",
+    "side": "white",
+    "type": "crew",
+    "name": "NASA Astronauts (D)",
+    "searchableText": "NASA Astronauts (D) LAUNCH FEES: +1 Aqua from the Pool after any player performs a boost operation.",
     "hash": "8a88c8ca3a56c684",
     "hashBytes": [
       138,
@@ -2884,7 +2892,27 @@
     "cardId": "crew-E",
     "side": "green",
     "type": "crew",
-    "name": "Anonymous P2P",
+    "name": "Anonymous P2P (E)",
+    "searchableText": "Anonymous P2P (E) OPEN SOURCE FINAO: Costs of FINAO is 3 Aqua.",
+    "hash": "8888804c7059c986",
+    "hashBytes": [
+      136,
+      136,
+      128,
+      76,
+      112,
+      89,
+      201,
+      134
+    ]
+  },
+  {
+    "filename": "CrewE-Green-AnonymousP2P.webp",
+    "cardId": "crew-E",
+    "side": "green",
+    "type": "crew",
+    "name": "Anonymous P2P (E)",
+    "searchableText": "Anonymous P2P (E) OPEN SOURCE FINAO: Costs of FINAO is 3 Aqua.",
     "hash": "8888804c7059c986",
     "hashBytes": [
       136,
@@ -2902,7 +2930,27 @@
     "cardId": "crew-F",
     "side": "green",
     "type": "crew",
-    "name": "ESASpace Unionists",
+    "name": "ESA Space Unionists (F)",
+    "searchableText": "ESA Space Unionists (F) POWERSAT: During any player's turn: May give +1 thrust to any spacecraft that in their thruster triangle has a solar sail icon.",
+    "hash": "8888c8c23246ce8c",
+    "hashBytes": [
+      136,
+      136,
+      200,
+      194,
+      50,
+      70,
+      206,
+      140
+    ]
+  },
+  {
+    "filename": "CrewF-Green-ESASpaceUnionists.webp",
+    "cardId": "crew-F",
+    "side": "green",
+    "type": "crew",
+    "name": "ESA Space Unionists (F)",
+    "searchableText": "ESA Space Unionists (F) POWERSAT: During any player's turn: May give +1 thrust to any spacecraft that in their thruster triangle has a solar sail icon.",
     "hash": "8888c8c23246ce8c",
     "hashBytes": [
       136,
@@ -2920,7 +2968,27 @@
     "cardId": "crew-G",
     "side": "white",
     "type": "crew",
-    "name": "ISRO Glavcosmonauts",
+    "name": "ISRO Glavcosmonauts (G)",
+    "searchableText": "ISRO Glavcosmonauts (G) DHARMA REFUEL: Double yield from site refuel when carrying a glory chit.",
+    "hash": "928ac8c4345ccc88",
+    "hashBytes": [
+      146,
+      138,
+      200,
+      196,
+      52,
+      92,
+      204,
+      136
+    ]
+  },
+  {
+    "filename": "CrewG-White-ISRO-Glavcosmonauts.webp",
+    "cardId": "crew-G",
+    "side": "white",
+    "type": "crew",
+    "name": "ISRO Glavcosmonauts (G)",
+    "searchableText": "ISRO Glavcosmonauts (G) DHARMA REFUEL: Double yield from site refuel when carrying a glory chit.",
     "hash": "928ac8c4345ccc88",
     "hashBytes": [
       146,
@@ -2938,7 +3006,27 @@
     "cardId": "crew-H",
     "side": "yellow",
     "type": "crew",
-    "name": "B612Foundation",
+    "name": "B612 Foundation (H)",
+    "searchableText": "B612 Foundation (H) BLINK TELESCOPE: 1 re-roll per prospecting operation when using a Raygun.",
+    "hash": "8088c8821a42c28e",
+    "hashBytes": [
+      128,
+      136,
+      200,
+      130,
+      26,
+      66,
+      194,
+      142
+    ]
+  },
+  {
+    "filename": "CrewH-Yellow-B612Foundation.webp",
+    "cardId": "crew-H",
+    "side": "yellow",
+    "type": "crew",
+    "name": "B612 Foundation (H)",
+    "searchableText": "B612 Foundation (H) BLINK TELESCOPE: 1 re-roll per prospecting operation when using a Raygun.",
     "hash": "8088c8821a42c28e",
     "hashBytes": [
       128,
@@ -2956,7 +3044,27 @@
     "cardId": "crew-J",
     "side": "grey",
     "type": "crew",
-    "name": "Space X",
+    "name": "SpaceX (J)",
+    "searchableText": "SpaceX (J) MARKETEER: Always win Auction ties.",
+    "hash": "8080c2163a42ca88",
+    "hashBytes": [
+      128,
+      128,
+      194,
+      22,
+      58,
+      66,
+      202,
+      136
+    ]
+  },
+  {
+    "filename": "CrewJ-Grey-SpaceX.webp",
+    "cardId": "crew-J",
+    "side": "grey",
+    "type": "crew",
+    "name": "SpaceX (J)",
+    "searchableText": "SpaceX (J) MARKETEER: Always win Auction ties.",
     "hash": "8080c2163a42ca88",
     "hashBytes": [
       128,
@@ -2974,7 +3082,27 @@
     "cardId": "crew-K",
     "side": "grey",
     "type": "crew",
-    "name": "Norse Astronauts",
+    "name": "Norse Astronauts (K)",
+    "searchableText": "Norse Astronauts (K) SCRUM TROUBLESHOOTERS: Repair any Glitch anywhere.",
+    "hash": "8488caca1246c284",
+    "hashBytes": [
+      132,
+      136,
+      202,
+      202,
+      18,
+      70,
+      194,
+      132
+    ]
+  },
+  {
+    "filename": "CrewK-Grey-NorseAstronauts.webp",
+    "cardId": "crew-K",
+    "side": "grey",
+    "type": "crew",
+    "name": "Norse Astronauts (K)",
+    "searchableText": "Norse Astronauts (K) SCRUM TROUBLESHOOTERS: Repair any Glitch anywhere.",
     "hash": "8488caca1246c284",
     "hashBytes": [
       132,
@@ -2992,7 +3120,27 @@
     "cardId": "crew-L",
     "side": "red",
     "type": "crew",
-    "name": "NASRDA Astronauts",
+    "name": "NASRDA Astronauts (L)",
+    "searchableText": "NASRDA Astronauts (L) MOONCABLE: As a once per turn free action, refuel an activated dirt thruster at LEO/Home Orbit with 7 tanks (non-crew thruster) or 1 tank (Crew thruster).",
+    "hash": "ac8885ca8c4cca9c",
+    "hashBytes": [
+      172,
+      136,
+      133,
+      202,
+      140,
+      76,
+      202,
+      156
+    ]
+  },
+  {
+    "filename": "CrewL-Red-NASRDA Astronauts.webp",
+    "cardId": "crew-L",
+    "side": "red",
+    "type": "crew",
+    "name": "NASRDA Astronauts (L)",
+    "searchableText": "NASRDA Astronauts (L) MOONCABLE: As a once per turn free action, refuel an activated dirt thruster at LEO/Home Orbit with 7 tanks (non-crew thruster) or 1 tank (Crew thruster).",
     "hash": "ac8885ca8c4cca9c",
     "hashBytes": [
       172,
@@ -3010,7 +3158,27 @@
     "cardId": "crew-M",
     "side": "red",
     "type": "crew",
-    "name": "Shimizu Corp Entrepreneurs",
+    "name": "Shimizu Corp Entrepreneurs (M)",
+    "searchableText": "Shimizu Corp Entrepreneurs (M) SKUNKWORKS: Ignore academia hand limit = may bid in auctions with any number of hand cards.",
+    "hash": "c48a88cc1c1cacaa",
+    "hashBytes": [
+      196,
+      138,
+      136,
+      204,
+      28,
+      28,
+      172,
+      170
+    ]
+  },
+  {
+    "filename": "CrewM-Red-ShimizuCorpEntrepreneurs.webp",
+    "cardId": "crew-M",
+    "side": "red",
+    "type": "crew",
+    "name": "Shimizu Corp Entrepreneurs (M)",
+    "searchableText": "Shimizu Corp Entrepreneurs (M) SKUNKWORKS: Ignore academia hand limit = may bid in auctions with any number of hand cards.",
     "hash": "c48a88cc1c1cacaa",
     "hashBytes": [
       196,
@@ -3025,10 +3193,30 @@
   },
   {
     "filename": "Exodus01-DecantingNetwork.webp",
-    "cardId": "Exodus01-DecantingNetwork",
-    "side": null,
-    "type": "exodus01-decantingnetwork.webp",
-    "name": "",
+    "cardId": "exodus-01",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Decanting Network",
+    "searchableText": "Decanting Network FULFILLED ABILITY: Allowed 1 extra Colonist. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: 2002 TX (9:50).",
+    "hash": "8ec6ccce6664e696",
+    "hashBytes": [
+      142,
+      198,
+      204,
+      206,
+      102,
+      100,
+      230,
+      150
+    ]
+  },
+  {
+    "filename": "Exodus01-DecantingNetwork.webp",
+    "cardId": "exodus-01",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Decanting Network",
+    "searchableText": "Decanting Network FULFILLED ABILITY: Allowed 1 extra Colonist. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: 2002 TX (9:50).",
     "hash": "8ec6ccce6664e696",
     "hashBytes": [
       142,
@@ -3043,10 +3231,30 @@
   },
   {
     "filename": "Exodus02-LifeSupportTestProtocol.webp",
-    "cardId": "Exodus02-LifeSupportTestProtocol",
-    "side": null,
-    "type": "exodus02-lifesupporttestprotocol.webp",
-    "name": "",
+    "cardId": "exodus-02",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Life Support Test Protocol",
+    "searchableText": "Life Support Test Protocol FULFILLED ABILITY: Implant is a free action. WHEN FULFILLING: Gain 3 Isotopes at this Site; you may Discard a Colonist (this is not a Felony). DESTINATION: Quaoar with Promoted Bernal (10:40).",
+    "hash": "8efcecc2a2b6b686",
+    "hashBytes": [
+      142,
+      252,
+      236,
+      194,
+      162,
+      182,
+      182,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus02-LifeSupportTestProtocol.webp",
+    "cardId": "exodus-02",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Life Support Test Protocol",
+    "searchableText": "Life Support Test Protocol FULFILLED ABILITY: Implant is a free action. WHEN FULFILLING: Gain 3 Isotopes at this Site; you may Discard a Colonist (this is not a Felony). DESTINATION: Quaoar with Promoted Bernal (10:40).",
     "hash": "8efcecc2a2b6b686",
     "hashBytes": [
       142,
@@ -3061,10 +3269,30 @@
   },
   {
     "filename": "Exodus03-LifeSupportReconfigTeam.webp",
-    "cardId": "Exodus03-LifeSupportReconfigTeam",
-    "side": null,
-    "type": "exodus03-lifesupportreconfigteam.webp",
-    "name": "",
+    "cardId": "exodus-03",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Life Support Reconfig Team",
+    "searchableText": "Life Support Reconfig Team FULFILLED ABILITY: Your Bernals add to Colonist limit even when unanchored. WHEN FULFILLING: Gain 3 Isotopes at your Bank; you may swap your Bernal cards (move each to the other Bernal Stack). DESTINATION: Your 2 Anchored non-Home Bernals & Return.",
+    "hash": "8ecccae2beb8b6c6",
+    "hashBytes": [
+      142,
+      204,
+      202,
+      226,
+      190,
+      184,
+      182,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus03-LifeSupportReconfigTeam.webp",
+    "cardId": "exodus-03",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Life Support Reconfig Team",
+    "searchableText": "Life Support Reconfig Team FULFILLED ABILITY: Your Bernals add to Colonist limit even when unanchored. WHEN FULFILLING: Gain 3 Isotopes at your Bank; you may swap your Bernal cards (move each to the other Bernal Stack). DESTINATION: Your 2 Anchored non-Home Bernals & Return.",
     "hash": "8ecccae2beb8b6c6",
     "hashBytes": [
       142,
@@ -3079,10 +3307,30 @@
   },
   {
     "filename": "Exodus04-IsotypeFuelingStation.webp",
-    "cardId": "Exodus04-IsotypeFuelingStation",
-    "side": null,
-    "type": "exodus04-isotypefuelingstation.webp",
-    "name": "",
+    "cardId": "exodus-04",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Isotope Fueling Station",
+    "searchableText": "Isotope Fueling Station FULFILLED ABILITY: After you do a factory refuel op, gain 1 Isotope at that Factory. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Your Factory of your isostandard in Neptune zone.",
+    "hash": "8eecc6c1b2b2a692",
+    "hashBytes": [
+      142,
+      236,
+      198,
+      193,
+      178,
+      178,
+      166,
+      146
+    ]
+  },
+  {
+    "filename": "Exodus04-IsotypeFuelingStation.webp",
+    "cardId": "exodus-04",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Isotope Fueling Station",
+    "searchableText": "Isotope Fueling Station FULFILLED ABILITY: After you do a factory refuel op, gain 1 Isotope at that Factory. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Your Factory of your isostandard in Neptune zone.",
     "hash": "8eecc6c1b2b2a692",
     "hashBytes": [
       142,
@@ -3097,10 +3345,30 @@
   },
   {
     "filename": "Exodus05-WardenProvingGround.webp",
-    "cardId": "Exodus05-WardenProvingGround",
-    "side": null,
-    "type": "exodus05-wardenprovingground.webp",
-    "name": "",
+    "cardId": "exodus-05",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Warden Proving Ground",
+    "searchableText": "Warden Proving Ground FULFILLED ABILITY: Your robonauts are -1 ISRU. WHEN FULFILLING: Gain 3 Isotopes at your Bank; Promote your freighter or you may gain a Mobile Factory at your Bank. DESTINATION: Teharonhiyawako (10:20).",
+    "hash": "8edcecae3e3bb686",
+    "hashBytes": [
+      142,
+      220,
+      236,
+      174,
+      62,
+      59,
+      182,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus05-WardenProvingGround.webp",
+    "cardId": "exodus-05",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Warden Proving Ground",
+    "searchableText": "Warden Proving Ground FULFILLED ABILITY: Your robonauts are -1 ISRU. WHEN FULFILLING: Gain 3 Isotopes at your Bank; Promote your freighter or you may gain a Mobile Factory at your Bank. DESTINATION: Teharonhiyawako (10:20).",
     "hash": "8edcecae3e3bb686",
     "hashBytes": [
       142,
@@ -3115,10 +3383,30 @@
   },
   {
     "filename": "Exodus06-TWEvaluationCommittee.webp",
-    "cardId": "Exodus06-TWEvaluationCommittee",
-    "side": null,
-    "type": "exodus06-twevaluationcommittee.webp",
-    "name": "",
+    "cardId": "exodus-06",
+    "side": "purple",
+    "type": "exodus",
+    "name": "TW Evaluation Committee",
+    "searchableText": "TW Evaluation Committee FULFILLED ABILITY: You may use Claim disks as delegates. WHEN FULFILLING: Gain 3 Isotopes at this Site; place 2 delegates on any 1 ideology. DESTINATION: Larissa (10:10).",
+    "hash": "86fcce8ebabef686",
+    "hashBytes": [
+      134,
+      252,
+      206,
+      142,
+      186,
+      190,
+      246,
+      134
+    ]
+  },
+  {
+    "filename": "Exodus06-TWEvaluationCommittee.webp",
+    "cardId": "exodus-06",
+    "side": "purple",
+    "type": "exodus",
+    "name": "TW Evaluation Committee",
+    "searchableText": "TW Evaluation Committee FULFILLED ABILITY: You may use Claim disks as delegates. WHEN FULFILLING: Gain 3 Isotopes at this Site; place 2 delegates on any 1 ideology. DESTINATION: Larissa (10:10).",
     "hash": "86fcce8ebabef686",
     "hashBytes": [
       134,
@@ -3133,10 +3421,30 @@
   },
   {
     "filename": "Exodus07-RadiationShieldPrototype.webp",
-    "cardId": "Exodus07-RadiationShieldPrototype",
-    "side": null,
-    "type": "exodus07-radiationshieldprototype.webp",
-    "name": "",
+    "cardId": "exodus-07",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Radiation Shield Prototype",
+    "searchableText": "Radiation Shield Prototype FULFILLED ABILITY: Your Stacks are immune to Belt/CME Rolls. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Mercury Site (6:30, 8:00), then enter 2 Radiation Belt Spaces in the Saturn zone or beyond & Return.",
+    "hash": "8edce8ecc692a6c2",
+    "hashBytes": [
+      142,
+      220,
+      232,
+      236,
+      198,
+      146,
+      166,
+      194
+    ]
+  },
+  {
+    "filename": "Exodus07-RadiationShieldPrototype.webp",
+    "cardId": "exodus-07",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Radiation Shield Prototype",
+    "searchableText": "Radiation Shield Prototype FULFILLED ABILITY: Your Stacks are immune to Belt/CME Rolls. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Mercury Site (6:30, 8:00), then enter 2 Radiation Belt Spaces in the Saturn zone or beyond & Return.",
     "hash": "8edce8ecc692a6c2",
     "hashBytes": [
       142,
@@ -3151,10 +3459,30 @@
   },
   {
     "filename": "Exodus08-RivalIsobank.webp",
-    "cardId": "Exodus08-RivalIsobank",
-    "side": null,
-    "type": "exodus08-rivalisobank.webp",
-    "name": "",
+    "cardId": "exodus-08",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Rival Isobank",
+    "searchableText": "Rival Isobank FULFILLED ABILITY: You may exchange 1 Isotope per Turn at your Anchored non-Home Bernal for 6 Aquas. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Pluto or Charon Factory (9:40, 9:50).",
+    "hash": "8edceccc82a6f6c6",
+    "hashBytes": [
+      142,
+      220,
+      236,
+      204,
+      130,
+      166,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus08-RivalIsobank.webp",
+    "cardId": "exodus-08",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Rival Isobank",
+    "searchableText": "Rival Isobank FULFILLED ABILITY: You may exchange 1 Isotope per Turn at your Anchored non-Home Bernal for 6 Aquas. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Pluto or Charon Factory (9:40, 9:50).",
     "hash": "8edceccc82a6f6c6",
     "hashBytes": [
       142,
@@ -3169,10 +3497,30 @@
   },
   {
     "filename": "Exodus09-TWStressTest.webp",
-    "cardId": "Exodus09-TWStressTest",
-    "side": null,
-    "type": "exodus09-twstresstest.webp",
-    "name": "",
+    "cardId": "exodus-09",
+    "side": "purple",
+    "type": "exodus",
+    "name": "TW Stress Test",
+    "searchableText": "TW Stress Test FULFILLED ABILITY: Your GW/TW thruster receives a Bonus Pivot. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Enter Solar Oberth, then Uranus zone Synodic Site, & Return.",
+    "hash": "8ec4cec8babef6c6",
+    "hashBytes": [
+      142,
+      196,
+      206,
+      200,
+      186,
+      190,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus09-TWStressTest.webp",
+    "cardId": "exodus-09",
+    "side": "purple",
+    "type": "exodus",
+    "name": "TW Stress Test",
+    "searchableText": "TW Stress Test FULFILLED ABILITY: Your GW/TW thruster receives a Bonus Pivot. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Enter Solar Oberth, then Uranus zone Synodic Site, & Return.",
     "hash": "8ec4cec8babef6c6",
     "hashBytes": [
       142,
@@ -3187,10 +3535,30 @@
   },
   {
     "filename": "Exodus10-IsoExchange.webp",
-    "cardId": "Exodus10-IsoExchange",
-    "side": null,
-    "type": "exodus10-isoexchange.webp",
-    "name": "",
+    "cardId": "exodus-10",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Iso-Exchange",
+    "searchableText": "Iso-Exchange FULFILLED ABILITY: Produce your isostandard during a site refuel op at any Factory (with permission). WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Saturn aerostat (8:40) & Return.",
+    "hash": "8efcc8cc9eb6f6c6",
+    "hashBytes": [
+      142,
+      252,
+      200,
+      204,
+      158,
+      182,
+      246,
+      198
+    ]
+  },
+  {
+    "filename": "Exodus10-IsoExchange.webp",
+    "cardId": "exodus-10",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Iso-Exchange",
+    "searchableText": "Iso-Exchange FULFILLED ABILITY: Produce your isostandard during a site refuel op at any Factory (with permission). WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Saturn aerostat (8:40) & Return.",
     "hash": "8efcc8cc9eb6f6c6",
     "hashBytes": [
       142,
@@ -3205,10 +3573,30 @@
   },
   {
     "filename": "Exodus11-DeepFreeze.webp",
-    "cardId": "Exodus11-DeepFreeze",
-    "side": null,
-    "type": "exodus11-deepfreeze.webp",
-    "name": "",
+    "cardId": "exodus-11",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Deep Freeze",
+    "searchableText": "Deep Freeze FULFILLED ABILITY: Before exomigrating, you may Discard the top card from the queue you are drawing from. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Arrokoth (9:50).",
+    "hash": "8ecece8c6c23869e",
+    "hashBytes": [
+      142,
+      206,
+      206,
+      140,
+      108,
+      35,
+      134,
+      158
+    ]
+  },
+  {
+    "filename": "Exodus11-DeepFreeze.webp",
+    "cardId": "exodus-11",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Deep Freeze",
+    "searchableText": "Deep Freeze FULFILLED ABILITY: Before exomigrating, you may Discard the top card from the queue you are drawing from. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Arrokoth (9:50).",
     "hash": "8ecece8c6c23869e",
     "hashBytes": [
       142,
@@ -3223,10 +3611,30 @@
   },
   {
     "filename": "Exodus12-AtmosphericIsoRefinery.webp",
-    "cardId": "Exodus12-AtmosphericIsoRefinery",
-    "side": null,
-    "type": "exodus12-atmosphericisorefinery.webp",
-    "name": "",
+    "cardId": "exodus-12",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Atmospheric Iso-Refinery",
+    "searchableText": "Atmospheric Iso-Refinery FULFILLED ABILITY: If your GW/TW thruster ends its move on an Aerobrake Hazard, that Stack gains 1 Isotope. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Uranus aerostat (9:20).",
+    "hash": "8ececcc8c8b1b4be",
+    "hashBytes": [
+      142,
+      206,
+      204,
+      200,
+      200,
+      177,
+      180,
+      190
+    ]
+  },
+  {
+    "filename": "Exodus12-AtmosphericIsoRefinery.webp",
+    "cardId": "exodus-12",
+    "side": "purple",
+    "type": "exodus",
+    "name": "Atmospheric Iso-Refinery",
+    "searchableText": "Atmospheric Iso-Refinery FULFILLED ABILITY: If your GW/TW thruster ends its move on an Aerobrake Hazard, that Stack gains 1 Isotope. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Uranus aerostat (9:20).",
     "hash": "8ececcc8c8b1b4be",
     "hashBytes": [
       142,
@@ -3244,7 +3652,8 @@
     "cardId": "freighter-01",
     "side": "black",
     "type": "freighter",
-    "name": "Fission Heated Steam",
+    "name": "Fission-heated Steam",
+    "searchableText": "Fission-heated Steam Factory loading only",
     "hash": "0d2f358343664d09",
     "hashBytes": [
       13,
@@ -3263,6 +3672,7 @@
     "side": "purple",
     "type": "freighter",
     "name": "Fission GCR",
+    "searchableText": "Fission GCR Can liftoff/land on Sites that are less than size 6 without factory-assist. EXOPLANET HUNT FUTURE: Req = Claim Sedna. Effect = (Endgame) 12 VP.",
     "hash": "0f2f8fefcb9a4c65",
     "hashBytes": [
       15,
@@ -3281,6 +3691,7 @@
     "side": "black",
     "type": "freighter",
     "name": "Fusion Fragment Sail",
+    "searchableText": "Fusion Fragment Sail Immune to flares & radiation belts. The sail is steered using inertial-confinement A-LIFT fusion.",
     "hash": "477731616371090f",
     "hashBytes": [
       71,
@@ -3298,7 +3709,8 @@
     "cardId": "freighter-02",
     "side": "purple",
     "type": "freighter",
-    "name": "Antiproton Sailand Harvester",
+    "name": "Antiproton Sail and Harvester",
+    "searchableText": "Antiproton Sail and Harvester +1 net thrust if starting its move on a radiation belt. ANTIMATTER FUTURE: Req = Promoted Bernal with S Dirtside. Effects = double isotope refuel, 10 VP.",
     "hash": "436787e7cd895f13",
     "hashBytes": [
       67,
@@ -3316,7 +3728,8 @@
     "cardId": "freighter-03",
     "side": "black",
     "type": "freighter",
-    "name": "HIIPERBeam Rider",
+    "name": "HIIPER Beam Rider",
+    "searchableText": "HIIPER Beam Rider",
     "hash": "0d6726a56363434d",
     "hashBytes": [
       13,
@@ -3335,6 +3748,7 @@
     "side": "purple",
     "type": "freighter",
     "name": "Magnetic Mirror Beam Rider",
+    "searchableText": "Magnetic Mirror Beam Rider Can liftoff/land on Sites that are less than size 6 without factory-assist. STAR WISP FUTURE: Req = Promoted Freighter (End game) at either neutrino sunlens (6VP) or EM sunlens = 11VP.",
     "hash": "4767a7ebc7c74707",
     "hashBytes": [
       71,
@@ -3352,7 +3766,8 @@
     "cardId": "freighter-04",
     "side": "black",
     "type": "freighter",
-    "name": "Inflatable Solar Heated",
+    "name": "Inflatable Solar-heated",
+    "searchableText": "Inflatable Solar-heated Factory loading only. SOLAR HEATED: If not using Powersat, may move out only as far as the Ceres zone.",
     "hash": "4d6d2571455e1125",
     "hashBytes": [
       77,
@@ -3371,6 +3786,7 @@
     "side": "purple",
     "type": "freighter",
     "name": "Archimedes Palmer Lens",
+    "searchableText": "Archimedes Palmer Lens Factory loading only. SOLAR HEATED: If not using Powersat, may move out only as far as the Jupiter zone. TERRAFORM FUTURE: Req = Promoted Bernal at a non-martian Atmospheric Dirtside. Effect = 8 VP.",
     "hash": "0b4f8dc7cf8f0727",
     "hashBytes": [
       11,
@@ -3389,6 +3805,7 @@
     "side": "black",
     "type": "freighter",
     "name": "Poodle Steam",
+    "searchableText": "Poodle Steam Factory loading only. RADIOISOTOPE: +2 thrust if its move starts on a Factory.",
     "hash": "4d2b3e666764480f",
     "hashBytes": [
       77,
@@ -3406,7 +3823,8 @@
     "cardId": "freighter-05",
     "side": "purple",
     "type": "freighter",
-    "name": "D Nanotube Dirt Launcher",
+    "name": "D-nanotube Dirt Launcher",
+    "searchableText": "D-nanotube Dirt Launcher BEANSTALK FUTURE: Req = 3+ Space Elevators built by any player. Effect (Endgame) = +3 VP for each Factory connected to a Space Elevator.",
     "hash": "4b6fc7cf8f870b07",
     "hashBytes": [
       75,
@@ -3425,6 +3843,7 @@
     "side": "black",
     "type": "freighter",
     "name": "Rotary Dirt Launcher",
+    "searchableText": "Rotary Dirt Launcher Factory loading only",
     "hash": "0d6f333969735d05",
     "hashBytes": [
       13,
@@ -3442,7 +3861,8 @@
     "cardId": "freighter-06",
     "side": "purple",
     "type": "freighter",
-    "name": "KESTSHoop Dirt Launcher",
+    "name": "KESTS Hoop Dirt Launcher",
+    "searchableText": "KESTS Hoop Dirt Launcher Factory loading only. BEEHIVE ARK FUTURE: Req = Promoted Bernal anchored at a Synodic Comet. Effect = 7 VP.",
     "hash": "0b6fcdc50f8b3e03",
     "hashBytes": [
       11,
@@ -3456,11 +3876,12 @@
     ]
   },
   {
-    "filename": "Freighter07-Black-Z-PinchD-T:6LiFusion.webp",
+    "filename": "Freighter07-Black-Z-PinchD-T-6LiFusion.webp",
     "cardId": "freighter-07",
     "side": "black",
     "type": "freighter",
-    "name": "Z Pinch D T:6Li Fusion",
+    "name": "Z-Pinch D-T/6Li Fusion",
+    "searchableText": "Z-Pinch D-T/6Li Fusion GOLDEN APPLES FUTURE: Req = Industrialize kreutz sungrazer. Effects = Ignore solar flares, 14 VP.",
     "hash": "0d2727274763433d",
     "hashBytes": [
       13,
@@ -3478,7 +3899,8 @@
     "cardId": "freighter-07",
     "side": "purple",
     "type": "freighter",
-    "name": "Z Pinch3He DTarget Fusion",
+    "name": "Z-Pinch 3He-D Target Fusion",
+    "searchableText": "Z-Pinch 3He-D Target Fusion GOLDEN APPLES FUTURE: Req = Industrialize kreutz sungrazer. Effects = Ignore solar flares, 14 VP.",
     "hash": "032fa3a73871ed13",
     "hashBytes": [
       3,
@@ -3492,263 +3914,12 @@
     ]
   },
   {
-    "filename": "GWThruster01-Black-Amat-CatalyzedFission-Fusion.webp",
-    "cardId": "gw-thruster-01",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Amat Catalyzed Fission Fusion",
-    "hash": "47312fa761613533",
-    "hashBytes": [
-      71,
-      49,
-      47,
-      167,
-      97,
-      97,
-      53,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.webp",
-    "cardId": "gw-thruster-01",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Amat Initiated H BMagnetic Inertial",
-    "hash": "4f2726cdcb891937",
-    "hashBytes": [
-      79,
-      39,
-      38,
-      205,
-      203,
-      137,
-      25,
-      55
-    ]
-  },
-  {
-    "filename": "GWThruster02-Black-DensePlasmaH-BFocusFusion.webp",
-    "cardId": "gw-thruster-02",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Dense Plasma H BFocus Fusion",
-    "hash": "47373f890d673333",
-    "hashBytes": [
-      71,
-      55,
-      63,
-      137,
-      13,
-      103,
-      51,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster02-Purple-CrossfireH-BFocusFusion.webp",
-    "cardId": "gw-thruster-02",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Crossfire H BFocus Fusion",
-    "hash": "47272fcb48363533",
-    "hashBytes": [
-      71,
-      39,
-      47,
-      203,
-      72,
-      54,
-      53,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster03-Black-LevitatedDipole6Li-HFusion.webp",
-    "cardId": "gw-thruster-03",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Levitated Dipole6Li HFusion",
-    "hash": "4779370703673733",
-    "hashBytes": [
-      71,
-      121,
-      55,
-      7,
-      3,
-      103,
-      55,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster03-Purple-DustyPlasma.webp",
-    "cardId": "gw-thruster-03",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Dusty Plasma",
-    "hash": "47272fcf87033335",
-    "hashBytes": [
-      71,
-      39,
-      47,
-      207,
-      135,
-      3,
-      51,
-      53
-    ]
-  },
-  {
-    "filename": "GWThruster04-Black-Mini-MagOrionZ-PinchFission.webp",
-    "cardId": "gw-thruster-04",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Mini Mag Orion Z Pinch Fission",
-    "hash": "4937270d65672b37",
-    "hashBytes": [
-      73,
-      55,
-      39,
-      13,
-      101,
-      103,
-      43,
-      55
-    ]
-  },
-  {
-    "filename": "GWThruster04-Purple-SolemMedusaTuggedOrion.webp",
-    "cardId": "gw-thruster-04",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Solem Medusa Tugged Orion",
-    "hash": "4f2f2fc78f173733",
-    "hashBytes": [
-      79,
-      47,
-      47,
-      199,
-      143,
-      23,
-      55,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster05-Black-Salt-WaterZubrin.webp",
-    "cardId": "gw-thruster-05",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Salt Water Zubrin",
-    "hash": "0d26228666642f37",
-    "hashBytes": [
-      13,
-      38,
-      34,
-      134,
-      102,
-      100,
-      47,
-      55
-    ]
-  },
-  {
-    "filename": "GWThruster05-Purple-Zubrin-GDM.webp",
-    "cardId": "gw-thruster-05",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Zubrin GDM",
-    "hash": "4f2d33c84c762733",
-    "hashBytes": [
-      79,
-      45,
-      51,
-      200,
-      76,
-      118,
-      39,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster06-Black-Spheromak3He-DMagneticFusion.webp",
-    "cardId": "gw-thruster-06",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "Spheromak3He DMagnetic Fusion",
-    "hash": "456737a747472735",
-    "hashBytes": [
-      69,
-      103,
-      55,
-      167,
-      71,
-      71,
-      39,
-      53
-    ]
-  },
-  {
-    "filename": "GWThruster06-Purple-CollidingFRC3He-DFusion.webp",
-    "cardId": "gw-thruster-06",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Colliding FRC3He DFusion",
-    "hash": "472f0bc70f2b3133",
-    "hashBytes": [
-      71,
-      47,
-      11,
-      199,
-      15,
-      43,
-      49,
-      51
-    ]
-  },
-  {
-    "filename": "GWThruster07-Black-VISTAD-TInertialFusion.webp",
-    "cardId": "gw-thruster-07",
-    "side": "black",
-    "type": "gw-thruster",
-    "name": "VISTAD TInertial Fusion",
-    "hash": "477f3e030f6e3135",
-    "hashBytes": [
-      71,
-      127,
-      62,
-      3,
-      15,
-      110,
-      49,
-      53
-    ]
-  },
-  {
-    "filename": "GWThruster07-Purple-Daedalus3He-DInertialFusion.webp",
-    "cardId": "gw-thruster-07",
-    "side": "purple",
-    "type": "gw-thruster",
-    "name": "Daedalus3He DInertial Fusion",
-    "hash": "476625eece862631",
-    "hashBytes": [
-      71,
-      102,
-      37,
-      238,
-      206,
-      134,
-      38,
-      49
-    ]
-  },
-  {
     "filename": "Generator01-Black-JTECH2Thermoelectric.webp",
     "cardId": "generator-01",
     "side": "black",
     "type": "generator",
-    "name": "JTECH2Thermoelectric",
+    "name": "JTEC H2 Thermoelectric",
+    "searchableText": "JTEC H2 Thermoelectric",
     "hash": "677b7123464d2f81",
     "hashBytes": [
       103,
@@ -3766,7 +3937,8 @@
     "cardId": "generator-01",
     "side": "white",
     "type": "generator",
-    "name": "AMTECThermoelectric",
+    "name": "AMTEC Thermoelectric",
+    "searchableText": "AMTEC Thermoelectric",
     "hash": "c480ace8ee8a89c6",
     "hashBytes": [
       196,
@@ -3784,7 +3956,8 @@
     "cardId": "generator-02",
     "side": "black",
     "type": "generator",
-    "name": "OMeara LSPParalens",
+    "name": "O'Meara LSP Paralens",
+    "searchableText": "O'Meara LSP Paralens",
     "hash": "47650e9f47662547",
     "hashBytes": [
       71,
@@ -3803,6 +3976,7 @@
     "side": "white",
     "type": "generator",
     "name": "Brayton Turbine",
+    "searchableText": "Brayton Turbine",
     "hash": "ec8c92cebab2b0c4",
     "hashBytes": [
       236,
@@ -3820,7 +3994,8 @@
     "cardId": "generator-03",
     "side": "black",
     "type": "generator",
-    "name": "Buckyball C60Photovoltaic",
+    "name": "Buckyball C60 Photovoltaic",
+    "searchableText": "Buckyball C60 Photovoltaic",
     "hash": "5d65212567672243",
     "hashBytes": [
       93,
@@ -3839,6 +4014,7 @@
     "side": "white",
     "type": "generator",
     "name": "Cascade Photovoltaic",
+    "searchableText": "Cascade Photovoltaic",
     "hash": "c6c89830a390c080",
     "hashBytes": [
       198,
@@ -3857,6 +4033,7 @@
     "side": "black",
     "type": "generator",
     "name": "Dusty Plasma MHD",
+    "searchableText": "Dusty Plasma MHD",
     "hash": "4561470f4a634713",
     "hashBytes": [
       69,
@@ -3875,6 +4052,7 @@
     "side": "white",
     "type": "generator",
     "name": "Cascade Thermoacoustic",
+    "searchableText": "Cascade Thermoacoustic",
     "hash": "cc8889c89a9a9bd6",
     "hashBytes": [
       204,
@@ -3892,7 +4070,8 @@
     "cardId": "generator-05",
     "side": "black",
     "type": "generator",
-    "name": "Diamonoid Electro Dynamic Tether",
+    "name": "Diamonoid Electrodynamic Tether",
+    "searchableText": "Diamonoid Electrodynamic Tether",
     "hash": "6d4f5f3c63621103",
     "hashBytes": [
       109,
@@ -3911,6 +4090,7 @@
     "side": "white",
     "type": "generator",
     "name": "Catalyzed Fission Scintillator",
+    "searchableText": "Catalyzed Fission Scintillator",
     "hash": "ec808edcbcac64a2",
     "hashBytes": [
       236,
@@ -3929,6 +4109,7 @@
     "side": "black",
     "type": "generator",
     "name": "Nanocomposite Thermoelectric",
+    "searchableText": "Nanocomposite Thermoelectric",
     "hash": "45671e0f135d6b43",
     "hashBytes": [
       69,
@@ -3947,6 +4128,7 @@
     "side": "white",
     "type": "generator",
     "name": "Ericsson Engine",
+    "searchableText": "Ericsson Engine",
     "hash": "c4c0cad696ace7c4",
     "hashBytes": [
       196,
@@ -3965,6 +4147,7 @@
     "side": "black",
     "type": "generator",
     "name": "Superconducting Adductor",
+    "searchableText": "Superconducting Adductor",
     "hash": "6d73835757472707",
     "hashBytes": [
       109,
@@ -3983,6 +4166,7 @@
     "side": "white",
     "type": "generator",
     "name": "Flywheel Compulsator",
+    "searchableText": "Flywheel Compulsator",
     "hash": "ccc7c9e4e6a6c180",
     "hashBytes": [
       204,
@@ -4001,6 +4185,7 @@
     "side": "black",
     "type": "generator",
     "name": "Microbial Fuel Cell",
+    "searchableText": "Microbial Fuel Cell",
     "hash": "6970753b776c2f45",
     "hashBytes": [
       105,
@@ -4018,7 +4203,8 @@
     "cardId": "generator-08",
     "side": "white",
     "type": "generator",
-    "name": "H2 O2Fuel Cell",
+    "name": "H2-O2 Fuel Cell",
+    "searchableText": "H2-O2 Fuel Cell",
     "hash": "c4c09151b8b0d886",
     "hashBytes": [
       196,
@@ -4036,7 +4222,8 @@
     "cardId": "generator-09",
     "side": "black",
     "type": "generator",
-    "name": "Z Pinch Microfission",
+    "name": "Z-pinch Microfission",
+    "searchableText": "Z-pinch Microfission",
     "hash": "657f3323656d6843",
     "hashBytes": [
       101,
@@ -4054,7 +4241,8 @@
     "cardId": "generator-09",
     "side": "white",
     "type": "generator",
-    "name": "In Core Thermionic",
+    "name": "In-core Thermionic",
+    "searchableText": "In-core Thermionic",
     "hash": "e48ea838f0c1d0b6",
     "hashBytes": [
       228,
@@ -4073,6 +4261,7 @@
     "side": "black",
     "type": "generator",
     "name": "Granular Rainbow Corral",
+    "searchableText": "Granular Rainbow Corral",
     "hash": "456f638f4f632987",
     "hashBytes": [
       69,
@@ -4091,6 +4280,7 @@
     "side": "white",
     "type": "generator",
     "name": "Magnetoshell Plasma Parachute",
+    "searchableText": "Magnetoshell Plasma Parachute",
     "hash": "ccc4c8c9b98acac6",
     "hashBytes": [
       204,
@@ -4109,6 +4299,7 @@
     "side": "black",
     "type": "generator",
     "name": "Casimir Battery",
+    "searchableText": "Casimir Battery",
     "hash": "477f368f4b63874d",
     "hashBytes": [
       71,
@@ -4127,6 +4318,7 @@
     "side": "white",
     "type": "generator",
     "name": "Marx Capacitor Bank",
+    "searchableText": "Marx Capacitor Bank",
     "hash": "c486a8e8d4d45a86",
     "hashBytes": [
       196,
@@ -4144,7 +4336,8 @@
     "cardId": "generator-12",
     "side": "black",
     "type": "generator",
-    "name": "Nuclear Pumped Excimer Flashlamp",
+    "name": "Nuclear-pumped Excimer Flashlamp",
+    "searchableText": "Nuclear-pumped Excimer Flashlamp",
     "hash": "4d73338d156b6741",
     "hashBytes": [
       77,
@@ -4163,6 +4356,7 @@
     "side": "white",
     "type": "generator",
     "name": "Optoelectric Nuclear Battery",
+    "searchableText": "Optoelectric Nuclear Battery",
     "hash": "cee4a374b4949ad2",
     "hashBytes": [
       206,
@@ -4180,7 +4374,8 @@
     "cardId": "generator-13",
     "side": "black",
     "type": "generator",
-    "name": "Palmer LSPAerosol Lens",
+    "name": "Palmer LSP Aerosol Lens",
+    "searchableText": "Palmer LSP Aerosol Lens",
     "hash": "6567480f47432343",
     "hashBytes": [
       101,
@@ -4199,6 +4394,7 @@
     "side": "white",
     "type": "generator",
     "name": "Photon Tether Rectenna",
+    "searchableText": "Photon Tether Rectenna",
     "hash": "ccc0a06ca089c9c4",
     "hashBytes": [
       204,
@@ -4217,6 +4413,7 @@
     "side": "black",
     "type": "generator",
     "name": "Triggered Decay Nuclear Battery",
+    "searchableText": "Triggered Decay Nuclear Battery",
     "hash": "6d6f8f9346468635",
     "hashBytes": [
       109,
@@ -4235,6 +4432,7 @@
     "side": "white",
     "type": "generator",
     "name": "Radioisotope Stirling",
+    "searchableText": "Radioisotope Stirling",
     "hash": "c2ccbc908292c6c0",
     "hashBytes": [
       194,
@@ -4252,7 +4450,8 @@
     "cardId": "generator-15",
     "side": "black",
     "type": "generator",
-    "name": "MHDOpen Cycle",
+    "name": "MHD Open-Cycle",
+    "searchableText": "MHD Open-Cycle",
     "hash": "6d37270675654d43",
     "hashBytes": [
       109,
@@ -4271,6 +4470,7 @@
     "side": "white",
     "type": "generator",
     "name": "Rankine MHD",
+    "searchableText": "Rankine MHD",
     "hash": "cccea8708496a7c6",
     "hashBytes": [
       204,
@@ -4289,6 +4489,7 @@
     "side": "black",
     "type": "generator",
     "name": "Rankine Multiphase",
+    "searchableText": "Rankine Multiphase",
     "hash": "6d77692d194d0d57",
     "hashBytes": [
       109,
@@ -4307,6 +4508,7 @@
     "side": "white",
     "type": "generator",
     "name": "Rankine Solar Dynamic",
+    "searchableText": "Rankine Solar Dynamic",
     "hash": "c4caaaceba9aca80",
     "hashBytes": [
       196,
@@ -4324,7 +4526,8 @@
     "cardId": "generator-17",
     "side": "black",
     "type": "generator",
-    "name": "Thermo Photovoltaic",
+    "name": "Thermo-Photovoltaic",
+    "searchableText": "Thermo-Photovoltaic",
     "hash": "47672b0f1f59214d",
     "hashBytes": [
       71,
@@ -4343,6 +4546,7 @@
     "side": "white",
     "type": "generator",
     "name": "Solar Stirling",
+    "searchableText": "Solar Stirling",
     "hash": "c4c8b874e4c2c082",
     "hashBytes": [
       196,
@@ -4356,11 +4560,278 @@
     ]
   },
   {
+    "filename": "GWThruster01-Black-Amat-CatalyzedFission-Fusion.webp",
+    "cardId": "gw-thruster-01",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Amat-catalyzed Fission-fusion",
+    "searchableText": "Amat-catalyzed Fission-fusion +2 thrust",
+    "hash": "47312fa761613533",
+    "hashBytes": [
+      71,
+      49,
+      47,
+      167,
+      97,
+      97,
+      53,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster01-Purple-Amat-InitiatedH-BMagnetic-Inertial.webp",
+    "cardId": "gw-thruster-01",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Amat-initiated H-B Magnetic-inertial",
+    "searchableText": "Amat-initiated H-B Magnetic-inertial +5 thrust. MINI-BLACK HOLE FUTURE: Req = Industrialized centaur with 10 isotope FTs. Effects = double all isotope refuel, 10 VP.",
+    "hash": "4f2726cdcb891937",
+    "hashBytes": [
+      79,
+      39,
+      38,
+      205,
+      203,
+      137,
+      25,
+      55
+    ]
+  },
+  {
+    "filename": "GWThruster02-Black-DensePlasmaH-BFocusFusion.webp",
+    "cardId": "gw-thruster-02",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Dense Plasma H-B Focus Fusion",
+    "searchableText": "Dense Plasma H-B Focus Fusion +5 thrust",
+    "hash": "47373f890d673333",
+    "hashBytes": [
+      71,
+      55,
+      63,
+      137,
+      13,
+      103,
+      51,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster02-Purple-CrossfireH-BFocusFusion.webp",
+    "cardId": "gw-thruster-02",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Crossfire H-B Focus Fusion",
+    "searchableText": "Crossfire H-B Focus Fusion +9 thrust. PROTIUM FUSION FUTURE: Req = Promoted Bernal with H Dirtside. Effects = double all isotope refuel, 10 VP.",
+    "hash": "47272fcb48363533",
+    "hashBytes": [
+      71,
+      39,
+      47,
+      203,
+      72,
+      54,
+      53,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster03-Black-LevitatedDipole6Li-HFusion.webp",
+    "cardId": "gw-thruster-03",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Levitated Dipole 6Li-H Fusion",
+    "searchableText": "Levitated Dipole 6Li-H Fusion +4 thrust",
+    "hash": "4779370703673733",
+    "hashBytes": [
+      71,
+      121,
+      55,
+      7,
+      3,
+      103,
+      55,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster03-Purple-DustyPlasma.webp",
+    "cardId": "gw-thruster-03",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Dusty Plasma",
+    "searchableText": "Dusty Plasma +9 thrust. MASS BEAM FUTURE: Req = Promoted Bernal with Io or Triton Dirtside. Effects = your Powersat adds +2 thrust, 7 VP.",
+    "hash": "47272fcf87033335",
+    "hashBytes": [
+      71,
+      39,
+      47,
+      207,
+      135,
+      3,
+      51,
+      53
+    ]
+  },
+  {
+    "filename": "GWThruster04-Black-Mini-MagOrionZ-PinchFission.webp",
+    "cardId": "gw-thruster-04",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Mini-Mag Orion Z-pinch Fission",
+    "searchableText": "Mini-Mag Orion Z-pinch Fission",
+    "hash": "4937270d65672b37",
+    "hashBytes": [
+      73,
+      55,
+      39,
+      13,
+      101,
+      103,
+      43,
+      55
+    ]
+  },
+  {
+    "filename": "GWThruster04-Purple-SolemMedusaTuggedOrion.webp",
+    "cardId": "gw-thruster-04",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Solem Medusa Tugged Orion",
+    "searchableText": "Solem Medusa Tugged Orion +3 thrust. LITHIATED AMMONIA ICE STARSHIP FUTURE: Req = Ad astra exit with 10 isotope fuel. Effect = 14 VP.",
+    "hash": "4f2f2fc78f173733",
+    "hashBytes": [
+      79,
+      47,
+      47,
+      199,
+      143,
+      23,
+      55,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster05-Black-Salt-WaterZubrin.webp",
+    "cardId": "gw-thruster-05",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Salt-water Zubrin",
+    "searchableText": "Salt-water Zubrin +1 thrust",
+    "hash": "0d26228666642f37",
+    "hashBytes": [
+      13,
+      38,
+      34,
+      134,
+      102,
+      100,
+      47,
+      55
+    ]
+  },
+  {
+    "filename": "GWThruster05-Purple-Zubrin-GDM.webp",
+    "cardId": "gw-thruster-05",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Zubrin-GDM",
+    "searchableText": "Zubrin-GDM +8 thrust. SPACEFARING FUTURE: Req = Bernal with 8+ dirtside hydration. Effects = Allowed 1 extra Colonist, 7VP.",
+    "hash": "4f2d33c84c762733",
+    "hashBytes": [
+      79,
+      45,
+      51,
+      200,
+      76,
+      118,
+      39,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster06-Black-Spheromak3He-DMagneticFusion.webp",
+    "cardId": "gw-thruster-06",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "Spheromak 3He-D Magnetic Fusion",
+    "searchableText": "Spheromak 3He-D Magnetic Fusion +6 thrust",
+    "hash": "456737a747472735",
+    "hashBytes": [
+      69,
+      103,
+      55,
+      167,
+      71,
+      71,
+      39,
+      53
+    ]
+  },
+  {
+    "filename": "GWThruster06-Purple-CollidingFRC3He-DFusion.webp",
+    "cardId": "gw-thruster-06",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Colliding FRC 3He-D Fusion",
+    "searchableText": "Colliding FRC 3He-D Fusion +10 thrust. ENZMANN STARSHIP FUTURE: Req = Ad astra exit with 2 Promoted Colonists + Mobile Factory. Effect = 12 VP.",
+    "hash": "472f0bc70f2b3133",
+    "hashBytes": [
+      71,
+      47,
+      11,
+      199,
+      15,
+      43,
+      49,
+      51
+    ]
+  },
+  {
+    "filename": "GWThruster07-Black-VISTAD-TInertialFusion.webp",
+    "cardId": "gw-thruster-07",
+    "side": "black",
+    "type": "gw-thruster",
+    "name": "VISTA D-T Inertial Fusion",
+    "searchableText": "VISTA D-T Inertial Fusion +3 thrust",
+    "hash": "477f3e030f6e3135",
+    "hashBytes": [
+      71,
+      127,
+      62,
+      3,
+      15,
+      110,
+      49,
+      53
+    ]
+  },
+  {
+    "filename": "GWThruster07-Purple-Daedalus3He-DInertialFusion.webp",
+    "cardId": "gw-thruster-07",
+    "side": "purple",
+    "type": "gw-thruster",
+    "name": "Daedalus 3He-D Inertial Fusion",
+    "searchableText": "Daedalus 3He-D Inertial Fusion +8 thrust. FUSION CANDLE FUTURE: Req = Triton Colony & Promoted Bernal with Neptune Aerostat Dirtside. Effects = double all isotope refuel, 14 VP.",
+    "hash": "476625eece862631",
+    "hashBytes": [
+      71,
+      102,
+      37,
+      238,
+      206,
+      134,
+      38,
+      49
+    ]
+  },
+  {
     "filename": "Radiator01-Black-ElectrostaticMembrane.webp",
     "cardId": "radiator-01",
     "side": "black",
     "type": "radiator",
     "name": "Electrostatic Membrane",
+    "searchableText": "Electrostatic Membrane",
     "hash": "4d7f0f69696c3169",
     "hashBytes": [
       77,
@@ -4379,6 +4850,7 @@
     "side": "white",
     "type": "radiator",
     "name": "Bubble Membrane",
+    "searchableText": "Bubble Membrane",
     "hash": "ccc88352f0b88c9c",
     "hashBytes": [
       204,
@@ -4396,7 +4868,8 @@
     "cardId": "radiator-02",
     "side": "black",
     "type": "radiator",
-    "name": "Graphene Crystal X Ray Mirror",
+    "name": "Graphene Crystal X-ray Mirror",
+    "searchableText": "Graphene Crystal X-ray Mirror",
     "hash": "4d652686476d0155",
     "hashBytes": [
       77,
@@ -4414,7 +4887,8 @@
     "cardId": "radiator-02",
     "side": "white",
     "type": "radiator",
-    "name": "Dielectric X Ray Window",
+    "name": "Dielectric X-ray Window",
+    "searchableText": "Dielectric X-ray Window",
     "hash": "ccc080f4e6e6accc",
     "hashBytes": [
       204,
@@ -4433,6 +4907,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Curie Point",
+    "searchableText": "Curie Point",
     "hash": "4d6b0f2b65611121",
     "hashBytes": [
       77,
@@ -4450,7 +4925,8 @@
     "cardId": "radiator-03",
     "side": "white",
     "type": "radiator",
-    "name": "ETHERCharged Dust",
+    "name": "ETHER Charged Dust",
+    "searchableText": "ETHER Charged Dust",
     "hash": "cec0816ca49ecc8c",
     "hashBytes": [
       206,
@@ -4469,6 +4945,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Thermochemical Heatsink Fountain",
+    "searchableText": "Thermochemical Heatsink Fountain Switch to light side after 1st use.",
     "hash": "596d8f0f6d6d1151",
     "hashBytes": [
       89,
@@ -4487,6 +4964,7 @@
     "side": "white",
     "type": "radiator",
     "name": "Li Heatsink Fountain",
+    "searchableText": "Li Heatsink Fountain Switch to light side after 1st use.",
     "hash": "ccc0ccfeb0bc6c98",
     "hashBytes": [
       204,
@@ -4505,6 +4983,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Nuclear Fuel Spin Polarizer",
+    "searchableText": "Nuclear Fuel Spin Polarizer",
     "hash": "6d71392d757a3955",
     "hashBytes": [
       109,
@@ -4523,6 +5002,7 @@
     "side": "white",
     "type": "radiator",
     "name": "Magnetocaloric Refrigerator",
+    "searchableText": "Magnetocaloric Refrigerator This card can cool its own supports.",
     "hash": "ccc08ce4b4acfcbc",
     "hashBytes": [
       204,
@@ -4541,6 +5021,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Marangoni Flow",
+    "searchableText": "Marangoni Flow",
     "hash": "4d730f0f4d673171",
     "hashBytes": [
       77,
@@ -4559,6 +5040,7 @@
     "side": "white",
     "type": "radiator",
     "name": "Microtube Array",
+    "searchableText": "Microtube Array",
     "hash": "cac4f5f5b5b0bc9c",
     "hashBytes": [
       202,
@@ -4577,6 +5059,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Tin Droplet",
+    "searchableText": "Tin Droplet",
     "hash": "4b6f6dbc264e0971",
     "hashBytes": [
       75,
@@ -4590,11 +5073,12 @@
     ]
   },
   {
-    "filename": "Radiator07-White-Mo:LiHeatPipe.webp",
+    "filename": "Radiator07-White-Mo-LiHeatPipe.webp",
     "cardId": "radiator-07",
     "side": "white",
     "type": "radiator",
-    "name": "Mo:Li Heat Pipe",
+    "name": "Mo/Li Heat Pipe",
+    "searchableText": "Mo/Li Heat Pipe",
     "hash": "cacc8c78b1a6cc9c",
     "hashBytes": [
       202,
@@ -4608,11 +5092,12 @@
     ]
   },
   {
-    "filename": "Radiator08-Black-ANDR:InDreamPipe.webp",
+    "filename": "Radiator08-Black-ANDR-InDreamPipe.webp",
     "cardId": "radiator-08",
     "side": "black",
     "type": "radiator",
-    "name": "ANDR:In Dream Pipe",
+    "name": "ANDR/In Dream Pipe",
+    "searchableText": "ANDR/In Dream Pipe",
     "hash": "4f6933264e3a3149",
     "hashBytes": [
       79,
@@ -4631,6 +5116,7 @@
     "side": "white",
     "type": "radiator",
     "name": "Qu Tube",
+    "searchableText": "Qu Tube",
     "hash": "c8cc8c71a2cc9cac",
     "hashBytes": [
       200,
@@ -4648,7 +5134,8 @@
     "cardId": "radiator-09",
     "side": "black",
     "type": "radiator",
-    "name": "Hula Hoop",
+    "name": "Hula-Hoop",
+    "searchableText": "Hula-Hoop",
     "hash": "4d679e9b4d6d3969",
     "hashBytes": [
       77,
@@ -4662,11 +5149,12 @@
     ]
   },
   {
-    "filename": "Radiator09-White-SS:NaKPumpedLoop.webp",
+    "filename": "Radiator09-White-SS-NaKPumpedLoop.webp",
     "cardId": "radiator-09",
     "side": "white",
     "type": "radiator",
-    "name": "SS:Na KPumped Loop",
+    "name": "SS/NaK Pumped Loop",
+    "searchableText": "SS/NaK Pumped Loop",
     "hash": "cccbc4ce8cbccc9c",
     "hashBytes": [
       204,
@@ -4685,6 +5173,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Buckytube Filament",
+    "searchableText": "Buckytube Filament",
     "hash": "4d75252767641979",
     "hashBytes": [
       77,
@@ -4702,7 +5191,8 @@
     "cardId": "radiator-10",
     "side": "white",
     "type": "radiator",
-    "name": "Salt Cooled Reflux Tube",
+    "name": "Salt-cooled Reflux Tube",
+    "searchableText": "Salt-cooled Reflux Tube",
     "hash": "c4cc8e31b18c9cbc",
     "hashBytes": [
       196,
@@ -4721,6 +5211,7 @@
     "side": "black",
     "type": "radiator",
     "name": "Pulsating Heat Pipe",
+    "searchableText": "Pulsating Heat Pipe",
     "hash": "4d2f4589476f8971",
     "hashBytes": [
       77,
@@ -4734,11 +5225,12 @@
     ]
   },
   {
-    "filename": "Radiator11-White-Steel:Pb-BiPumpedLoop.webp",
+    "filename": "Radiator11-White-Steel-Pb-BiPumpedLoop.webp",
     "cardId": "radiator-11",
     "side": "white",
     "type": "radiator",
-    "name": "Steel:Pb Bi Pumped Loop",
+    "name": "Steel/Pb-Bi Pumped Loop",
+    "searchableText": "Steel/Pb-Bi Pumped Loop",
     "hash": "ccc08a34a4b04cac",
     "hashBytes": [
       204,
@@ -4756,7 +5248,8 @@
     "cardId": "radiator-12",
     "side": "black",
     "type": "radiator",
-    "name": "Flux Pinned Superthermal",
+    "name": "Flux-pinned Superthermal",
+    "searchableText": "Flux-pinned Superthermal",
     "hash": "4d6bc69f07658161",
     "hashBytes": [
       77,
@@ -4770,11 +5263,12 @@
     ]
   },
   {
-    "filename": "Radiator12-White-Ti:KHeatPipe.webp",
+    "filename": "Radiator12-White-Ti-KHeatPipe.webp",
     "cardId": "radiator-12",
     "side": "white",
     "type": "radiator",
-    "name": "Ti:KHeat Pipe",
+    "name": "Ti/K Heat Pipe",
+    "searchableText": "Ti/K Heat Pipe",
     "hash": "c6cc8c79a1a6cc9c",
     "hashBytes": [
       198,
@@ -4792,7 +5286,8 @@
     "cardId": "reactor-01",
     "side": "black",
     "type": "reactor",
-    "name": "Pulsed NTRFission",
+    "name": "Pulsed NTR Fission",
+    "searchableText": "Pulsed NTR Fission",
     "hash": "6d733c0b52682641",
     "hashBytes": [
       109,
@@ -4810,7 +5305,8 @@
     "cardId": "reactor-01",
     "side": "white",
     "type": "reactor",
-    "name": "Cermet NERVAFission",
+    "name": "Cermet NERVA Fission",
+    "searchableText": "Cermet NERVA Fission",
     "hash": "cecc987cbd89c3c2",
     "hashBytes": [
       206,
@@ -4828,7 +5324,8 @@
     "cardId": "reactor-02",
     "side": "black",
     "type": "reactor",
-    "name": "H BFusion Reciprocating Plasmoid",
+    "name": "H-B Fusion Reciprocating Plasmoid",
+    "searchableText": "H-B Fusion Reciprocating Plasmoid",
     "hash": "4b6b3b2766682a43",
     "hashBytes": [
       75,
@@ -4846,7 +5343,8 @@
     "cardId": "reactor-02",
     "side": "white",
     "type": "reactor",
-    "name": "D DFusion Magneto Inertial",
+    "name": "D-D Fusion Magneto-Inertial",
+    "searchableText": "D-D Fusion Magneto-Inertial",
     "hash": "ccc486d0cce6c6c2",
     "hashBytes": [
       204,
@@ -4865,6 +5363,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Antimatter GDM",
+    "searchableText": "Antimatter GDM",
     "hash": "7b27372a686e3543",
     "hashBytes": [
       123,
@@ -4882,7 +5381,8 @@
     "cardId": "reactor-03",
     "side": "white",
     "type": "reactor",
-    "name": "D TFusion Tokamak",
+    "name": "D-T Fusion Tokamak",
+    "searchableText": "D-T Fusion Tokamak",
     "hash": "ccccb4f4bc98d4c2",
     "hashBytes": [
       204,
@@ -4901,6 +5401,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Macron Blowpipe Fusion",
+    "searchableText": "Macron Blowpipe Fusion",
     "hash": "3d6d3f2767632747",
     "hashBytes": [
       61,
@@ -4918,7 +5419,8 @@
     "cardId": "reactor-04",
     "side": "white",
     "type": "reactor",
-    "name": "D TGun Fusion",
+    "name": "D-T Gun Fusion",
+    "searchableText": "D-T Gun Fusion",
     "hash": "cc88a1f29c96c2c2",
     "hashBytes": [
       204,
@@ -4937,6 +5439,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Free Radical Hydrogen Trap",
+    "searchableText": "Free Radical Hydrogen Trap",
     "hash": "6d6f3b8b0b713443",
     "hashBytes": [
       109,
@@ -4955,6 +5458,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Lyman Alpha Trap",
+    "searchableText": "Lyman Alpha Trap",
     "hash": "eec494d59c9cccc8",
     "hashBytes": [
       238,
@@ -4972,7 +5476,8 @@
     "cardId": "reactor-06",
     "side": "black",
     "type": "reactor",
-    "name": "Fission Augmented D TInertial Fusion",
+    "name": "Fission-augmented D-T Inertial Fusion",
+    "searchableText": "Fission-augmented D-T Inertial Fusion",
     "hash": "4d7f398f0b692647",
     "hashBytes": [
       77,
@@ -4991,6 +5496,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Metallic Hydrogen",
+    "searchableText": "Metallic Hydrogen",
     "hash": "cccca6d696b2c2c0",
     "hashBytes": [
       204,
@@ -5009,6 +5515,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Ultracold Neutrons",
+    "searchableText": "Ultracold Neutrons SCOOP: -2 ISRU for Colocated ISRU platforms at Aerostat Sites.",
     "hash": "6f6d27676366c40f",
     "hashBytes": [
       111,
@@ -5026,7 +5533,8 @@
     "cardId": "reactor-07",
     "side": "white",
     "type": "reactor",
-    "name": "Mini Mag RFPaul Trap",
+    "name": "Mini-Mag RF Paul Trap",
+    "searchableText": "Mini-Mag RF Paul Trap SCOOP: -2 ISRU for Colocated ISRU platforms at Aerostat Sites.",
     "hash": "ccc489d8b89adac0",
     "hashBytes": [
       204,
@@ -5044,7 +5552,8 @@
     "cardId": "reactor-08",
     "side": "black",
     "type": "reactor",
-    "name": "VCRLight Bulb Fission",
+    "name": "VCR Light Bulb Fission",
+    "searchableText": "VCR Light Bulb Fission",
     "hash": "4f7533a362632545",
     "hashBytes": [
       79,
@@ -5063,6 +5572,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Pebble Bed Fission",
+    "searchableText": "Pebble Bed Fission",
     "hash": "cce8b8dc9c9ccdc6",
     "hashBytes": [
       204,
@@ -5080,7 +5590,8 @@
     "cardId": "reactor-09",
     "side": "black",
     "type": "reactor",
-    "name": "3He DFusion Mirror Cell",
+    "name": "3He-D Fusion Mirror Cell",
+    "searchableText": "3He-D Fusion Mirror Cell",
     "hash": "456b2b4a4b6b0b43",
     "hashBytes": [
       69,
@@ -5099,6 +5610,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Penning Trap",
+    "searchableText": "Penning Trap",
     "hash": "e4cab8749abafa8a",
     "hashBytes": [
       228,
@@ -5117,6 +5629,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Project Valkyrie",
+    "searchableText": "Project Valkyrie When activated, Decommission colocated cards with Rad-Hard < 4.",
     "hash": "4d3f3f756f657243",
     "hashBytes": [
       77,
@@ -5135,6 +5648,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Project Orion",
+    "searchableText": "Project Orion",
     "hash": "ccc8a6d4c696c6c6",
     "hashBytes": [
       204,
@@ -5153,6 +5667,7 @@
     "side": "black",
     "type": "reactor",
     "name": "Positronium Bottle",
+    "searchableText": "Positronium Bottle",
     "hash": "6f7f378363632347",
     "hashBytes": [
       111,
@@ -5171,6 +5686,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Rubbia Thin Film Fission Hohlraum",
+    "searchableText": "Rubbia Thin Film Fission Hohlraum",
     "hash": "ccccaa5ab898dac2",
     "hashBytes": [
       204,
@@ -5188,7 +5704,8 @@
     "cardId": "reactor-12",
     "side": "black",
     "type": "reactor",
-    "name": "H 6Li Fusor",
+    "name": "H-6Li Fusor",
+    "searchableText": "H-6Li Fusor",
     "hash": "6d6967674b672743",
     "hashBytes": [
       109,
@@ -5207,6 +5724,7 @@
     "side": "white",
     "type": "reactor",
     "name": "Supercritical Water Fission",
+    "searchableText": "Supercritical Water Fission",
     "hash": "cccaa878b4b5d0c2",
     "hashBytes": [
       204,
@@ -5225,6 +5743,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Ilmenite Semiconductor Film",
+    "searchableText": "Ilmenite Semiconductor Film POWER GIRDLE: If used to industrialize a non-atmospheric site of size 8+, you permanently gain the Powersat faction privilege.",
     "hash": "316b69096f515165",
     "hashBytes": [
       49,
@@ -5243,6 +5762,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Atomic Layer Deposition",
+    "searchableText": "Atomic Layer Deposition",
     "hash": "c082a578b4a464e4",
     "hashBytes": [
       192,
@@ -5261,6 +5781,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Von Neumann Santa Claus Machine",
+    "searchableText": "Von Neumann Santa Claus Machine DIVINING NUBOTS: -1 ISRU for Colocated ISRU platform.",
     "hash": "316366454f4f576d",
     "hashBytes": [
       49,
@@ -5279,6 +5800,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Basalt Fiber Spinning",
+    "searchableText": "Basalt Fiber Spinning",
     "hash": "c0c0ad7c969e76e8",
     "hashBytes": [
       192,
@@ -5297,6 +5819,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Carbonyl Volatilization",
+    "searchableText": "Carbonyl Volatilization THORIUM BREEDER: -3 to Colocated size rolls on S Sites.",
     "hash": "31636988585a0161",
     "hashBytes": [
       49,
@@ -5314,7 +5837,8 @@
     "cardId": "refinery-03",
     "side": "white",
     "type": "refinery",
-    "name": "CVDMolding",
+    "name": "CVD Molding",
+    "searchableText": "CVD Molding",
     "hash": "e0c8c178918cd2b0",
     "hashBytes": [
       224,
@@ -5333,6 +5857,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Solar Carbotherm",
+    "searchableText": "Solar Carbotherm ARCOLOGY: Decommissioning of a robonaut is not needed when this is used to industrialize in the Mercury, Venus and Earth zones.",
     "hash": "31712426634d2429",
     "hashBytes": [
       49,
@@ -5350,7 +5875,8 @@
     "cardId": "refinery-04",
     "side": "white",
     "type": "refinery",
-    "name": "Carbo Chlorination",
+    "name": "Carbo-Chlorination",
+    "searchableText": "Carbo-Chlorination",
     "hash": "c080a0f6b4b8b8a0",
     "hashBytes": [
       192,
@@ -5369,6 +5895,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Impact Mold Sinter",
+    "searchableText": "Impact Mold Sinter FOAMED NICKEL: -1 to Colocated size rolls.",
     "hash": "7171672369119369",
     "hashBytes": [
       113,
@@ -5387,6 +5914,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Electroforming",
+    "searchableText": "Electroforming",
     "hash": "c080a2ceecf07eba",
     "hashBytes": [
       192,
@@ -5405,6 +5933,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Atmospheric Scoop",
+    "searchableText": "Atmospheric Scoop SCOOP: If operational, this card makes adjacent or co-located aerostat sites into fuel icons.",
     "hash": "712323226363b361",
     "hashBytes": [
       113,
@@ -5423,6 +5952,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Fluidized Bed",
+    "searchableText": "Fluidized Bed",
     "hash": "c080a26ab2b230b0",
     "hashBytes": [
       192,
@@ -5440,7 +5970,8 @@
     "cardId": "refinery-07",
     "side": "black",
     "type": "refinery",
-    "name": "Laser Heated Pedestal Growth",
+    "name": "Laser-heated Pedestal Growth",
+    "searchableText": "Laser-heated Pedestal Growth SUPERLENS: -1 to all Colocated raygun size rolls.",
     "hash": "513b32624b46974d",
     "hashBytes": [
       81,
@@ -5459,6 +5990,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Foamglass Sintering",
+    "searchableText": "Foamglass Sintering",
     "hash": "c0808ad4c4c2b2e8",
     "hashBytes": [
       192,
@@ -5477,6 +6009,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Femtochemistry",
+    "searchableText": "Femtochemistry SCAVENGING: If Colocated, doubles FTs during site refuel.",
     "hash": "3161630d65630b61",
     "hashBytes": [
       49,
@@ -5495,6 +6028,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Froth Flotation",
+    "searchableText": "Froth Flotation",
     "hash": "c080a779e9ccf0b0",
     "hashBytes": [
       192,
@@ -5513,6 +6047,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Biophytolytic Algal Farm",
+    "searchableText": "Biophytolytic Algal Farm COMET LICHEN: -2 to Colocated size rolls on D Sites.",
     "hash": "31676b9351519155",
     "hashBytes": [
       49,
@@ -5530,7 +6065,8 @@
     "cardId": "refinery-09",
     "side": "white",
     "type": "refinery",
-    "name": "ISRUSabatier",
+    "name": "ISRU Sabatier",
+    "searchableText": "ISRU Sabatier",
     "hash": "c080ae56b9e8e1b0",
     "hashBytes": [
       192,
@@ -5549,6 +6085,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Termite Nest",
+    "searchableText": "Termite Nest MINE REVIVAL: As an op, remove a busted disk and place Claim on a Colocated Site of Size 2+.",
     "hash": "7133302545530931",
     "hashBytes": [
       113,
@@ -5566,7 +6103,8 @@
     "cardId": "refinery-10",
     "side": "white",
     "type": "refinery",
-    "name": "In Situ Leaching",
+    "name": "In-Situ Leaching",
+    "searchableText": "In-Situ Leaching",
     "hash": "c0c084b59baafab0",
     "hashBytes": [
       192,
@@ -5585,6 +6123,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Ionosphere Lasing",
+    "searchableText": "Ionosphere Lasing IONOSAT: If used to industrialize an Atmospheric Site, permanently gain the Powersat faction privilege.",
     "hash": "316733a7474b0767",
     "hashBytes": [
       49,
@@ -5603,6 +6142,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Magma Electrolysis",
+    "searchableText": "Magma Electrolysis",
     "hash": "c088ac7b94e0c0a8",
     "hashBytes": [
       192,
@@ -5621,6 +6161,7 @@
     "side": "black",
     "type": "refinery",
     "name": "Solid Flame",
+    "searchableText": "Solid Flame JELLYBOTS: Colocated industrialization is a free action.",
     "hash": "713136474e5a1233",
     "hashBytes": [
       113,
@@ -5639,6 +6180,7 @@
     "side": "white",
     "type": "refinery",
     "name": "Supercritical Drying",
+    "searchableText": "Supercritical Drying",
     "hash": "c080ab71b4a8e8e0",
     "hashBytes": [
       192,
@@ -5657,6 +6199,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Fissile Aerosol Laser",
+    "searchableText": "Fissile Aerosol Laser",
     "hash": "01333f8b47539d69",
     "hashBytes": [
       1,
@@ -5674,7 +6217,8 @@
     "cardId": "robonaut-01",
     "side": "white",
     "type": "robonaut",
-    "name": "Blackbody Pumped Laser",
+    "name": "Blackbody-pumped Laser",
+    "searchableText": "Blackbody-pumped Laser",
     "hash": "8080805ca2acecc0",
     "hashBytes": [
       128,
@@ -5692,7 +6236,8 @@
     "cardId": "robonaut-02",
     "side": "black",
     "type": "robonaut",
-    "name": "H BCat Inertial",
+    "name": "H-B Cat Inertial",
+    "searchableText": "H-B Cat Inertial",
     "hash": "0135352765632735",
     "hashBytes": [
       1,
@@ -5710,7 +6255,8 @@
     "cardId": "robonaut-02",
     "side": "white",
     "type": "robonaut",
-    "name": "Cat Fusion Z pinch Torch",
+    "name": "Cat Fusion Z-pinch Torch",
+    "searchableText": "Cat Fusion Z-pinch Torch",
     "hash": "8480a8748b99c6ca",
     "hashBytes": [
       132,
@@ -5729,6 +6275,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Electrophoretic Sandworm",
+    "searchableText": "Electrophoretic Sandworm",
     "hash": "15786d4b5b6d8f71",
     "hashBytes": [
       21,
@@ -5747,6 +6294,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Flywheel Tractor",
+    "searchableText": "Flywheel Tractor",
     "hash": "8480a959b8c8c8a0",
     "hashBytes": [
       132,
@@ -5764,7 +6312,8 @@
     "cardId": "robonaut-04",
     "side": "black",
     "type": "robonaut",
-    "name": "Wakefielde Beam",
+    "name": "Wakefield e-beam",
+    "searchableText": "Wakefield e-beam",
     "hash": "113d3b8b4b4f2739",
     "hashBytes": [
       17,
@@ -5783,6 +6332,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Free Electron Laser",
+    "searchableText": "Free Electron Laser",
     "hash": "8484acdc9d9cfce8",
     "hashBytes": [
       132,
@@ -5801,6 +6351,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Ablative Laser",
+    "searchableText": "Ablative Laser",
     "hash": "152b668525693939",
     "hashBytes": [
       21,
@@ -5819,6 +6370,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Kuck Mosquito",
+    "searchableText": "Kuck Mosquito",
     "hash": "808ca1f8e8c4cc98",
     "hashBytes": [
       128,
@@ -5837,6 +6389,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Nanobot",
+    "searchableText": "Nanobot",
     "hash": "116b9793531f9371",
     "hashBytes": [
       17,
@@ -5854,7 +6407,8 @@
     "cardId": "robonaut-06",
     "side": "white",
     "type": "robonaut",
-    "name": "METSteamer",
+    "name": "MET Steamer",
+    "searchableText": "MET Steamer",
     "hash": "8080aa78b2d8d8bc",
     "hashBytes": [
       128,
@@ -5872,7 +6426,8 @@
     "cardId": "robonaut-07",
     "side": "black",
     "type": "robonaut",
-    "name": "D DInertial Fusion",
+    "name": "D-D Inertial Fusion",
+    "searchableText": "D-D Inertial Fusion",
     "hash": "113f338759753739",
     "hashBytes": [
       17,
@@ -5891,6 +6446,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Neutral Beam",
+    "searchableText": "Neutral Beam",
     "hash": "8480ac58b1e1c3b0",
     "hashBytes": [
       132,
@@ -5909,6 +6465,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Helical Railgun",
+    "searchableText": "Helical Railgun",
     "hash": "0535308f04682c1d",
     "hashBytes": [
       5,
@@ -5927,6 +6484,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Nuclear Drill",
+    "searchableText": "Nuclear Drill",
     "hash": "8488a4d0b092d298",
     "hashBytes": [
       132,
@@ -5944,7 +6502,8 @@
     "cardId": "robonaut-09",
     "side": "black",
     "type": "robonaut",
-    "name": "Lorentz Propelled Microprobe",
+    "name": "Lorentz-Propelled Microprobe",
+    "searchableText": "Lorentz-Propelled Microprobe NANITES: One re-roll if fail 1 or more size rolls.",
     "hash": "15656ba647470769",
     "hashBytes": [
       21,
@@ -5962,7 +6521,8 @@
     "cardId": "robonaut-09",
     "side": "white",
     "type": "robonaut",
-    "name": "Phase Locked Diode Laser",
+    "name": "Phase-Locked Diode Laser",
+    "searchableText": "Phase-Locked Diode Laser",
     "hash": "8484aa70b8b8d8e0",
     "hashBytes": [
       132,
@@ -5980,7 +6540,8 @@
     "cardId": "robonaut-10",
     "side": "black",
     "type": "robonaut",
-    "name": "Mag Beam",
+    "name": "MagBeam",
+    "searchableText": "MagBeam -1 ISRU, +3 thrust if pushed by Powersat.",
     "hash": "112d640b47632b39",
     "hashBytes": [
       17,
@@ -5999,6 +6560,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Rock Splitter",
+    "searchableText": "Rock Splitter",
     "hash": "808cacf4b4b4dcb2",
     "hashBytes": [
       128,
@@ -6017,6 +6579,7 @@
     "side": "black",
     "type": "robonaut",
     "name": "Quantum Cascade Laser",
+    "searchableText": "Quantum Cascade Laser",
     "hash": "1134350b6b668f69",
     "hashBytes": [
       17,
@@ -6034,7 +6597,8 @@
     "cardId": "robonaut-11",
     "side": "white",
     "type": "robonaut",
-    "name": "Solar Pumped MHDExciplex Laser",
+    "name": "Solar-pumped MHD Exciplex Laser",
+    "searchableText": "Solar-pumped MHD Exciplex Laser",
     "hash": "8088a870b6bb7be4",
     "hashBytes": [
       128,
@@ -6052,7 +6616,8 @@
     "cardId": "robonaut-12",
     "side": "black",
     "type": "robonaut",
-    "name": "MITEEArcjet",
+    "name": "MITEE Arcjet",
+    "searchableText": "MITEE Arcjet",
     "hash": "112f2e8d67642c39",
     "hashBytes": [
       17,
@@ -6071,6 +6636,7 @@
     "side": "white",
     "type": "robonaut",
     "name": "Tungsten Resistojet",
+    "searchableText": "Tungsten Resistojet",
     "hash": "8080a858b88ad9b6",
     "hashBytes": [
       128,
@@ -6089,6 +6655,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "The Presence",
+    "searchableText": "The Presence You may add 1 & move 2 delegates during a fund-raise op.",
     "hash": "8ccd81c1c36321c2",
     "hashBytes": [
       140,
@@ -6106,7 +6673,8 @@
     "cardId": "spaceborn-01",
     "side": "white",
     "type": "spaceborn",
-    "name": "VRSimulcasters",
+    "name": "VR Simulcasters",
+    "searchableText": "VR Simulcasters",
     "hash": "aceed6e2e8e8c882",
     "hashBytes": [
       172,
@@ -6125,6 +6693,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Shipbrain",
+    "searchableText": "Shipbrain You may cargo transfer between your non-ET Home Bernal and LEO. Cannot enter Aerobrake Hazards.",
     "hash": "cccc8b83c34e3736",
     "hashBytes": [
       204,
@@ -6143,6 +6712,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Neural Pilots",
+    "searchableText": "Neural Pilots Can't enter aerobrake.",
     "hash": "8cc4c0f0f0b6b6b2",
     "hashBytes": [
       140,
@@ -6161,6 +6731,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Zombie Wanderers",
+    "searchableText": "Zombie Wanderers As an Op, Decom. to remove Busted disk and place Claim on a Colocated Site of Size 2+.",
     "hash": "8cec8ac9864c3434",
     "hashBytes": [
       140,
@@ -6179,6 +6750,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Boston Hexapods",
+    "searchableText": "Boston Hexapods",
     "hash": "8c8cc88c86c4a4b4",
     "hashBytes": [
       140,
@@ -6197,6 +6769,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Sunburn League",
+    "searchableText": "Sunburn League You may ignore the Solar-Power icon on 1 Colocated card.",
     "hash": "ac8e82c1c2883832",
     "hashBytes": [
       172,
@@ -6215,6 +6788,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Lava Lamp Evangelists",
+    "searchableText": "Lava Lamp Evangelists",
     "hash": "8ca6c2e2f0e6a2b0",
     "hashBytes": [
       140,
@@ -6233,6 +6807,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Death Insurers",
+    "searchableText": "Death Insurers You may implant the parenthood augmentation into your spaceborn.",
     "hash": "adee8ccccd0727e6",
     "hashBytes": [
       173,
@@ -6251,6 +6826,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Clone Entrepreneurs",
+    "searchableText": "Clone Entrepreneurs",
     "hash": "acecb2b268fe8ea2",
     "hashBytes": [
       172,
@@ -6269,6 +6845,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Transplaneteers",
+    "searchableText": "Transplaneteers You may boost contracts to your Home Bernal without doubling Boost cost.",
     "hash": "adaca6c6e2ce9c82",
     "hashBytes": [
       173,
@@ -6287,6 +6864,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Prehensilists",
+    "searchableText": "Prehensilists",
     "hash": "acacc28e8ecc9a82",
     "hashBytes": [
       172,
@@ -6305,6 +6883,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Drone Queen",
+    "searchableText": "Drone Queen Implant is a 1/turn free action.",
     "hash": "89cc8ecaa29b8986",
     "hashBytes": [
       137,
@@ -6323,6 +6902,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Teleoperators",
+    "searchableText": "Teleoperators",
     "hash": "c8c0868ccac3d2a6",
     "hashBytes": [
       200,
@@ -6341,6 +6921,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Jarhead Insurgents",
+    "searchableText": "Jarhead Insurgents You may commit Felonies against players with no spaceborn.",
     "hash": "a9a68acec5918a82",
     "hashBytes": [
       169,
@@ -6359,6 +6940,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Transhuman Activists",
+    "searchableText": "Transhuman Activists",
     "hash": "a8a28e8ea6cecc82",
     "hashBytes": [
       168,
@@ -6376,7 +6958,8 @@
     "cardId": "spaceborn-09",
     "side": "purple",
     "type": "spaceborn",
-    "name": "Space Jokeys",
+    "name": "Space Jockeys",
+    "searchableText": "Space Jockeys Constructing Space Elevators is a free action.",
     "hash": "ad8d8f8dc16d6182",
     "hashBytes": [
       173,
@@ -6395,6 +6978,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Exoskeletalists",
+    "searchableText": "Exoskeletalists",
     "hash": "ac8c82d0c8d09ac2",
     "hashBytes": [
       172,
@@ -6413,6 +6997,7 @@
     "side": "purple",
     "type": "spaceborn",
     "name": "Bubbleopolis",
+    "searchableText": "Bubbleopolis Your Spacecraft may land or liftoff sites with Size = net thrust.",
     "hash": "8cacaac6c3823836",
     "hashBytes": [
       140,
@@ -6431,6 +7016,7 @@
     "side": "white",
     "type": "spaceborn",
     "name": "Gabonese Mining Consortium",
+    "searchableText": "Gabonese Mining Consortium",
     "hash": "8cc88a8c8cc8beb2",
     "hashBytes": [
       140,
@@ -6449,6 +7035,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Ablative Nozzle",
+    "searchableText": "Ablative Nozzle",
     "hash": "596b348b19653539",
     "hashBytes": [
       89,
@@ -6467,6 +7054,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Ablative Plate",
+    "searchableText": "Ablative Plate",
     "hash": "c8808ce2e2eec088",
     "hashBytes": [
       200,
@@ -6485,6 +7073,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Magnetic Nozzle",
+    "searchableText": "Magnetic Nozzle",
     "hash": "713f35a16a763239",
     "hashBytes": [
       113,
@@ -6503,6 +7092,7 @@
     "side": "white",
     "type": "thruster",
     "name": "De Laval Nozzle",
+    "searchableText": "De Laval Nozzle",
     "hash": "e8c0887bbe96d788",
     "hashBytes": [
       232,
@@ -6521,6 +7111,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Timberwind",
+    "searchableText": "Timberwind",
     "hash": "79773e8f474d3839",
     "hashBytes": [
       121,
@@ -6539,6 +7130,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Dumbo",
+    "searchableText": "Dumbo",
     "hash": "c8808cd8989bd98c",
     "hashBytes": [
       200,
@@ -6557,6 +7149,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Ion Drive",
+    "searchableText": "Ion Drive",
     "hash": "593f3dc94b63293d",
     "hashBytes": [
       89,
@@ -6575,6 +7168,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Hall Effect",
+    "searchableText": "Hall Effect",
     "hash": "c888a2f0f8a4d08c",
     "hashBytes": [
       200,
@@ -6592,7 +7186,8 @@
     "cardId": "thruster-05",
     "side": "black",
     "type": "thruster",
-    "name": "MPDT wave",
+    "name": "MPD T-wave",
+    "searchableText": "MPD T-wave",
     "hash": "593536376666270f",
     "hashBytes": [
       89,
@@ -6611,6 +7206,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Mass Driver",
+    "searchableText": "Mass Driver",
     "hash": "c880ac78a8d8c088",
     "hashBytes": [
       200,
@@ -6628,7 +7224,8 @@
     "cardId": "thruster-06",
     "side": "black",
     "type": "thruster",
-    "name": "n 6Li Microfission",
+    "name": "n-6Li Microfission",
+    "searchableText": "n-6Li Microfission",
     "hash": "59331b9954663539",
     "hashBytes": [
       89,
@@ -6647,6 +7244,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Metastable Helium",
+    "searchableText": "Metastable Helium",
     "hash": "c884acdc9c9ad288",
     "hashBytes": [
       200,
@@ -6665,6 +7263,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Vortex Confined Nozzle",
+    "searchableText": "Vortex Confined Nozzle",
     "hash": "513934831b693137",
     "hashBytes": [
       81,
@@ -6682,7 +7281,8 @@
     "cardId": "thruster-07",
     "side": "white",
     "type": "thruster",
-    "name": "Monoatomic Plug Nozzle",
+    "name": "Monatomic Plug Nozzle",
+    "searchableText": "Monatomic Plug Nozzle",
     "hash": "c888a250b98bc8a4",
     "hashBytes": [
       200,
@@ -6701,6 +7301,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Electric Sail",
+    "searchableText": "Electric Sail DeCom. Immune to Flare & Belt Rolls.",
     "hash": "71696b87476a2a3d",
     "hashBytes": [
       113,
@@ -6719,6 +7320,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Photon Heliogyro",
+    "searchableText": "Photon Heliogyro DeCom. Immune to Flare & Belt Rolls.",
     "hash": "c8c482ccbc9ac88c",
     "hashBytes": [
       200,
@@ -6737,6 +7339,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Mag Sail",
+    "searchableText": "Mag Sail DeCom. Each Radiation Belt entered = Bonus Burn",
     "hash": "7179376763672935",
     "hashBytes": [
       113,
@@ -6755,6 +7358,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Photon Kite Sail",
+    "searchableText": "Photon Kite Sail DeCom. Immune to Flare & Belt Rolls.",
     "hash": "f8c0c0f2b8b0d28c",
     "hashBytes": [
       248,
@@ -6773,6 +7377,7 @@
     "side": "black",
     "type": "thruster",
     "name": "Pulsed Plasmoid",
+    "searchableText": "Pulsed Plasmoid",
     "hash": "71792db572632f09",
     "hashBytes": [
       113,
@@ -6791,6 +7396,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Ponderomotive VASIMR",
+    "searchableText": "Ponderomotive VASIMR",
     "hash": "c88cacdcac8cca82",
     "hashBytes": [
       200,
@@ -6808,7 +7414,8 @@
     "cardId": "thruster-11",
     "side": "black",
     "type": "thruster",
-    "name": "Dual Stage4 Grid",
+    "name": "Dual-Stage 4-Grid",
+    "searchableText": "Dual-Stage 4-Grid",
     "hash": "51383a13516a2f3d",
     "hashBytes": [
       81,
@@ -6827,6 +7434,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Pulsed Inductive",
+    "searchableText": "Pulsed Inductive",
     "hash": "c080a8c8999bcb8c",
     "hashBytes": [
       192,
@@ -6844,7 +7452,8 @@
     "cardId": "thruster-12",
     "side": "black",
     "type": "thruster",
-    "name": "Colliding Beam H BFusion",
+    "name": "Colliding Beam H-B Fusion",
+    "searchableText": "Colliding Beam H-B Fusion",
     "hash": "713f3f3f777a383d",
     "hashBytes": [
       113,
@@ -6863,6 +7472,7 @@
     "side": "white",
     "type": "thruster",
     "name": "Re Solar Moth",
+    "searchableText": "Re Solar Moth",
     "hash": "e0c2cec6aec6d288",
     "hashBytes": [
       224,
@@ -6873,186 +7483,6 @@
       198,
       210,
       136
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc16612272734524402827EA16954D032D5AFC457E2A8BFF06E0AA9F3C4E4.webp",
-    "cardId": "httpcloud3steamusercontentcomugc16612272734524402827EA16954D032D5AFC457E2A8BFF06E0AA9F3C4E4",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc16612272734524402827ea16954d032d5afc457e2a8bff06e0aa9f3c4e4.webp",
-    "name": "",
-    "hash": "024ea5b5a54aa808",
-    "hashBytes": [
-      2,
-      78,
-      165,
-      181,
-      165,
-      74,
-      168,
-      8
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc16612272734524408757DA5A22D49C6325B2E5C945444811B797F0149F6.webp",
-    "cardId": "httpcloud3steamusercontentcomugc16612272734524408757DA5A22D49C6325B2E5C945444811B797F0149F6",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc16612272734524408757da5a22d49c6325b2e5c945444811b797f0149f6.webp",
-    "name": "",
-    "hash": "3c51baaa324d0000",
-    "hashBytes": [
-      60,
-      81,
-      186,
-      170,
-      50,
-      77,
-      0,
-      0
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc1669106010808738084F044E9425186A8A27F1BF0C0FA574854B658F723.webp",
-    "cardId": "httpcloud3steamusercontentcomugc1669106010808738084F044E9425186A8A27F1BF0C0FA574854B658F723",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc1669106010808738084f044e9425186a8a27f1bf0c0fa574854b658f723.webp",
-    "name": "",
-    "hash": "ac65c0b845ab6363",
-    "hashBytes": [
-      172,
-      101,
-      192,
-      184,
-      69,
-      171,
-      99,
-      99
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc16691060108087382846EA220BA8FAFAC2A775A3942FCCB8EAED2AA4053.webp",
-    "cardId": "httpcloud3steamusercontentcomugc16691060108087382846EA220BA8FAFAC2A775A3942FCCB8EAED2AA4053",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc16691060108087382846ea220ba8fafac2a775a3942fccb8eaed2aa4053.webp",
-    "name": "",
-    "hash": "54caf4d090a46363",
-    "hashBytes": [
-      84,
-      202,
-      244,
-      208,
-      144,
-      164,
-      99,
-      99
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc1818901417401148137DF11D5F63679A3D30B3DA3E79B7806DC806658EA.webp",
-    "cardId": "httpcloud3steamusercontentcomugc1818901417401148137DF11D5F63679A3D30B3DA3E79B7806DC806658EA",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc1818901417401148137df11d5f63679a3d30b3da3e79b7806dc806658ea.webp",
-    "name": "",
-    "hash": "145c6743697ba424",
-    "hashBytes": [
-      20,
-      92,
-      103,
-      67,
-      105,
-      123,
-      164,
-      36
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc18189014174011492691B851A71E10C3D2008BD7B150729221155BB7155.webp",
-    "cardId": "httpcloud3steamusercontentcomugc18189014174011492691B851A71E10C3D2008BD7B150729221155BB7155",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc18189014174011492691b851a71e10c3d2008bd7b150729221155bb7155.webp",
-    "name": "",
-    "hash": "242cc9db6ce924bc",
-    "hashBytes": [
-      36,
-      44,
-      201,
-      219,
-      108,
-      233,
-      36,
-      188
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc1818901417401150936A2A9DBA6DA1C8BAFEAD7A07F7FDFF072327877AF.webp",
-    "cardId": "httpcloud3steamusercontentcomugc1818901417401150936A2A9DBA6DA1C8BAFEAD7A07F7FDFF072327877AF",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc1818901417401150936a2a9dba6da1c8bafead7a07f7fdff072327877af.webp",
-    "name": "",
-    "hash": "14178a2a68484b00",
-    "hashBytes": [
-      20,
-      23,
-      138,
-      42,
-      104,
-      72,
-      75,
-      0
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc1818901417401151418BFFA214D3466D2D848DF4A65065B859C0E9D2A9A.webp",
-    "cardId": "httpcloud3steamusercontentcomugc1818901417401151418BFFA214D3466D2D848DF4A65065B859C0E9D2A9A",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc1818901417401151418bffa214d3466d2d848df4a65065b859c0e9d2a9a.webp",
-    "name": "",
-    "hash": "c8cb86ca32584900",
-    "hashBytes": [
-      200,
-      203,
-      134,
-      202,
-      50,
-      88,
-      73,
-      0
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc18290256580439161477BF607E643D70E186C0075559EE5CDAD4BF6309E.webp",
-    "cardId": "httpcloud3steamusercontentcomugc18290256580439161477BF607E643D70E186C0075559EE5CDAD4BF6309E",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc18290256580439161477bf607e643d70e186c0075559ee5cdad4bf6309e.webp",
-    "name": "",
-    "hash": "3f1d5d1555551757",
-    "hashBytes": [
-      63,
-      29,
-      93,
-      21,
-      85,
-      85,
-      23,
-      87
-    ]
-  },
-  {
-    "filename": "httpcloud3steamusercontentcomugc18290256580439164183CD308EFA3C352F7AD31223D002846EE98528F1B.webp",
-    "cardId": "httpcloud3steamusercontentcomugc18290256580439164183CD308EFA3C352F7AD31223D002846EE98528F1B",
-    "side": null,
-    "type": "httpcloud3steamusercontentcomugc18290256580439164183cd308efa3c352f7ad31223d002846ee98528f1b.webp",
-    "name": "",
-    "hash": "6d3f5b7f4f1e5f7f",
-    "hashBytes": [
-      109,
-      63,
-      91,
-      127,
-      79,
-      30,
-      95,
-      127
     ]
   }
 ]

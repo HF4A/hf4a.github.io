@@ -1,0 +1,222 @@
+[
+  {
+    "filename": "Spaceborn01-White-VRSimulcasters.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "VR Simulcasters",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A young woman with dark curly hair in a pink shirt stands before a tropical setting, with a holographic blue figure of a person gesturing beside her."
+  },
+  {
+    "filename": "Spaceborn01-Purple-ThePresence.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "The Presence",
+    "mass": 1,
+    "radHard": 7,
+    "ability": "You may add 1 & move 2 delegates during a fund-raise op.",
+    "future": "TW COMMANDER FUTURE: Reqs = Contribute 8+ & more than any opponent to isototal. Effects = Your delegates count as 2 votes, 9 VP.",
+    "imageDescription": "A man embraces a glowing blue holographic humanoid figure, symbolizing the intimate connection between humans and their digital presence."
+  },
+  {
+    "filename": "Spaceborn02-White-NeuralPilots.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Neural Pilots",
+    "mass": 1,
+    "radHard": 7,
+    "ability": "Can't enter aerobrake.",
+    "future": null,
+    "imageDescription": "A futuristic spaceplane with twin engines flies through an orange-tinted sky, representing brain-integrated spacecraft piloting technology."
+  },
+  {
+    "filename": "Spaceborn02-Purple-Shipbrain.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Shipbrain",
+    "mass": 0,
+    "radHard": 8,
+    "ability": "You may cargo transfer between your non-ET Home Bernal and LEO. Cannot enter Aerobrake Hazards.",
+    "future": "WARDEN STAR-SHOT FUTURE: Reqs = Ad astra with TW Thruster and Promoted Freighter. Effect = Freighter/Mobile Factories receive +1 thrust, 7 VP.",
+    "imageDescription": "A stylized human skull with cybernetic spine attachments floats against a purple background, representing humans who have merged with their spacecraft."
+  },
+  {
+    "filename": "Spaceborn03-White-BostonHexapods.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Boston Hexapods",
+    "mass": 1,
+    "radHard": 6,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A woman in a white spacesuit examines a holographic display showing a six-legged robotic walker design, demonstrating hexapod mobility technology."
+  },
+  {
+    "filename": "Spaceborn03-Purple-ZombieWanderers.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Zombie Wanderers",
+    "mass": 1,
+    "radHard": 7,
+    "ability": "As an Op, Decom. to remove Busted disk and place Claim on a Colocated Site of Size 2+.",
+    "future": "AVATAR FUTURE: Reqs = This card at Promoted Bernal with Neptune zone Dirtside, Active Law = Individuality. Effects = immune to Felonies, 9 VP.",
+    "imageDescription": "A pale woman with white hair wearing protective goggles stands before a computer display showing 'data transfer', representing humans with 3D-printed organ scaffolding."
+  },
+  {
+    "filename": "Spaceborn04-White-LavaLampEvangelists.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Lava Lamp Evangelists",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A bearded man wearing a headband and dark clothing with glowing orange patterns resembling lava lamp fluid, promoting local nanite-based energy generation."
+  },
+  {
+    "filename": "Spaceborn04-Purple-SunburnLeague.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Sunburn League",
+    "mass": 2,
+    "radHard": 6,
+    "ability": "You may ignore the Solar-Power icon on 1 Colocated card.",
+    "future": "NANITE GOO FUTURE: Reqs = This card at your Colonized Push Factory. Effects = 1 free implant op at this Site, 11 VP.",
+    "imageDescription": "A figure with sun-damaged, mottled skin adjusts their collar, representing humans adapted to survive high radiation environments through nanite technology."
+  },
+  {
+    "filename": "Spaceborn05-White-CloneEntrepreneurs.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Clone Entrepreneurs",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "Two identical fetuses float in mirrored artificial wombs surrounded by blue energy, representing cloning technology promising immortality."
+  },
+  {
+    "filename": "Spaceborn05-Purple-DeathInsurers.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Death Insurers",
+    "mass": 1,
+    "radHard": 8,
+    "ability": "You may implant the parenthood augmentation into your spaceborn.",
+    "future": "VATS FUTURE: Reqs = Your Colonist with the life-support augmentation has a wunderkind. Effects = 9 VP.",
+    "imageDescription": "A man with cybernetic implants on his head and temples closes his eyes peacefully, representing advanced hibernation jar technology for brain preservation."
+  },
+  {
+    "filename": "Spaceborn06-White-Prehensilists.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Prehensilists",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A luminous blue teardrop shape floats among tentacle-like appendages, representing humans adapted for weightless environments with prehensile capabilities."
+  },
+  {
+    "filename": "Spaceborn06-Purple-Transplaneteers.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Transplaneteers",
+    "mass": 0,
+    "radHard": 7,
+    "ability": "You may boost contracts to your Home Bernal without doubling Boost cost.",
+    "future": "INTERSTELLAR EXPLORATION FUTURE: Reqs = this card plus augmented Colonist at EM Sunlens. Effects = immediate research grant at no cost, 14 VP.",
+    "imageDescription": "A blue-green terraformed planet floats in the darkness of space, representing spaceborn humans adapted to survive radiation and low gravity but unable to live at 1 gee."
+  },
+  {
+    "filename": "Spaceborn07-White-Teleoperators.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Teleoperators",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A man wearing VR goggles watches a white robot holding a pink flower, demonstrating remote robonaut operation at distances up to a light minute away."
+  },
+  {
+    "filename": "Spaceborn07-Purple-DroneQueen.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Drone Queen",
+    "mass": 1,
+    "radHard": 6,
+    "ability": "Implant is a 1/turn free action.",
+    "future": "LIC SCAN FUTURE: Reqs = This card and another Promoted Colonist at your Synodic Comet Factory. Effects = If you produce any isotopes as part of a site refuel operation, you may move 1 of them to your Bank, 9 VP.",
+    "imageDescription": "A woman's face is overlaid with a hierarchical organizational chart, representing neurological control of remote drones merging human brains with machine capabilities."
+  },
+  {
+    "filename": "Spaceborn08-White-TranshumanActivists.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Transhuman Activists",
+    "mass": 1,
+    "radHard": 5,
+    "ability": null,
+    "future": null,
+    "imageDescription": "Diverse human figures hold hands around planet Earth, representing activists who believe civilization's future lies with those adapted to space conditions."
+  },
+  {
+    "filename": "Spaceborn08-Purple-JarheadInsurgents.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Jarhead Insurgents",
+    "mass": 0,
+    "radHard": 6,
+    "ability": "You may commit Felonies against players with no spaceborn.",
+    "future": "EXODUS FUTURE: Reqs = Ad astra with TW Thruster and your Promoted Bernal. Effects = Casus belli, 12 VP.",
+    "imageDescription": "A futuristic identification device with fingerprint scanner, holographic display, and biometric readers floats against a blue background."
+  },
+  {
+    "filename": "Spaceborn09-White-Exoskeletalists.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Exoskeletalists",
+    "mass": 2,
+    "radHard": 6,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A person wearing a powered exoskeleton walks through a red rocky canyon landscape, demonstrating wearable limb technology suitable for space conditions."
+  },
+  {
+    "filename": "Spaceborn09-Purple-SpaceJokeys.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Space Jockeys",
+    "mass": 1,
+    "radHard": 7,
+    "ability": "Constructing Space Elevators is a free action.",
+    "future": "ISOTOPE CARTEL FUTURE: Reqs = This card and 15 isotope at your Promoted Anchored Bernal. Effects = Isotope exchange rate is now 12 Aqua for all players. Endgame Effect: 9 VP.",
+    "imageDescription": "A sleek black spacecraft with glowing orange engines flies through blue skies, representing pilots who harness gravity and high thrust to maintain links between gravity wells."
+  },
+  {
+    "filename": "Spaceborn10-White-GaboneseMiningConsortium.webp",
+    "type": "spaceborn",
+    "side": "white",
+    "name": "Gabonese Mining Consortium",
+    "mass": 2,
+    "radHard": 6,
+    "ability": null,
+    "future": null,
+    "imageDescription": "A child sits on the ground eating a hamburger with mining equipment and supplies nearby, representing a space mining operation focused on post-scarcity through raw materials."
+  },
+  {
+    "filename": "Spaceborn10-Purple-Bubbleopolis.webp",
+    "type": "spaceborn",
+    "side": "purple",
+    "name": "Bubbleopolis",
+    "mass": 1,
+    "radHard": 7,
+    "ability": "Your Spacecraft may land or liftoff sites with Size = net thrust.",
+    "future": "QUANTUM ENTANGLEMENT FUTURE: Reqs = This card at Haumea with Operational X reactor. Effects = 1 reroll per Crash Hazard Roll, 10 VP.",
+    "imageDescription": "A transparent domed city floats above a barren planetary surface under a starry sky, depicting Bubbleopolis, a libertarian space colony from the 'Quantum Vibe' sci-fi comics."
+  }
+]
