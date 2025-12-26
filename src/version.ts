@@ -25,5 +25,6 @@
 //   0.3.3 - Fix OCR engine: force single-threaded WASM for GitHub Pages compatibility
 //   0.3.4 - Improve text matching: clean OCR garbage, try last-N-words, tighter title region
 //   0.3.5 - Progressive matching: all word combos, type-first search, stop words, better logging
-export const APP_VERSION = '0.3.5';
+//   0.3.6 - Fix OCR engine: dynamic import ensures ONNX config before library loads
+export const APP_VERSION = '0.3.6';
 export const BUILD_DATE = '2025-12-26';
