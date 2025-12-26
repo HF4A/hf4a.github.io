@@ -6,15 +6,19 @@
  *
  * v0.3.1: Replaces OCR.space API with local ONNX inference
  * v0.3.3: Force single-threaded WASM for GitHub Pages compatibility
- * v0.3.5: Dynamic import to ensure ONNX config is set first
  */
 
+import Ocr from '@gutenye/ocr-browser';
+import * as ort from 'onnxruntime-web';
 import { log } from '../../../store/logsStore';
+
+// Force single-threaded WASM execution
+// GitHub Pages doesn't support COOP/COEP headers required for SharedArrayBuffer
+ort.env.wasm.numThreads = 1;
 
 export type OcrEngineStatus = 'idle' | 'loading' | 'ready' | 'error';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type OcrInstance = any;  // Dynamic import, can't get type statically
+type OcrInstance = Awaited<ReturnType<typeof Ocr.create>>;
 
 interface OcrEngineState {
   status: OcrEngineStatus;
@@ -29,25 +33,6 @@ const engine: OcrEngineState = {
   loadPromise: null,
   instance: null,
 };
-
-/**
- * Configure ONNX runtime for GitHub Pages compatibility
- * Must be called BEFORE loading the OCR library
- */
-async function configureOnnxRuntime(): Promise<void> {
-  try {
-    const ort = await import('onnxruntime-web');
-
-    // Force single-threaded WASM execution
-    // GitHub Pages doesn't support COOP/COEP headers required for SharedArrayBuffer
-    ort.env.wasm.numThreads = 1;
-
-    log.debug('[OcrEngine] ONNX runtime configured: numThreads=1');
-  } catch (err) {
-    log.error(`[OcrEngine] Failed to configure ONNX: ${err}`);
-    throw err;
-  }
-}
 
 /**
  * Load the OCR engine (lazy, with promise deduplication)
@@ -65,13 +50,6 @@ export async function loadOcrEngine(): Promise<void> {
       const basePath = import.meta.env.BASE_URL;
       const startTime = performance.now();
 
-      // Step 1: Configure ONNX runtime FIRST
-      await configureOnnxRuntime();
-
-      // Step 2: Now dynamically import OCR library
-      const { default: Ocr } = await import('@gutenye/ocr-browser');
-
-      // Step 3: Create OCR instance
       engine.instance = await Ocr.create({
         models: {
           detectionPath: `${basePath}models/ch_PP-OCRv4_det_infer.onnx`,
