@@ -23,23 +23,27 @@ import type { Card } from '../../../types/card';
 
 /**
  * Merge cloud-identified cards with OpenCV-detected bboxes.
- * Cloud API provides accurate card identification but UNRELIABLE absolute bbox positions.
- * However, cloud bboxes are RELATIVELY correct (card A left of card B is accurate).
- * OpenCV provides accurate bboxes but lower recall (may miss some cards).
  *
- * Strategy: GRID-BASED MATCHING
- * 1. Detect grid dimensions from cloud cards (e.g., 3x3)
- * 2. Assign each cloud card to a grid cell based on relative position
- * 3. Assign each OpenCV bbox to a grid cell based on position
- * 4. Match by grid cell - handles missing detections gracefully
- * 5. Transform unmatched cloud bboxes to image coordinate space
+ * PRINCIPLE: OpenCV is source of truth for POSITION, Cloud is source of truth for IDENTIFICATION.
+ *
+ * Cloud API bbox positions are UNRELIABLE (fake grid coords, wrong positions).
+ * OpenCV bbox positions are ACCURATE but may miss cards (lower recall).
+ *
+ * Strategy: SIMPLE SORTED-ORDER MATCHING
+ * 1. Sort OpenCV bboxes by position (reading order: top-to-bottom, left-to-right)
+ * 2. Sort cloud cards by position (for relative ordering only)
+ * 3. Pair 1:1 by array index - use cloud ID + OpenCV bbox
+ * 4. Extra OpenCV bboxes → "unknown" (cloud missed identification)
+ * 5. Extra cloud cards → DROPPED (no reliable position available)
+ *
+ * This is simple and avoids the complexity of grid matching across incompatible coordinate spaces.
  */
 function mergeCloudWithOpenCV(
   cloudCards: IdentifiedCard[],
   opencvCorners: Point[][],
   defaultScanResult: string
 ): IdentifiedCard[] {
-  // If no OpenCV corners, just return cloud cards as-is (fallback)
+  // If no OpenCV corners, return cloud cards as fallback (positions may be wrong)
   if (opencvCorners.length === 0) {
     console.log('[mergeCloudWithOpenCV] No OpenCV corners, using cloud bboxes (fallback)');
     return cloudCards;
@@ -51,200 +55,79 @@ function mergeCloudWithOpenCV(
   });
 
   const getBounds = (corners: Point[]) => ({
-    minX: Math.min(...corners.map(p => p.x)),
-    maxX: Math.max(...corners.map(p => p.x)),
     minY: Math.min(...corners.map(p => p.y)),
     maxY: Math.max(...corners.map(p => p.y)),
   });
 
-  // Detect grid dimensions by clustering Y coordinates into rows
-  const detectGrid = (centers: Point[]): { rows: number; cols: number; rowTolerance: number } => {
-    if (centers.length === 0) return { rows: 1, cols: 1, rowTolerance: 50 };
+  // Calculate row tolerance from OpenCV bbox heights (50% of average height)
+  const avgHeight = opencvCorners.reduce((sum, corners) => {
+    const bounds = getBounds(corners);
+    return sum + (bounds.maxY - bounds.minY);
+  }, 0) / opencvCorners.length;
+  const rowTolerance = avgHeight * 0.5;
 
-    // Sort by Y to find row breaks
-    const sortedY = [...centers].sort((a, b) => a.y - b.y);
-    const yGaps: number[] = [];
-    for (let i = 1; i < sortedY.length; i++) {
-      yGaps.push(sortedY[i].y - sortedY[i - 1].y);
-    }
-
-    // Row tolerance is the median small gap (within-row spacing is small, between-row is large)
-    const sortedGaps = [...yGaps].sort((a, b) => a - b);
-    const medianGap = sortedGaps[Math.floor(sortedGaps.length / 2)] || 50;
-    const rowTolerance = medianGap * 1.5;
-
-    // Count rows
-    let rows = 1;
-    for (const gap of yGaps) {
-      if (gap > rowTolerance) rows++;
-    }
-
-    const cols = Math.ceil(centers.length / rows);
-    return { rows, cols, rowTolerance };
-  };
-
-  // Assign items to grid cells
-  const assignToGrid = <T extends { center: Point }>(
-    items: T[],
-    _rows: number,
-    _cols: number,
-    rowTolerance: number
-  ): Map<string, T> => {
-    const grid = new Map<string, T>();
-
-    // Sort by Y to group into rows
-    const sortedByY = [...items].sort((a, b) => a.center.y - b.center.y);
-
-    let currentRow = 0;
-    let rowStartY = sortedByY[0]?.center.y ?? 0;
-    const rowItems: T[][] = [[]];
-
-    for (const item of sortedByY) {
-      if (item.center.y - rowStartY > rowTolerance) {
-        currentRow++;
-        rowItems[currentRow] = [];
-        rowStartY = item.center.y;
+  // Sort by reading order: group into rows by Y, then sort by X within rows
+  const sortByReadingOrder = <T extends { center: Point }>(items: T[]): T[] => {
+    return [...items].sort((a, b) => {
+      // If Y difference is small, they're in the same row - sort by X
+      if (Math.abs(a.center.y - b.center.y) < rowTolerance) {
+        return a.center.x - b.center.x;
       }
-      rowItems[currentRow].push(item);
-    }
-
-    // Within each row, sort by X and assign column
-    for (let row = 0; row < rowItems.length; row++) {
-      const sorted = rowItems[row].sort((a, b) => a.center.x - b.center.x);
-      for (let col = 0; col < sorted.length; col++) {
-        grid.set(`${row},${col}`, sorted[col]);
-      }
-    }
-
-    return grid;
+      // Otherwise sort by Y (top to bottom)
+      return a.center.y - b.center.y;
+    });
   };
 
-  // Prepare cloud items
-  const cloudItems = cloudCards.map(card => ({
-    card,
-    center: getCenter(card.corners),
-    bounds: getBounds(card.corners),
-  }));
+  // Sort OpenCV bboxes by position (source of truth for positions)
+  const sortedOpenCV = sortByReadingOrder(
+    opencvCorners.map(corners => ({ corners, center: getCenter(corners) }))
+  );
 
-  // Prepare OpenCV items
-  const opencvItems = opencvCorners.map(corners => ({
-    corners,
-    center: getCenter(corners),
-    bounds: getBounds(corners),
-  }));
+  // Sort cloud cards by their (unreliable) positions for relative ordering
+  const sortedCloud = sortByReadingOrder(
+    cloudCards.map(card => ({ card, center: getCenter(card.corners) }))
+  );
 
-  // Detect grid from cloud (it has higher recall)
-  const cloudCenters = cloudItems.map(c => c.center);
-  const { rows, cols, rowTolerance: cloudRowTolerance } = detectGrid(cloudCenters);
-
-  // Assign cloud cards to grid cells
-  const cloudGrid = assignToGrid(cloudItems, rows, cols, cloudRowTolerance);
-
-  // Calculate OpenCV row tolerance from bbox heights
-  const opencvAvgHeight = opencvItems.reduce((sum, item) =>
-    sum + (item.bounds.maxY - item.bounds.minY), 0) / opencvItems.length;
-  const opencvRowTolerance = opencvAvgHeight * 0.5;
-
-  // Assign OpenCV bboxes to grid cells
-  const opencvGrid = assignToGrid(opencvItems, rows, cols, opencvRowTolerance);
-
-  // Calculate coordinate transform from cloud to OpenCV space
-  // Use ALL matched pairs for better accuracy
-  const matchedCloud: Point[] = [];
-  const matchedOpenCV: Point[] = [];
-
-  for (const [cell, cloudItem] of cloudGrid) {
-    const opencvItem = opencvGrid.get(cell);
-    if (opencvItem) {
-      matchedCloud.push(cloudItem.center);
-      matchedOpenCV.push(opencvItem.center);
-    }
-  }
-
-  // Linear interpolation helper with extrapolation support
-  const lerp = (value: number, inMin: number, inMax: number, outMin: number, outMax: number) => {
-    if (inMax === inMin) return (outMin + outMax) / 2;
-    return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
-  };
-
-  // Build transform from matched pairs
-  let transformCorners: (corners: Point[]) => Point[];
-
-  if (matchedCloud.length >= 2) {
-    const cloudBounds = {
-      minX: Math.min(...matchedCloud.map(p => p.x)),
-      maxX: Math.max(...matchedCloud.map(p => p.x)),
-      minY: Math.min(...matchedCloud.map(p => p.y)),
-      maxY: Math.max(...matchedCloud.map(p => p.y)),
-    };
-    const opencvBounds = {
-      minX: Math.min(...matchedOpenCV.map(p => p.x)),
-      maxX: Math.max(...matchedOpenCV.map(p => p.x)),
-      minY: Math.min(...matchedOpenCV.map(p => p.y)),
-      maxY: Math.max(...matchedOpenCV.map(p => p.y)),
-    };
-
-    transformCorners = (corners: Point[]): Point[] => {
-      return corners.map(p => ({
-        x: lerp(p.x, cloudBounds.minX, cloudBounds.maxX, opencvBounds.minX, opencvBounds.maxX),
-        y: lerp(p.y, cloudBounds.minY, cloudBounds.maxY, opencvBounds.minY, opencvBounds.maxY),
-      }));
-    };
-  } else {
-    // Fallback: use cloud corners as-is
-    transformCorners = (corners) => corners;
-  }
-
-  // Build merged result
   const mergedCards: IdentifiedCard[] = [];
-  const usedOpencvCells = new Set<string>();
+  const extraCloudCount = Math.max(0, sortedCloud.length - sortedOpenCV.length);
 
-  // First pass: cloud cards with OpenCV matches (use OpenCV bbox)
-  for (const [cell, cloudItem] of cloudGrid) {
-    const opencvItem = opencvGrid.get(cell);
-    if (opencvItem) {
-      usedOpencvCells.add(cell);
+  // Pair cloud cards with OpenCV bboxes by sorted index
+  for (let i = 0; i < sortedOpenCV.length; i++) {
+    if (i < sortedCloud.length) {
+      // Matched: cloud identification + OpenCV position
       mergedCards.push({
-        ...cloudItem.card,
-        corners: opencvItem.corners, // Use accurate OpenCV position
+        ...sortedCloud[i].card,
+        corners: sortedOpenCV[i].corners, // Use accurate OpenCV position
         showingOpposite: defaultScanResult === 'opposite',
       });
-    }
-  }
-
-  // Second pass: cloud cards WITHOUT OpenCV match (transform cloud bbox)
-  for (const [cell, cloudItem] of cloudGrid) {
-    if (!opencvGrid.has(cell)) {
-      const transformedCorners = transformCorners(cloudItem.card.corners);
-      mergedCards.push({
-        ...cloudItem.card,
-        corners: transformedCorners,
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-    }
-  }
-
-  // Third pass: OpenCV bboxes not matched to any cloud card (unknown)
-  for (const [cell, opencvItem] of opencvGrid) {
-    if (!usedOpencvCells.has(cell)) {
+    } else {
+      // Extra OpenCV bbox with no cloud match: unknown
       mergedCards.push({
         cardId: 'unknown',
         filename: '',
         side: null,
         confidence: 0.5,
-        corners: opencvItem.corners,
+        corners: sortedOpenCV[i].corners,
         showingOpposite: defaultScanResult === 'opposite',
       });
     }
   }
 
+  // Note: Extra cloud cards beyond OpenCV count are dropped
+  // Their positions are unreliable - better to show nothing than wrong positions
+  if (extraCloudCount > 0) {
+    console.log(
+      '[mergeCloudWithOpenCV] Dropped',
+      extraCloudCount,
+      'cloud cards (no reliable position)'
+    );
+  }
+
   console.log(
-    '[mergeCloudWithOpenCV] Grid:', rows, 'x', cols,
-    '| cloud:', cloudCards.length,
+    '[mergeCloudWithOpenCV] cloud:', cloudCards.length,
     '| opencv:', opencvCorners.length,
-    '| matched:', matchedCloud.length,
-    '| cloud-only:', cloudGrid.size - matchedCloud.length,
-    '| opencv-only:', opencvGrid.size - usedOpencvCells.size
+    '| paired:', Math.min(sortedCloud.length, sortedOpenCV.length),
+    '| dropped:', extraCloudCount
   );
 
   return mergedCards;
