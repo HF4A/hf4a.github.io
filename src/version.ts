@@ -21,5 +21,6 @@
 // 0.3.x - Pipeline refactor: warp-then-detect, OCR-primary matching
 //   0.3.0 - Full pipeline refactor: warp entire frame, OCR-primary, text matching, diagnostics
 //   0.3.1 - Switch from OCR.space API to local PP-OCRv4 via ONNX (offline capable)
-export const APP_VERSION = '0.3.1';
-export const BUILD_DATE = '2025-12-25';
+//   0.3.2 - Regenerate card data via visual analysis (fix 34 cards with empty names/invalid types)
+export const APP_VERSION = '0.3.2';
+export const BUILD_DATE = '2025-12-26';
