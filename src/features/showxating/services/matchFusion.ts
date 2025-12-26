@@ -56,6 +56,10 @@ const MEDIUM_CONFIDENCE_THRESHOLD = 0.45;  // fusedScore < 0.45
 const MAX_HAMMING_DISTANCE = 64;
 const HASH_MATCH_THRESHOLD = 22; // Previously tuned value
 
+// Hash-only match rejection threshold
+// If OCR completely fails and hash is worse than this, prefer "unknown"
+const HASH_ONLY_REJECT_DISTANCE = 18; // Stricter threshold for hash-only matches
+
 /**
  * Compute dHash from a canvas (client-side version)
  * Returns 8 bytes representing 64-bit hash
@@ -226,10 +230,26 @@ export async function fuseMatches(
     };
   }
 
-  // Case 3: Only hash matches
+  // Case 3: Only hash matches (OCR failed to find text matches)
   if (textMatches.length === 0) {
     diagnostics.fusionMethod = 'hash-only';
     const best = hashMatches[0];
+
+    // Check if OCR extracted meaningful text
+    const ocrHadContent = ocrResult.typeText.length > 2 || ocrResult.titleText.length > 2;
+
+    // If OCR extracted text but still couldn't match, and hash is weak, reject the match
+    // This prevents incorrect matches when the card simply doesn't exist in the index
+    // OR when OCR failed completely (empty text), use stricter hash threshold
+    if (!ocrHadContent && best.distance > HASH_ONLY_REJECT_DISTANCE) {
+      log.info(`[MatchFusion] Rejecting weak hash-only match (distance ${best.distance} > ${HASH_ONLY_REJECT_DISTANCE}, no OCR content)`);
+      return null;
+    }
+
+    // Even if we accept, mark confidence as low when OCR failed
+    const adjustedConfidence = ocrHadContent
+      ? getConfidence(best.normalizedScore)
+      : 'low';
 
     return {
       cardId: best.cardId,
@@ -241,7 +261,7 @@ export async function fuseMatches(
       textScore: 1, // No text match
       hashScore: best.normalizedScore,
       matchSource: 'hash',
-      confidence: getConfidence(best.normalizedScore),
+      confidence: adjustedConfidence,
       diagnostics,
     };
   }

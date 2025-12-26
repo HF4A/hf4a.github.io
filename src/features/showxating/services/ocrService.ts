@@ -78,27 +78,70 @@ function boxToRect(box: number[][] | undefined): { top: number; left: number; wi
 
 // Region boundaries (as percentage of card height)
 const TYPE_REGION_MAX_Y = 0.15;   // Top 15% of card
-const TITLE_REGION_MIN_Y = 0.85;  // Bottom 15% of card (was 80%, tighter to avoid stats)
+
+// Dynamic title region based on card size
+// Small cards (multi-card scans): expand to 25% to catch more text
+// Large cards (single-card scans): use 15% to avoid stats
+const TITLE_REGION_MIN_Y_SMALL = 0.75;  // Bottom 25% for small cards
+const TITLE_REGION_MIN_Y_LARGE = 0.85;  // Bottom 15% for large cards
+const SMALL_CARD_HEIGHT_THRESHOLD = 400; // Below this, use expanded title region
+
+// Minimum card width before upscaling for OCR
+const MIN_OCR_WIDTH = 300;
+const UPSCALE_FACTOR = 2;
+
+/**
+ * Upscale a small canvas for better OCR accuracy
+ */
+function upscaleCanvas(canvas: HTMLCanvasElement, factor: number): HTMLCanvasElement {
+  const upscaled = document.createElement('canvas');
+  upscaled.width = canvas.width * factor;
+  upscaled.height = canvas.height * factor;
+  const ctx = upscaled.getContext('2d');
+  if (ctx) {
+    // Use better interpolation for upscaling
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(canvas, 0, 0, upscaled.width, upscaled.height);
+  }
+  return upscaled;
+}
 
 /**
  * Extract text from a card image using local OCR
  * Runs single OCR pass, then filters by region
+ * v0.3.8: Dynamic title region + upscaling for small cards
  */
 export async function extractCardText(
   cardCanvas: HTMLCanvasElement
 ): Promise<OCRResult> {
   const startTime = performance.now();
-  const cardHeight = cardCanvas.height;
-  const cardWidth = cardCanvas.width;
+  let cardHeight = cardCanvas.height;
+  let cardWidth = cardCanvas.width;
+
+  // Upscale small cards for better OCR accuracy
+  let processCanvas = cardCanvas;
+  let wasUpscaled = false;
+  if (cardWidth < MIN_OCR_WIDTH) {
+    processCanvas = upscaleCanvas(cardCanvas, UPSCALE_FACTOR);
+    cardHeight = processCanvas.height;
+    cardWidth = processCanvas.width;
+    wasUpscaled = true;
+    log.debug(`[OCR] Upscaled small card: ${cardCanvas.width}x${cardCanvas.height} → ${cardWidth}x${cardHeight}`);
+  }
+
+  // Use dynamic title region based on original card size
+  const isSmallCard = cardCanvas.height < SMALL_CARD_HEIGHT_THRESHOLD;
+  const titleRegionMinY = isSmallCard ? TITLE_REGION_MIN_Y_SMALL : TITLE_REGION_MIN_Y_LARGE;
 
   const diagnostics: OCRDiagnostics = {
     fullCard: createEmptyDiagnostics(cardWidth, cardHeight),
     typeRegion: createEmptyDiagnostics(cardWidth, Math.round(cardHeight * TYPE_REGION_MAX_Y)),
-    titleRegion: createEmptyDiagnostics(cardWidth, Math.round(cardHeight * (1 - TITLE_REGION_MIN_Y))),
+    titleRegion: createEmptyDiagnostics(cardWidth, Math.round(cardHeight * (1 - titleRegionMinY))),
     engineType: 'local',
   };
 
-  log.debug(`[OCR] Starting local extraction from ${cardWidth}x${cardHeight} card image`);
+  log.debug(`[OCR] Starting local extraction from ${cardWidth}x${cardHeight} card image${wasUpscaled ? ' (upscaled)' : ''}${isSmallCard ? ' (small card, expanded title region)' : ''}`);
 
   // Ensure OCR engine is loaded
   if (!isOcrEngineReady()) {
@@ -108,8 +151,8 @@ export async function extractCardText(
 
   const ocr = getOcrEngine();
 
-  // Convert canvas to data URL
-  const dataUrl = cardCanvas.toDataURL('image/jpeg', 0.95);
+  // Convert canvas to data URL (use processCanvas which may be upscaled)
+  const dataUrl = processCanvas.toDataURL('image/jpeg', 0.95);
   diagnostics.fullCard.imageKB = Math.round(dataUrl.length / 1024);
 
   // Run single OCR pass on full card
@@ -149,7 +192,7 @@ export async function extractCardText(
   const typeMs = performance.now() - typeStart;
 
   const titleStart = performance.now();
-  const titleThreshold = cardHeight * TITLE_REGION_MIN_Y;
+  const titleThreshold = cardHeight * titleRegionMinY;
   const titleLines = allLines.filter(l => l.top + l.height / 2 > titleThreshold);
   const titleText = titleLines.map(l => l.text).join(' ').replace(/\s+/g, ' ').trim();
   diagnostics.titleRegion.detectedLines = titleLines;
