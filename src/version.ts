@@ -27,5 +27,6 @@
 //   0.3.5 - Progressive matching: all word combos, type-first search, stop words, better logging
 //   0.3.6 - Revert OCR engine to static imports (dynamic import broke it)
 //   0.3.8 - Multi-card OCR fixes: upscale small cards, expand title region, reject weak hash matches
-export const APP_VERSION = '0.3.8';
+//   0.3.9 - Reject type-only matches, filter type words from candidates, match quality tracking
+export const APP_VERSION = '0.3.9';
 export const BUILD_DATE = '2025-12-26';

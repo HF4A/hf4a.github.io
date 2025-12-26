@@ -5,10 +5,11 @@
  * Text matching is primary (85% weight), hash matching is secondary (15%).
  *
  * v0.3.0: Fusion logic for hybrid matching approach
+ * v0.3.9: Better confidence calibration, use matchQuality, improved diagnostics
  */
 
 import type { OCRResult } from './ocrService';
-import type { TextMatchResult, CardIndexEntry } from './textMatcher';
+import type { TextMatchResult, CardIndexEntry, MatchQuality } from './textMatcher';
 import { matchByText, loadCardIndex } from './textMatcher';
 import { log } from '../../../store/logsStore';
 
@@ -33,6 +34,7 @@ export interface FusedMatchResult {
   hashScore: number;      // Hash match contribution
   matchSource: 'text' | 'hash' | 'fused'; // Primary match source
   confidence: 'high' | 'medium' | 'low';
+  textMatchQuality: MatchQuality;  // Quality of text match for debugging
   diagnostics: FusionDiagnostics;
 }
 
@@ -41,7 +43,9 @@ export interface FusionDiagnostics {
   hashMatches: HashMatchResult[];
   textWeight: number;
   hashWeight: number;
-  fusionMethod: 'weighted' | 'text-only' | 'hash-only' | 'fallback';
+  fusionMethod: 'weighted' | 'text-only' | 'hash-only' | 'none';
+  ocrHadContent: boolean;        // Did OCR extract any text?
+  rejectionReason?: string;      // Why was match rejected (if applicable)
 }
 
 // Fusion weights
@@ -184,11 +188,15 @@ export async function matchByHash(
 /**
  * Fuse text and hash matching results
  * Primary matching method for v0.3.0 pipeline
+ * v0.3.9: Better diagnostics, use textMatchQuality, stricter rejection
  */
 export async function fuseMatches(
   ocrResult: OCRResult,
   cardCanvas: HTMLCanvasElement
 ): Promise<FusedMatchResult | null> {
+  // Check if OCR extracted meaningful text
+  const ocrHadContent = ocrResult.typeText.length > 2 || ocrResult.titleText.length > 2;
+
   // Run both matching methods
   const [textMatches, hashMatches] = await Promise.all([
     matchByText(ocrResult),
@@ -201,10 +209,13 @@ export async function fuseMatches(
     textWeight: TEXT_WEIGHT,
     hashWeight: HASH_WEIGHT,
     fusionMethod: 'weighted',
+    ocrHadContent,
   };
 
   // Case 1: No matches at all
   if (textMatches.length === 0 && hashMatches.length === 0) {
+    diagnostics.fusionMethod = 'none';
+    diagnostics.rejectionReason = 'No text or hash matches found';
     log.debug('[MatchFusion] No matches from either method');
     return null;
   }
@@ -213,7 +224,7 @@ export async function fuseMatches(
   if (hashMatches.length === 0) {
     diagnostics.fusionMethod = 'text-only';
     const best = textMatches[0];
-    const fusedScore = best.score; // Use text score directly
+    const fusedScore = best.score;
 
     return {
       cardId: best.cardId,
@@ -225,31 +236,34 @@ export async function fuseMatches(
       textScore: best.score,
       hashScore: 1, // No hash match
       matchSource: 'text',
-      confidence: getConfidence(fusedScore),
+      confidence: getConfidenceFromQuality(best.matchQuality),
+      textMatchQuality: best.matchQuality,
       diagnostics,
     };
   }
 
-  // Case 3: Only hash matches (OCR failed to find text matches)
+  // Case 3: Only hash matches (text matching failed)
   if (textMatches.length === 0) {
     diagnostics.fusionMethod = 'hash-only';
     const best = hashMatches[0];
 
-    // Check if OCR extracted meaningful text
-    const ocrHadContent = ocrResult.typeText.length > 2 || ocrResult.titleText.length > 2;
-
-    // If OCR extracted text but still couldn't match, and hash is weak, reject the match
-    // This prevents incorrect matches when the card simply doesn't exist in the index
-    // OR when OCR failed completely (empty text), use stricter hash threshold
-    if (!ocrHadContent && best.distance > HASH_ONLY_REJECT_DISTANCE) {
-      log.info(`[MatchFusion] Rejecting weak hash-only match (distance ${best.distance} > ${HASH_ONLY_REJECT_DISTANCE}, no OCR content)`);
+    // If OCR had content but text matching found nothing, be skeptical of hash
+    // This likely means the card isn't in our index, or OCR was garbage
+    if (ocrHadContent && best.distance > HASH_ONLY_REJECT_DISTANCE) {
+      diagnostics.rejectionReason = `OCR had content but text match failed, hash too weak (${best.distance} > ${HASH_ONLY_REJECT_DISTANCE})`;
+      log.info(`[MatchFusion] Rejecting: ${diagnostics.rejectionReason}`);
       return null;
     }
 
-    // Even if we accept, mark confidence as low when OCR failed
-    const adjustedConfidence = ocrHadContent
-      ? getConfidence(best.normalizedScore)
-      : 'low';
+    // If OCR had NO content, be very skeptical of hash
+    if (!ocrHadContent && best.distance > HASH_ONLY_REJECT_DISTANCE) {
+      diagnostics.rejectionReason = `No OCR content, hash too weak (${best.distance} > ${HASH_ONLY_REJECT_DISTANCE})`;
+      log.info(`[MatchFusion] Rejecting: ${diagnostics.rejectionReason}`);
+      return null;
+    }
+
+    // Accept hash match but with appropriate confidence
+    const confidence = ocrHadContent ? 'low' : (best.distance <= 15 ? 'medium' : 'low');
 
     return {
       cardId: best.cardId,
@@ -261,7 +275,8 @@ export async function fuseMatches(
       textScore: 1, // No text match
       hashScore: best.normalizedScore,
       matchSource: 'hash',
-      confidence: adjustedConfidence,
+      confidence,
+      textMatchQuality: 'none',
       diagnostics,
     };
   }
@@ -313,6 +328,10 @@ export async function fuseMatches(
         matchSource = 'hash';
       }
 
+      // Get text match quality if we have a text match for this card
+      const textMatchForCard = textMatches.find(tm => tm.cardId === cardId);
+      const textMatchQuality: MatchQuality = textMatchForCard?.matchQuality || 'none';
+
       bestMatch = {
         cardId,
         filename: scores.card.filename,
@@ -323,7 +342,10 @@ export async function fuseMatches(
         textScore: scores.textScore,
         hashScore: scores.hashScore,
         matchSource,
-        confidence: getConfidence(fusedScore),
+        confidence: textMatchQuality !== 'none'
+          ? getConfidenceFromQuality(textMatchQuality)
+          : getConfidence(fusedScore),
+        textMatchQuality,
         diagnostics,
       };
     }
@@ -343,6 +365,21 @@ function getConfidence(score: number): 'high' | 'medium' | 'low' {
   if (score < HIGH_CONFIDENCE_THRESHOLD) return 'high';
   if (score < MEDIUM_CONFIDENCE_THRESHOLD) return 'medium';
   return 'low';
+}
+
+/**
+ * Get confidence level from match quality
+ * More intuitive than using fused scores
+ */
+function getConfidenceFromQuality(quality: MatchQuality): 'high' | 'medium' | 'low' {
+  switch (quality) {
+    case 'excellent': return 'high';
+    case 'good': return 'high';
+    case 'fair': return 'medium';
+    case 'poor': return 'low';
+    case 'none': return 'low';
+    default: return 'low';
+  }
 }
 
 /**

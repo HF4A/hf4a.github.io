@@ -5,7 +5,8 @@
  * Strategy: Start narrow (detected type), progressively widen if needed.
  *
  * v0.3.0: Primary matching method (hash is secondary)
- * v0.3.4: Progressive matching with intelligent text extraction
+ * v0.3.5: Progressive matching with intelligent text extraction
+ * v0.3.9: Reject type-only matches, add match quality tracking, better diagnostics
  */
 
 import Fuse, { type FuseResult } from 'fuse.js';
@@ -25,6 +26,9 @@ export interface CardIndexEntry {
   hashBytes: number[];
 }
 
+// Match quality levels for confidence calibration
+export type MatchQuality = 'excellent' | 'good' | 'fair' | 'poor' | 'none';
+
 export interface TextMatchResult {
   cardId: string;
   filename: string;
@@ -32,8 +36,9 @@ export interface TextMatchResult {
   type: string;
   name: string;
   score: number;          // 0 = perfect match, 1 = no match (Fuse.js convention)
-  matchedOn: 'type' | 'title' | 'fullText';
+  matchedOn: 'title' | 'fullText';
   matchedText: string;    // The text that matched
+  matchQuality: MatchQuality;  // Quality assessment for confidence calibration
 }
 
 // Card index cache
@@ -44,6 +49,25 @@ let indexLoadPromise: Promise<void> | null = null;
 const STOP_WORDS = new Set([
   'the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'at', 'for', 'is', 'it',
   'mass', 'thrust', 'isp', 'crew', 'turns', 'cost', 'net', 'op', 'ops',
+]);
+
+// Card type words - should NEVER be used as match candidates
+// Matching "radiator" to a radiator card is not useful - we need the NAME
+const TYPE_WORDS = new Set([
+  'thruster', 'thrusters',
+  'generator', 'generators', 'generato', // OCR sometimes cuts off
+  'reactor', 'reactors', 'revctor', // OCR misreads
+  'radiator', 'radiators',
+  'refinery', 'refineries',
+  'robonaut', 'robonauts',
+  'colonist', 'colonists',
+  'freighter', 'freighters',
+  'bernal', 'bernals',
+  'contract', 'contracts',
+  'crew',
+  'exodus',
+  'spaceborn',
+  'gw', 'gwthruster',
 ]);
 
 /**
@@ -76,10 +100,20 @@ function getActiveTypes(): Set<string> {
 }
 
 /**
+ * Check if a candidate is just a type word (useless for matching)
+ */
+function isTypeOnlyCandidate(candidate: string): boolean {
+  const words = candidate.toLowerCase().split(' ');
+  // If ALL words are type words, reject
+  return words.every(w => TYPE_WORDS.has(w) || w.length < 3);
+}
+
+/**
  * Generate text candidates from OCR text - progressive word combinations
  * Returns candidates sorted by specificity (longer = more specific = try first)
+ * Filters out type-only candidates that would cause false matches
  */
-function generateCandidates(text: string): string[] {
+function generateCandidates(text: string, filterTypeWords: boolean = true): string[] {
   if (!text) return [];
 
   // Clean the text
@@ -107,6 +141,10 @@ function generateCandidates(text: string): string[] {
     for (let start = 0; start <= words.length - len; start++) {
       const phrase = words.slice(start, start + len).join(' ');
       if (phrase.length >= 3) {
+        // Filter out type-only candidates if requested
+        if (filterTypeWords && isTypeOnlyCandidate(phrase)) {
+          continue;
+        }
         candidates.push(phrase);
       }
     }
@@ -117,6 +155,17 @@ function generateCandidates(text: string): string[] {
 }
 
 /**
+ * Assess match quality based on score
+ */
+function assessMatchQuality(score: number): MatchQuality {
+  if (score < 0.1) return 'excellent';
+  if (score < 0.25) return 'good';
+  if (score < 0.4) return 'fair';
+  if (score < 0.6) return 'poor';
+  return 'none';
+}
+
+/**
  * Progressive matching within a card set
  * Tries candidates from most specific to least, returns best match
  */
@@ -124,7 +173,7 @@ function progressiveMatch(
   cards: CardIndexEntry[],
   candidates: string[],
   threshold: number
-): { results: FuseResult<CardIndexEntry>[]; matchedText: string } | null {
+): { results: FuseResult<CardIndexEntry>[]; matchedText: string; quality: MatchQuality } | null {
   if (cards.length === 0 || candidates.length === 0) return null;
 
   const fuse = new Fuse(cards, {
@@ -161,7 +210,8 @@ function progressiveMatch(
   }
 
   if (bestResults.length > 0) {
-    return { results: bestResults, matchedText: bestMatchedText };
+    const quality = assessMatchQuality(bestScore);
+    return { results: bestResults, matchedText: bestMatchedText, quality };
   }
 
   return null;
@@ -170,6 +220,7 @@ function progressiveMatch(
 /**
  * Match OCR results against card index
  * Progressive strategy: narrow type → loose type → all types
+ * v0.3.9: Rejects type-only matches to prevent false positives
  */
 export async function matchByText(
   ocrResult: OCRResult
@@ -186,12 +237,22 @@ export async function matchByText(
   }
 
   // Generate candidates from title and full text
-  const titleCandidates = generateCandidates(ocrResult.titleText);
-  const fullTextCandidates = generateCandidates(ocrResult.fullText);
+  // Filter type words to prevent "radiator" matching to random radiator card
+  const titleCandidates = generateCandidates(ocrResult.titleText, true);
+  const fullTextCandidates = generateCandidates(ocrResult.fullText, true);
+
+  const hasTitleCandidates = titleCandidates.length > 0;
+  const hasFullTextCandidates = fullTextCandidates.length > 0;
 
   log.debug(`[TextMatcher] Generated ${titleCandidates.length} title candidates, ${fullTextCandidates.length} fullText candidates`);
   if (titleCandidates.length > 0) {
     log.debug(`[TextMatcher] Top title candidates: ${titleCandidates.slice(0, 5).join(', ')}`);
+  }
+
+  // If we have NO useful candidates (only type words), return early
+  if (!hasTitleCandidates && !hasFullTextCandidates) {
+    log.debug('[TextMatcher] No useful candidates after filtering type words - returning empty');
+    return [];
   }
 
   // Parse detected type from OCR
@@ -207,41 +268,46 @@ export async function matchByText(
       // Try title candidates first (strict threshold)
       let match = progressiveMatch(typeFiltered, titleCandidates, 0.4);
       if (match && match.results[0].score! < 0.3) {
-        log.info(`[TextMatcher] Phase 1 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
-        return formatResults(match.results, match.matchedText, 'title');
+        log.info(`[TextMatcher] Phase 1 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)}) [${match.quality}]`);
+        return formatResults(match.results, match.matchedText, 'title', match.quality);
       }
 
       // Try full text candidates (looser threshold)
       match = progressiveMatch(typeFiltered, fullTextCandidates, 0.5);
       if (match && match.results[0].score! < 0.4) {
-        log.info(`[TextMatcher] Phase 1 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
-        return formatResults(match.results, match.matchedText, 'fullText');
+        log.info(`[TextMatcher] Phase 1 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)}) [${match.quality}]`);
+        return formatResults(match.results, match.matchedText, 'fullText', match.quality);
       }
 
-      // Phase 1b: Loosen threshold within type before expanding
-      match = progressiveMatch(typeFiltered, [...titleCandidates, ...fullTextCandidates], 0.6);
-      if (match) {
-        log.info(`[TextMatcher] Phase 1b loose hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
-        return formatResults(match.results, match.matchedText, 'fullText');
+      // Phase 1b: Loosen threshold within type, but ONLY if we have title candidates
+      // This prevents matching just because we know the type
+      if (hasTitleCandidates) {
+        match = progressiveMatch(typeFiltered, titleCandidates, 0.5);
+        if (match) {
+          log.info(`[TextMatcher] Phase 1b loose hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)}) [${match.quality}]`);
+          return formatResults(match.results, match.matchedText, 'title', match.quality);
+        }
       }
     }
   }
 
-  // PHASE 2: Expand to all active types
-  log.debug(`[TextMatcher] Phase 2: Searching all ${activeCards.length} active cards`);
+  // PHASE 2: Expand to all active types (only if we have real candidates)
+  if (hasTitleCandidates || hasFullTextCandidates) {
+    log.debug(`[TextMatcher] Phase 2: Searching all ${activeCards.length} active cards`);
 
-  // Try title candidates
-  let match = progressiveMatch(activeCards, titleCandidates, 0.4);
-  if (match) {
-    log.info(`[TextMatcher] Phase 2 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
-    return formatResults(match.results, match.matchedText, 'title');
-  }
+    // Try title candidates
+    let match = progressiveMatch(activeCards, titleCandidates, 0.4);
+    if (match) {
+      log.info(`[TextMatcher] Phase 2 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)}) [${match.quality}]`);
+      return formatResults(match.results, match.matchedText, 'title', match.quality);
+    }
 
-  // Try full text candidates
-  match = progressiveMatch(activeCards, fullTextCandidates, 0.5);
-  if (match) {
-    log.info(`[TextMatcher] Phase 2 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
-    return formatResults(match.results, match.matchedText, 'fullText');
+    // Try full text candidates
+    match = progressiveMatch(activeCards, fullTextCandidates, 0.5);
+    if (match) {
+      log.info(`[TextMatcher] Phase 2 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)}) [${match.quality}]`);
+      return formatResults(match.results, match.matchedText, 'fullText', match.quality);
+    }
   }
 
   log.debug('[TextMatcher] No matches found');
@@ -254,7 +320,8 @@ export async function matchByText(
 function formatResults(
   results: FuseResult<CardIndexEntry>[],
   matchedText: string,
-  matchedOn: 'title' | 'fullText'
+  matchedOn: 'title' | 'fullText',
+  matchQuality: MatchQuality
 ): TextMatchResult[] {
   return results.slice(0, 10).map(result => ({
     cardId: result.item.cardId,
@@ -265,6 +332,7 @@ function formatResults(
     score: result.score || 1,
     matchedOn,
     matchedText,
+    matchQuality,
   }));
 }
 
