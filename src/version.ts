@@ -24,5 +24,6 @@
 //   0.3.2 - Regenerate card data via visual analysis (fix 34 cards with empty names/invalid types)
 //   0.3.3 - Fix OCR engine: force single-threaded WASM for GitHub Pages compatibility
 //   0.3.4 - Improve text matching: clean OCR garbage, try last-N-words, tighter title region
-export const APP_VERSION = '0.3.4';
+//   0.3.5 - Progressive matching: all word combos, type-first search, stop words, better logging
+export const APP_VERSION = '0.3.5';
 export const BUILD_DATE = '2025-12-26';

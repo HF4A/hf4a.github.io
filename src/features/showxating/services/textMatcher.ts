@@ -1,13 +1,14 @@
 /**
  * Text Matching Service
  *
- * Fuzzy text matching against card metadata using Fuse.js.
- * Two-pass approach: type-segmented search first, then broad search.
+ * Progressive fuzzy text matching against card metadata using Fuse.js.
+ * Strategy: Start narrow (detected type), progressively widen if needed.
  *
  * v0.3.0: Primary matching method (hash is secondary)
+ * v0.3.4: Progressive matching with intelligent text extraction
  */
 
-import Fuse from 'fuse.js';
+import Fuse, { type FuseResult } from 'fuse.js';
 import type { CardType } from '../../../types/card';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { log } from '../../../store/logsStore';
@@ -39,6 +40,12 @@ export interface TextMatchResult {
 let cardIndex: CardIndexEntry[] | null = null;
 let indexLoadPromise: Promise<void> | null = null;
 
+// Common words to filter out (not useful for matching)
+const STOP_WORDS = new Set([
+  'the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'at', 'for', 'is', 'it',
+  'mass', 'thrust', 'isp', 'crew', 'turns', 'cost', 'net', 'op', 'ops',
+]);
+
 /**
  * Load the card index
  */
@@ -69,8 +76,100 @@ function getActiveTypes(): Set<string> {
 }
 
 /**
+ * Generate text candidates from OCR text - progressive word combinations
+ * Returns candidates sorted by specificity (longer = more specific = try first)
+ */
+function generateCandidates(text: string): string[] {
+  if (!text) return [];
+
+  // Clean the text
+  const cleaned = text
+    .replace(/["""''()[\]{}|\\/<>@#$%^&*+=~`]/g, ' ')  // Remove special chars
+    .replace(/\d+/g, ' ')                               // Remove numbers
+    .replace(/\s+/g, ' ')                               // Normalize whitespace
+    .trim()
+    .toLowerCase();
+
+  if (cleaned.length < 2) return [];
+
+  // Extract meaningful words (filter stop words and short words)
+  const words = cleaned.split(' ').filter(w =>
+    w.length >= 2 && !STOP_WORDS.has(w)
+  );
+
+  if (words.length === 0) return [];
+
+  const candidates: string[] = [];
+
+  // Generate all contiguous word combinations (sliding window)
+  // Longer combinations first (more specific)
+  for (let len = words.length; len >= 1; len--) {
+    for (let start = 0; start <= words.length - len; start++) {
+      const phrase = words.slice(start, start + len).join(' ');
+      if (phrase.length >= 3) {
+        candidates.push(phrase);
+      }
+    }
+  }
+
+  // Dedupe while preserving order (longer phrases first)
+  return [...new Set(candidates)];
+}
+
+/**
+ * Progressive matching within a card set
+ * Tries candidates from most specific to least, returns best match
+ */
+function progressiveMatch(
+  cards: CardIndexEntry[],
+  candidates: string[],
+  threshold: number
+): { results: FuseResult<CardIndexEntry>[]; matchedText: string } | null {
+  if (cards.length === 0 || candidates.length === 0) return null;
+
+  const fuse = new Fuse(cards, {
+    keys: ['name'],
+    threshold,
+    includeScore: true,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+  });
+
+  let bestResults: FuseResult<CardIndexEntry>[] = [];
+  let bestScore = 1;
+  let bestMatchedText = '';
+
+  for (const candidate of candidates) {
+    const results = fuse.search(candidate);
+
+    if (results.length > 0) {
+      const score = results[0].score ?? 1;
+
+      // Accept if under threshold and better than current best
+      if (score < threshold && score < bestScore) {
+        bestResults = results;
+        bestScore = score;
+        bestMatchedText = candidate;
+
+        // If we get a really good match, stop early
+        if (score < 0.15) {
+          log.debug(`[TextMatcher] Excellent match: "${candidate}" → ${results[0].item.name} (${score.toFixed(3)})`);
+          break;
+        }
+      }
+    }
+  }
+
+  if (bestResults.length > 0) {
+    return { results: bestResults, matchedText: bestMatchedText };
+  }
+
+  return null;
+}
+
+/**
  * Match OCR results against card index
- * Two-pass approach for better accuracy
+ * Progressive strategy: narrow type → loose type → all types
  */
 export async function matchByText(
   ocrResult: OCRResult
@@ -86,52 +185,63 @@ export async function matchByText(
     return [];
   }
 
+  // Generate candidates from title and full text
+  const titleCandidates = generateCandidates(ocrResult.titleText);
+  const fullTextCandidates = generateCandidates(ocrResult.fullText);
+
+  log.debug(`[TextMatcher] Generated ${titleCandidates.length} title candidates, ${fullTextCandidates.length} fullText candidates`);
+  if (titleCandidates.length > 0) {
+    log.debug(`[TextMatcher] Top title candidates: ${titleCandidates.slice(0, 5).join(', ')}`);
+  }
+
   // Parse detected type from OCR
   const detectedType = parseTypeFromText(ocrResult.typeText);
   log.debug(`[TextMatcher] Detected type: ${detectedType || 'unknown'}`);
 
-  // Pass 1: Type-segmented search (if we detected a type)
+  // PHASE 1: Type-constrained matching (if we detected a type)
   if (detectedType && activeTypes.has(detectedType as CardType)) {
     const typeFiltered = activeCards.filter(c => c.type === detectedType);
+    log.debug(`[TextMatcher] Phase 1: Searching ${typeFiltered.length} ${detectedType} cards`);
 
     if (typeFiltered.length > 0) {
-      // Search by title within type
-      const titleResults = fuzzySearchByName(typeFiltered, ocrResult.titleText);
-
-      // If we got a good match (score < 0.3), use it
-      if (titleResults.length > 0 && titleResults[0].score < 0.3) {
-        log.debug(`[TextMatcher] Pass 1 hit: ${titleResults[0].cardId} (score: ${titleResults[0].score.toFixed(3)})`);
-        return titleResults.map(r => ({ ...r, matchedOn: 'title' as const }));
+      // Try title candidates first (strict threshold)
+      let match = progressiveMatch(typeFiltered, titleCandidates, 0.4);
+      if (match && match.results[0].score! < 0.3) {
+        log.info(`[TextMatcher] Phase 1 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
+        return formatResults(match.results, match.matchedText, 'title');
       }
 
-      // Try matching on full text within type
-      const fullTextResults = fuzzySearchByName(typeFiltered, ocrResult.fullText);
-      if (fullTextResults.length > 0 && fullTextResults[0].score < 0.4) {
-        log.debug(`[TextMatcher] Pass 1 fullText hit: ${fullTextResults[0].cardId} (score: ${fullTextResults[0].score.toFixed(3)})`);
-        return fullTextResults.map(r => ({ ...r, matchedOn: 'fullText' as const }));
+      // Try full text candidates (looser threshold)
+      match = progressiveMatch(typeFiltered, fullTextCandidates, 0.5);
+      if (match && match.results[0].score! < 0.4) {
+        log.info(`[TextMatcher] Phase 1 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
+        return formatResults(match.results, match.matchedText, 'fullText');
+      }
+
+      // Phase 1b: Loosen threshold within type before expanding
+      match = progressiveMatch(typeFiltered, [...titleCandidates, ...fullTextCandidates], 0.6);
+      if (match) {
+        log.info(`[TextMatcher] Phase 1b loose hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
+        return formatResults(match.results, match.matchedText, 'fullText');
       }
     }
   }
 
-  // Pass 2: Broad search across all active types
-  log.debug('[TextMatcher] Pass 2: Broad search');
+  // PHASE 2: Expand to all active types
+  log.debug(`[TextMatcher] Phase 2: Searching all ${activeCards.length} active cards`);
 
-  // Try title text first
-  if (ocrResult.titleText) {
-    const titleResults = fuzzySearchByName(activeCards, ocrResult.titleText);
-    if (titleResults.length > 0 && titleResults[0].score < 0.4) {
-      log.debug(`[TextMatcher] Pass 2 title hit: ${titleResults[0].cardId} (score: ${titleResults[0].score.toFixed(3)})`);
-      return titleResults.map(r => ({ ...r, matchedOn: 'title' as const }));
-    }
+  // Try title candidates
+  let match = progressiveMatch(activeCards, titleCandidates, 0.4);
+  if (match) {
+    log.info(`[TextMatcher] Phase 2 title hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
+    return formatResults(match.results, match.matchedText, 'title');
   }
 
-  // Try full text
-  if (ocrResult.fullText) {
-    const fullTextResults = fuzzySearchByName(activeCards, ocrResult.fullText);
-    if (fullTextResults.length > 0) {
-      log.debug(`[TextMatcher] Pass 2 fullText: ${fullTextResults[0].cardId} (score: ${fullTextResults[0].score.toFixed(3)})`);
-      return fullTextResults.map(r => ({ ...r, matchedOn: 'fullText' as const }));
-    }
+  // Try full text candidates
+  match = progressiveMatch(activeCards, fullTextCandidates, 0.5);
+  if (match) {
+    log.info(`[TextMatcher] Phase 2 fullText hit: ${match.results[0].item.cardId} via "${match.matchedText}" (${match.results[0].score!.toFixed(3)})`);
+    return formatResults(match.results, match.matchedText, 'fullText');
   }
 
   log.debug('[TextMatcher] No matches found');
@@ -139,97 +249,13 @@ export async function matchByText(
 }
 
 /**
- * Clean OCR text for better matching
- * Removes garbage characters, numbers, and short fragments that confuse fuzzy matching
+ * Format Fuse results into TextMatchResult array
  */
-function cleanOcrText(text: string): string[] {
-  if (!text) return [];
-
-  // Split on quotes, parentheses, and other delimiters
-  const fragments = text
-    .replace(/["""()[\]{}]/g, ' ')  // Replace delimiters with spaces
-    .replace(/\d+/g, ' ')            // Remove numbers
-    .replace(/\s+/g, ' ')            // Normalize whitespace
-    .trim()
-    .split(/\s{2,}/);                // Split on multiple spaces
-
-  // Also try the full cleaned text and word combinations
-  const cleaned = text
-    .replace(/["""()[\]{}]/g, ' ')
-    .replace(/\d+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  // Build candidates: full text, fragments >= 3 chars, and last N words
-  const candidates: string[] = [];
-
-  if (cleaned.length >= 3) {
-    candidates.push(cleaned);
-  }
-
-  // Add individual fragments
-  for (const frag of fragments) {
-    if (frag.length >= 3) {
-      candidates.push(frag.trim());
-    }
-  }
-
-  // Try last 2-4 words (card names often at end)
-  const words = cleaned.split(' ').filter(w => w.length >= 2);
-  for (let n = 2; n <= Math.min(4, words.length); n++) {
-    const lastN = words.slice(-n).join(' ');
-    if (lastN.length >= 3) {
-      candidates.push(lastN);
-    }
-  }
-
-  // Dedupe while preserving order
-  return [...new Set(candidates)];
-}
-
-/**
- * Fuzzy search cards by name
- * Tries multiple cleaned variants of the search text
- */
-function fuzzySearchByName(
-  cards: CardIndexEntry[],
-  searchText: string
+function formatResults(
+  results: FuseResult<CardIndexEntry>[],
+  matchedText: string,
+  matchedOn: 'title' | 'fullText'
 ): TextMatchResult[] {
-  if (!searchText || searchText.length < 2) {
-    return [];
-  }
-
-  const fuse = new Fuse(cards, {
-    keys: ['name'],
-    threshold: 0.5,         // Allow loose matching
-    includeScore: true,
-    ignoreLocation: true,   // Match anywhere in string
-    minMatchCharLength: 2,
-  });
-
-  // Try raw text first
-  let results = fuse.search(searchText);
-  let bestScore = results[0]?.score ?? 1;
-  let bestMatchedText = searchText;
-
-  // If score is bad, try cleaned variants
-  if (bestScore > 0.3) {
-    const candidates = cleanOcrText(searchText);
-    log.debug(`[TextMatcher] Trying ${candidates.length} cleaned variants`);
-
-    for (const candidate of candidates) {
-      const candidateResults = fuse.search(candidate);
-      if (candidateResults.length > 0 && (candidateResults[0].score ?? 1) < bestScore) {
-        results = candidateResults;
-        bestScore = candidateResults[0].score ?? 1;
-        bestMatchedText = candidate;
-        log.debug(`[TextMatcher] Better match with "${candidate}": score ${bestScore.toFixed(3)}`);
-      }
-    }
-  }
-
-  log.debug(`[TextMatcher] Searching ${cards.length} cards of type for: ${bestMatchedText}`);
-
   return results.slice(0, 10).map(result => ({
     cardId: result.item.cardId,
     filename: result.item.filename,
@@ -237,8 +263,8 @@ function fuzzySearchByName(
     type: result.item.type,
     name: result.item.name,
     score: result.score || 1,
-    matchedOn: 'title' as const,
-    matchedText: bestMatchedText,
+    matchedOn,
+    matchedText,
   }));
 }
 
