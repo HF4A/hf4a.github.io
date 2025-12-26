@@ -12,7 +12,7 @@
  */
 
 import { useCallback, useRef } from 'react';
-import { useShowxatingStore, IdentifiedCard, CapturedScan } from '../store/showxatingStore';
+import { useShowxatingStore, IdentifiedCard, CapturedScan, Point } from '../store/showxatingStore';
 import { useCardStore } from '../../../store/cardStore';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { cloudScanner } from '../../../services/cloudScanner';
@@ -20,6 +20,88 @@ import { authService } from '../../../services/authService';
 import { getCardMatcher } from '../services/cardMatcher';
 import { detectAllCards, detectCardQuadrilateral } from '../services/visionPipeline';
 import type { Card } from '../../../types/card';
+
+/**
+ * Merge cloud-identified cards with OpenCV-detected bboxes.
+ * Cloud API provides accurate card identification but UNRELIABLE bboxes.
+ * OpenCV provides accurate bboxes but lower recall (may miss some cards).
+ *
+ * Strategy:
+ * - Cloud has higher recall (finds more cards)
+ * - OpenCV has more accurate positions (when it detects)
+ * - Match OpenCV bboxes to cloud cards by position
+ * - Cards matched to OpenCV get accurate positions
+ * - Cards not matched still show but may have inaccurate positions
+ */
+function mergeCloudWithOpenCV(
+  cloudCards: IdentifiedCard[],
+  opencvCorners: Point[][],
+  defaultScanResult: string
+): IdentifiedCard[] {
+  // If no OpenCV corners, just return cloud cards as-is
+  if (opencvCorners.length === 0) {
+    console.log('[mergeCloudWithOpenCV] No OpenCV corners, using cloud bboxes');
+    return cloudCards;
+  }
+
+  // Sort both by position (top-to-bottom, left-to-right) for matching
+  const getCenter = (corners: Point[]) => ({
+    x: corners.reduce((sum, p) => sum + p.x, 0) / corners.length,
+    y: corners.reduce((sum, p) => sum + p.y, 0) / corners.length,
+  });
+
+  const sortByPosition = (corners: Point[]) => {
+    const c = getCenter(corners);
+    return c.y * 10000 + c.x; // Y-major sort
+  };
+
+  // Sort OpenCV corners for matching
+  const sortedOpenCV = [...opencvCorners]
+    .map((corners, index) => ({ corners, index, center: getCenter(corners) }))
+    .sort((a, b) => sortByPosition(a.corners) - sortByPosition(b.corners));
+
+  // Sort cloud cards for matching
+  const sortedCloud = [...cloudCards]
+    .map((card, index) => ({ card, index, center: getCenter(card.corners) }))
+    .sort((a, b) => sortByPosition(a.card.corners) - sortByPosition(b.card.corners));
+
+  // Match up to min(cloud, opencv) cards by sorted position
+  const matchCount = Math.min(sortedCloud.length, sortedOpenCV.length);
+  const mergedCards: IdentifiedCard[] = [];
+  const usedOpenCVIndices = new Set<number>();
+
+  // First pass: match sorted positions
+  for (let i = 0; i < matchCount; i++) {
+    const cloudItem = sortedCloud[i];
+    const opencvItem = sortedOpenCV[i];
+    usedOpenCVIndices.add(opencvItem.index);
+
+    mergedCards.push({
+      ...cloudItem.card,
+      corners: opencvItem.corners, // Use OpenCV corners (accurate)
+      showingOpposite: defaultScanResult === 'opposite',
+    });
+  }
+
+  // Second pass: add remaining cloud cards (without OpenCV match)
+  // These keep their cloud bboxes (may be inaccurate but still shown)
+  for (let i = matchCount; i < sortedCloud.length; i++) {
+    mergedCards.push({
+      ...sortedCloud[i].card,
+      // Keep cloud corners - may be inaccurate but better than nothing
+      showingOpposite: defaultScanResult === 'opposite',
+    });
+  }
+
+  console.log(
+    '[mergeCloudWithOpenCV]',
+    cloudCards.length, 'cloud cards,',
+    opencvCorners.length, 'OpenCV bboxes,',
+    matchCount, 'matched'
+  );
+
+  return mergedCards;
+}
 
 interface UseScanCaptureOptions {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -266,15 +348,19 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
       // Phase 4: Send to cloud in background (if authenticated)
       if (authService.hasCredentials()) {
         // Run cloud processing asynchronously (don't await)
+        // Keep OpenCV bboxes, only use cloud for card identification
+        const opencvCorners = placeholderCards.map(c => c.corners);
         (async () => {
           try {
             console.log('[useScanCapture] Starting cloud scan for', scanId);
             const cloudCards = await scanWithCloud(canvas);
 
             if (cloudCards.length > 0) {
-              // Phase 5: Update scan with cloud results
-              console.log('[useScanCapture] Cloud identified', cloudCards.length, 'cards for', scanId);
-              updateScanCards(scanId, cloudCards, false);
+              // Phase 5: Merge cloud IDs with OpenCV bboxes
+              // Cloud API bboxes are unreliable - use OpenCV corners instead
+              const mergedCards = mergeCloudWithOpenCV(cloudCards, opencvCorners, defaultScanResult);
+              console.log('[useScanCapture] Cloud identified', cloudCards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
+              updateScanCards(scanId, mergedCards, false);
             } else {
               // Cloud returned nothing - try local fallback
               console.log('[useScanCapture] Cloud returned no cards, trying local fallback');
