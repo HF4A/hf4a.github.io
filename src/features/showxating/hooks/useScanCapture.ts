@@ -27,20 +27,20 @@ import type { Card } from '../../../types/card';
  * OpenCV provides accurate bboxes but lower recall (may miss some cards).
  *
  * Strategy:
- * - Cloud has higher recall (finds more cards)
- * - OpenCV has more accurate positions (when it detects)
- * - Use SPATIAL PROXIMITY matching (nearest neighbor) instead of sorted order
- * - Cards matched to OpenCV get accurate positions
- * - Unmatched cloud cards are HIDDEN (their bboxes are unreliable)
+ * - Vision API returns cards in visual reading order (top-to-bottom, left-to-right)
+ * - Sort OpenCV bboxes by position to match this order
+ * - Pair cloud cards to OpenCV bboxes by ARRAY ORDER (ignoring cloud bboxes entirely)
+ * - Extra OpenCV bboxes become "unknown"
+ * - Extra cloud cards are dropped (their bboxes are unreliable)
  */
 function mergeCloudWithOpenCV(
   cloudCards: IdentifiedCard[],
   opencvCorners: Point[][],
   defaultScanResult: string
 ): IdentifiedCard[] {
-  // If no OpenCV corners, just return cloud cards as-is
+  // If no OpenCV corners, just return cloud cards as-is (fallback)
   if (opencvCorners.length === 0) {
-    console.log('[mergeCloudWithOpenCV] No OpenCV corners, using cloud bboxes');
+    console.log('[mergeCloudWithOpenCV] No OpenCV corners, using cloud bboxes (fallback)');
     return cloudCards;
   }
 
@@ -49,91 +49,60 @@ function mergeCloudWithOpenCV(
     y: corners.reduce((sum, p) => sum + p.y, 0) / corners.length,
   });
 
-  const distance = (a: { x: number; y: number }, b: { x: number; y: number }) =>
-    Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+  // Sort OpenCV bboxes by position: top-to-bottom, left-to-right (reading order)
+  // Use Y-major sorting with row tolerance to handle slight vertical misalignment
+  const sortedOpenCV = [...opencvCorners]
+    .map((corners) => ({ corners, center: getCenter(corners) }))
+    .sort((a, b) => {
+      // Calculate average bbox height for row tolerance
+      const avgHeight = (
+        (Math.max(...a.corners.map(p => p.y)) - Math.min(...a.corners.map(p => p.y))) +
+        (Math.max(...b.corners.map(p => p.y)) - Math.min(...b.corners.map(p => p.y)))
+      ) / 2;
+      const rowTolerance = avgHeight * 0.4; // Cards within 40% of height are same row
 
-  // Calculate average bbox size for distance threshold
-  const avgBboxSize = opencvCorners.reduce((sum, corners) => {
-    const xs = corners.map(p => p.x);
-    const ys = corners.map(p => p.y);
-    const width = Math.max(...xs) - Math.min(...xs);
-    const height = Math.max(...ys) - Math.min(...ys);
-    return sum + (width + height) / 2;
-  }, 0) / opencvCorners.length;
-
-  // Distance threshold: 1.5x average bbox size
-  const maxDistance = avgBboxSize * 1.5;
-
-  // Prepare OpenCV bboxes with centers
-  const opencvItems = opencvCorners.map((corners, index) => ({
-    corners,
-    index,
-    center: getCenter(corners),
-    used: false,
-  }));
-
-  // Prepare cloud cards with centers
-  const cloudItems = cloudCards.map((card, index) => ({
-    card,
-    index,
-    center: getCenter(card.corners),
-  }));
+      // If Y difference is small, they're in the same row - sort by X
+      if (Math.abs(a.center.y - b.center.y) < rowTolerance) {
+        return a.center.x - b.center.x;
+      }
+      // Otherwise sort by Y (top to bottom)
+      return a.center.y - b.center.y;
+    });
 
   const mergedCards: IdentifiedCard[] = [];
-  let matchedCount = 0;
 
-  // For each cloud card, find the nearest unused OpenCV bbox
-  for (const cloudItem of cloudItems) {
-    let bestMatch: typeof opencvItems[0] | null = null;
-    let bestDistance = Infinity;
+  // Pair cloud cards (in array order) with sorted OpenCV bboxes (by position)
+  // Cloud returns cards in visual reading order, so this should align
+  const pairCount = Math.min(cloudCards.length, sortedOpenCV.length);
 
-    for (const opencvItem of opencvItems) {
-      if (opencvItem.used) continue;
-
-      const dist = distance(cloudItem.center, opencvItem.center);
-      if (dist < bestDistance && dist < maxDistance) {
-        bestDistance = dist;
-        bestMatch = opencvItem;
-      }
-    }
-
-    if (bestMatch) {
-      // Found a matching OpenCV bbox - use its accurate corners
-      bestMatch.used = true;
-      matchedCount++;
-
-      mergedCards.push({
-        ...cloudItem.card,
-        corners: bestMatch.corners, // Use OpenCV corners (accurate)
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-    }
-    // If no match found, DON'T add the cloud card - its bbox is unreliable
-    // This is intentional: better to show fewer accurate bboxes than
-    // many inaccurate ones that confuse the user
+  for (let i = 0; i < pairCount; i++) {
+    mergedCards.push({
+      ...cloudCards[i],
+      corners: sortedOpenCV[i].corners, // Use OpenCV corners (accurate)
+      showingOpposite: defaultScanResult === 'opposite',
+    });
   }
 
-  // Also add any unused OpenCV bboxes as "unknown" cards
-  // These are cards OpenCV detected but cloud didn't identify
-  for (const opencvItem of opencvItems) {
-    if (!opencvItem.used) {
-      mergedCards.push({
-        cardId: 'unknown',
-        filename: '',
-        side: null,
-        confidence: 0.5,
-        corners: opencvItem.corners,
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-    }
+  // Add remaining OpenCV bboxes as "unknown" cards
+  for (let i = pairCount; i < sortedOpenCV.length; i++) {
+    mergedCards.push({
+      cardId: 'unknown',
+      filename: '',
+      side: null,
+      confidence: 0.5,
+      corners: sortedOpenCV[i].corners,
+      showingOpposite: defaultScanResult === 'opposite',
+    });
   }
+
+  // Note: Extra cloud cards (beyond OpenCV count) are dropped - their bboxes are unreliable
 
   console.log(
     '[mergeCloudWithOpenCV]',
     cloudCards.length, 'cloud cards,',
     opencvCorners.length, 'OpenCV bboxes,',
-    matchedCount, 'matched,',
-    opencvItems.filter(o => !o.used).length, 'unmatched OpenCV bboxes added as unknown'
+    pairCount, 'paired by array order,',
+    sortedOpenCV.length - pairCount, 'extra OpenCV bboxes as unknown'
   );
 
   return mergedCards;

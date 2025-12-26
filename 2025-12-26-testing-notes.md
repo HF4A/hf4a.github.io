@@ -1,0 +1,2 @@
+- [ ] when clicked, the identified cards do not 'flip' onto the other side.  is the problem in the client or the remapped data?
+- [ ] the correction flow (entered by tapping an unmatched card, or by selecting rescan in card details) shows 'running OCR' - it already should have access to the returned data from the API call - make sure this page is refactored to consider the new pipeline and data model.
