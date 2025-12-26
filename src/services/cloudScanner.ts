@@ -19,6 +19,8 @@ export interface CardResult {
 export interface ScanResponse {
   success: boolean;
   cards: CardResult[];
+  gridRows?: number;  // Grid dimensions detected by API
+  gridCols?: number;
   model_used: string;
   tokens_used?: { input: number; output: number };
   latency_ms: number;

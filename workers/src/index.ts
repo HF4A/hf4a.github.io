@@ -48,6 +48,8 @@ interface CardResult {
 interface ScanResponse {
   success: boolean;
   cards: CardResult[];
+  gridRows?: number;  // Number of rows in detected card grid
+  gridCols?: number;  // Number of columns in detected card grid
   model_used: string;
   tokens_used?: { input: number; output: number };
   latency_ms: number;
@@ -59,6 +61,8 @@ const SYSTEM_PROMPT = `You are an expert at identifying cards from the board gam
 When shown an image of a card (or multiple cards), identify each card and return JSON:
 
 {
+  "gridRows": 3,
+  "gridCols": 3,
   "cards": [
     {
       "card_type": "crew|thruster|robonaut|refinery|reactor|radiator|generator|freighter|bernal|colonist|patent|event|factory|support",
@@ -72,6 +76,7 @@ When shown an image of a card (or multiple cards), identify each card and return
 }
 
 Rules:
+- gridRows/gridCols: the arrangement of cards in the image (e.g., 3x3 grid = 3 rows, 3 cols). Set to 1x1 for single card.
 - card_type must be one of the listed types (appears in colored banner at top)
 - card_name is the unique name printed at the BOTTOM of the card (NOT the type). Examples: "Solar Moth", "Ericsson Engine", "Penning Trap"
 - side refers to the card's BACK color (white, black, blue, gold, or purple). The colored banner at top indicates card_type, not side. Most tech cards are white-backed.
@@ -366,6 +371,8 @@ export default {
         const response: ScanResponse = {
           success: !parsed.error && (parsed.cards?.length ?? 0) > 0,
           cards: parsed.cards || [],
+          gridRows: parsed.gridRows,
+          gridCols: parsed.gridCols,
           model_used: model,
           tokens_used: openaiResult.usage ? {
             input: openaiResult.usage.prompt_tokens,

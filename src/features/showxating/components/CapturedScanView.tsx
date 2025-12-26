@@ -9,12 +9,13 @@
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { motion, PanInfo } from 'framer-motion';
-import { useShowxatingStore, IdentifiedCard } from '../store/showxatingStore';
+import { motion, PanInfo, AnimatePresence } from 'framer-motion';
+import { useShowxatingStore, IdentifiedCard, ScanViewMode } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
 import { useCardStore } from '../../../store/cardStore';
 import { useSettingsStore, ALL_CARD_TYPES, CARD_TYPE_LABELS } from '../../../store/settingsStore';
 import { log } from '../../../store/logsStore';
+import { GridResultsView } from './GridResultsView';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
@@ -27,7 +28,7 @@ interface CapturedScanViewProps {
 }
 
 export function CapturedScanView({ slotId }: CapturedScanViewProps) {
-  const { scanSlots, updateCardFlip } = useShowxatingStore();
+  const { scanSlots, updateCardFlip, setViewMode } = useShowxatingStore();
   const { cards } = useCardStore();
   const scan = scanSlots[slotId];
 
@@ -41,8 +42,31 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
     card: IdentifiedCard;
     cardIndex: number;
   } | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
+
+  // Determine current view mode (default to 'photo', switch to 'grid' after API completes)
+  const viewMode = scan?.viewMode || 'photo';
+
+  // Auto-switch to grid view when API processing completes
+  useEffect(() => {
+    if (scan && !scan.isProcessing && scan.cards.length > 0 && !scan.viewMode) {
+      // API just completed - trigger transition
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setViewMode(slotId, 'grid');
+        setIsTransitioning(false);
+      }, 500); // Delay for scanline animation
+    }
+  }, [scan?.isProcessing, scan?.cards.length, scan?.viewMode, slotId, setViewMode]);
+
+  // Toggle view mode
+  const toggleViewMode = useCallback(() => {
+    if (!scan) return;
+    const newMode: ScanViewMode = viewMode === 'photo' ? 'grid' : 'photo';
+    setViewMode(slotId, newMode);
+  }, [scan, viewMode, slotId, setViewMode]);
 
   // Track container and image sizes for overlay positioning
   useEffect(() => {
@@ -115,47 +139,90 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
 
   return (
     <div ref={containerRef} className="relative w-full h-full bg-black overflow-hidden">
-      {/* Captured image */}
-      <img
-        ref={imageRef}
-        src={scan.imageDataUrl}
-        alt="Captured scan"
-        className="absolute inset-0 w-full h-full object-cover"
-        onLoad={() => {
-          if (containerRef.current) {
-            setContainerSize({
-              width: containerRef.current.clientWidth,
-              height: containerRef.current.clientHeight,
-            });
-          }
-        }}
-      />
+      <AnimatePresence mode="wait">
+        {viewMode === 'photo' ? (
+          <motion.div
+            key="photo-view"
+            className="absolute inset-0"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Captured image */}
+            <img
+              ref={imageRef}
+              src={scan.imageDataUrl}
+              alt="Captured scan"
+              className="absolute inset-0 w-full h-full object-cover"
+              onLoad={() => {
+                if (containerRef.current) {
+                  setContainerSize({
+                    width: containerRef.current.clientWidth,
+                    height: containerRef.current.clientHeight,
+                  });
+                }
+              }}
+            />
 
-      {/* Card overlays */}
-      {scan.cards.map((card, index) => (
-        <CardOverlay
-          key={index}
-          card={card}
-          cardIndex={index}
-          containerSize={containerSize}
-          imageRef={imageRef}
-          imageWidth={scan.imageWidth || 0}
-          imageHeight={scan.imageHeight || 0}
-          isProcessing={scan.isProcessing}
-          onFlip={() => updateCardFlip(slotId, index, !card.showingOpposite)}
-          onOpenDetail={() => {
-            // Find the card in the catalog and open detail modal
-            const catalogCard = cards.find((c) => c.id === card.cardId);
-            if (catalogCard) {
-              setDetailData({ card: catalogCard, identifiedCard: card, cardIndex: index });
-            }
-          }}
-          onOpenCorrection={() => {
-            // Open correction flow for this card
-            setCorrectionData({ card, cardIndex: index });
-          }}
-        />
-      ))}
+            {/* Card overlays */}
+            {scan.cards.map((card, index) => (
+              <CardOverlay
+                key={index}
+                card={card}
+                cardIndex={index}
+                containerSize={containerSize}
+                imageRef={imageRef}
+                imageWidth={scan.imageWidth || 0}
+                imageHeight={scan.imageHeight || 0}
+                isProcessing={scan.isProcessing}
+                onFlip={() => updateCardFlip(slotId, index, !card.showingOpposite)}
+                onOpenDetail={() => {
+                  const catalogCard = cards.find((c) => c.id === card.cardId);
+                  if (catalogCard) {
+                    setDetailData({ card: catalogCard, identifiedCard: card, cardIndex: index });
+                  }
+                }}
+                onOpenCorrection={() => {
+                  setCorrectionData({ card, cardIndex: index });
+                }}
+              />
+            ))}
+
+            {/* Transition scanline animation */}
+            {isTransitioning && (
+              <motion.div
+                className="absolute left-0 right-0 h-1 bg-[var(--showxating-cyan)] shadow-lg"
+                style={{ boxShadow: '0 0 20px var(--showxating-cyan)' }}
+                initial={{ top: 0 }}
+                animate={{ top: '100%' }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+              />
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="grid-view"
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <GridResultsView
+              scan={scan}
+              slotId={slotId}
+              onCardFlip={(cardIndex, showingOpposite) => {
+                updateCardFlip(slotId, cardIndex, showingOpposite);
+              }}
+              onOpenDetail={(catalogCard, identifiedCard, cardIndex) => {
+                setDetailData({ card: catalogCard, identifiedCard, cardIndex });
+              }}
+              onOpenCorrection={(card, cardIndex) => {
+                setCorrectionData({ card, cardIndex });
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Card Detail Modal */}
       {detailData && (
@@ -163,7 +230,6 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
           card={detailData.card}
           onClose={() => setDetailData(null)}
           onRescan={() => {
-            // Open correction flow for this card
             setCorrectionData({
               card: detailData.identifiedCard,
               cardIndex: detailData.cardIndex,
@@ -185,8 +251,25 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
         />
       )}
 
-      {/* Scanline effect on top */}
-      <div className="scanline-overlay" />
+      {/* Scanline effect on top (only in photo view) */}
+      {viewMode === 'photo' && <div className="scanline-overlay" />}
+
+      {/* View toggle button */}
+      {!scan.isProcessing && scan.cards.length > 0 && (
+        <button
+          onClick={toggleViewMode}
+          className="absolute top-4 right-4 bg-black/70 px-3 py-1.5 rounded border transition-colors"
+          style={{
+            borderColor: 'var(--showxating-cyan)',
+            color: 'var(--showxating-cyan)',
+            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          }}
+        >
+          <span className="text-xs tracking-wider uppercase">
+            {viewMode === 'photo' ? 'GRID' : 'PHOTO'}
+          </span>
+        </button>
+      )}
 
       {/* Info badge */}
       <div className="absolute top-4 left-4 bg-black/70 px-3 py-1.5 rounded flex flex-col gap-0.5">

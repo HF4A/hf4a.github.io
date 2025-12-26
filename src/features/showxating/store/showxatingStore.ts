@@ -39,6 +39,8 @@ export interface IdentifiedCard {
   fusedScore?: number; // Combined score (0 = perfect)
 }
 
+export type ScanViewMode = 'photo' | 'grid';
+
 export interface CapturedScan {
   id: string;
   timestamp: number;
@@ -50,6 +52,10 @@ export interface CapturedScan {
   // Scan statistics for UI display
   opencvCardCount?: number;  // How many cards OpenCV detected
   apiCardCount?: number;     // How many cards the cloud API returned
+  // Grid view state
+  viewMode?: ScanViewMode;  // 'photo' (default) or 'grid'
+  gridRows?: number;        // Detected/inferred grid rows
+  gridCols?: number;        // Detected/inferred grid cols
 }
 
 interface ShowxatingStore {
@@ -109,6 +115,8 @@ interface ShowxatingStore {
   updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
   clearSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void;
   removeSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void; // Remove and shift
+  setViewMode: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7', mode: ScanViewMode) => void;
+  setGridDimensions: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7', rows: number, cols: number) => void;
 
   reset: () => void;
 }
@@ -281,6 +289,32 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
     const newActiveSlot = state.activeSlot === slotId ? 'live' : state.activeSlot;
 
     set({ scanSlots: newSlots, activeSlot: newActiveSlot });
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  setViewMode: (slotId, mode) => {
+    const state = get();
+    const slot = state.scanSlots[slotId];
+    if (!slot) return;
+
+    const newSlots = {
+      ...state.scanSlots,
+      [slotId]: { ...slot, viewMode: mode },
+    };
+    set({ scanSlots: newSlots });
+    useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  setGridDimensions: (slotId, rows, cols) => {
+    const state = get();
+    const slot = state.scanSlots[slotId];
+    if (!slot) return;
+
+    const newSlots = {
+      ...state.scanSlots,
+      [slotId]: { ...slot, gridRows: rows, gridCols: cols },
+    };
+    set({ scanSlots: newSlots });
     useScanSlotsStore.setState({ scanSlots: newSlots });
   },
 

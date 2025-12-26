@@ -35,7 +35,9 @@
 //   0.4.3 - Fix off-by-one bbox mapping (don't sort cloud results)
 //   0.4.4 - Grid-based merge algorithm for bbox matching
 //   0.4.5 - Add scan object count to UI
-export const APP_VERSION = '0.4.5';
+// 0.5.x - Grid-based scan results view
+//   0.5.0 - Replace photo+overlay with NxM grid of card images
+export const APP_VERSION = '0.5.0';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)
