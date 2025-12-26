@@ -23,15 +23,16 @@ import type { Card } from '../../../types/card';
 
 /**
  * Merge cloud-identified cards with OpenCV-detected bboxes.
- * Cloud API provides accurate card identification but UNRELIABLE bboxes.
+ * Cloud API provides accurate card identification but UNRELIABLE absolute bbox positions.
+ * However, cloud bboxes are RELATIVELY correct (card A left of card B is accurate).
  * OpenCV provides accurate bboxes but lower recall (may miss some cards).
  *
  * Strategy:
- * - Vision API returns cards in visual reading order (top-to-bottom, left-to-right)
- * - Sort OpenCV bboxes by position to match this order
- * - Pair cloud cards to OpenCV bboxes by ARRAY ORDER (ignoring cloud bboxes entirely)
- * - Extra OpenCV bboxes become "unknown"
- * - Extra cloud cards are dropped (their bboxes are unreliable)
+ * 1. Sort both cloud and OpenCV bboxes by position (reading order)
+ * 2. Pair them 1:1 where possible - use OpenCV positions (accurate)
+ * 3. For extra cloud cards: transform their bboxes from cloud's coord space
+ *    to OpenCV's coord space using the matched pairs as reference
+ * 4. For extra OpenCV bboxes: add as "unknown"
  */
 function mergeCloudWithOpenCV(
   cloudCards: IdentifiedCard[],
@@ -49,38 +50,106 @@ function mergeCloudWithOpenCV(
     y: corners.reduce((sum, p) => sum + p.y, 0) / corners.length,
   });
 
-  // Sort OpenCV bboxes by position: top-to-bottom, left-to-right (reading order)
-  // Use Y-major sorting with row tolerance to handle slight vertical misalignment
-  const sortedOpenCV = [...opencvCorners]
-    .map((corners) => ({ corners, center: getCenter(corners) }))
-    .sort((a, b) => {
-      // Calculate average bbox height for row tolerance
-      const avgHeight = (
-        (Math.max(...a.corners.map(p => p.y)) - Math.min(...a.corners.map(p => p.y))) +
-        (Math.max(...b.corners.map(p => p.y)) - Math.min(...b.corners.map(p => p.y)))
-      ) / 2;
-      const rowTolerance = avgHeight * 0.4; // Cards within 40% of height are same row
+  const getBounds = (corners: Point[]) => ({
+    minX: Math.min(...corners.map(p => p.x)),
+    maxX: Math.max(...corners.map(p => p.x)),
+    minY: Math.min(...corners.map(p => p.y)),
+    maxY: Math.max(...corners.map(p => p.y)),
+  });
 
-      // If Y difference is small, they're in the same row - sort by X
+  // Helper to sort by reading order (top-to-bottom, left-to-right)
+  const sortByReadingOrder = <T extends { center: Point }>(items: T[], rowTolerance: number): T[] => {
+    return [...items].sort((a, b) => {
       if (Math.abs(a.center.y - b.center.y) < rowTolerance) {
         return a.center.x - b.center.x;
       }
-      // Otherwise sort by Y (top to bottom)
       return a.center.y - b.center.y;
     });
+  };
+
+  // Calculate row tolerance from OpenCV bboxes (40% of average height)
+  const avgHeight = opencvCorners.reduce((sum, corners) => {
+    const bounds = getBounds(corners);
+    return sum + (bounds.maxY - bounds.minY);
+  }, 0) / opencvCorners.length;
+  const rowTolerance = avgHeight * 0.4;
+
+  // Sort OpenCV bboxes by position
+  const opencvItems = opencvCorners.map(corners => ({
+    corners,
+    center: getCenter(corners),
+    bounds: getBounds(corners),
+  }));
+  const sortedOpenCV = sortByReadingOrder(opencvItems, rowTolerance);
+
+  // Sort cloud cards by their bbox positions (relative order)
+  const cloudItems = cloudCards.map(card => ({
+    card,
+    center: getCenter(card.corners),
+    bounds: getBounds(card.corners),
+  }));
+  // Use cloud's own coordinate scale for row tolerance
+  const cloudAvgHeight = cloudItems.reduce((sum, item) =>
+    sum + (item.bounds.maxY - item.bounds.minY), 0) / cloudItems.length;
+  const sortedCloud = sortByReadingOrder(cloudItems, cloudAvgHeight * 0.4);
 
   const mergedCards: IdentifiedCard[] = [];
+  const pairCount = Math.min(sortedCloud.length, sortedOpenCV.length);
 
-  // Pair cloud cards (in array order) with sorted OpenCV bboxes (by position)
-  // Cloud returns cards in visual reading order, so this should align
-  const pairCount = Math.min(cloudCards.length, sortedOpenCV.length);
-
+  // Pair cloud cards with OpenCV bboxes by sorted position
   for (let i = 0; i < pairCount; i++) {
     mergedCards.push({
-      ...cloudCards[i],
+      ...sortedCloud[i].card,
       corners: sortedOpenCV[i].corners, // Use OpenCV corners (accurate)
       showingOpposite: defaultScanResult === 'opposite',
     });
+  }
+
+  // For extra cloud cards: transform their bboxes to OpenCV coordinate space
+  if (sortedCloud.length > pairCount && pairCount >= 2) {
+    // Calculate transform from cloud coords to OpenCV coords using matched pairs
+    const cloudBounds = {
+      minX: Math.min(...sortedCloud.slice(0, pairCount).map(c => c.center.x)),
+      maxX: Math.max(...sortedCloud.slice(0, pairCount).map(c => c.center.x)),
+      minY: Math.min(...sortedCloud.slice(0, pairCount).map(c => c.center.y)),
+      maxY: Math.max(...sortedCloud.slice(0, pairCount).map(c => c.center.y)),
+    };
+    const opencvBounds = {
+      minX: Math.min(...sortedOpenCV.slice(0, pairCount).map(o => o.center.x)),
+      maxX: Math.max(...sortedOpenCV.slice(0, pairCount).map(o => o.center.x)),
+      minY: Math.min(...sortedOpenCV.slice(0, pairCount).map(o => o.center.y)),
+      maxY: Math.max(...sortedOpenCV.slice(0, pairCount).map(o => o.center.y)),
+    };
+
+    // Linear interpolation helper
+    const lerp = (value: number, inMin: number, inMax: number, outMin: number, outMax: number) => {
+      if (inMax === inMin) return (outMin + outMax) / 2;
+      return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
+    };
+
+    // Transform cloud corners to OpenCV coordinate space
+    const transformCorners = (corners: Point[]): Point[] => {
+      return corners.map(p => ({
+        x: lerp(p.x, cloudBounds.minX, cloudBounds.maxX, opencvBounds.minX, opencvBounds.maxX),
+        y: lerp(p.y, cloudBounds.minY, cloudBounds.maxY, opencvBounds.minY, opencvBounds.maxY),
+      }));
+    };
+
+    // Add extra cloud cards with transformed bboxes
+    for (let i = pairCount; i < sortedCloud.length; i++) {
+      const transformedCorners = transformCorners(sortedCloud[i].card.corners);
+      mergedCards.push({
+        ...sortedCloud[i].card,
+        corners: transformedCorners,
+        showingOpposite: defaultScanResult === 'opposite',
+      });
+    }
+
+    console.log(
+      '[mergeCloudWithOpenCV] Transformed',
+      sortedCloud.length - pairCount,
+      'extra cloud bboxes to OpenCV coord space'
+    );
   }
 
   // Add remaining OpenCV bboxes as "unknown" cards
@@ -95,14 +164,13 @@ function mergeCloudWithOpenCV(
     });
   }
 
-  // Note: Extra cloud cards (beyond OpenCV count) are dropped - their bboxes are unreliable
-
   console.log(
     '[mergeCloudWithOpenCV]',
-    cloudCards.length, 'cloud cards,',
-    opencvCorners.length, 'OpenCV bboxes,',
-    pairCount, 'paired by array order,',
-    sortedOpenCV.length - pairCount, 'extra OpenCV bboxes as unknown'
+    cloudCards.length, 'cloud,',
+    opencvCorners.length, 'opencv,',
+    pairCount, 'paired,',
+    Math.max(0, sortedCloud.length - pairCount), 'cloud transformed,',
+    Math.max(0, sortedOpenCV.length - pairCount), 'opencv unknown'
   );
 
   return mergedCards;
