@@ -30,7 +30,12 @@
 //   0.3.9 - Reject type-only matches, filter type words from candidates, match quality tracking
 // 0.4.x - Cloud-based scanning via OpenAI Vision API
 //   0.4.0 - Cloud scanning via Cloudflare Worker + OpenAI Vision API, invite code auth, immediate OpenCV feedback
-export const APP_VERSION = '0.4.0';
+//   0.4.1 - Fix card flip functionality
+//   0.4.2 - Remove redundant OCR in correction flow
+//   0.4.3 - Fix off-by-one bbox mapping (don't sort cloud results)
+//   0.4.4 - Grid-based merge algorithm for bbox matching
+//   0.4.5 - Add scan object count to UI
+export const APP_VERSION = '0.4.5';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)
