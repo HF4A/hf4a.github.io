@@ -189,12 +189,17 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
       <div className="scanline-overlay" />
 
       {/* Info badge */}
-      <div className="absolute top-4 left-4 bg-black/70 px-3 py-1 rounded">
+      <div className="absolute top-4 left-4 bg-black/70 px-3 py-1.5 rounded flex flex-col gap-0.5">
         <span className="hud-text text-xs">
           {scan.cards.length > 0
             ? `${scan.cards.length} CARD${scan.cards.length > 1 ? 'S' : ''} DETECTED`
             : 'NO CARDS DETECTED'}
         </span>
+        {scan.apiCardCount !== undefined && scan.apiCardCount > 0 && (
+          <span className="hud-text hud-text-dim text-[10px]">
+            SCAN: {scan.apiCardCount} OBJECT{scan.apiCardCount > 1 ? 'S' : ''}
+          </span>
+        )}
       </div>
     </div>
   );

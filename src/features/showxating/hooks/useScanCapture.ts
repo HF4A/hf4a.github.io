@@ -516,10 +516,11 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
         imageHeight: canvas.height,
         cards: placeholderCards,
         isProcessing: authService.hasCredentials(), // Only processing if we'll call cloud
+        opencvCardCount: placeholderCards.length,   // Track OpenCV detection count
       };
 
       addCapture(scan);
-      console.log('[useScanCapture] Captured scan:', scanId, 'placeholder cards:', placeholderCards.length);
+      console.log('[useScanCapture] Captured scan:', scanId, 'OpenCV detected:', placeholderCards.length);
 
       // Store reference for async cloud processing
       pendingCaptureRef.current = { canvas, imageData, scanId };
@@ -539,17 +540,17 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
               // Cloud API bboxes are unreliable - use OpenCV corners instead
               const mergedCards = mergeCloudWithOpenCV(cloudCards, opencvCorners, defaultScanResult);
               console.log('[useScanCapture] Cloud identified', cloudCards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
-              updateScanCards(scanId, mergedCards, false);
+              updateScanCards(scanId, mergedCards, false, { opencv: opencvCorners.length, api: cloudCards.length });
             } else {
               // Cloud returned nothing - try local fallback
               console.log('[useScanCapture] Cloud returned no cards, trying local fallback');
               const localCards = await scanWithLocal(canvas, imageData);
-              updateScanCards(scanId, localCards.length > 0 ? localCards : [], false);
+              updateScanCards(scanId, localCards.length > 0 ? localCards : [], false, { api: 0 });
             }
           } catch (err) {
             console.error('[useScanCapture] Cloud processing error:', err);
             // Mark as no longer processing even on error
-            updateScanCards(scanId, [], false);
+            updateScanCards(scanId, [], false, { api: 0 });
           }
         })();
       } else if (placeholderCards.length === 0) {

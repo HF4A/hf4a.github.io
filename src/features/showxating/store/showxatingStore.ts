@@ -47,6 +47,9 @@ export interface CapturedScan {
   imageHeight: number;  // Original capture height for bbox coordinate conversion
   cards: IdentifiedCard[];
   isProcessing?: boolean;  // True while waiting for cloud API response
+  // Scan statistics for UI display
+  opencvCardCount?: number;  // How many cards OpenCV detected
+  apiCardCount?: number;     // How many cards the cloud API returned
 }
 
 interface ShowxatingStore {
@@ -102,7 +105,7 @@ interface ShowxatingStore {
   setActiveSlot: (slot: ScanSlot) => void;
   setCapturing: (capturing: boolean) => void;
   addCapture: (scan: CapturedScan) => void;
-  updateScanCards: (scanId: string, cards: IdentifiedCard[], isProcessing?: boolean) => void;
+  updateScanCards: (scanId: string, cards: IdentifiedCard[], isProcessing?: boolean, counts?: { opencv?: number; api?: number }) => void;
   updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
   clearSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void;
   removeSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void; // Remove and shift
@@ -212,7 +215,7 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
     useScanSlotsStore.setState({ scanSlots: newSlots });
   },
 
-  updateScanCards: (scanId, cards, isProcessing = false) => {
+  updateScanCards: (scanId, cards, isProcessing = false, counts) => {
     const state = get();
     const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
 
@@ -222,7 +225,13 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
       if (slot && slot.id === scanId) {
         const newSlots = {
           ...state.scanSlots,
-          [slotId]: { ...slot, cards, isProcessing },
+          [slotId]: {
+            ...slot,
+            cards,
+            isProcessing,
+            ...(counts?.opencv !== undefined && { opencvCardCount: counts.opencv }),
+            ...(counts?.api !== undefined && { apiCardCount: counts.api }),
+          },
         };
         set({ scanSlots: newSlots });
         useScanSlotsStore.setState({ scanSlots: newSlots });
