@@ -238,11 +238,13 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
         identifiedCards = await scanWithLocal(canvas, imageData);
       }
 
-      // Create scan record
+      // Create scan record with original dimensions for coordinate conversion
       const scan: CapturedScan = {
         id: `scan-${Date.now()}`,
         timestamp: Date.now(),
         imageDataUrl,
+        imageWidth: canvas.width,
+        imageHeight: canvas.height,
         cards: identifiedCards,
       };
 

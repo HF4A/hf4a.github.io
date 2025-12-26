@@ -149,6 +149,8 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
           cardIndex={index}
           containerSize={containerSize}
           imageRef={imageRef}
+          imageWidth={scan.imageWidth || 0}
+          imageHeight={scan.imageHeight || 0}
           onFlip={() => updateCardFlip(slotId, index, !card.showingOpposite)}
           onOpenDetail={() => {
             // Find the card in the catalog and open detail modal
@@ -211,7 +213,9 @@ interface CardOverlayProps {
   card: IdentifiedCard;
   cardIndex: number;
   containerSize: { width: number; height: number };
-  imageRef: React.RefObject<HTMLImageElement | null>;
+  imageRef: React.RefObject<HTMLImageElement | null>; // Fallback for legacy scans
+  imageWidth: number;   // Original capture width (0 for legacy scans)
+  imageHeight: number;  // Original capture height (0 for legacy scans)
   onFlip: () => void;
   onOpenDetail: () => void;
   onOpenCorrection: () => void;
@@ -221,6 +225,8 @@ function CardOverlay({
   card,
   containerSize,
   imageRef,
+  imageWidth,
+  imageHeight,
   onFlip,
   onOpenDetail,
   onOpenCorrection,
@@ -253,12 +259,22 @@ function CardOverlay({
   }, [catalogCard, catalogCards, card.showingOpposite, card.filename]);
 
   // Calculate overlay position based on detected corners
+  // Uses stored imageWidth/imageHeight for consistent coordinate transformation
+  // Falls back to img.naturalWidth for legacy scans without stored dimensions
   const getOverlayStyle = useCallback((): React.CSSProperties => {
-    if (!imageRef.current || containerSize.width === 0) return { display: 'none' };
+    if (containerSize.width === 0) {
+      return { display: 'none' };
+    }
 
-    const img = imageRef.current;
-    const naturalW = img.naturalWidth || 1;
-    const naturalH = img.naturalHeight || 1;
+    // Use stored dimensions if available, fall back to image natural dimensions
+    let naturalW = imageWidth;
+    let naturalH = imageHeight;
+    if (naturalW === 0 || naturalH === 0) {
+      // Legacy fallback: use image natural dimensions
+      if (!imageRef.current) return { display: 'none' };
+      naturalW = imageRef.current.naturalWidth || 1;
+      naturalH = imageRef.current.naturalHeight || 1;
+    }
 
     // Calculate object-cover scaling
     const imgAR = naturalW / naturalH;
@@ -299,7 +315,7 @@ function CardOverlay({
       width: maxX - minX,
       height: maxY - minY,
     };
-  }, [card.corners, containerSize, imageRef]);
+  }, [card.corners, containerSize, imageWidth, imageHeight, imageRef]);
 
   // Handle tap events
   // Single tap = flip, double tap = open detail modal

@@ -32,6 +32,8 @@ export interface DiagnosticsMetadata {
 export interface ScanDiagnostics {
   id: string;
   timestamp: string;
+  imageWidth?: number;
+  imageHeight?: number;
   cardsCount: number;
   cards: CardDiagnostics[];
 }
@@ -72,6 +74,8 @@ function formatScanDiagnostics(scan: CapturedScan): ScanDiagnostics {
   return {
     id: scan.id,
     timestamp: new Date(scan.timestamp).toISOString(),
+    imageWidth: scan.imageWidth,
+    imageHeight: scan.imageHeight,
     cardsCount: scan.cards.length,
     cards: scan.cards.map(formatCardDiagnostics),
   };

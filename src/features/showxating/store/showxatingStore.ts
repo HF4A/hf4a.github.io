@@ -43,6 +43,8 @@ export interface CapturedScan {
   id: string;
   timestamp: number;
   imageDataUrl: string;
+  imageWidth: number;   // Original capture width for bbox coordinate conversion
+  imageHeight: number;  // Original capture height for bbox coordinate conversion
   cards: IdentifiedCard[];
 }
 
