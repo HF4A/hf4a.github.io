@@ -47,6 +47,13 @@ interface TextLineInfo {
   height: number;
 }
 
+// Raw OCR detection result from @gutenye/ocr-browser
+interface OcrDetectionLine {
+  text: string;
+  mean: number;
+  box?: number[][];
+}
+
 /**
  * Convert OCR box (array of 4 corner points) to bounding rect
  * Box format: [[x1,y1], [x2,y2], [x3,y3], [x4,y4]] (4 corners, clockwise from top-left)
@@ -110,8 +117,8 @@ export async function extractCardText(
   let allLines: TextLineInfo[] = [];
 
   try {
-    const result = await ocr.detect(dataUrl);
-    allLines = result.map(line => {
+    const result: OcrDetectionLine[] = await ocr.detect(dataUrl);
+    allLines = result.map((line: OcrDetectionLine) => {
       const rect = boxToRect(line.box);
       return {
         text: line.text,
