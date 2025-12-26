@@ -3,16 +3,56 @@
  *
  * Scrollable welcome with Belta Creole sprinkled throughout.
  * Explains the app's purpose and basic usage.
+ * Requires invite code registration before proceeding.
  */
 
+import { useState, useEffect } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
+import { authService } from '../services/authService';
 import { APP_VERSION } from '../version';
 
 export function WelcomeScreen() {
   const { setHasSeenWelcome } = useSettingsStore();
+  const [inviteCode, setInviteCode] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  // Check if already registered on mount
+  useEffect(() => {
+    if (authService.hasCredentials()) {
+      setIsRegistered(true);
+      const storedCode = authService.getInviteCode();
+      if (storedCode) {
+        setInviteCode(storedCode);
+      }
+    }
+  }, []);
+
+  const handleRegister = async () => {
+    if (!inviteCode.trim()) {
+      setError('Please enter an invite code');
+      return;
+    }
+
+    setIsRegistering(true);
+    setError(null);
+
+    const result = await authService.register(inviteCode.trim());
+
+    setIsRegistering(false);
+
+    if (result.success) {
+      setIsRegistered(true);
+    } else {
+      setError(result.error || 'Registration failed');
+    }
+  };
 
   const handleContinue = () => {
-    setHasSeenWelcome(true);
+    if (isRegistered) {
+      setHasSeenWelcome(true);
+    }
   };
 
   return (
@@ -179,19 +219,72 @@ export function WelcomeScreen() {
           </section>
         </main>
 
-        {/* Footer with CTA */}
-        <footer className="sticky bottom-0 bg-[#0a0a0f]/95 backdrop-blur border-t border-[#d4a84b]/30 p-6">
+        {/* Footer with Invite Code and CTA */}
+        <footer className="sticky bottom-0 bg-[#0a0a0f]/95 backdrop-blur border-t border-[#d4a84b]/30 p-6 space-y-4">
+          {/* Invite Code Section */}
+          <div className="space-y-2">
+            <label
+              htmlFor="invite-code"
+              className="block text-xs tracking-wider uppercase"
+              style={{ color: '#707080' }}
+            >
+              {isRegistered ? 'REGISTERED' : 'ENTER INVITE CODE'}
+            </label>
+            <div className="flex gap-2">
+              <input
+                id="invite-code"
+                type="text"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                placeholder="e.g. ROSS2024"
+                disabled={isRegistered || isRegistering}
+                className="flex-1 px-4 py-3 text-sm tracking-wider uppercase bg-[#1a1a2f] border border-[#d4a84b]/30 rounded focus:outline-none focus:border-[#d4a84b] disabled:opacity-50"
+                style={{ color: '#a0a0b0' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !isRegistered) {
+                    handleRegister();
+                  }
+                }}
+              />
+              {!isRegistered && (
+                <button
+                  onClick={handleRegister}
+                  disabled={isRegistering || !inviteCode.trim()}
+                  className="px-4 py-3 text-sm font-bold tracking-wider uppercase transition-colors disabled:opacity-50"
+                  style={{
+                    backgroundColor: '#d4a84b',
+                    color: '#0a0a0f',
+                  }}
+                >
+                  {isRegistering ? '...' : 'VERIFY'}
+                </button>
+              )}
+            </div>
+            {error && (
+              <p className="text-xs" style={{ color: '#ff6b6b' }}>
+                {error}
+              </p>
+            )}
+            {isRegistered && (
+              <p className="text-xs" style={{ color: '#4ade80' }}>
+                ✓ Device registered, ready to scan
+              </p>
+            )}
+          </div>
+
+          {/* Continue Button */}
           <button
             onClick={handleContinue}
-            className="w-full py-4 text-lg font-bold tracking-widest uppercase transition-colors"
+            disabled={!isRegistered}
+            className="w-full py-4 text-lg font-bold tracking-widest uppercase transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
-              backgroundColor: '#d4a84b',
-              color: '#0a0a0f',
+              backgroundColor: isRegistered ? '#d4a84b' : '#3a3a4f',
+              color: isRegistered ? '#0a0a0f' : '#707080',
             }}
           >
-            OKEY, LET'S GO
+            {isRegistered ? "OKEY, LET'S GO" : 'ENTER CODE TO CONTINUE'}
           </button>
-          <p className="text-center text-xs mt-3" style={{ color: '#707080' }}>
+          <p className="text-center text-xs" style={{ color: '#707080' }}>
             Kowmang rise up, beratna! <span style={{ color: '#505060' }}>v{APP_VERSION}</span>
           </p>
         </footer>

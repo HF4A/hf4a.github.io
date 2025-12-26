@@ -1,0 +1,22 @@
+name = "hf4a-card-scanner"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# Account ID (auto-detected, but explicit is safer)
+# account_id = "f2bb1e4e805506d1d4cd2ced10d0f385"
+
+[vars]
+# Public config - not secrets
+ALLOWED_ORIGINS = "https://hf4a.github.io,http://localhost:5173,http://localhost:4173"
+DEFAULT_MODEL = "gpt-4.1-mini"
+AUTH_SALT = "hf4a-salt-v1"
+
+# Secrets are NOT stored here - use `wrangler secret put OPENAI_API_KEY`
+# OPENAI_API_KEY = "sk-..." # NEVER do this
+
+[[kv_namespaces]]
+binding = "HF4A_AUTH"
+id = "69e83e90df374e95aabc4b6564d28f29"
+
+[observability]
+enabled = true
