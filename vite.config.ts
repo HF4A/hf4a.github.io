@@ -32,8 +32,10 @@ export default defineConfig({
       },
       workbox: {
         // Exclude card images from precaching - they use runtime caching instead
-        globPatterns: ['**/*.{js,css,html,json,woff2}'],
+        globPatterns: ['**/*.{js,css,html,json,woff2,wasm}'],
         globIgnores: ['**/cards/**'],
+        // Increase limit for ONNX runtime bundle (~11MB + 24MB WASM)
+        maximumFileSizeToCacheInBytes: 40 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /\/cards\/thumbs\//,
@@ -49,6 +51,14 @@ export default defineConfig({
             options: {
               cacheName: 'card-full-images',
               expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
+          {
+            urlPattern: /\/models\/.*\.(onnx|txt)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'ocr-models',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 },
             },
           },
         ],

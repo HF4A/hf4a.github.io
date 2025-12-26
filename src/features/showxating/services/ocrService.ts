@@ -1,13 +1,14 @@
 /**
  * OCR Service for card text extraction
  *
- * Extracts text from card images using OCR.space API.
+ * Extracts text from card images using local PP-OCRv4 via ONNX.
  * Provides detailed diagnostics for troubleshooting.
  *
- * v0.3.0: Full card OCR with type/title region extraction
+ * v0.3.1: Switched from OCR.space API to local ONNX inference
  */
 
 import { log } from '../../../store/logsStore';
+import { loadOcrEngine, getOcrEngine, isOcrEngineReady } from './ocrEngine';
 
 export interface OCRResult {
   fullText: string;           // All text extracted from full card
@@ -27,178 +28,159 @@ export interface OCRDiagnostics {
   fullCard: OCRRegionDiagnostics;
   typeRegion: OCRRegionDiagnostics;
   titleRegion: OCRRegionDiagnostics;
+  engineType: 'local';
 }
 
 export interface OCRRegionDiagnostics {
   inputSize: { width: number; height: number };
   imageKB: number;
-  apiResponse: unknown;
+  detectedLines: TextLineInfo[];
   error?: string;
 }
 
-// OCR region definitions (as percentage of card dimensions)
-const OCR_REGIONS = {
-  // Full card - no cropping
-  full: { x: 0, y: 0, w: 100, h: 100 },
-  // Type region - top banner where "Refinery", "Thruster" etc. appears
-  type: { x: 0, y: 0, w: 100, h: 15 },
-  // Title region - bottom where card name appears
-  title: { x: 0, y: 80, w: 100, h: 20 },
-};
+interface TextLineInfo {
+  text: string;
+  score: number;  // Confidence (from 'mean' in OCR result)
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}
 
 /**
- * Extract text from a card image using OCR
- * Runs three extractions: full card, type region, title region
+ * Convert OCR box (array of 4 corner points) to bounding rect
+ * Box format: [[x1,y1], [x2,y2], [x3,y3], [x4,y4]] (4 corners, clockwise from top-left)
+ */
+function boxToRect(box: number[][] | undefined): { top: number; left: number; width: number; height: number } {
+  if (!box || box.length < 4) {
+    return { top: 0, left: 0, width: 0, height: 0 };
+  }
+  const xs = box.map(p => p[0]);
+  const ys = box.map(p => p[1]);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  return {
+    left: minX,
+    top: minY,
+    width: maxX - minX,
+    height: maxY - minY,
+  };
+}
+
+// Region boundaries (as percentage of card height)
+const TYPE_REGION_MAX_Y = 0.15;   // Top 15% of card
+const TITLE_REGION_MIN_Y = 0.80;  // Bottom 20% of card
+
+/**
+ * Extract text from a card image using local OCR
+ * Runs single OCR pass, then filters by region
  */
 export async function extractCardText(
   cardCanvas: HTMLCanvasElement
 ): Promise<OCRResult> {
   const startTime = performance.now();
+  const cardHeight = cardCanvas.height;
+  const cardWidth = cardCanvas.width;
+
   const diagnostics: OCRDiagnostics = {
-    fullCard: createEmptyDiagnostics(),
-    typeRegion: createEmptyDiagnostics(),
-    titleRegion: createEmptyDiagnostics(),
+    fullCard: createEmptyDiagnostics(cardWidth, cardHeight),
+    typeRegion: createEmptyDiagnostics(cardWidth, Math.round(cardHeight * TYPE_REGION_MAX_Y)),
+    titleRegion: createEmptyDiagnostics(cardWidth, Math.round(cardHeight * (1 - TITLE_REGION_MIN_Y))),
+    engineType: 'local',
   };
 
-  log.debug(`[OCR] Starting extraction from ${cardCanvas.width}x${cardCanvas.height} card image`);
+  log.debug(`[OCR] Starting local extraction from ${cardWidth}x${cardHeight} card image`);
 
-  // Run all three OCR extractions
-  // Note: Running in sequence to avoid rate limiting, but could be parallelized
+  // Ensure OCR engine is loaded
+  if (!isOcrEngineReady()) {
+    log.debug('[OCR] Loading OCR engine...');
+    await loadOcrEngine();
+  }
+
+  const ocr = getOcrEngine();
+
+  // Convert canvas to data URL
+  const dataUrl = cardCanvas.toDataURL('image/jpeg', 0.95);
+  diagnostics.fullCard.imageKB = Math.round(dataUrl.length / 1024);
+
+  // Run single OCR pass on full card
   const fullStart = performance.now();
-  const fullResult = await runOCROnRegion(cardCanvas, OCR_REGIONS.full, diagnostics.fullCard);
+  let allLines: TextLineInfo[] = [];
+
+  try {
+    const result = await ocr.detect(dataUrl);
+    allLines = result.map(line => {
+      const rect = boxToRect(line.box);
+      return {
+        text: line.text,
+        score: line.mean,  // 'mean' is the confidence score
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      };
+    });
+    diagnostics.fullCard.detectedLines = allLines;
+  } catch (err) {
+    diagnostics.fullCard.error = err instanceof Error ? err.message : String(err);
+    log.error(`[OCR] Detection error: ${diagnostics.fullCard.error}`);
+  }
+
   const fullMs = performance.now() - fullStart;
 
+  // Extract full text (all lines)
+  const fullText = allLines.map(l => l.text).join(' ').replace(/\s+/g, ' ').trim();
+
+  // Filter lines by region
   const typeStart = performance.now();
-  const typeResult = await runOCROnRegion(cardCanvas, OCR_REGIONS.type, diagnostics.typeRegion);
+  const typeThreshold = cardHeight * TYPE_REGION_MAX_Y;
+  const typeLines = allLines.filter(l => l.top + l.height / 2 < typeThreshold);
+  const typeText = typeLines.map(l => l.text).join(' ').replace(/\s+/g, ' ').trim();
+  diagnostics.typeRegion.detectedLines = typeLines;
   const typeMs = performance.now() - typeStart;
 
   const titleStart = performance.now();
-  const titleResult = await runOCROnRegion(cardCanvas, OCR_REGIONS.title, diagnostics.titleRegion);
+  const titleThreshold = cardHeight * TITLE_REGION_MIN_Y;
+  const titleLines = allLines.filter(l => l.top + l.height / 2 > titleThreshold);
+  const titleText = titleLines.map(l => l.text).join(' ').replace(/\s+/g, ' ').trim();
+  diagnostics.titleRegion.detectedLines = titleLines;
   const titleMs = performance.now() - titleStart;
 
   const totalMs = performance.now() - startTime;
 
-  // Calculate overall confidence
-  const hasFullText = fullResult.length > 0;
-  const hasTypeText = typeResult.length > 0;
-  const hasTitleText = titleResult.length > 0;
-  const confidence = (hasFullText ? 0.4 : 0) + (hasTypeText ? 0.3 : 0) + (hasTitleText ? 0.3 : 0);
+  // Calculate overall confidence based on detected text and scores
+  const avgScore = allLines.length > 0
+    ? allLines.reduce((sum, l) => sum + l.score, 0) / allLines.length
+    : 0;
+  const hasFullText = fullText.length > 0;
+  const hasTypeText = typeText.length > 0;
+  const hasTitleText = titleText.length > 0;
+  const confidence = avgScore * ((hasFullText ? 0.4 : 0) + (hasTypeText ? 0.3 : 0) + (hasTitleText ? 0.3 : 0));
 
   const result: OCRResult = {
-    fullText: fullResult,
-    typeText: typeResult,
-    titleText: titleResult,
+    fullText,
+    typeText,
+    titleText,
     confidence,
     timing: { fullMs, typeMs, titleMs, totalMs },
     diagnostics,
   };
 
-  log.info(`[OCR] Complete in ${totalMs.toFixed(0)}ms: type="${typeResult}" title="${titleResult}" (${fullResult.length} chars total)`);
+  log.info(`[OCR] Complete in ${totalMs.toFixed(0)}ms: type="${typeText}" title="${titleText}" (${allLines.length} lines, ${fullText.length} chars)`);
 
   return result;
 }
 
 /**
- * Run OCR on a specific region of the card
- */
-async function runOCROnRegion(
-  cardCanvas: HTMLCanvasElement,
-  region: { x: number; y: number; w: number; h: number },
-  diagnostics: OCRRegionDiagnostics
-): Promise<string> {
-  try {
-    // Calculate pixel coordinates
-    const x = Math.round((region.x / 100) * cardCanvas.width);
-    const y = Math.round((region.y / 100) * cardCanvas.height);
-    const w = Math.round((region.w / 100) * cardCanvas.width);
-    const h = Math.round((region.h / 100) * cardCanvas.height);
-
-    // Create canvas for this region
-    const regionCanvas = document.createElement('canvas');
-    regionCanvas.width = w;
-    regionCanvas.height = h;
-    const ctx = regionCanvas.getContext('2d');
-
-    if (!ctx) {
-      diagnostics.error = 'Failed to create canvas context';
-      return '';
-    }
-
-    // Draw the region (no downscaling - preserve full resolution)
-    ctx.drawImage(cardCanvas, x, y, w, h, 0, 0, w, h);
-
-    diagnostics.inputSize = { width: w, height: h };
-
-    // Convert to high-quality JPEG
-    const dataUrl = regionCanvas.toDataURL('image/jpeg', 0.95);
-    diagnostics.imageKB = Math.round(dataUrl.length / 1024);
-
-    log.debug(`[OCR] Region ${w}x${h}px, ${diagnostics.imageKB}KB`);
-
-    // Call OCR.space API
-    const text = await callOCRSpace(dataUrl, diagnostics);
-    return text;
-  } catch (err) {
-    diagnostics.error = err instanceof Error ? err.message : String(err);
-    log.error(`[OCR] Region extraction error: ${diagnostics.error}`);
-    return '';
-  }
-}
-
-/**
- * Call OCR.space API
- */
-async function callOCRSpace(
-  dataUrl: string,
-  diagnostics: OCRRegionDiagnostics
-): Promise<string> {
-  const formData = new FormData();
-  formData.append('base64Image', dataUrl);
-  formData.append('language', 'eng');
-  formData.append('OCREngine', '2');  // Engine 2 better for photos/screenshots
-  formData.append('scale', 'true');   // Let OCR.space scale if needed
-
-  try {
-    const response = await fetch('https://api.ocr.space/parse/image', {
-      method: 'POST',
-      headers: {
-        'apikey': 'helloworld', // Free demo key
-      },
-      body: formData,
-    });
-
-    const result = await response.json();
-    diagnostics.apiResponse = result;
-
-    if (result.ParsedResults && result.ParsedResults.length > 0) {
-      const parsed = result.ParsedResults[0];
-      const text = parsed.ParsedText || '';
-      // Clean up the text: normalize whitespace, trim
-      return text.replace(/\s+/g, ' ').trim();
-    }
-
-    if (result.IsErroredOnProcessing) {
-      const errorMsg = result.ErrorMessage?.[0] || 'Processing error';
-      diagnostics.error = errorMsg;
-      log.error(`[OCR] OCR.space error: ${errorMsg}`);
-    }
-
-    return '';
-  } catch (err) {
-    diagnostics.error = err instanceof Error ? err.message : String(err);
-    log.error(`[OCR] Network error: ${diagnostics.error}`);
-    return '';
-  }
-}
-
-/**
  * Create empty diagnostics object
  */
-function createEmptyDiagnostics(): OCRRegionDiagnostics {
+function createEmptyDiagnostics(width: number, height: number): OCRRegionDiagnostics {
   return {
-    inputSize: { width: 0, height: 0 },
+    inputSize: { width, height },
     imageKB: 0,
-    apiResponse: null,
+    detectedLines: [],
   };
 }
 
@@ -209,9 +191,11 @@ function createEmptyDiagnostics(): OCRRegionDiagnostics {
 export async function extractTypeText(
   cardCanvas: HTMLCanvasElement
 ): Promise<{ text: string; diagnostics: OCRRegionDiagnostics }> {
-  const diagnostics = createEmptyDiagnostics();
-  const text = await runOCROnRegion(cardCanvas, OCR_REGIONS.type, diagnostics);
-  return { text, diagnostics };
+  const result = await extractCardText(cardCanvas);
+  return {
+    text: result.typeText,
+    diagnostics: result.diagnostics.typeRegion,
+  };
 }
 
 /**

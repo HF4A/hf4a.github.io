@@ -15,6 +15,7 @@ import {
 } from '../services/visionPipeline';
 import { extractCardText } from '../services/ocrService';
 import { fuseMatches, quickHashMatch } from '../services/matchFusion';
+import { loadOcrEngine, getOcrEngineStatus, type OcrEngineStatus } from '../services/ocrEngine';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { log } from '../../../store/logsStore';
 import '../styles/belter-theme.css';
@@ -23,6 +24,7 @@ export function ShowxatingShell() {
   const navigate = useNavigate();
   const [showSysPanel, setShowSysPanel] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [ocrStatus, setOcrStatus] = useState<OcrEngineStatus>(() => getOcrEngineStatus());
   const cameraViewRef = useRef<CameraViewHandle>(null);
   const captureCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -258,7 +260,17 @@ export function ShowxatingShell() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate]);
 
-  const canScan = cameraReady && isIndexLoaded && !isCapturing;
+  // Preload OCR engine after camera and index are ready
+  useEffect(() => {
+    if (cameraReady && isIndexLoaded && ocrStatus === 'idle') {
+      setOcrStatus('loading');
+      loadOcrEngine()
+        .then(() => setOcrStatus('ready'))
+        .catch(() => setOcrStatus('error'));
+    }
+  }, [cameraReady, isIndexLoaded, ocrStatus]);
+
+  const canScan = cameraReady && isIndexLoaded && ocrStatus === 'ready' && !isCapturing;
 
   return (
     <div className="showxating-shell fixed inset-0 z-50 flex flex-col">
@@ -293,6 +305,10 @@ export function ShowxatingShell() {
               ? 'LOADING CARD INDEX...'
               : !isIndexLoaded
               ? 'INDEX NOT READY'
+              : ocrStatus === 'loading'
+              ? 'LOADING OCR ENGINE...'
+              : ocrStatus === 'error'
+              ? 'OCR ENGINE FAILED'
               : activeSlot !== 'live'
               ? `VIEWING ${activeSlot.toUpperCase()}`
               : cameraReady

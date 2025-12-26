@@ -20,5 +20,6 @@
 //   0.2.16 - Remove binarization (was destroying text), add debug logging, use Engine 1
 // 0.3.x - Pipeline refactor: warp-then-detect, OCR-primary matching
 //   0.3.0 - Full pipeline refactor: warp entire frame, OCR-primary, text matching, diagnostics
-export const APP_VERSION = '0.3.0';
-export const BUILD_DATE = '2025-12-23';
+//   0.3.1 - Switch from OCR.space API to local PP-OCRv4 via ONNX (offline capable)
+export const APP_VERSION = '0.3.1';
+export const BUILD_DATE = '2025-12-25';

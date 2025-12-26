@@ -7,14 +7,14 @@
 - [x] Slots shouldn't display when no scan in them.
 - [x] Add version to first time welcome screen.  
 - [ ] match on text extraction + image match.
-- [ ] change blow the airlock to wipe the core
+- [x] change blow the airlock to wipe the core
 - [ ] when polishing, make sure scanning shows as least briefly, maybe stagger a bit so they don't all MATCH at the same time, or show SCANNING - MATCH - then load card overlay, with a perceptable but still snappy-feeling delay to let the user know that is happening.
 - [ ] Update SYS stats on number of manual corrections
 - [x] keep a limited depth set of logs, add a logs display button to SYS page that shows them in a very Belter space ship system looking way
-- [ ] move version number to bottom under 'okey let's go' button, small and unobtrusive, next to the beratna quote (not another line)
+- [x] move version number to bottom under 'okey let's go' button, small and unobtrusive, next to the beratna quote (not another line)
 - [ ] Show the first time welcome screen to users on middle number version update (0.2.7 to 0.3.0 for example)
-- [ ] Belter / HF4A inspired favicon?
-- [ ] the back-side card is backwards!
+- [x] Belter / HF4A inspired favicon
+- [x] the back-side card is backwards!
 
 ## Key Handling
 - [ ] evaluate switching to cloudflare - would allow more complex AI capabilities in future.  If not, come up with 'invite URL scheme' which allows sharing link in apple messages, which opens installed app and injects the API key - I don't expect people to copy and paste the key.
