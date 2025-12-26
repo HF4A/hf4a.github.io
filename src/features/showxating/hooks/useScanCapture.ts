@@ -29,14 +29,15 @@ import type { Card } from '../../../types/card';
  * Cloud API bbox positions are UNRELIABLE (fake grid coords, wrong positions).
  * OpenCV bbox positions are ACCURATE but may miss cards (lower recall).
  *
- * Strategy: SIMPLE SORTED-ORDER MATCHING
- * 1. Sort OpenCV bboxes by position (reading order: top-to-bottom, left-to-right)
- * 2. Sort cloud cards by position (for relative ordering only)
- * 3. Pair 1:1 by array index - use cloud ID + OpenCV bbox
+ * Strategy: TRUST API ORDER
+ * 1. Sort OpenCV bboxes by reading order (top-to-bottom, left-to-right)
+ * 2. Use cloud cards in their ORIGINAL API order (GPT-4 returns in reading order)
+ * 3. Pair 1:1 by array index - cloud ID + OpenCV bbox
  * 4. Extra OpenCV bboxes → "unknown" (cloud missed identification)
  * 5. Extra cloud cards → DROPPED (no reliable position available)
  *
- * This is simple and avoids the complexity of grid matching across incompatible coordinate spaces.
+ * KEY INSIGHT: Do NOT re-sort cloud results by their fake bbox positions.
+ * The API naturally returns cards in reading order - trust that order.
  */
 function mergeCloudWithOpenCV(
   cloudCards: IdentifiedCard[],
@@ -83,25 +84,31 @@ function mergeCloudWithOpenCV(
     opencvCorners.map(corners => ({ corners, center: getCenter(corners) }))
   );
 
-  // Sort cloud cards by their (unreliable) positions for relative ordering
-  const sortedCloud = sortByReadingOrder(
-    cloudCards.map(card => ({ card, center: getCenter(card.corners) }))
-  );
+  // DO NOT sort cloud cards - use original API order
+  // GPT-4 Vision returns cards in natural reading order
+  // Sorting by fake bbox positions causes off-by-one errors
 
   const mergedCards: IdentifiedCard[] = [];
-  const extraCloudCount = Math.max(0, sortedCloud.length - sortedOpenCV.length);
+  const extraCloudCount = Math.max(0, cloudCards.length - sortedOpenCV.length);
 
-  // Pair cloud cards with OpenCV bboxes by sorted index
+  // Log the pairing for debugging
+  console.log('[mergeCloudWithOpenCV] Pairing:');
+
+  // Pair cloud cards with OpenCV bboxes by index
   for (let i = 0; i < sortedOpenCV.length; i++) {
-    if (i < sortedCloud.length) {
+    const opencvCenter = sortedOpenCV[i].center;
+
+    if (i < cloudCards.length) {
       // Matched: cloud identification + OpenCV position
+      console.log(`  [${i}] opencv:(${Math.round(opencvCenter.x)},${Math.round(opencvCenter.y)}) ← cloud:${cloudCards[i].cardId}`);
       mergedCards.push({
-        ...sortedCloud[i].card,
+        ...cloudCards[i],
         corners: sortedOpenCV[i].corners, // Use accurate OpenCV position
         showingOpposite: defaultScanResult === 'opposite',
       });
     } else {
       // Extra OpenCV bbox with no cloud match: unknown
+      console.log(`  [${i}] opencv:(${Math.round(opencvCenter.x)},${Math.round(opencvCenter.y)}) ← unknown`);
       mergedCards.push({
         cardId: 'unknown',
         filename: '',
@@ -114,7 +121,6 @@ function mergeCloudWithOpenCV(
   }
 
   // Note: Extra cloud cards beyond OpenCV count are dropped
-  // Their positions are unreliable - better to show nothing than wrong positions
   if (extraCloudCount > 0) {
     console.log(
       '[mergeCloudWithOpenCV] Dropped',
@@ -124,9 +130,9 @@ function mergeCloudWithOpenCV(
   }
 
   console.log(
-    '[mergeCloudWithOpenCV] cloud:', cloudCards.length,
+    '[mergeCloudWithOpenCV] Summary: cloud:', cloudCards.length,
     '| opencv:', opencvCorners.length,
-    '| paired:', Math.min(sortedCloud.length, sortedOpenCV.length),
+    '| paired:', Math.min(cloudCards.length, sortedOpenCV.length),
     '| dropped:', extraCloudCount
   );
 

@@ -45,6 +45,7 @@ yarn-error.log*
 *.tmp
 *.temp
 hf4a-diagnostics-*.zip
+diagnostics/
 
 # Wrangler local state
 workers/.wrangler/

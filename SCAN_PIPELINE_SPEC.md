@@ -1,27 +1,25 @@
 # HF4A Scan Pipeline Specification
 
-## Current Issues (v0.4.0, build EC4B)
+## Status (v0.4.3)
 
-### 1. Bbox Mapping Failures
-- **Overlapping bboxes**: Grid matching produces duplicate bboxes for same card position
-- **Bad aspect ratios**: Transformed cloud bboxes have incorrect aspect ratios (e.g., 65px height)
-- **Wrong cell assignment**: Cloud and OpenCV assigned to different grid cells for same physical location
+### Fixed Issues
+- [x] **Card Flip** (v0.4.1): Fixed `relatedCards` lookup in `getDisplayFilename`
+- [x] **Correction Flow** (v0.4.2): Removed redundant OCR.space call, uses cloud API text
+- [x] **Async Scan Correlation**: Working via scanId - verified in code review
+- [x] **Bbox Mapping** (v0.4.3): Don't re-sort cloud results by fake bbox positions
 
-**Root cause**: Cloud bboxes are in a fake coordinate space that doesn't match image reality. Grid-based matching tries to reconcile two incompatible coordinate systems.
+### Root Cause of Off-by-One Errors
 
-### 2. Async Scan Correlation
-- User can snap multiple scans quickly before API returns
-- Each scan needs unique correlation ID
-- API responses must update the correct scan slot
-- Currently: scans stored with `id` but unclear if async updates work correctly
+Previous algorithm sorted BOTH lists by "reading order" and paired by index:
+```
+sortedOpenCV[i] ← sortedCloud[i]
+```
 
-### 3. Card Flip Not Working
-- Tapping identified card should flip to show opposite side
-- Currently broken - need to investigate data flow
+**Problem**: Cloud API bbox positions are FAKE. Sorting by fake positions produces a
+different order than sorting by real positions. Result: mismatched pairings.
 
-### 4. Correction Flow
-- Shows "Running OCR" when it should use cached API data
-- Needs refactoring for new cloud pipeline
+**Fix**: Trust that GPT-4 Vision returns cards in natural reading order. Only sort
+OpenCV bboxes; use cloud cards in their original API order.
 
 ---
 
