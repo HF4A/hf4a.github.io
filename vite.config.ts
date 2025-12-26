@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import { execSync } from 'child_process';
 
-// Generate a short 4-character build hash from timestamp
-const buildTime = Date.now();
-const buildHash = buildTime.toString(36).slice(-4).toUpperCase();
+// Generate build hash from git commit SHA (deterministic across local/CI builds)
+const gitSha = execSync('git rev-parse --short HEAD').toString().trim();
+const buildHash = gitSha.slice(0, 4).toUpperCase();
 
 // Deploy URL: https://hf4a.github.io/
 export default defineConfig({
