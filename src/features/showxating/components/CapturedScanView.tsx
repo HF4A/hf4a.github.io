@@ -18,16 +18,6 @@ import { log } from '../../../store/logsStore';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
-// Card region definitions (as percentage of card dimensions)
-// HF4A cards have consistent layouts: type at top, title at bottom
-const CARD_REGIONS = {
-  // Title region: bottom of card, usually contains the card name in readable font
-  title: { x: 2, y: 78, w: 96, h: 20 },
-  // Type region: top of card, contains type name (centered text)
-  // Full width to capture centered text like "Refinery", "Thruster"
-  type: { x: 0, y: 0, w: 100, h: 12 },
-};
-
 // Swipe gesture thresholds
 const SWIPE_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
@@ -622,11 +612,11 @@ function CorrectionModal({
   const [candidates, setCandidates] = useState<Array<{ card: Card; distance?: number }>>([]);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [extractedText, setExtractedText] = useState<string | null>(null);
-  const [isOcrRunning, setIsOcrRunning] = useState(false);
   const [selectedType, setSelectedType] = useState<CardType | 'all'>('all');
   const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
 
   // Crop the bounding box from the scan image
+  // Use existing extractedText from cloud API instead of running secondary OCR
   useEffect(() => {
     if (!identifiedCard.corners || identifiedCard.corners.length < 4) return;
 
@@ -657,99 +647,18 @@ function CorrectionModal({
         const dataUrl = canvas.toDataURL('image/png');
         setCroppedImage(dataUrl);
 
-        // Run OCR on the TYPE region (top of card) - more readable than title
-        setIsOcrRunning(true);
-        const ocrStartTime = performance.now();
-
-        // Extract type region from the cropped card (top area where "Refinery", "Thruster", etc. appears)
-        const typeRegion = CARD_REGIONS.type;
-        const regionX = Math.round((typeRegion.x / 100) * cropW);
-        const regionY = Math.round((typeRegion.y / 100) * cropH);
-        const regionW = Math.round((typeRegion.w / 100) * cropW);
-        const regionH = Math.round((typeRegion.h / 100) * cropH);
-
-        // Create a canvas for the type region
-        const ocrCanvas = document.createElement('canvas');
-        ocrCanvas.width = regionW;
-        ocrCanvas.height = regionH;
-        const ocrCtx = ocrCanvas.getContext('2d');
-
-        if (ocrCtx) {
-          // Scale up small images for better OCR accuracy
-          // Tesseract works best with text ~30-40px tall, so scale to ~200px region height
-          const MIN_OCR_HEIGHT = 200;
-          const scaleFactor = regionH < MIN_OCR_HEIGHT ? MIN_OCR_HEIGHT / regionH : 1;
-          const scaledW = Math.round(regionW * scaleFactor);
-          const scaledH = Math.round(regionH * scaleFactor);
-
-          // Resize canvas to scaled dimensions
-          ocrCanvas.width = scaledW;
-          ocrCanvas.height = scaledH;
-
-          // Enable image smoothing for better upscaling
-          ocrCtx.imageSmoothingEnabled = true;
-          ocrCtx.imageSmoothingQuality = 'high';
-
-          // Draw scaled type region (no preprocessing - OCR.space handles it)
-          ocrCtx.drawImage(canvas, regionX, regionY, regionW, regionH, 0, 0, scaledW, scaledH);
-
-          const ocrDataUrl = ocrCanvas.toDataURL('image/jpeg', 0.9); // JPEG for smaller size
-
-          log.debug(`OCR type region: ${regionW}x${regionH}px → ${scaledW}x${scaledH}px (${scaleFactor.toFixed(1)}x scale)`);
-
-          // Use OCR.space API (free tier: 25k requests/month)
-          const formData = new FormData();
-          formData.append('base64Image', ocrDataUrl);
-          formData.append('language', 'eng');
-          formData.append('OCREngine', '2'); // Engine 2 better for photos/screenshots
-          formData.append('scale', 'true');
-
-          log.debug(`Sending to OCR.space: ${Math.round(ocrDataUrl.length / 1024)}KB image`);
-
-          fetch('https://api.ocr.space/parse/image', {
-            method: 'POST',
-            headers: {
-              'apikey': 'helloworld', // Free demo key
-            },
-            body: formData,
-          })
-            .then((res) => res.json())
-            .then((result) => {
-              const ocrDuration = Math.round(performance.now() - ocrStartTime);
-              log.debug(`OCR.space response: ${JSON.stringify(result).substring(0, 500)}`);
-
-              if (result.ParsedResults && result.ParsedResults.length > 0) {
-                const parsed = result.ParsedResults[0];
-                const text = parsed.ParsedText || '';
-                const cleaned = text.replace(/\s+/g, ' ').trim().substring(0, 100);
-                setExtractedText(cleaned || '(no text detected)');
-                log.info(`OCR.space in ${ocrDuration}ms: "${cleaned}"`);
-              } else if (result.IsErroredOnProcessing) {
-                const errorMsg = result.ErrorMessage?.[0] || 'Processing error';
-                log.error(`OCR.space processing error: ${errorMsg}`);
-                setExtractedText(`(error: ${errorMsg})`);
-              } else {
-                log.warn(`OCR.space no results: ${JSON.stringify(result)}`);
-                setExtractedText('(no text found)');
-              }
-            })
-            .catch((err) => {
-              const ocrDuration = Math.round(performance.now() - ocrStartTime);
-              log.error(`OCR.space network error after ${ocrDuration}ms: ${err.message}`);
-              setExtractedText('(network error)');
-            })
-            .finally(() => {
-              setIsOcrRunning(false);
-            });
+        // Use existing text from cloud API if available
+        // No need to run secondary OCR - cloud API already identified the card
+        if (identifiedCard.extractedText) {
+          setExtractedText(identifiedCard.extractedText);
         } else {
-          setIsOcrRunning(false);
-          log.error('OCR: failed to create canvas context');
-          setExtractedText('(failed to create canvas)');
+          // No text available - show placeholder
+          setExtractedText(null);
         }
       }
     };
     img.src = scanImageDataUrl;
-  }, [scanImageDataUrl, identifiedCard.corners]);
+  }, [scanImageDataUrl, identifiedCard.corners, identifiedCard.extractedText]);
 
   // Initialize candidates based on dHash matches, search, and type filter
   useEffect(() => {
@@ -907,12 +816,10 @@ function CorrectionModal({
                   minHeight: '3rem',
                 }}
               >
-                {isOcrRunning ? (
-                  <span style={{ color: 'var(--showxating-cyan)' }}>⟳ Running OCR...</span>
-                ) : extractedText ? (
+                {extractedText ? (
                   extractedText
                 ) : (
-                  <span style={{ color: 'var(--showxating-gold-dim)' }}>(waiting for image)</span>
+                  <span style={{ color: 'var(--showxating-gold-dim)' }}>(no text available)</span>
                 )}
               </p>
             </div>

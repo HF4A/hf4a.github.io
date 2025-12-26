@@ -237,6 +237,8 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
             confidence: apiCard.confidence,
             corners,
             showingOpposite: defaultScanResult === 'opposite',
+            // Propagate OCR text from cloud API for correction flow
+            extractedText: apiCard.ocr_text || `${apiCard.card_type}: ${apiCard.card_name}`,
           });
         } else {
           // Card detected but not found in database
@@ -249,6 +251,8 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
             confidence: apiCard.confidence * 0.5, // Lower confidence for unmatched
             corners,
             showingOpposite: defaultScanResult === 'opposite',
+            // Store what the API detected for correction flow
+            extractedText: apiCard.ocr_text || `${apiCard.card_type}: ${apiCard.card_name}`,
           });
         }
       }
