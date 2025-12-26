@@ -46,6 +46,7 @@ export interface CapturedScan {
   imageWidth: number;   // Original capture width for bbox coordinate conversion
   imageHeight: number;  // Original capture height for bbox coordinate conversion
   cards: IdentifiedCard[];
+  isProcessing?: boolean;  // True while waiting for cloud API response
 }
 
 interface ShowxatingStore {
@@ -101,6 +102,7 @@ interface ShowxatingStore {
   setActiveSlot: (slot: ScanSlot) => void;
   setCapturing: (capturing: boolean) => void;
   addCapture: (scan: CapturedScan) => void;
+  updateScanCards: (scanId: string, cards: IdentifiedCard[], isProcessing?: boolean) => void;
   updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
   clearSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void;
   removeSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void; // Remove and shift
@@ -208,6 +210,25 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
     set({ scanSlots: newSlots, activeSlot: 's1' });
     // Persist to localStorage
     useScanSlotsStore.setState({ scanSlots: newSlots });
+  },
+
+  updateScanCards: (scanId, cards, isProcessing = false) => {
+    const state = get();
+    const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
+
+    // Find slot containing scan with matching ID
+    for (const slotId of slotOrder) {
+      const slot = state.scanSlots[slotId];
+      if (slot && slot.id === scanId) {
+        const newSlots = {
+          ...state.scanSlots,
+          [slotId]: { ...slot, cards, isProcessing },
+        };
+        set({ scanSlots: newSlots });
+        useScanSlotsStore.setState({ scanSlots: newSlots });
+        return;
+      }
+    }
   },
 
   updateCardFlip: (slotId, cardIndex, showingOpposite) => {

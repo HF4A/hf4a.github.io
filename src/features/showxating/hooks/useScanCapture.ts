@@ -1,11 +1,12 @@
 /**
  * useScanCapture Hook
  *
- * Handles the SCAN capture flow:
+ * Handles the SCAN capture flow with immediate visual feedback:
  * 1. Capture static image from video
- * 2. Send to cloud API for card identification
- * 3. Match returned cards to local database
- * 4. Store in scan slot
+ * 2. Run OpenCV detection for immediate bboxes
+ * 3. Store scan with placeholder cards (isProcessing: true)
+ * 4. Send to cloud API in background
+ * 5. Update scan when cloud returns
  *
  * Falls back to local dHash matching when offline.
  */
@@ -17,7 +18,7 @@ import { useSettingsStore } from '../../../store/settingsStore';
 import { cloudScanner } from '../../../services/cloudScanner';
 import { authService } from '../../../services/authService';
 import { getCardMatcher } from '../services/cardMatcher';
-import { detectCardQuadrilateral } from '../services/visionPipeline';
+import { detectAllCards, detectCardQuadrilateral } from '../services/visionPipeline';
 import type { Card } from '../../../types/card';
 
 interface UseScanCaptureOptions {
@@ -74,10 +75,16 @@ function bboxToCorners(
 }
 
 export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
-  const { isCapturing, setCapturing, addCapture } = useShowxatingStore();
+  const { isCapturing, setCapturing, addCapture, updateScanCards } = useShowxatingStore();
   const { cards } = useCardStore();
   const { defaultScanResult } = useSettingsStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // Keep track of captured image data for async cloud processing
+  const pendingCaptureRef = useRef<{
+    canvas: HTMLCanvasElement;
+    imageData: ImageData;
+    scanId: string;
+  } | null>(null);
 
   const getCanvas = useCallback(() => {
     if (!canvasRef.current) {
@@ -216,46 +223,84 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('Could not get canvas context');
 
-      // Capture frame
+      // Phase 1: Capture frame immediately
       ctx.drawImage(video, 0, 0);
-
-      // Convert to data URL for storage
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-
-      // Get image data for local fallback
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const scanId = `scan-${Date.now()}`;
 
-      let identifiedCards: IdentifiedCard[] = [];
+      // Phase 2: Run OpenCV detection for immediate bboxes
+      let placeholderCards: IdentifiedCard[] = [];
+      const opencvResult = detectAllCards(imageData, canvas.width, canvas.height);
 
-      // Try cloud scan first if authenticated
-      if (authService.hasCredentials()) {
-        identifiedCards = await scanWithCloud(canvas);
+      if (opencvResult.cards.length > 0) {
+        console.log('[useScanCapture] OpenCV detected', opencvResult.cards.length, 'cards');
+        // Create placeholder cards with OpenCV bboxes
+        placeholderCards = opencvResult.cards.map((detection) => ({
+          cardId: 'unknown',
+          filename: '',
+          side: null,
+          confidence: 0.5, // Placeholder confidence
+          corners: detection.corners!,
+          showingOpposite: defaultScanResult === 'opposite',
+        }));
       }
 
-      // Fall back to local if cloud failed or not authenticated
-      if (identifiedCards.length === 0) {
-        console.log('[useScanCapture] Falling back to local scan');
-        identifiedCards = await scanWithLocal(canvas, imageData);
-      }
-
-      // Create scan record with original dimensions for coordinate conversion
+      // Phase 3: Store scan with placeholder cards (isProcessing: true)
       const scan: CapturedScan = {
-        id: `scan-${Date.now()}`,
+        id: scanId,
         timestamp: Date.now(),
         imageDataUrl,
         imageWidth: canvas.width,
         imageHeight: canvas.height,
-        cards: identifiedCards,
+        cards: placeholderCards,
+        isProcessing: authService.hasCredentials(), // Only processing if we'll call cloud
       };
 
       addCapture(scan);
-      console.log('[useScanCapture] Captured scan:', scan.id, 'cards:', identifiedCards.length);
+      console.log('[useScanCapture] Captured scan:', scanId, 'placeholder cards:', placeholderCards.length);
+
+      // Store reference for async cloud processing
+      pendingCaptureRef.current = { canvas, imageData, scanId };
+
+      // Phase 4: Send to cloud in background (if authenticated)
+      if (authService.hasCredentials()) {
+        // Run cloud processing asynchronously (don't await)
+        (async () => {
+          try {
+            console.log('[useScanCapture] Starting cloud scan for', scanId);
+            const cloudCards = await scanWithCloud(canvas);
+
+            if (cloudCards.length > 0) {
+              // Phase 5: Update scan with cloud results
+              console.log('[useScanCapture] Cloud identified', cloudCards.length, 'cards for', scanId);
+              updateScanCards(scanId, cloudCards, false);
+            } else {
+              // Cloud returned nothing - try local fallback
+              console.log('[useScanCapture] Cloud returned no cards, trying local fallback');
+              const localCards = await scanWithLocal(canvas, imageData);
+              updateScanCards(scanId, localCards.length > 0 ? localCards : [], false);
+            }
+          } catch (err) {
+            console.error('[useScanCapture] Cloud processing error:', err);
+            // Mark as no longer processing even on error
+            updateScanCards(scanId, [], false);
+          }
+        })();
+      } else if (placeholderCards.length === 0) {
+        // No cloud access and no OpenCV results - try local fallback
+        console.log('[useScanCapture] Trying local fallback');
+        const localCards = await scanWithLocal(canvas, imageData);
+        if (localCards.length > 0) {
+          updateScanCards(scanId, localCards, false);
+        }
+      }
     } catch (err) {
       console.error('[useScanCapture] Capture error:', err);
     } finally {
       setCapturing(false);
     }
-  }, [isCapturing, videoRef, getCanvas, setCapturing, addCapture, scanWithCloud, scanWithLocal]);
+  }, [isCapturing, videoRef, getCanvas, setCapturing, addCapture, updateScanCards, defaultScanResult, scanWithCloud, scanWithLocal]);
 
   return {
     capture,

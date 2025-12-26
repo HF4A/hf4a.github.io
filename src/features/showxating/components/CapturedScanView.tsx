@@ -151,6 +151,7 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
           imageRef={imageRef}
           imageWidth={scan.imageWidth || 0}
           imageHeight={scan.imageHeight || 0}
+          isProcessing={scan.isProcessing}
           onFlip={() => updateCardFlip(slotId, index, !card.showingOpposite)}
           onOpenDetail={() => {
             // Find the card in the catalog and open detail modal
@@ -216,6 +217,7 @@ interface CardOverlayProps {
   imageRef: React.RefObject<HTMLImageElement | null>; // Fallback for legacy scans
   imageWidth: number;   // Original capture width (0 for legacy scans)
   imageHeight: number;  // Original capture height (0 for legacy scans)
+  isProcessing?: boolean;  // True while cloud API is still running
   onFlip: () => void;
   onOpenDetail: () => void;
   onOpenCorrection: () => void;
@@ -227,6 +229,7 @@ function CardOverlay({
   imageRef,
   imageWidth,
   imageHeight,
+  isProcessing = false,
   onFlip,
   onOpenDetail,
   onOpenCorrection,
@@ -341,24 +344,35 @@ function CardOverlay({
   const displayFilename = getDisplayFilename();
 
   if (card.cardId === 'unknown' || !catalogCard) {
-    // Unknown card - show placeholder, tap opens correction modal
+    // Unknown/scanning card - show placeholder
+    // If still processing, show "SCANNING...", otherwise "UNIDENTIFIED"
     return (
       <div
         style={style}
-        className="border-2 border-[var(--showxating-gold)] bg-black/50 rounded-lg flex items-center justify-center touch-none select-none cursor-pointer"
+        className={`border-2 bg-black/50 rounded-lg flex items-center justify-center touch-none select-none ${
+          isProcessing ? 'border-[var(--showxating-cyan)]' : 'border-[var(--showxating-gold)] cursor-pointer'
+        }`}
         onClick={(e) => {
-          e.preventDefault();
-          onOpenCorrection();
+          if (!isProcessing) {
+            e.preventDefault();
+            onOpenCorrection();
+          }
         }}
         onTouchEnd={(e) => {
-          e.preventDefault();
-          onOpenCorrection();
+          if (!isProcessing) {
+            e.preventDefault();
+            onOpenCorrection();
+          }
         }}
       >
         <div className="scan-animation" />
         <div className="flex flex-col items-center gap-1">
-          <span className="hud-text text-sm">UNIDENTIFIED</span>
-          <span className="hud-text hud-text-dim text-[10px]">TAP TO ID</span>
+          <span className={`hud-text text-sm ${isProcessing ? 'text-[var(--showxating-cyan)]' : ''}`}>
+            {isProcessing ? 'SCANNING...' : 'UNIDENTIFIED'}
+          </span>
+          {!isProcessing && (
+            <span className="hud-text hud-text-dim text-[10px]">TAP TO ID</span>
+          )}
         </div>
       </div>
     );
