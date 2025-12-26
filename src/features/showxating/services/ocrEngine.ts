@@ -5,10 +5,16 @@
  * Uses @gutenye/ocr-browser for client-side text detection.
  *
  * v0.3.1: Replaces OCR.space API with local ONNX inference
+ * v0.3.2: Force single-threaded WASM for GitHub Pages compatibility
  */
 
 import Ocr from '@gutenye/ocr-browser';
+import * as ort from 'onnxruntime-web';
 import { log } from '../../../store/logsStore';
+
+// Force single-threaded WASM execution
+// GitHub Pages doesn't support COOP/COEP headers required for SharedArrayBuffer
+ort.env.wasm.numThreads = 1;
 
 export type OcrEngineStatus = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -58,9 +64,17 @@ export async function loadOcrEngine(): Promise<void> {
       log.info(`[OcrEngine] Models loaded in ${loadTime.toFixed(0)}ms`);
     } catch (err) {
       engine.status = 'error';
-      engine.error = err instanceof Error ? err.message : String(err);
+      const errMsg = err instanceof Error ? err.message : String(err);
+      const errStack = err instanceof Error ? err.stack : undefined;
+      engine.error = errMsg;
       engine.loadPromise = null; // Allow retry
-      log.error(`[OcrEngine] Failed to load: ${engine.error}`);
+      log.error(`[OcrEngine] Failed to load: ${errMsg}`);
+      if (errStack) {
+        log.error(`[OcrEngine] Stack: ${errStack}`);
+      }
+      // Log model paths for debugging
+      const basePath = import.meta.env.BASE_URL;
+      log.error(`[OcrEngine] Attempted paths: det=${basePath}models/ch_PP-OCRv4_det_infer.onnx, rec=${basePath}models/ch_PP-OCRv4_rec_infer.onnx`);
       throw err;
     }
   })();
