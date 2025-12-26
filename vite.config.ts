@@ -2,9 +2,17 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Generate a short 4-character build hash from timestamp
+const buildTime = Date.now();
+const buildHash = buildTime.toString(36).slice(-4).toUpperCase();
+
 // Deploy URL: https://hf4a.github.io/
 export default defineConfig({
   base: '/',
+  define: {
+    __BUILD_HASH__: JSON.stringify(buildHash),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   plugins: [
     react(),
     VitePWA({

@@ -9,7 +9,7 @@
 import { useState, useEffect } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
 import { authService } from '../services/authService';
-import { APP_VERSION } from '../version';
+import { APP_VERSION, BUILD_HASH } from '../version';
 
 export function WelcomeScreen() {
   const { setHasSeenWelcome } = useSettingsStore();
@@ -286,6 +286,7 @@ export function WelcomeScreen() {
           </button>
           <p className="text-center text-xs" style={{ color: '#707080' }}>
             Kowmang rise up, beratna! <span style={{ color: '#505060' }}>v{APP_VERSION}</span>
+            <span style={{ color: '#404050' }}> • {BUILD_HASH}</span>
           </p>
         </footer>
       </div>

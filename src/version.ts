@@ -28,5 +28,14 @@
 //   0.3.6 - Revert OCR engine to static imports (dynamic import broke it)
 //   0.3.8 - Multi-card OCR fixes: upscale small cards, expand title region, reject weak hash matches
 //   0.3.9 - Reject type-only matches, filter type words from candidates, match quality tracking
-export const APP_VERSION = '0.3.9';
+// 0.4.x - Cloud-based scanning via OpenAI Vision API
+//   0.4.0 - Cloud scanning via Cloudflare Worker + OpenAI Vision API, invite code auth, immediate OpenCV feedback
+export const APP_VERSION = '0.4.0';
 export const BUILD_DATE = '2025-12-26';
+
+// Build hash injected at build time by Vite (see vite.config.ts)
+// This provides a unique identifier for each build to verify deployments
+declare const __BUILD_HASH__: string;
+declare const __BUILD_TIME__: string;
+export const BUILD_HASH = typeof __BUILD_HASH__ !== 'undefined' ? __BUILD_HASH__ : 'DEV';
+export const BUILD_TIME = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : new Date().toISOString();
