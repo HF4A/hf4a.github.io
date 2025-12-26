@@ -242,24 +242,27 @@ function CardOverlay({
 
   // Get the image to display based on flip state
   // Note: cards.json has .png extensions but actual files are .webp
+  // relatedCards structure: { "white": "CardFilename.png", "black": "OtherFile.png" }
   const getDisplayFilename = useCallback(() => {
     const ensureWebp = (filename: string) => filename.replace('.png', '.webp');
 
     if (!catalogCard) return ensureWebp(card.filename); // Ensure .webp even for scanner filename
 
-    if (card.showingOpposite) {
-      // Show opposite side - find related card
-      const relatedCard = catalogCards.find(
-        (c) =>
-          c.relatedCards?.promotedSide === catalogCard.id ||
-          catalogCard.relatedCards?.promotedSide === c.id
-      );
-      const filename = relatedCard?.filename || catalogCard.filename;
-      return ensureWebp(filename);
+    if (card.showingOpposite && catalogCard.relatedCards) {
+      // Show opposite side - relatedCards is keyed by side color
+      // Find any side that isn't the current card's side
+      const otherSides = Object.entries(catalogCard.relatedCards)
+        .filter(([side]) => side !== catalogCard.side);
+
+      if (otherSides.length > 0) {
+        // Use the first available opposite side's filename
+        const [, oppositeFilename] = otherSides[0];
+        return ensureWebp(oppositeFilename);
+      }
     }
     // Show visible side - always ensure .webp extension
     return ensureWebp(card.filename || catalogCard.filename);
-  }, [catalogCard, catalogCards, card.showingOpposite, card.filename]);
+  }, [catalogCard, card.showingOpposite, card.filename]);
 
   // Calculate overlay position based on detected corners
   // Uses stored imageWidth/imageHeight for consistent coordinate transformation
