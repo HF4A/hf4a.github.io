@@ -18,6 +18,8 @@ export interface IdentifiedCard {
   confidence: number;
   corners: Point[];
   showingOpposite: boolean; // flip state for this card
+  // API-returned type for unmatched cards (enables type-filtered correction picker)
+  apiReturnedType?: string;
   // Debug info for diagnostics
   boundingBox?: { x: number; y: number; width: number; height: number };
   computedHash?: string; // 64-bit dHash as hex string

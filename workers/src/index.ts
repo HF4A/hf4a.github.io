@@ -562,13 +562,15 @@ export default {
       }
 
       try {
-        const body = await request.json() as ScanRequest;
+        const body = await request.json() as ScanRequest & { model?: string };
 
         if (!body.image) {
           return jsonResponse({ error: 'Missing required field: image' }, 400, corsHeaders);
         }
 
-        const model = env.DEFAULT_MODEL;
+        // Allow model override for testing
+        const modelKey = body.model || 'mini';
+        const model = MODEL_MAP[modelKey] || body.model || env.DEFAULT_MODEL;
         const isGpt4 = model.startsWith('gpt-4');
 
         // Use simple segmentation prompt

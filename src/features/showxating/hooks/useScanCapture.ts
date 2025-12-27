@@ -206,7 +206,8 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
           });
         } else {
           // Card detected but not found in database
-          console.warn('[useScanCapture] Card not found in database:', apiCard.card_name);
+          // Store the API-returned type for type-filtered correction picker
+          console.warn('[useScanCapture] Card not found in database:', apiCard.card_name, 'type:', apiCard.card_type);
 
           identifiedCards.push({
             cardId: 'unknown',
@@ -215,6 +216,8 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
             confidence: apiCard.confidence * 0.5, // Lower confidence for unmatched
             corners,
             showingOpposite: defaultScanResult === 'opposite',
+            // Store API-returned type for correction flow (type is 100% accurate)
+            apiReturnedType: apiCard.card_type?.toLowerCase(),
             // Store what the API detected for correction flow
             extractedText: apiCard.ocr_text || `${apiCard.card_type}: ${apiCard.card_name}`,
           });

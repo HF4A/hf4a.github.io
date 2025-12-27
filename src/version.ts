@@ -48,8 +48,9 @@
 //   0.5.9 - Fix: API results are source of truth (no longer drops cards that OpenCV misses)
 //   0.5.10 - UX improvements: remove FRONT/BACK tags, API logs modal, empty cell click to add card
 //   0.5.11 - Fix: API is sole source of truth (remove broken OpenCV merge), add scan architecture docs
-export const APP_VERSION = '0.5.11';
-export const BUILD_DATE = '2025-12-27';
+//   0.5.12 - "Unknown {Type}" tiles: display API-returned type for unmatched cards, auto-filter correction picker
+export const APP_VERSION = '0.5.12';
+export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)
 // This provides a unique identifier for each build to verify deployments

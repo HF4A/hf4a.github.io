@@ -340,11 +340,17 @@ function GridCellView({
     );
   }
 
-  // Unidentified cell - show cropped region
+  // Unidentified cell - show cropped region with type label if available
   if (cell.type === 'unidentified') {
+    // API type is 100% accurate - display it prominently
+    const apiType = cell.card?.apiReturnedType;
+    const typeLabel = apiType
+      ? `UNKNOWN ${apiType.toUpperCase()}`
+      : 'UNIDENTIFIED';
+
     return (
       <div
-        className="w-full h-full rounded-lg border-2 overflow-hidden cursor-pointer flex flex-col items-center justify-center bg-black/50"
+        className="w-full h-full rounded-lg border-2 overflow-hidden cursor-pointer flex flex-col items-center justify-center bg-black/50 relative"
         style={{
           aspectRatio: '2/3',
           borderColor: 'var(--showxating-gold)',
@@ -355,14 +361,14 @@ function GridCellView({
         {cell.cropDataUrl ? (
           <img
             src={cell.cropDataUrl}
-            alt="Unidentified card"
+            alt={typeLabel}
             className="w-full h-full object-cover opacity-60"
           />
         ) : (
           <div className="w-full h-full bg-black/50" />
         )}
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40">
-          <span className="hud-text text-xs text-[var(--showxating-gold)]">UNIDENTIFIED</span>
+          <span className="hud-text text-xs text-[var(--showxating-gold)]">{typeLabel}</span>
           <span className="hud-text hud-text-dim text-[10px] mt-1">TAP TO ID</span>
         </div>
       </div>

@@ -459,7 +459,12 @@ function CardOverlay({
 
   if (card.cardId === 'unknown' || !catalogCard) {
     // Unknown/scanning card - show placeholder
-    // If still processing, show "SCANNING...", otherwise "UNIDENTIFIED"
+    // If still processing, show "SCANNING...", otherwise show type if known
+    const apiType = card.apiReturnedType;
+    const typeLabel = apiType
+      ? `UNKNOWN ${apiType.toUpperCase()}`
+      : 'UNIDENTIFIED';
+
     return (
       <div
         style={style}
@@ -482,7 +487,7 @@ function CardOverlay({
         <div className="scan-animation" />
         <div className="flex flex-col items-center gap-1">
           <span className={`hud-text text-sm ${isProcessing ? 'text-[var(--showxating-cyan)]' : ''}`}>
-            {isProcessing ? 'SCANNING...' : 'UNIDENTIFIED'}
+            {isProcessing ? 'SCANNING...' : typeLabel}
           </span>
           {!isProcessing && (
             <span className="hud-text hud-text-dim text-[10px]">TAP TO ID</span>
@@ -816,20 +821,32 @@ function CorrectionModal({
   const [typeInferred, setTypeInferred] = useState(false);
   const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
 
-  // Infer type from extractedText and pre-select filter
+  // Pre-select type filter from API-returned type (100% accurate)
+  // Falls back to regex parsing of extractedText for legacy scans
   useEffect(() => {
-    if (typeInferred || !identifiedCard.extractedText) return;
+    if (typeInferred) return;
 
-    const text = identifiedCard.extractedText.toLowerCase();
-    // Try to find a type at the start (format: "type: name" or just "type")
-    const typeMatch = text.match(/^(crew|thruster|robonaut|refinery|reactor|radiator|generator|freighter|bernal|colonist|patent|event|factory|support)/);
-    if (typeMatch) {
-      const inferredType = typeMatch[1] as CardType;
-      console.log('[CorrectionModal] Inferred type from text:', inferredType);
-      setSelectedType(inferredType);
+    // Primary: use apiReturnedType (set for unmatched API results)
+    if (identifiedCard.apiReturnedType) {
+      const apiType = identifiedCard.apiReturnedType.toLowerCase() as CardType;
+      console.log('[CorrectionModal] Using API-returned type:', apiType);
+      setSelectedType(apiType);
       setTypeInferred(true);
+      return;
     }
-  }, [identifiedCard.extractedText, typeInferred]);
+
+    // Fallback: infer from extractedText for legacy scans
+    if (identifiedCard.extractedText) {
+      const text = identifiedCard.extractedText.toLowerCase();
+      const typeMatch = text.match(/^(crew|thruster|robonaut|refinery|reactor|radiator|generator|freighter|bernal|colonist|patent|event|factory|support)/);
+      if (typeMatch) {
+        const inferredType = typeMatch[1] as CardType;
+        console.log('[CorrectionModal] Inferred type from text:', inferredType);
+        setSelectedType(inferredType);
+        setTypeInferred(true);
+      }
+    }
+  }, [identifiedCard.apiReturnedType, identifiedCard.extractedText, typeInferred]);
 
   // Crop the bounding box from the scan image
   // Use existing extractedText from cloud API instead of running secondary OCR
