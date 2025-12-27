@@ -111,7 +111,7 @@ interface ShowxatingStore {
   setActiveSlot: (slot: ScanSlot) => void;
   setCapturing: (capturing: boolean) => void;
   addCapture: (scan: CapturedScan) => void;
-  updateScanCards: (scanId: string, cards: IdentifiedCard[], isProcessing?: boolean, counts?: { opencv?: number; api?: number }) => void;
+  updateScanCards: (scanId: string, cards: IdentifiedCard[], isProcessing?: boolean, counts?: { opencv?: number; api?: number }, grid?: { rows?: number; cols?: number }) => void;
   updateCardFlip: (slotId: ScanSlot, cardIndex: number, showingOpposite: boolean) => void;
   clearSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void;
   removeSlot: (slotId: 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7') => void; // Remove and shift
@@ -223,7 +223,7 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
     useScanSlotsStore.setState({ scanSlots: newSlots });
   },
 
-  updateScanCards: (scanId, cards, isProcessing = false, counts) => {
+  updateScanCards: (scanId, cards, isProcessing = false, counts, grid) => {
     const state = get();
     const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
 
@@ -239,6 +239,8 @@ export const useShowxatingStore = create<ShowxatingStore>((set, get) => ({
             isProcessing,
             ...(counts?.opencv !== undefined && { opencvCardCount: counts.opencv }),
             ...(counts?.api !== undefined && { apiCardCount: counts.api }),
+            ...(grid?.rows !== undefined && { gridRows: grid.rows }),
+            ...(grid?.cols !== undefined && { gridCols: grid.cols }),
           },
         };
         set({ scanSlots: newSlots });

@@ -350,10 +350,17 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
     return canvasRef.current;
   }, []);
 
+  // Cloud scan result with grid dimensions
+  interface CloudScanResult {
+    cards: IdentifiedCard[];
+    gridRows?: number;
+    gridCols?: number;
+  }
+
   // Cloud-based scan using OpenAI Vision API
   const scanWithCloud = useCallback(async (
     canvas: HTMLCanvasElement
-  ): Promise<IdentifiedCard[]> => {
+  ): Promise<CloudScanResult> => {
     const identifiedCards: IdentifiedCard[] = [];
 
     try {
@@ -361,7 +368,7 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
 
       if (!response.success || response.cards.length === 0) {
         console.warn('[useScanCapture] Cloud scan returned no cards:', response.error);
-        return identifiedCards;
+        return { cards: identifiedCards };
       }
 
       // Map API results to IdentifiedCard format
@@ -402,12 +409,16 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
         }
       }
 
-      console.log('[useScanCapture] Cloud scan identified', identifiedCards.length, 'cards');
+      console.log('[useScanCapture] Cloud scan identified', identifiedCards.length, 'cards, grid:', response.gridRows, 'x', response.gridCols);
+      return {
+        cards: identifiedCards,
+        gridRows: response.gridRows,
+        gridCols: response.gridCols,
+      };
     } catch (err) {
       console.error('[useScanCapture] Cloud scan error:', err);
+      return { cards: identifiedCards };
     }
-
-    return identifiedCards;
   }, [cards, defaultScanResult]);
 
   // Local fallback scan using dHash matching
@@ -533,14 +544,20 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
         (async () => {
           try {
             console.log('[useScanCapture] Starting cloud scan for', scanId);
-            const cloudCards = await scanWithCloud(canvas);
+            const cloudResult = await scanWithCloud(canvas);
 
-            if (cloudCards.length > 0) {
+            if (cloudResult.cards.length > 0) {
               // Phase 5: Merge cloud IDs with OpenCV bboxes
               // Cloud API bboxes are unreliable - use OpenCV corners instead
-              const mergedCards = mergeCloudWithOpenCV(cloudCards, opencvCorners, defaultScanResult);
-              console.log('[useScanCapture] Cloud identified', cloudCards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
-              updateScanCards(scanId, mergedCards, false, { opencv: opencvCorners.length, api: cloudCards.length });
+              const mergedCards = mergeCloudWithOpenCV(cloudResult.cards, opencvCorners, defaultScanResult);
+              console.log('[useScanCapture] Cloud identified', cloudResult.cards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
+              updateScanCards(
+                scanId,
+                mergedCards,
+                false,
+                { opencv: opencvCorners.length, api: cloudResult.cards.length },
+                { rows: cloudResult.gridRows, cols: cloudResult.gridCols }
+              );
             } else {
               // Cloud returned nothing - try local fallback
               console.log('[useScanCapture] Cloud returned no cards, trying local fallback');

@@ -37,7 +37,8 @@
 //   0.4.5 - Add scan object count to UI
 // 0.5.x - Grid-based scan results view
 //   0.5.0 - Replace photo+overlay with NxM grid of card images
-export const APP_VERSION = '0.5.0';
+//   0.5.1 - Fix grid dimensions: pass API gridRows/gridCols through data flow
+export const APP_VERSION = '0.5.1';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

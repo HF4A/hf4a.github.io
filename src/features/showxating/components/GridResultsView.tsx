@@ -49,17 +49,29 @@ export function GridResultsView({
 
   // Determine grid dimensions
   const gridDims = useMemo(() => {
-    // Use stored dimensions if available
+    // Use stored dimensions if available (from API)
     if (scan.gridRows && scan.gridCols) {
+      console.log('[GridResultsView] Using API grid dimensions:', scan.gridRows, 'x', scan.gridCols);
       return { rows: scan.gridRows, cols: scan.gridCols };
     }
 
-    // Otherwise infer from bboxes
+    // Fallback: infer from API card count (more accurate than merged cards)
+    if (scan.apiCardCount && scan.apiCardCount > 0) {
+      const count = scan.apiCardCount;
+      // Try to make a reasonable grid (prefer squarish)
+      const cols = Math.ceil(Math.sqrt(count));
+      const rows = Math.ceil(count / cols);
+      console.log('[GridResultsView] Inferred grid from API count:', rows, 'x', cols, 'for', count, 'cards');
+      return { rows, cols };
+    }
+
+    // Last resort: infer from merged card bboxes
     const bboxes = scan.cards.map(c => c.corners);
     const dims = determineGridDimensions(undefined, undefined, bboxes, bboxes);
+    console.log('[GridResultsView] Inferred grid from bboxes:', dims.rows, 'x', dims.cols);
 
     return dims;
-  }, [scan.gridRows, scan.gridCols, scan.cards]);
+  }, [scan.gridRows, scan.gridCols, scan.apiCardCount, scan.cards]);
 
   // Store inferred dimensions
   useEffect(() => {
