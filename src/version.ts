@@ -44,7 +44,8 @@
 //   0.5.5 - Fix Mo/Li Heat Pipe relatedCards (was missing reverse side reference)
 //   0.5.6 - Fix card data: remove 24 duplicates, add 6 missing relatedCards
 //   0.5.7 - Add swipe-up for card info in scan mode (matches catalog behavior)
-export const APP_VERSION = '0.5.7';
+//   0.5.8 - Extract shared CardInfoPanel, remove redundant CLOSE buttons from info panels
+export const APP_VERSION = '0.5.8';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

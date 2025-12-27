@@ -3,44 +3,13 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useCardStore } from '../store/cardStore';
 import { useFilterStore } from '../store/filterStore';
-import { CARD_TYPE_LABELS, SPECTRAL_TYPE_LABELS, SPECIALTY_LABELS } from '../types/card';
-import type { Card, CardStats } from '../types/card';
+import { CardInfoPanel } from './CardInfoPanel';
+import { CARD_TYPE_LABELS } from '../types/card';
+import type { Card } from '../types/card';
 
 // Gesture thresholds
 const SWIPE_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
-
-// Stat display labels
-const STAT_LABELS: Record<string, string> = {
-  mass: 'Mass',
-  radHard: 'Rad-Hard',
-  thrust: 'Thrust',
-  fuelConsumption: 'Fuel',
-  therms: 'Therms',
-  isru: 'ISRU',
-  loadLimit: 'Load Limit',
-  afterburn: 'Afterburn',
-  bonusPivots: 'Pivots',
-};
-
-const PRIMARY_STATS = ['mass', 'radHard', 'thrust', 'fuelConsumption', 'therms', 'isru', 'loadLimit'];
-const BOOLEAN_STATS = ['push', 'solar', 'airEater', 'missile', 'raygun', 'buggy', 'powersat', 'hasGenerator', 'factoryLoadingOnly'];
-
-function formatStatValue(value: unknown): string {
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
-  if (value === null || value === undefined) return '—';
-  return String(value);
-}
-
-const SUPPORT_LABELS: Record<string, string> = {
-  generatorPush: '⟛ Gen',
-  generatorElectric: 'e Gen',
-  reactorFission: 'X Reactor',
-  reactorFusion: '∿ Reactor',
-  reactorAntimatter: '💣 Reactor',
-  reactorAny: 'Any Reactor',
-  solar: 'Solar',
-};
 
 export function CardDetailView() {
   const { cardId } = useParams<{ cardId: string }>();
@@ -387,11 +356,7 @@ export function CardDetailView() {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed inset-0 z-60 bg-[#0a0a0f] overflow-y-auto"
           >
-            <InfoPanel
-              card={displayCard}
-              onClose={() => setShowInfo(false)}
-              cards={cards}
-            />
+            <InfoPanel card={displayCard} cards={cards} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -399,44 +364,23 @@ export function CardDetailView() {
   );
 }
 
-// Info Panel Component
+// Info Panel Component - uses shared CardInfoPanel
 interface InfoPanelProps {
   card: Card;
-  onClose: () => void;
   cards: Card[];
 }
 
-function InfoPanel({ card, onClose, cards }: InfoPanelProps) {
+function InfoPanel({ card, cards }: InfoPanelProps) {
   const displayName = card.ocr?.name || card.name || 'Unknown Card';
-
-  // Find related cards
-  const relatedCards = useMemo(() => {
-    if (!card.relatedCards) return undefined;
-    return Object.values(card.relatedCards)
-      .map((filename) => cards.find((c) => c.filename === filename))
-      .filter((c): c is Card => c !== undefined);
-  }, [card, cards]);
 
   return (
     <div
       className="min-h-screen"
       style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
     >
-      {/* Header - close button on LEFT */}
+      {/* Header - just title, no close button (INFO button in parent toggles) */}
       <header className="sticky top-0 z-10 bg-[#0a0a0f] border-b border-[#d4a84b]/30">
-        <div className="flex items-center justify-between px-4 py-3">
-          <button
-            onClick={onClose}
-            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
-            style={{ borderColor: '#d4a84b50', color: '#a08040' }}
-          >
-            ← CLOSE
-          </button>
-          {/* Empty space on right to balance layout */}
-          <div />
-        </div>
-        {/* Card title below buttons */}
-        <div className="px-4 pb-3">
+        <div className="px-4 py-3">
           <h1
             className="text-lg tracking-wider uppercase"
             style={{ color: '#d4a84b' }}
@@ -446,365 +390,10 @@ function InfoPanel({ card, onClose, cards }: InfoPanelProps) {
         </div>
       </header>
 
-      {/* Content */}
-      <div className="p-4 space-y-6">
-        {/* Type & Spectral */}
-        <div className="flex flex-wrap gap-2">
-          <span
-            className="px-3 py-1 text-xs tracking-wider uppercase border"
-            style={{ backgroundColor: '#d4a84b', color: '#0a0a0f', borderColor: '#d4a84b' }}
-          >
-            {CARD_TYPE_LABELS[card.type] || card.type}
-          </span>
-          {card.spreadsheet?.cardSubtype && (
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{ borderColor: '#00d4ff50', color: '#00d4ff' }}
-            >
-              {card.spreadsheet.cardSubtype}
-            </span>
-          )}
-          {card.ocr?.spectralType && (
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{ borderColor: '#d4a84b50', color: '#a08040' }}
-            >
-              {(SPECTRAL_TYPE_LABELS as Record<string, string>)[card.ocr.spectralType] || card.ocr.spectralType}
-            </span>
-          )}
-          {card.ocr?.cardId && (
-            <span
-              className="px-3 py-1 text-xs tracking-wider font-mono"
-              style={{ color: '#707080' }}
-            >
-              {card.ocr.cardId}
-            </span>
-          )}
-        </div>
-
-        {/* Description */}
-        {card.ocr?.description && (
-          <Section title="Description">
-            <p style={{ color: '#c0c0d0' }} className="leading-relaxed">
-              {card.ocr.description}
-            </p>
-          </Section>
-        )}
-
-        {/* Primary Stats */}
-        {card.ocr?.stats && (
-          <Section title="Stats">
-            <div className="grid grid-cols-3 gap-2">
-              {PRIMARY_STATS.map((key) => {
-                const value = (card.ocr?.stats as CardStats)?.[key as keyof CardStats];
-                if (value === undefined || value === null) return null;
-                return (
-                  <div
-                    key={key}
-                    className="p-3 text-center border"
-                    style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f' }}
-                  >
-                    <div className="text-xs" style={{ color: '#707080' }}>
-                      {STAT_LABELS[key] || key}
-                    </div>
-                    <div className="text-lg font-bold" style={{ color: '#d4a84b' }}>
-                      {formatStatValue(value)}
-                    </div>
-                  </div>
-                );
-              })}
-              {card.ocr?.stats?.afterburn !== undefined && card.ocr.stats.afterburn > 0 && (
-                <div
-                  className="p-3 text-center border"
-                  style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f' }}
-                >
-                  <div className="text-xs" style={{ color: '#707080' }}>
-                    Afterburn
-                  </div>
-                  <div className="text-lg font-bold" style={{ color: '#ff8844' }}>
-                    +{card.ocr.stats.afterburn}
-                  </div>
-                </div>
-              )}
-              {card.ocr?.stats?.bonusPivots !== undefined && card.ocr.stats.bonusPivots > 0 && (
-                <div
-                  className="p-3 text-center border"
-                  style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f' }}
-                >
-                  <div className="text-xs" style={{ color: '#707080' }}>
-                    Pivots
-                  </div>
-                  <div className="text-lg font-bold" style={{ color: '#00d4ff' }}>
-                    +{card.ocr.stats.bonusPivots}
-                  </div>
-                </div>
-              )}
-            </div>
-          </Section>
-        )}
-
-        {/* Radiator Dual-Side Stats */}
-        {card.type === 'radiator' && card.ocr?.stats?.lightSideMass !== undefined && (
-          <Section title="Radiator Sides">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 border" style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f' }}>
-                <div className="text-xs mb-2 font-medium" style={{ color: '#a08040' }}>Light Side</div>
-                <div className="grid grid-cols-3 gap-2 text-center text-sm">
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Mass</div>
-                    <div style={{ color: '#d4a84b' }}>{card.ocr.stats.lightSideMass}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Rad</div>
-                    <div style={{ color: '#d4a84b' }}>{card.ocr.stats.lightSideRadHard}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Therms</div>
-                    <div style={{ color: '#00d4ff' }}>{card.ocr.stats.lightSideTherms}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 border" style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f' }}>
-                <div className="text-xs mb-2 font-medium" style={{ color: '#a08040' }}>Heavy Side</div>
-                <div className="grid grid-cols-3 gap-2 text-center text-sm">
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Mass</div>
-                    <div style={{ color: '#d4a84b' }}>{card.ocr.stats.heavySideMass}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Rad</div>
-                    <div style={{ color: '#d4a84b' }}>{card.ocr.stats.heavySideRadHard}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs" style={{ color: '#707080' }}>Therms</div>
-                    <div style={{ color: '#ff8844' }}>{card.ocr.stats.heavySideTherms}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Section>
-        )}
-
-        {/* Boolean Capabilities */}
-        {card.ocr?.stats && (
-          (() => {
-            const capabilities = BOOLEAN_STATS
-              .filter((key) => (card.ocr?.stats as CardStats)?.[key as keyof CardStats] === true)
-              .map((key) => key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase()));
-            if (capabilities.length === 0) return null;
-            return (
-              <Section title="Capabilities">
-                <div className="flex flex-wrap gap-2">
-                  {capabilities.map((cap) => (
-                    <span
-                      key={cap}
-                      className="px-3 py-1 text-xs tracking-wider uppercase border"
-                      style={{ borderColor: '#22c55e50', color: '#22c55e' }}
-                    >
-                      {cap}
-                    </span>
-                  ))}
-                </div>
-              </Section>
-            );
-          })()
-        )}
-
-        {/* Support Requirements */}
-        {card.ocr?.supportRequirements && (
-          (() => {
-            const reqs = Object.entries(card.ocr.supportRequirements)
-              .filter(([, value]) => value === true)
-              .map(([key]) => SUPPORT_LABELS[key] || key);
-            if (reqs.length === 0) return null;
-            return (
-              <Section title="Requires">
-                <div className="flex flex-wrap gap-2">
-                  {reqs.map((req) => (
-                    <span
-                      key={req}
-                      className="px-3 py-1 text-xs tracking-wider uppercase border"
-                      style={{ borderColor: '#eab30850', color: '#eab308' }}
-                    >
-                      {req}
-                    </span>
-                  ))}
-                </div>
-              </Section>
-            );
-          })()
-        )}
-
-        {/* Ability */}
-        {card.ocr?.ability && (
-          <Section title="Ability">
-            <p
-              className="leading-relaxed p-3 border"
-              style={{ borderColor: '#d4a84b30', backgroundColor: '#1a1a2f', color: '#c0c0d0' }}
-            >
-              {card.ocr.ability}
-            </p>
-          </Section>
-        )}
-
-        {/* Colonist Info */}
-        {(card.spreadsheet?.colonistType || card.spreadsheet?.specialty || card.spreadsheet?.ideology) && (
-          <Section title="Colonist">
-            <div className="flex flex-wrap gap-2">
-              {card.spreadsheet?.colonistType && (
-                <span
-                  className="px-3 py-1 text-xs tracking-wider uppercase border"
-                  style={{
-                    borderColor: card.spreadsheet.colonistType === 'Robot' ? '#00d4ff50' : '#f5920050',
-                    color: card.spreadsheet.colonistType === 'Robot' ? '#00d4ff' : '#f59200',
-                  }}
-                >
-                  {card.spreadsheet.colonistType}
-                </span>
-              )}
-              {card.spreadsheet?.specialty && (
-                <span
-                  className="px-3 py-1 text-xs tracking-wider uppercase border"
-                  style={{ borderColor: '#8b5cf650', color: '#8b5cf6' }}
-                >
-                  {SPECIALTY_LABELS[card.spreadsheet.specialty as keyof typeof SPECIALTY_LABELS] || card.spreadsheet.specialty}
-                </span>
-              )}
-              {card.spreadsheet?.ideology && (
-                <span
-                  className="px-3 py-1 text-xs tracking-wider uppercase border"
-                  style={{
-                    borderColor: '#a0804050',
-                    color: '#a08040',
-                  }}
-                >
-                  {card.spreadsheet.ideology}
-                </span>
-              )}
-            </div>
-          </Section>
-        )}
-
-        {/* Promotion */}
-        {card.spreadsheet?.promotionColony && (
-          <Section title="Promotion">
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{ borderColor: '#3b82f650', color: '#3b82f6' }}
-            >
-              {card.spreadsheet.promotionColony}
-            </span>
-          </Section>
-        )}
-
-        {/* Generator Type */}
-        {card.ocr?.stats?.generatorType && (
-          <Section title="Generator Type">
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{ borderColor: '#eab30850', color: '#eab308' }}
-            >
-              {card.ocr.stats.generatorType === 'push' ? '⟛ Push Generator' : 'e Electric Generator'}
-            </span>
-          </Section>
-        )}
-
-        {/* Reactor Type */}
-        {card.ocr?.stats?.reactorType && (
-          <Section title="Reactor Type">
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{
-                borderColor:
-                  card.ocr.stats.reactorType === 'X' ? '#f9731650' :
-                  card.ocr.stats.reactorType === 'wave' ? '#00d4ff50' :
-                  '#ef444450',
-                color:
-                  card.ocr.stats.reactorType === 'X' ? '#f97316' :
-                  card.ocr.stats.reactorType === 'wave' ? '#00d4ff' :
-                  '#ef4444',
-              }}
-            >
-              {card.ocr.stats.reactorType === 'X' ? 'X Fission' :
-               card.ocr.stats.reactorType === 'wave' ? '∿ Fusion' :
-               '💣 Antimatter'}
-            </span>
-          </Section>
-        )}
-
-        {/* Future */}
-        {card.spreadsheet?.future && (
-          <Section title="Future">
-            <p
-              className="leading-relaxed p-3 border text-sm"
-              style={{ borderColor: '#8b5cf630', backgroundColor: '#1a1a2f', color: '#a08040' }}
-            >
-              {card.spreadsheet.future}
-            </p>
-          </Section>
-        )}
-
-        {/* Related Cards */}
-        {relatedCards && relatedCards.length > 0 && (
-          <Section title="Related Cards">
-            <div className="flex flex-wrap gap-2">
-              {relatedCards.map((related) => (
-                <Link
-                  key={related.id}
-                  to={`/catalog/card/${related.id}`}
-                  className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors hover:bg-[#d4a84b]/10"
-                  style={{ borderColor: '#d4a84b50', color: '#a08040' }}
-                >
-                  {related.ocr?.name || related.name || related.id}
-                  {related.side && (
-                    <span
-                      className="ml-2 w-3 h-3 rounded-full inline-block"
-                      style={{
-                        backgroundColor:
-                          related.side.toLowerCase() === 'white' ? '#fff' :
-                          related.side.toLowerCase() === 'black' ? '#1a1a2f' :
-                          '#4a4a5f',
-                        border: '1px solid #d4a84b50',
-                      }}
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {/* Report Issue */}
-        <div className="pt-4 border-t" style={{ borderColor: '#d4a84b20' }}>
-          <a
-            href={`https://docs.google.com/forms/d/e/1FAIpQLSfG1ylpJXQVvn2Q3yEQQzEgD6e1nX-Tsgf6WxNVmaow1p2_kw/viewform?usp=pp_url&entry.325757878=${encodeURIComponent(displayName)}&entry.93108582=${encodeURIComponent(window.location.href)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs tracking-wider uppercase transition-colors"
-            style={{ color: '#707080' }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Report Issue
-          </a>
-        </div>
+      {/* Content - uses shared component */}
+      <div className="p-4">
+        <CardInfoPanel card={card} cards={cards} showCardLinks />
       </div>
-    </div>
-  );
-}
-
-// Section helper component
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <h2
-        className="text-xs tracking-wider uppercase mb-2"
-        style={{ color: '#a08040' }}
-      >
-        {title}
-      </h2>
-      {children}
     </div>
   );
 }

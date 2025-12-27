@@ -16,6 +16,7 @@ import { useCardStore } from '../../../store/cardStore';
 import { useSettingsStore, ALL_CARD_TYPES, CARD_TYPE_LABELS } from '../../../store/settingsStore';
 import { log } from '../../../store/logsStore';
 import { GridResultsView } from './GridResultsView';
+import { CardInfoPanel } from '../../../components/CardInfoPanel';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
@@ -693,12 +694,6 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
             ← SWIPE TO FLIP →
           </p>
         )}
-        <p
-          className="text-[10px] tracking-wider uppercase mt-1"
-          style={{ color: 'var(--showxating-gold-dim)', opacity: 0.6 }}
-        >
-          ↑ SWIPE UP FOR INFO
-        </p>
       </footer>
 
       {/* Info Panel Overlay */}
@@ -711,11 +706,7 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed inset-0 z-[110] bg-black overflow-y-auto"
           >
-            <ScanInfoPanel
-              card={displayCard}
-              onClose={() => setShowInfo(false)}
-              cards={cards}
-            />
+            <ScanInfoPanel card={displayCard} cards={cards} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -725,45 +716,25 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
 
 /**
  * ScanInfoPanel - Card metadata panel for scan mode
- * Styled consistently with showxating theme
+ * Uses shared CardInfoPanel, styled with showxating theme
+ * No close button - INFO button in parent header toggles this
  */
 interface ScanInfoPanelProps {
   card: Card;
-  onClose: () => void;
   cards: Card[];
 }
 
-function ScanInfoPanel({ card, onClose, cards }: ScanInfoPanelProps) {
+function ScanInfoPanel({ card, cards }: ScanInfoPanelProps) {
   const displayName = card.ocr?.name || card.name || 'Unknown Card';
-
-  // Find related cards
-  const relatedCards = card.relatedCards
-    ? Object.values(card.relatedCards)
-        .map((filename) => cards.find((c) => c.filename === filename))
-        .filter((c): c is Card => c !== undefined)
-    : undefined;
 
   return (
     <div
       className="min-h-screen"
       style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
     >
-      {/* Header */}
+      {/* Header - just title, no close button (INFO button in parent toggles) */}
       <header className="sticky top-0 z-10 bg-black border-b border-[var(--showxating-gold-dim)]">
-        <div className="flex items-center justify-between px-4 py-3">
-          <button
-            onClick={onClose}
-            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
-            style={{
-              borderColor: 'var(--showxating-gold-dim)',
-              color: 'var(--showxating-gold)',
-            }}
-          >
-            ← CLOSE
-          </button>
-          <div />
-        </div>
-        <div className="px-4 pb-3">
+        <div className="px-4 py-3">
           <h1
             className="text-lg tracking-wider uppercase"
             style={{ color: 'var(--showxating-gold)' }}
@@ -773,157 +744,9 @@ function ScanInfoPanel({ card, onClose, cards }: ScanInfoPanelProps) {
         </div>
       </header>
 
-      {/* Content */}
-      <div className="p-4 space-y-6">
-        {/* Type & Spectral */}
-        <div className="flex flex-wrap gap-2">
-          <span
-            className="px-3 py-1 text-xs tracking-wider uppercase border"
-            style={{
-              backgroundColor: 'var(--showxating-gold)',
-              color: '#0a0a0f',
-              borderColor: 'var(--showxating-gold)',
-            }}
-          >
-            {card.type.toUpperCase()}
-          </span>
-          {card.side && (
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{
-                borderColor: 'var(--showxating-gold-dim)',
-                color: 'var(--showxating-gold-dim)',
-              }}
-            >
-              {card.side.toUpperCase()}
-            </span>
-          )}
-          {card.ocr?.spectralType && (
-            <span
-              className="px-3 py-1 text-xs tracking-wider uppercase border"
-              style={{
-                borderColor: 'var(--showxating-cyan)',
-                color: 'var(--showxating-cyan)',
-              }}
-            >
-              SPECTRAL {card.ocr.spectralType}
-            </span>
-          )}
-        </div>
-
-        {/* Description */}
-        {card.ocr?.description && (
-          <div>
-            <h2
-              className="text-xs tracking-wider uppercase mb-2"
-              style={{ color: 'var(--showxating-gold-dim)' }}
-            >
-              Description
-            </h2>
-            <p style={{ color: '#c0c0d0' }} className="leading-relaxed text-sm">
-              {card.ocr.description}
-            </p>
-          </div>
-        )}
-
-        {/* Stats */}
-        {card.ocr?.stats && (
-          <div>
-            <h2
-              className="text-xs tracking-wider uppercase mb-2"
-              style={{ color: 'var(--showxating-gold-dim)' }}
-            >
-              Stats
-            </h2>
-            <div className="grid grid-cols-3 gap-2">
-              {Object.entries(card.ocr.stats)
-                .filter(([key, value]) => value !== null && value !== undefined && !['lightSideMass', 'lightSideRadHard', 'lightSideTherms', 'heavySideMass', 'heavySideRadHard', 'heavySideTherms'].includes(key))
-                .slice(0, 6)
-                .map(([key, value]) => (
-                  <div
-                    key={key}
-                    className="p-2 text-center border"
-                    style={{
-                      borderColor: 'var(--showxating-gold-dim)',
-                      backgroundColor: '#1a1a2f',
-                    }}
-                  >
-                    <div className="text-[10px] uppercase" style={{ color: 'var(--showxating-gold-dim)' }}>
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
-                    </div>
-                    <div className="text-sm font-bold" style={{ color: 'var(--showxating-gold)' }}>
-                      {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value)}
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        )}
-
-        {/* Ability */}
-        {card.ocr?.ability && (
-          <div>
-            <h2
-              className="text-xs tracking-wider uppercase mb-2"
-              style={{ color: 'var(--showxating-gold-dim)' }}
-            >
-              Ability
-            </h2>
-            <p
-              className="leading-relaxed p-3 border text-sm"
-              style={{
-                borderColor: 'var(--showxating-gold-dim)',
-                backgroundColor: '#1a1a2f',
-                color: '#c0c0d0',
-              }}
-            >
-              {card.ocr.ability}
-            </p>
-          </div>
-        )}
-
-        {/* Related Cards */}
-        {relatedCards && relatedCards.length > 0 && (
-          <div>
-            <h2
-              className="text-xs tracking-wider uppercase mb-2"
-              style={{ color: 'var(--showxating-gold-dim)' }}
-            >
-              Related Cards
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {relatedCards.map((related) => (
-                <span
-                  key={related.id}
-                  className="px-3 py-1 text-xs tracking-wider uppercase border"
-                  style={{
-                    borderColor: 'var(--showxating-gold-dim)',
-                    color: 'var(--showxating-gold-dim)',
-                  }}
-                >
-                  {related.ocr?.name || related.name || related.id}
-                  {related.side && ` (${related.side})`}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Report Issue */}
-        <div className="pt-4 border-t" style={{ borderColor: 'var(--showxating-gold-dim)' }}>
-          <a
-            href={`https://docs.google.com/forms/d/e/1FAIpQLSfG1ylpJXQVvn2Q3yEQQzEgD6e1nX-Tsgf6WxNVmaow1p2_kw/viewform?usp=pp_url&entry.325757878=${encodeURIComponent(displayName)}&entry.93108582=${encodeURIComponent(window.location.href)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs tracking-wider uppercase transition-colors"
-            style={{ color: 'var(--showxating-gold-dim)' }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Report Issue
-          </a>
-        </div>
+      {/* Content - uses shared component with scan theme */}
+      <div className="p-4">
+        <CardInfoPanel card={card} cards={cards} useScanTheme />
       </div>
     </div>
   );
