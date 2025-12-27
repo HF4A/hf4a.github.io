@@ -346,6 +346,73 @@ Always prefer Phase A when available. API provides authoritative grid dimensions
 | Re-inferring grid from merged cards | Mixing coordinate systems corrupts grid detection | Use API's gridRows/gridCols directly |
 | Treating OpenCV as "position truth" | OpenCV bboxes are approximations, API has seen the actual cards | API bboxes are more accurate |
 
+### Name Matching & Fallback Strategy
+
+**Observation (2025-12-27):** API card **types** are 100% accurate, but **names** hallucinate ~50% of the time despite prompt engineering. Types are identified by colored header banner (visually distinct), names require OCR of small text.
+
+**Multi-Step Identification Flow:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ STEP 1: Initial API Call                                                            │
+│ - API returns N cards with {type, name, bbox, confidence}                           │
+│ - For each card, attempt findCardByName(name, type)                                 │
+│ - Track which cards matched vs failed                                               │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    │                                     │
+                    ▼                                     ▼
+         ┌─────────────────────┐              ┌─────────────────────┐
+         │ MATCHED             │              │ UNMATCHED           │
+         │ - Display card      │              │ - Name not in DB    │
+         │ - Show confidence   │              │ - Type IS reliable  │
+         └─────────────────────┘              └──────────┬──────────┘
+                                                         │
+                                                         ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ STEP 2: Clarification API Call (per unmatched card)                                 │
+│ - Crop card region from original image using bbox                                   │
+│ - Send cropped image + constrained prompt:                                          │
+│   "This is a {type} card. The name MUST be one of: [list of {type} cards]"         │
+│ - API returns single best match from constrained list                               │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    │                                     │
+                    ▼                                     ▼
+         ┌─────────────────────┐              ┌─────────────────────┐
+         │ NOW MATCHED         │              │ STILL UNMATCHED     │
+         │ - Display card      │              │ - Show "Unknown     │
+         │ - Lower confidence  │              │   {Type}" tile      │
+         └─────────────────────┘              │ - Tap to manually   │
+                                              │   identify          │
+                                              └─────────────────────┘
+```
+
+**"Unknown {Type}" Tile Behavior:**
+- Display: Cropped card image from scan with overlay text "Unknown Thruster" (etc.)
+- On tap: Opens card picker modal with type pre-filtered
+- User selects correct card → updates scan results
+- Correction logged for future model improvement (if telemetry tier permits)
+
+**API Cost Consideration:**
+- Step 2 calls are per-unmatched-card, potentially 1-9 additional calls
+- Use cheaper/faster model for Step 2 (gpt-4.1-nano: 2.5s, cheapest)
+- Crop tightly to reduce input tokens
+- Consider batching: send all unmatched crops in one call with numbered positions
+
+**Alternative: Skip Step 2**
+- Simpler implementation: go directly to "Unknown {Type}" state
+- Let user always manually identify failed matches
+- Trade-off: More user effort, but eliminates Step 2 API costs and latency
+
+**Implementation Notes:**
+- Store `apiReturnedType` on IdentifiedCard even when name doesn't match
+- `findCardByName()` should accept optional `type` filter parameter
+- Cropped images for Step 2 come from captured scan image, not live camera
+- Grid layout remains stable (from Step 1) even as individual cards resolve
+
 ### Diagnostics
 
 Export diagnostics via "Export Diagnostics" in SYS panel. Zip contains:
