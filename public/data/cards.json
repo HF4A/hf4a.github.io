@@ -1951,7 +1951,10 @@
       "stats": {},
       "ability": "Fulfilled Ability: Shielded. Destination: Unexplored Size 7+ Site not in Earth zone."
     },
-    "imageDescription": "Amalthea moon in Jupiter's shadow, the most challenging moon to explore due to ultrahigh radiation and electric currents."
+    "imageDescription": "Amalthea moon in Jupiter's shadow, the most challenging moon to explore due to ultrahigh radiation and electric currents.",
+    "relatedCards": {
+      "blue": "Contract23-Blue-Science-HexapodExplorer.webp"
+    }
   },
   {
     "id": "contract-23",
@@ -2971,378 +2974,6 @@
     "imageDescription": "Card showing a dragonfly-like atmospheric collection craft with transparent wings flying through Uranus's pale blue-green cloudy atmosphere."
   },
   {
-    "id": "crew-A",
-    "type": "crew",
-    "filename": "CrewA-Yellow-UnitedNationsCosmonauts.webp",
-    "name": "United Nations Cosmonauts (A)",
-    "side": "yellow",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "SECRETARY GENERAL: Start the game with +2 Aqua."
-    },
-    "imageDescription": "Card featuring the United Nations emblem with laurel wreath and globe, alongside the Liberty rocket with red, white and blue striping.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-B",
-    "type": "crew",
-    "filename": "CrewB-Purple-ROSCOSMOS.webp",
-    "name": "ROSCOSMOS (B)",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 5
-      },
-      "ability": "TAXES: +1 Aqua after any player places a Claim or industrializes."
-    },
-    "imageDescription": "Card showing the ROSCOSMOS logo and the Angara 5 rocket, a Russian heavy-lift launch vehicle with green and white staging.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-C",
-    "type": "crew",
-    "filename": "CrewC-Purple-Taikonauts.webp",
-    "name": "Taikonauts (C)",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "FELONIOUS: May perform Felonious actions."
-    },
-    "imageDescription": "Card displaying the CNSA (China National Space Administration) blue arrow logo and The Long March 9 heavy rocket with multiple boosters.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-D",
-    "type": "crew",
-    "filename": "CrewD-White-Nasa.webp",
-    "name": "NASA Astronauts (D)",
-    "side": "white",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "LAUNCH FEES: +1 Aqua from the Pool after any player performs a boost operation."
-    },
-    "imageDescription": "Card showing the classic NASA meatball logo and the SLS (Space Launch System) 130t Block II Crew rocket, a white heavy-lift vehicle with orange tank.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-E",
-    "type": "crew",
-    "filename": "CrewE-Green-AnonymousP2P.webp",
-    "name": "Anonymous P2P (E)",
-    "side": "green",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "OPEN SOURCE FINAO: Costs of FINAO is 3 Aqua."
-    },
-    "imageDescription": "Card featuring the iconic Guy Fawkes/Anonymous mask and the Skylon spaceplane, a sleek black single-stage-to-orbit vehicle design.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-F",
-    "type": "crew",
-    "filename": "CrewF-Green-ESASpaceUnionists.webp",
-    "name": "ESA Space Unionists (F)",
-    "side": "green",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "POWERSAT: During any player's turn: May give +1 thrust to any spacecraft that in their thruster triangle has a solar sail icon."
-    },
-    "imageDescription": "Card showing the POWERSAT/ESA circular logo with satellite imagery and the Ariane 64 rocket, a white European launch vehicle.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-G",
-    "type": "crew",
-    "filename": "CrewG-White-ISRO-Glavcosmonauts.webp",
-    "name": "ISRO Glavcosmonauts (G)",
-    "side": "white",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "DHARMA REFUEL: Double yield from site refuel when carrying a glory chit."
-    },
-    "imageDescription": "Card displaying the ISRO (Indian Space Research Organisation) logo with Sanskrit text and the GSLV MkIII (Vikas) rocket with 'INDIA' markings.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-H",
-    "type": "crew",
-    "filename": "CrewH-Yellow-B612Foundation.webp",
-    "name": "B612 Foundation (H)",
-    "side": "yellow",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 3
-      },
-      "ability": "BLINK TELESCOPE: 1 re-roll per prospecting operation when using a Raygun."
-    },
-    "imageDescription": "Card featuring the B612 Foundation logo and the New Glenn rocket from Blue Origin, a tall white rocket with 'BLUE ORIGIN' text.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-J",
-    "type": "crew",
-    "filename": "CrewJ-Grey-SpaceX.webp",
-    "name": "SpaceX (J)",
-    "side": "grey",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "MARKETEER: Always win Auction ties."
-    },
-    "imageDescription": "Card showing the orange SpaceX logo and the Starship rocket, a tall stainless steel vehicle with distinctive grid fins.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-K",
-    "type": "crew",
-    "filename": "CrewK-Grey-NorseAstronauts.webp",
-    "name": "Norse Astronauts (K)",
-    "side": "grey",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 3
-      },
-      "ability": "SCRUM TROUBLESHOOTERS: Repair any Glitch anywhere."
-    },
-    "imageDescription": "Card displaying a Swedish royal coat of arms with crown and the OmegA SE rocket, a white vehicle with Swedish flag markings.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-L",
-    "type": "crew",
-    "filename": "CrewL-Red-NASRDA Astronauts.webp",
-    "name": "NASRDA Astronauts (L)",
-    "side": "red",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "MOONCABLE: As a once per turn free action, refuel an activated dirt thruster at LEO/Home Orbit with 7 tanks (non-crew thruster) or 1 tank (Crew thruster)."
-    },
-    "imageDescription": "Card showing the NASRDA (Nigerian space agency) green gear logo and the Pegasus XL air-launched rocket carried by an aircraft.",
-    "relatedCards": {}
-  },
-  {
-    "id": "crew-M",
-    "type": "crew",
-    "filename": "CrewM-Red-ShimizuCorpEntrepreneurs.webp",
-    "name": "Shimizu Corp Entrepreneurs (M)",
-    "side": "red",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 3
-      },
-      "ability": "SKUNKWORKS: Ignore academia hand limit = may bid in auctions with any number of hand cards."
-    },
-    "imageDescription": "Card featuring the Shimizu Corporation logo with paper airplane icon and Japanese characters, alongside a lunar lander module and rover.",
-    "relatedCards": {}
-  },
-  {
-    "id": "exodus-01",
-    "type": "exodus",
-    "filename": "Exodus01-DecantingNetwork.webp",
-    "name": "Decanting Network",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 5,
-        "radHard": 4
-      },
-      "ability": "FULFILLED ABILITY: Allowed 1 extra Colonist. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: 2002 TX (9:50)."
-    },
-    "imageDescription": "Card depicting two scientists in white lab coats working with cryogenic pods, showing human bodies being prepared for coldnap hibernation."
-  },
-  {
-    "id": "exodus-02",
-    "type": "exodus",
-    "filename": "Exodus02-LifeSupportTestProtocol.webp",
-    "name": "Life Support Test Protocol",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 2,
-        "radHard": 4
-      },
-      "ability": "FULFILLED ABILITY: Implant is a free action. WHEN FULFILLING: Gain 3 Isotopes at this Site; you may Discard a Colonist (this is not a Felony). DESTINATION: Quaoar with Promoted Bernal (10:40)."
-    },
-    "imageDescription": "Card showing a spacecraft near Quaoar, a reddish-pink trans-Neptunian object, with the dwarf planet prominently displayed against a starfield."
-  },
-  {
-    "id": "exodus-03",
-    "type": "exodus",
-    "filename": "Exodus03-LifeSupportReconfigTeam.webp",
-    "name": "Life Support Reconfig Team",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 3,
-        "radHard": 4
-      },
-      "ability": "FULFILLED ABILITY: Your Bernals add to Colonist limit even when unanchored. WHEN FULFILLING: Gain 3 Isotopes at your Bank; you may swap your Bernal cards (move each to the other Bernal Stack). DESTINATION: Your 2 Anchored non-Home Bernals & Return."
-    },
-    "imageDescription": "Card depicting a rotating space habitat with multiple modules and solar panels, representing a Bernal sphere-style space station in deep space."
-  },
-  {
-    "id": "exodus-04",
-    "type": "exodus",
-    "filename": "Exodus04-IsotypeFuelingStation.webp",
-    "name": "Isotope Fueling Station",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 5,
-        "radHard": 6
-      },
-      "ability": "FULFILLED ABILITY: After you do a factory refuel op, gain 1 Isotope at that Factory. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Your Factory of your isostandard in Neptune zone."
-    },
-    "imageDescription": "Card showing a spacecraft mining operation on a cratered asteroid near Neptune's moon, with storage tanks and equipment visible on the surface."
-  },
-  {
-    "id": "exodus-05",
-    "type": "exodus",
-    "filename": "Exodus05-WardenProvingGround.webp",
-    "name": "Warden Proving Ground",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 3,
-        "radHard": 4
-      },
-      "ability": "FULFILLED ABILITY: Your robonauts are -1 ISRU. WHEN FULFILLING: Gain 3 Isotopes at your Bank; Promote your freighter or you may gain a Mobile Factory at your Bank. DESTINATION: Teharonhiyawako (10:20)."
-    },
-    "imageDescription": "Card depicting multiple robotic rovers operating on the surface of Teharonhiyawako, a gray cratered asteroid, testing autonomous systems."
-  },
-  {
-    "id": "exodus-06",
-    "type": "exodus",
-    "filename": "Exodus06-TWEvaluationCommittee.webp",
-    "name": "TW Evaluation Committee",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 2,
-        "radHard": 5
-      },
-      "ability": "FULFILLED ABILITY: You may use Claim disks as delegates. WHEN FULFILLING: Gain 3 Isotopes at this Site; place 2 delegates on any 1 ideology. DESTINATION: Larissa (10:10)."
-    },
-    "imageDescription": "Card showing Earth from space with a thruster spacecraft in orbit, representing committee evaluation of terrawatt-class propulsion systems."
-  },
-  {
-    "id": "exodus-07",
-    "type": "exodus",
-    "filename": "Exodus07-RadiationShieldPrototype.webp",
-    "name": "Radiation Shield Prototype",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 8,
-        "radHard": 0
-      },
-      "ability": "FULFILLED ABILITY: Your Stacks are immune to Belt/CME Rolls. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Mercury Site (6:30, 8:00), then enter 2 Radiation Belt Spaces in the Saturn zone or beyond & Return."
-    },
-    "imageDescription": "Card depicting a spacecraft with thruster firing near Pluto, the dwarf planet shown as a large pinkish-gray sphere with its distinctive heart feature."
-  },
-  {
-    "id": "exodus-08",
-    "type": "exodus",
-    "filename": "Exodus08-RivalIsobank.webp",
-    "name": "Rival Isobank",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 6
-      },
-      "ability": "FULFILLED ABILITY: You may exchange 1 Isotope per Turn at your Anchored non-Home Bernal for 6 Aquas. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Pluto or Charon Factory (9:40, 9:50)."
-    },
-    "imageDescription": "Card showing a space station with HE-3 isotope storage tanks silhouetted against a large full moon, representing an isotope banking facility."
-  },
-  {
-    "id": "exodus-09",
-    "type": "exodus",
-    "filename": "Exodus09-TWStressTest.webp",
-    "name": "TW Stress Test",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 1,
-        "radHard": 4
-      },
-      "ability": "FULFILLED ABILITY: Your GW/TW thruster receives a Bonus Pivot. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Enter Solar Oberth, then Uranus zone Synodic Site, & Return."
-    },
-    "imageDescription": "Card depicting a spacecraft with extended thruster boom performing a close solar pass, with the sun's corona and surface prominently displayed."
-  },
-  {
-    "id": "exodus-10",
-    "type": "exodus",
-    "filename": "Exodus10-IsoExchange.webp",
-    "name": "Iso-Exchange",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 4,
-        "radHard": 5
-      },
-      "ability": "FULFILLED ABILITY: Produce your isostandard during a site refuel op at any Factory (with permission). WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Saturn aerostat (8:40) & Return."
-    },
-    "imageDescription": "Card showing a bulbous spacecraft or aerostat with multiple spherical tanks floating in Saturn's atmosphere, designed for isotope collection."
-  },
-  {
-    "id": "exodus-11",
-    "type": "exodus",
-    "filename": "Exodus11-DeepFreeze.webp",
-    "name": "Deep Freeze",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 5,
-        "radHard": 6
-      },
-      "ability": "FULFILLED ABILITY: Before exomigrating, you may Discard the top card from the queue you are drawing from. WHEN FULFILLING: Gain 3 Isotopes at this Site. DESTINATION: Arrokoth (9:50)."
-    },
-    "imageDescription": "Card depicting multiple humans in blue cryogenic hibernation pods with tubes and monitoring equipment, representing deep freeze colonist storage."
-  },
-  {
-    "id": "exodus-12",
-    "type": "exodus",
-    "filename": "Exodus12-AtmosphericIsoRefinery.webp",
-    "name": "Atmospheric Iso-Refinery",
-    "side": "purple",
-    "ocr": {
-      "stats": {
-        "mass": 5,
-        "radHard": 3
-      },
-      "ability": "FULFILLED ABILITY: If your GW/TW thruster ends its move on an Aerobrake Hazard, that Stack gains 1 Isotope. WHEN FULFILLING: Gain 3 Isotopes at your Bank. DESTINATION: Uranus aerostat (9:20)."
-    },
-    "imageDescription": "Card showing a dragonfly-like atmospheric collection craft with transparent wings flying through Uranus's pale blue-green cloudy atmosphere."
-  },
-  {
     "id": "freighter-01",
     "type": "freighter",
     "filename": "Freighter01-Black-Fission-HeatedSteam.webp",
@@ -3647,7 +3278,10 @@
         "H"
       ]
     },
-    "imageDescription": "Helium-3 aerostats distilling gas giant atmospheres for helium-3 and deuterium, featuring 70 tonne Z-pinch tanker, 80m insulated balloon, 146 tonne 3He distillation plant, and hot air nuclear reactor."
+    "imageDescription": "Helium-3 aerostats distilling gas giant atmospheres for helium-3 and deuterium, featuring 70 tonne Z-pinch tanker, 80m insulated balloon, 146 tonne 3He distillation plant, and hot air nuclear reactor.",
+    "relatedCards": {
+      "purple": "Freighter07-Purple-Z-Pinch3He-DTargetFusion.webp"
+    }
   },
   {
     "id": "freighter-07",
@@ -4907,7 +4541,10 @@
       "ability": null,
       "spectralType": "M"
     },
-    "imageDescription": "ANDR-Indium dream pipe heat transfer system."
+    "imageDescription": "ANDR-Indium dream pipe heat transfer system.",
+    "relatedCards": {
+      "white": "Radiator08-White-QuTube.webp"
+    }
   },
   {
     "id": "radiator-09",
@@ -4920,7 +4557,10 @@
       "ability": null,
       "spectralType": "C"
     },
-    "imageDescription": "Stainless steel sodium-potassium pumped loop radiator."
+    "imageDescription": "Stainless steel sodium-potassium pumped loop radiator.",
+    "relatedCards": {
+      "black": "Radiator09-Black-Hula-Hoop.webp"
+    }
   },
   {
     "id": "radiator-09",
@@ -4981,7 +4621,10 @@
       "ability": null,
       "spectralType": "M"
     },
-    "imageDescription": "Steel lead-bismuth pumped loop radiator system."
+    "imageDescription": "Steel lead-bismuth pumped loop radiator system.",
+    "relatedCards": {
+      "black": "Radiator11-Black-PulsatingHeatPipe.webp"
+    }
   },
   {
     "id": "radiator-11",
@@ -5010,7 +4653,10 @@
       "ability": null,
       "spectralType": "C"
     },
-    "imageDescription": "Titanium-potassium heat pipe radiator."
+    "imageDescription": "Titanium-potassium heat pipe radiator.",
+    "relatedCards": {
+      "black": "Radiator12-Black-Flux-PinnedSuperthermal.webp"
+    }
   },
   {
     "id": "radiator-12",
