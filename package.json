@@ -1,6 +1,6 @@
 {
   "name": "hf4a-cards",
-  "version": "0.5.0",
+  "version": "0.5.11",
   "type": "module",
   "description": "High Frontier 4 All Card Explorer",
   "scripts": {

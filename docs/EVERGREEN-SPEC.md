@@ -223,6 +223,147 @@ Use cases:
 
 ---
 
+## Scan System Architecture
+
+**CRITICAL PRINCIPLE: The Cloud API is the SOLE source of truth for card identification and grid layout.**
+
+This section documents the scan system design. Future sessions MUST read and follow these principles to avoid regressions.
+
+### System Overview
+
+The scan system identifies playing cards from camera images using a cloud-based OpenAI Vision API. The flow has five phases with clear responsibilities:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 1: CAPTURE                                                                    │
+│ - User taps scan button                                                             │
+│ - Static frame captured from video feed to canvas                                   │
+│ - Image encoded as JPEG data URL                                                    │
+│ - Scan ID generated (scan-{timestamp})                                              │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 2: LOCAL DETECTION (PLACEHOLDER ONLY)                                         │
+│ - OpenCV runs on canvas to detect card-shaped rectangles                            │
+│ - Creates PLACEHOLDER cards with unknown IDs and OpenCV bboxes                      │
+│ - PURPOSE: Immediate visual feedback while API processes (~2-10s)                   │
+│ - These are NOT used for identification - purely visual placeholders                │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 3: STORE PLACEHOLDER SCAN                                                     │
+│ - Scan stored in showxatingStore with isProcessing: true                            │
+│ - UI shows placeholder cards with "unknown" state                                   │
+│ - Captured image displayed in background                                            │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 4: CLOUD API CALL (ASYNC)                                                     │
+│ - JPEG sent to Cloudflare Worker → OpenAI Vision API                                │
+│ - API returns: card names, types, sides, confidence, normalized bboxes, grid dims   │
+│ - Client matches API card names to local card database                              │
+│ - API bboxes converted from normalized [0-1] to pixel coordinates                   │
+└──────────────────────────────────────┬──────────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ PHASE 5: UPDATE WITH API RESULTS                                                    │
+│ - OpenCV placeholder cards are COMPLETELY DISCARDED                                 │
+│ - API cards (with API bboxes) replace placeholders entirely                         │
+│ - Grid dimensions from API (gridRows, gridCols) are stored                          │
+│ - isProcessing set to false                                                         │
+│ - UI updates to show identified cards in grid layout                                │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Key Files
+
+| File | Responsibility |
+|------|----------------|
+| `src/features/showxating/hooks/useScanCapture.ts` | Orchestrates all 5 phases |
+| `src/services/cloudScanner.ts` | API client for Cloudflare Worker |
+| `src/features/showxating/components/GridResultsView.tsx` | Displays final card grid |
+| `src/features/showxating/utils/gridDetection.ts` | Grid cell assignment utilities |
+| `src/features/showxating/services/visionPipeline.ts` | OpenCV detection (placeholders only) |
+| `workers/src/index.ts` | Cloudflare Worker - calls OpenAI Vision |
+
+### Data Flow: API Response → Grid Display
+
+```
+API Response:
+{
+  cards: [
+    { card_type: "thruster", card_name: "Solar Moth", side: "white",
+      confidence: 1.0, bbox: [0.03, 0.05, 0.28, 0.33] },
+    ...
+  ],
+  gridRows: 3,
+  gridCols: 3
+}
+        │
+        ▼
+┌──────────────────────────────────────────────────────────────┐
+│ useScanCapture.scanWithCloud()                               │
+│ - For each API card:                                         │
+│   1. findCardByName() matches card_name to local database    │
+│   2. bboxToCorners() converts normalized bbox to pixels      │
+│   3. Creates IdentifiedCard with cardId, filename, corners   │
+│ - Returns { cards: IdentifiedCard[], gridRows, gridCols }    │
+└──────────────────────────────────────────────────────────────┘
+        │
+        ▼
+┌──────────────────────────────────────────────────────────────┐
+│ updateScanCards(scanId, cards, false, counts, gridDims)      │
+│ - Replaces placeholder cards with API cards                  │
+│ - Stores gridRows, gridCols, apiCardCount on scan            │
+│ - Sets isProcessing: false                                   │
+└──────────────────────────────────────────────────────────────┘
+        │
+        ▼
+┌──────────────────────────────────────────────────────────────┐
+│ GridResultsView                                              │
+│ - Reads gridRows/gridCols from scan (Phase A source)         │
+│ - Uses buildGridCellMap() to assign cards to grid cells      │
+│ - Renders NxM CSS grid with card images                      │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Grid Dimension Sources (Priority Order)
+
+GridResultsView determines grid dimensions in this order:
+
+1. **Phase A: API explicit** - `scan.gridRows` and `scan.gridCols` from API response
+2. **Phase B: API count inference** - If no explicit dims, infer from `scan.apiCardCount`
+3. **Phase C: Bbox inference** - Last resort: cluster card bboxes into rows/columns
+
+Always prefer Phase A when available. API provides authoritative grid dimensions.
+
+### Failure Modes to Avoid
+
+| Anti-Pattern | Why It Fails | Correct Approach |
+|--------------|--------------|------------------|
+| Merging OpenCV with API by grid cell | Cell detection can misalign between coordinate spaces, causing API cards to be lost | Discard OpenCV entirely when API returns |
+| Using OpenCV bbox count as final | OpenCV may detect more/fewer cards than actually present | API card count is authoritative |
+| Re-inferring grid from merged cards | Mixing coordinate systems corrupts grid detection | Use API's gridRows/gridCols directly |
+| Treating OpenCV as "position truth" | OpenCV bboxes are approximations, API has seen the actual cards | API bboxes are more accurate |
+
+### Diagnostics
+
+Export diagnostics via "Export Diagnostics" in SYS panel. Zip contains:
+
+| File | Contents |
+|------|----------|
+| `metadata.json` | App version, timestamp, device info |
+| `scans.json` | All captured scans with cards array |
+| `logs.json` | API logs including raw responses |
+| `images/` | Captured scan images |
+
+When debugging scan issues:
+1. Check `logs.json` for API response (all 9 cards identified?)
+2. Check `scans.json` for final cards array (any "unknown" that shouldn't be?)
+3. Compare API card count vs final cards array length
+
+---
+
 ## Near-Term Polish
 
 ### UX Improvements
