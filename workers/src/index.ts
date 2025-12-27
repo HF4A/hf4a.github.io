@@ -144,7 +144,7 @@ async function buildSystemPrompt(): Promise<string> {
   // Build the valid names section
   let validNamesSection = '';
   if (types.length > 0) {
-    validNamesSection = '\nVALID CARD NAMES (you MUST use one of these exact names):\n\n';
+    validNamesSection = '\n=== VALID CARD NAMES (CLOSED SET - NO OTHER NAMES EXIST) ===\n\n';
     for (const type of types) {
       const names = byType[type];
       if (names && names.length > 0) {
@@ -155,33 +155,52 @@ async function buildSystemPrompt(): Promise<string> {
 
   const typesList = types.length > 0 ? types.join('|') : 'thruster|robonaut|refinery|reactor|radiator|generator|crew|freighter|bernal|colonist|gw-thruster';
 
-  return `You are an expert at identifying cards from the board game "High Frontier 4 All" by Sierra Madre Games.
+  return `You are identifying cards from "High Frontier 4 All" board game. You MUST return card names EXACTLY as they appear in the VALID CARD NAMES list below. DO NOT invent, modify, or guess names that are not in the list.
 
-When shown an image of a card (or multiple cards), identify each card and return JSON:
+CRITICAL: The card name is printed at the BOTTOM of each card in small text. Read this text carefully and match it to a name from the valid list.
 
+Return JSON format:
 {
-  "gridRows": 3,
-  "gridCols": 3,
+  "gridRows": N,
+  "gridCols": M,
   "cards": [
     {
       "card_type": "${typesList}",
-      "card_name": "exact name from the VALID NAMES list below",
-      "side": "white|black|blue|gold|purple",
+      "card_name": "EXACT name from valid list",
+      "side": "white|black|blue",
       "confidence": 0.0-1.0,
       "bbox": [x1, y1, x2, y2]
     }
   ]
 }
 ${validNamesSection}
-Rules:
-- gridRows/gridCols: the arrangement of cards in the image (e.g., 3x3 grid = 3 rows, 3 cols). Set to 1x1 for single card.
-- card_type: identified by colored banner at top of card (orange=thruster, red=generator, purple=reactor, blue=radiator, brown=refinery, magenta=robonaut)
-- card_name: MUST be one of the valid names listed above. The name is printed at the BOTTOM of the card.
-- side: the card's BACK color (white, black, blue, gold, or purple). Most tech cards are white-backed.
-- confidence: 1.0 = certain match to valid name, 0.5 = unsure, below 0.3 = guess
-- bbox: normalized coordinates [0-1] for top-left (x1,y1) and bottom-right (x2,y2) of each card
-- If you cannot match a card to a valid name, use your best guess from the list
-- Return ONLY valid JSON, no markdown or explanation`;
+=== IDENTIFICATION RULES ===
+
+1. CARD TYPE: Look at the colored banner at TOP of card
+   - Orange = thruster
+   - Red/salmon = generator
+   - Dark purple = reactor
+   - Light blue = radiator
+   - Brown/tan = refinery
+   - Magenta/pink = robonaut
+
+2. CARD NAME: Read the text at the BOTTOM of the card. Match to the CLOSEST name in the valid list for that type. Common cards you'll see:
+   - "Ion Drive" (thruster) - NOT "Ion Drive Mk II"
+   - "Ericsson Engine" (generator) - NOT "Fissioned Engine"
+   - "In-core Thermionic" (generator)
+   - "Penning Trap" (reactor)
+   - "Project Orion" (reactor)
+   - "Carbo-Chlorination" (refinery) - NOT "Carbon Distillation"
+   - "ETHER Charged Dust" (radiator)
+   - "Mo/Li Heat Pipe" (radiator)
+   - "Tungsten Resistojet" (robonaut)
+   - "Re Solar Moth" (thruster)
+
+3. NEVER INVENT NAMES: If you cannot read the text clearly, pick the most likely match from the valid list based on the card's appearance. Every name you return MUST exist in the valid list above.
+
+4. bbox: normalized [0-1] coordinates for each card's position
+
+Return ONLY valid JSON, no markdown.`;
 }
 
 const MODEL_MAP: Record<string, string> = {
