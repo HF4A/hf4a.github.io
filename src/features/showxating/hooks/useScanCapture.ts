@@ -290,30 +290,62 @@ function normalizeName(name: string): string {
 // Find card in database by name (fuzzy match)
 function findCardByName(cards: Card[], cardName: string, cardType?: string): Card | null {
   const normalizedSearch = normalizeName(cardName);
+  console.log(`[findCardByName] Searching for: "${cardName}" (normalized: "${normalizedSearch}") type: ${cardType || 'any'}`);
 
   // Try exact match first
   let match = cards.find(c => normalizeName(c.name) === normalizedSearch);
-  if (match) return match;
+  if (match) {
+    console.log(`[findCardByName] ✓ Exact match: ${match.id} "${match.name}"`);
+    return match;
+  }
 
   // Try match with type filter
   if (cardType) {
     const typeNormalized = cardType.toLowerCase();
     const typeFiltered = cards.filter(c => c.type === typeNormalized);
+    console.log(`[findCardByName] Type filter "${typeNormalized}": ${typeFiltered.length} cards`);
+
     match = typeFiltered.find(c => normalizeName(c.name) === normalizedSearch);
-    if (match) return match;
+    if (match) {
+      console.log(`[findCardByName] ✓ Type+exact match: ${match.id} "${match.name}"`);
+      return match;
+    }
 
     // Try partial match within type
     match = typeFiltered.find(c => normalizeName(c.name).includes(normalizedSearch));
-    if (match) return match;
+    if (match) {
+      console.log(`[findCardByName] ✓ Type+partial match: ${match.id} "${match.name}"`);
+      return match;
+    }
   }
 
   // Try partial match
   match = cards.find(c => normalizeName(c.name).includes(normalizedSearch));
-  if (match) return match;
+  if (match) {
+    console.log(`[findCardByName] ✓ Partial match: ${match.id} "${match.name}"`);
+    return match;
+  }
 
   // Try reverse partial match
   match = cards.find(c => normalizedSearch.includes(normalizeName(c.name)));
-  return match || null;
+  if (match) {
+    console.log(`[findCardByName] ✓ Reverse partial match: ${match.id} "${match.name}"`);
+    return match;
+  }
+
+  // No match - log some similar names for debugging
+  const similar = cards
+    .map(c => ({ card: c, norm: normalizeName(c.name) }))
+    .filter(({ norm }) => {
+      // Check if any word matches
+      const searchWords = normalizedSearch.split(' ');
+      const cardWords = norm.split(' ');
+      return searchWords.some(sw => cardWords.some(cw => cw.includes(sw) || sw.includes(cw)));
+    })
+    .slice(0, 5);
+
+  console.log(`[findCardByName] ✗ No match found. Similar cards:`, similar.map(s => `${s.card.id} "${s.card.name}"`));
+  return null;
 }
 
 // Convert normalized bbox [x1, y1, x2, y2] to corner points
@@ -370,6 +402,12 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
         console.warn('[useScanCapture] Cloud scan returned no cards:', response.error);
         return { cards: identifiedCards };
       }
+
+      // Log all API results for debugging
+      console.log('[useScanCapture] API returned', response.cards.length, 'cards:');
+      response.cards.forEach((c, i) => {
+        console.log(`  [${i}] type="${c.card_type}" name="${c.card_name}" side="${c.side}" conf=${c.confidence}`);
+      });
 
       // Map API results to IdentifiedCard format
       for (const apiCard of response.cards) {
