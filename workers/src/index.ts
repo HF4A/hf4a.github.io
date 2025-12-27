@@ -184,19 +184,14 @@ ${validNamesSection}
    - Brown/tan = refinery
    - Magenta/pink = robonaut
 
-2. CARD NAME: Read the text at the BOTTOM of the card. Match to the CLOSEST name in the valid list for that type. Common cards you'll see:
-   - "Ion Drive" (thruster) - NOT "Ion Drive Mk II"
-   - "Ericsson Engine" (generator) - NOT "Fissioned Engine"
-   - "In-core Thermionic" (generator)
-   - "Penning Trap" (reactor)
-   - "Project Orion" (reactor)
-   - "Carbo-Chlorination" (refinery) - NOT "Carbon Distillation"
-   - "ETHER Charged Dust" (radiator)
-   - "Mo/Li Heat Pipe" (radiator)
-   - "Tungsten Resistojet" (robonaut)
-   - "Re Solar Moth" (thruster)
+2. CARD NAME: Read the text at the BOTTOM of the card carefully. Find the EXACT match in the valid names list for that card type. The name is usually 2-4 words.
 
-3. NEVER INVENT NAMES: If you cannot read the text clearly, pick the most likely match from the valid list based on the card's appearance. Every name you return MUST exist in the valid list above.
+3. NEVER INVENT NAMES: You MUST return a name exactly as it appears in the valid list. Do not:
+   - Add words (e.g., "Mk II", "Advanced")
+   - Change spelling
+   - Combine words from different cards
+   - Guess names that sound similar
+   If unsure, return your best match from the list with lower confidence.
 
 4. bbox: normalized [0-1] coordinates for each card's position
 
