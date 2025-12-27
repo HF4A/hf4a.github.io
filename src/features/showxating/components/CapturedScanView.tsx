@@ -8,7 +8,7 @@
  * The card detail modal includes a [RESCAN] button for correction flow.
  */
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { motion, PanInfo, AnimatePresence } from 'framer-motion';
 import { useShowxatingStore, IdentifiedCard, ScanViewMode } from '../store/showxatingStore';
 import { useCorrectionsStore, ManualCorrection } from '../store/correctionsStore';
@@ -556,13 +556,20 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
 
-  // Find the related card (opposite side)
-  const relatedCard = cards.find(
-    (c) =>
-      c.relatedCards?.promotedSide === card.id ||
-      card.relatedCards?.promotedSide === c.id ||
-      (c.cardGroupId === card.cardGroupId && c.id !== card.id)
-  );
+  // Find the related card (opposite side) by looking up filenames in relatedCards
+  // relatedCards maps side colors to filenames: { "white": "file.png", "black": "file.png" }
+  const relatedCard = useMemo(() => {
+    if (!card.relatedCards) return null;
+
+    const relatedFilenames = Object.values(card.relatedCards);
+    for (const filename of relatedFilenames) {
+      // Normalize extension (.png in relatedCards, .webp in actual data)
+      const normalizedFilename = filename.replace('.png', '.webp');
+      const related = cards.find((c) => c.filename === normalizedFilename);
+      if (related) return related;
+    }
+    return null;
+  }, [card, cards]);
 
   const displayCard = isFlipped && relatedCard ? relatedCard : card;
   const canFlip = !!relatedCard;

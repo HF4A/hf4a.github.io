@@ -50,7 +50,8 @@
 //   0.5.11 - Fix: API is sole source of truth (remove broken OpenCV merge), add scan architecture docs
 //   0.5.12 - "Unknown {Type}" tiles: display API-returned type for unmatched cards, auto-filter correction picker
 //   0.5.13 - Feedback system: Report Issue modal, diagnostics upload to R2, fix grid aspect ratio, simplify info badge
-export const APP_VERSION = '0.5.13';
+//   0.5.14 - Fix card flip in detail views (was showing wrong card due to filename extension mismatch)
+export const APP_VERSION = '0.5.14';
 export const BUILD_DATE = '2025-12-27';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

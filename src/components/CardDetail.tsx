@@ -93,7 +93,9 @@ export function CardDetail() {
     if (cardVariants.length === 1 && cardVariants[0].relatedCards) {
       const relatedFilenames = Object.values(cardVariants[0].relatedCards);
       for (const filename of relatedFilenames) {
-        const related = cards.find((c) => c.filename === filename);
+        // Normalize extension (.png in relatedCards, .webp in actual data)
+        const normalizedFilename = filename.replace('.png', '.webp');
+        const related = cards.find((c) => c.filename === normalizedFilename);
         if (related?.side?.toLowerCase() === 'white') {
           white = related;
         } else if (related?.side) {
@@ -112,7 +114,11 @@ export function CardDetail() {
   const relatedCards = useMemo(() => {
     if (!card?.relatedCards) return undefined;
     return Object.values(card.relatedCards)
-      .map((filename) => cards.find((c) => c.filename === filename))
+      .map((filename) => {
+        // Normalize extension (.png in relatedCards, .webp in actual data)
+        const normalizedFilename = filename.replace('.png', '.webp');
+        return cards.find((c) => c.filename === normalizedFilename);
+      })
       .filter((c): c is Card => c !== undefined);
   }, [card, cards]);
 
