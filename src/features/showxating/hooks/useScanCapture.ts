@@ -12,7 +12,7 @@
  */
 
 import { useCallback, useRef } from 'react';
-import { useShowxatingStore, IdentifiedCard, CapturedScan, Point } from '../store/showxatingStore';
+import { useShowxatingStore, IdentifiedCard, CapturedScan } from '../store/showxatingStore';
 import { useCardStore } from '../../../store/cardStore';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { cloudScanner } from '../../../services/cloudScanner';
@@ -23,264 +23,14 @@ import { log } from '../../../store/logsStore';
 import type { Card } from '../../../types/card';
 
 /**
- * Grid-based merge of cloud-identified cards with OpenCV-detected bboxes.
+ * IMPORTANT: API results are the SOLE source of truth for card identification and grid layout.
  *
- * PRINCIPLE: OpenCV is source of truth for POSITION, Cloud is source of truth for IDENTIFICATION.
+ * OpenCV detection is ONLY used as a visual placeholder while the API call is in progress.
+ * When the API returns results, OpenCV detections are completely discarded.
  *
- * Strategy: GRID-BASED MATCHING
- * 1. Detect grid structure from OpenCV bbox centers (cluster into rows/columns)
- * 2. Assign each OpenCV bbox to a (row, col) grid cell
- * 3. Detect grid structure from cloud bbox centers (same clustering approach)
- * 4. Assign each cloud card to a (row, col) grid cell
- * 5. Merge by matching grid cells - cloud ID + OpenCV position
- *
- * KEY INSIGHT: Even if cloud bbox positions are absolutely wrong, they may preserve
- * RELATIVE ordering. We use centroid-based clustering in both coordinate spaces
- * independently, then match by (row, col) - not by absolute position or array index.
+ * This prevents complex merge logic that can lose API-identified cards when grid cell
+ * detection doesn't align perfectly between OpenCV and API coordinate spaces.
  */
-
-interface GridCell {
-  row: number;
-  col: number;
-}
-
-interface GridStructure {
-  rowBoundaries: number[];  // Y values that separate rows
-  colBoundaries: number[];  // X values that separate columns
-  rowCentroids: number[];   // Y centroid for each row
-  colCentroids: number[];   // X centroid for each column
-  numRows: number;
-  numCols: number;
-}
-
-/**
- * Detect grid structure from a set of center points.
- * Uses gap detection to cluster Y values into rows and X values into columns.
- */
-function detectGridStructure(centers: Point[], avgSize: number): GridStructure {
-  if (centers.length === 0) {
-    return { rowBoundaries: [], colBoundaries: [], rowCentroids: [], colCentroids: [], numRows: 0, numCols: 0 };
-  }
-
-  if (centers.length === 1) {
-    return {
-      rowBoundaries: [],
-      colBoundaries: [],
-      rowCentroids: [centers[0].y],
-      colCentroids: [centers[0].x],
-      numRows: 1,
-      numCols: 1
-    };
-  }
-
-  const gapThreshold = avgSize * 0.5;
-
-  // Cluster Y values into rows
-  const sortedByY = [...centers].sort((a, b) => a.y - b.y);
-  const rowGroups: Point[][] = [[sortedByY[0]]];
-  const rowBoundaries: number[] = [];
-
-  for (let i = 1; i < sortedByY.length; i++) {
-    const gap = sortedByY[i].y - sortedByY[i - 1].y;
-    if (gap > gapThreshold) {
-      rowBoundaries.push((sortedByY[i].y + sortedByY[i - 1].y) / 2);
-      rowGroups.push([sortedByY[i]]);
-    } else {
-      rowGroups[rowGroups.length - 1].push(sortedByY[i]);
-    }
-  }
-
-  // Calculate row centroids
-  const rowCentroids = rowGroups.map(group =>
-    group.reduce((sum, p) => sum + p.y, 0) / group.length
-  );
-
-  // Cluster X values into columns
-  const sortedByX = [...centers].sort((a, b) => a.x - b.x);
-  const colGroups: Point[][] = [[sortedByX[0]]];
-  const colBoundaries: number[] = [];
-
-  for (let i = 1; i < sortedByX.length; i++) {
-    const gap = sortedByX[i].x - sortedByX[i - 1].x;
-    if (gap > gapThreshold) {
-      colBoundaries.push((sortedByX[i].x + sortedByX[i - 1].x) / 2);
-      colGroups.push([sortedByX[i]]);
-    } else {
-      colGroups[colGroups.length - 1].push(sortedByX[i]);
-    }
-  }
-
-  // Calculate column centroids
-  const colCentroids = colGroups.map(group =>
-    group.reduce((sum, p) => sum + p.x, 0) / group.length
-  );
-
-  return {
-    rowBoundaries,
-    colBoundaries,
-    rowCentroids,
-    colCentroids,
-    numRows: rowGroups.length,
-    numCols: colGroups.length
-  };
-}
-
-/**
- * Assign a center point to a grid cell based on the grid structure.
- */
-function assignToGridCell(center: Point, grid: GridStructure): GridCell {
-  // Find row by comparing Y to row boundaries
-  let row = 0;
-  for (let i = 0; i < grid.rowBoundaries.length; i++) {
-    if (center.y > grid.rowBoundaries[i]) {
-      row = i + 1;
-    }
-  }
-
-  // Find column by comparing X to column boundaries
-  let col = 0;
-  for (let i = 0; i < grid.colBoundaries.length; i++) {
-    if (center.x > grid.colBoundaries[i]) {
-      col = i + 1;
-    }
-  }
-
-  return { row, col };
-}
-
-/**
- * Create a string key for a grid cell (for Map lookup)
- */
-function cellKey(cell: GridCell): string {
-  return `${cell.row},${cell.col}`;
-}
-
-function mergeCloudWithOpenCV(
-  cloudCards: IdentifiedCard[],
-  opencvCorners: Point[][],
-  defaultScanResult: string
-): IdentifiedCard[] {
-  // If no OpenCV corners, return cloud cards as fallback (positions may be wrong)
-  if (opencvCorners.length === 0) {
-    console.log('[GridMerge] No OpenCV corners, using cloud bboxes (fallback)');
-    return cloudCards;
-  }
-
-  const getCenter = (corners: Point[]) => ({
-    x: corners.reduce((sum, p) => sum + p.x, 0) / corners.length,
-    y: corners.reduce((sum, p) => sum + p.y, 0) / corners.length,
-  });
-
-  const getBounds = (corners: Point[]) => ({
-    minX: Math.min(...corners.map(p => p.x)),
-    maxX: Math.max(...corners.map(p => p.x)),
-    minY: Math.min(...corners.map(p => p.y)),
-    maxY: Math.max(...corners.map(p => p.y)),
-  });
-
-  // Calculate average bbox size for gap threshold
-  const avgSize = opencvCorners.reduce((sum, corners) => {
-    const bounds = getBounds(corners);
-    return sum + ((bounds.maxY - bounds.minY) + (bounds.maxX - bounds.minX)) / 2;
-  }, 0) / opencvCorners.length;
-
-  // Calculate centers for OpenCV bboxes
-  const opencvCenters = opencvCorners.map(corners => getCenter(corners));
-
-  // Step 1: Detect grid structure from OpenCV (source of truth)
-  const opencvGrid = detectGridStructure(opencvCenters, avgSize);
-  console.log(`[GridMerge] OpenCV grid: ${opencvGrid.numRows}×${opencvGrid.numCols}`);
-  console.log(`[GridMerge] Row centroids: [${opencvGrid.rowCentroids.map(y => Math.round(y)).join(', ')}]`);
-  console.log(`[GridMerge] Col centroids: [${opencvGrid.colCentroids.map(x => Math.round(x)).join(', ')}]`);
-
-  // Step 2: Assign OpenCV bboxes to grid cells
-  const opencvByCell = new Map<string, { corners: Point[]; center: Point }>();
-  opencvCorners.forEach((corners, i) => {
-    const center = opencvCenters[i];
-    const cell = assignToGridCell(center, opencvGrid);
-    const key = cellKey(cell);
-    opencvByCell.set(key, { corners, center });
-    console.log(`[GridMerge] OpenCV[${i}] center:(${Math.round(center.x)},${Math.round(center.y)}) → cell(${cell.row},${cell.col})`);
-  });
-
-  // Step 3: Detect grid structure from cloud cards (using same approach)
-  const cloudCenters = cloudCards.map(card => getCenter(card.corners));
-
-  // Use cloud's own coordinate space for clustering
-  const cloudAvgSize = cloudCards.length > 0 ? cloudCards.reduce((sum, card) => {
-    const bounds = getBounds(card.corners);
-    return sum + ((bounds.maxY - bounds.minY) + (bounds.maxX - bounds.minX)) / 2;
-  }, 0) / cloudCards.length : avgSize;
-
-  const cloudGrid = detectGridStructure(cloudCenters, cloudAvgSize);
-  console.log(`[GridMerge] Cloud grid: ${cloudGrid.numRows}×${cloudGrid.numCols}`);
-
-  // Step 4: Assign cloud cards to grid cells
-  const cloudByCell = new Map<string, IdentifiedCard>();
-  cloudCards.forEach((card, i) => {
-    const center = cloudCenters[i];
-    const cell = assignToGridCell(center, cloudGrid);
-    const key = cellKey(cell);
-    cloudByCell.set(key, card);
-    console.log(`[GridMerge] Cloud[${i}] ${card.cardId} center:(${Math.round(center.x)},${Math.round(center.y)}) → cell(${cell.row},${cell.col})`);
-  });
-
-  // Check for grid dimension mismatch
-  if (opencvGrid.numRows !== cloudGrid.numRows || opencvGrid.numCols !== cloudGrid.numCols) {
-    console.warn(`[GridMerge] Grid dimension mismatch! OpenCV: ${opencvGrid.numRows}×${opencvGrid.numCols}, Cloud: ${cloudGrid.numRows}×${cloudGrid.numCols}`);
-  }
-
-  // Step 5: Merge - CLOUD IS SOURCE OF TRUTH
-  // Iterate over cloud cards (not OpenCV) to ensure all API results are included
-  const mergedCards: IdentifiedCard[] = [];
-  let improvedCount = 0;
-  let usedApiBoxCount = 0;
-
-  console.log('[GridMerge] Merging (cloud-first):');
-  cloudByCell.forEach((cloudCard, key) => {
-    const opencv = opencvByCell.get(key);
-
-    if (opencv) {
-      // Match found: use cloud ID + better OpenCV position
-      console.log(`  cell(${key}): cloud:${cloudCard.cardId} ← improved by opencv:(${Math.round(opencv.center.x)},${Math.round(opencv.center.y)})`);
-      mergedCards.push({
-        ...cloudCard,
-        corners: opencv.corners,
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-      improvedCount++;
-    } else {
-      // No OpenCV match - use cloud's own bbox (API results are truth)
-      console.log(`  cell(${key}): cloud:${cloudCard.cardId} ← using API bbox`);
-      mergedCards.push({
-        ...cloudCard,
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-      usedApiBoxCount++;
-    }
-  });
-
-  // Add any OpenCV-only detections as unknown cards
-  let unknownCount = 0;
-  opencvByCell.forEach((opencv, key) => {
-    if (!cloudByCell.has(key)) {
-      console.log(`  cell(${key}): opencv-only → unknown`);
-      mergedCards.push({
-        cardId: 'unknown',
-        filename: '',
-        side: null,
-        confidence: 0.5,
-        corners: opencv.corners,
-        showingOpposite: defaultScanResult === 'opposite',
-      });
-      unknownCount++;
-    }
-  });
-
-  console.log(`[GridMerge] Summary: cloud:${cloudCards.length} opencv:${opencvCorners.length} improved:${improvedCount} api-bbox:${usedApiBoxCount} unknown:${unknownCount}`);
-
-  return mergedCards;
-}
 
 interface UseScanCaptureOptions {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -602,24 +352,24 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
       // Phase 4: Send to cloud in background (if authenticated)
       if (authService.hasCredentials()) {
         // Run cloud processing asynchronously (don't await)
-        // Keep OpenCV bboxes, only use cloud for card identification
-        const opencvCorners = placeholderCards.map(c => c.corners);
+        // IMPORTANT: API results are the SOLE source of truth - OpenCV is only placeholder
+        const opencvCount = placeholderCards.length;
         (async () => {
           try {
             console.log('[useScanCapture] Starting cloud scan for', scanId);
             const cloudResult = await scanWithCloud(canvas);
 
             if (cloudResult.cards.length > 0) {
-              // Phase 5: Merge cloud IDs with OpenCV bboxes
-              // Cloud API bboxes are unreliable - use OpenCV corners instead
-              const mergedCards = mergeCloudWithOpenCV(cloudResult.cards, opencvCorners, defaultScanResult);
-              console.log('[useScanCapture] Cloud identified', cloudResult.cards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
+              // Phase 5: Use cloud results directly (API is source of truth)
+              // OpenCV detections are completely discarded - they were only placeholders
+              console.log('[useScanCapture] API identified', cloudResult.cards.length, 'cards');
+              console.log('[useScanCapture] Discarding', opencvCount, 'OpenCV placeholders - API is source of truth');
               console.log('[useScanCapture] Storing grid dimensions:', { rows: cloudResult.gridRows, cols: cloudResult.gridCols });
               updateScanCards(
                 scanId,
-                mergedCards,
+                cloudResult.cards,  // Use API cards directly, not merged
                 false,
-                { opencv: opencvCorners.length, api: cloudResult.cards.length },
+                { opencv: opencvCount, api: cloudResult.cards.length },
                 { rows: cloudResult.gridRows, cols: cloudResult.gridCols }
               );
             } else {
