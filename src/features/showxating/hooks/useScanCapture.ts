@@ -229,27 +229,41 @@ function mergeCloudWithOpenCV(
     console.warn(`[GridMerge] Grid dimension mismatch! OpenCV: ${opencvGrid.numRows}×${opencvGrid.numCols}, Cloud: ${cloudGrid.numRows}×${cloudGrid.numCols}`);
   }
 
-  // Step 5: Merge by matching grid cells
+  // Step 5: Merge - CLOUD IS SOURCE OF TRUTH
+  // Iterate over cloud cards (not OpenCV) to ensure all API results are included
   const mergedCards: IdentifiedCard[] = [];
-  let matchedCount = 0;
-  let unmatchedCount = 0;
+  let improvedCount = 0;
+  let usedApiBoxCount = 0;
 
-  console.log('[GridMerge] Merging by grid cell:');
-  opencvByCell.forEach((opencv, key) => {
-    const cloudCard = cloudByCell.get(key);
+  console.log('[GridMerge] Merging (cloud-first):');
+  cloudByCell.forEach((cloudCard, key) => {
+    const opencv = opencvByCell.get(key);
 
-    if (cloudCard) {
-      // Match found: use cloud ID + OpenCV position
-      console.log(`  cell(${key}): opencv:(${Math.round(opencv.center.x)},${Math.round(opencv.center.y)}) ← cloud:${cloudCard.cardId}`);
+    if (opencv) {
+      // Match found: use cloud ID + better OpenCV position
+      console.log(`  cell(${key}): cloud:${cloudCard.cardId} ← improved by opencv:(${Math.round(opencv.center.x)},${Math.round(opencv.center.y)})`);
       mergedCards.push({
         ...cloudCard,
         corners: opencv.corners,
         showingOpposite: defaultScanResult === 'opposite',
       });
-      matchedCount++;
+      improvedCount++;
     } else {
-      // No cloud match for this OpenCV bbox
-      console.log(`  cell(${key}): opencv:(${Math.round(opencv.center.x)},${Math.round(opencv.center.y)}) ← unknown (no cloud match)`);
+      // No OpenCV match - use cloud's own bbox (API results are truth)
+      console.log(`  cell(${key}): cloud:${cloudCard.cardId} ← using API bbox`);
+      mergedCards.push({
+        ...cloudCard,
+        showingOpposite: defaultScanResult === 'opposite',
+      });
+      usedApiBoxCount++;
+    }
+  });
+
+  // Add any OpenCV-only detections as unknown cards
+  let unknownCount = 0;
+  opencvByCell.forEach((opencv, key) => {
+    if (!cloudByCell.has(key)) {
+      console.log(`  cell(${key}): opencv-only → unknown`);
       mergedCards.push({
         cardId: 'unknown',
         filename: '',
@@ -258,22 +272,11 @@ function mergeCloudWithOpenCV(
         corners: opencv.corners,
         showingOpposite: defaultScanResult === 'opposite',
       });
-      unmatchedCount++;
+      unknownCount++;
     }
   });
 
-  // Log any cloud cards that didn't match an OpenCV bbox
-  const unmatchedCloud: string[] = [];
-  cloudByCell.forEach((card, key) => {
-    if (!opencvByCell.has(key)) {
-      unmatchedCloud.push(`${card.cardId}@cell(${key})`);
-    }
-  });
-  if (unmatchedCloud.length > 0) {
-    console.log(`[GridMerge] Unmatched cloud cards (dropped): ${unmatchedCloud.join(', ')}`);
-  }
-
-  console.log(`[GridMerge] Summary: opencv:${opencvCorners.length} cloud:${cloudCards.length} matched:${matchedCount} unmatched:${unmatchedCount} dropped:${unmatchedCloud.length}`);
+  console.log(`[GridMerge] Summary: cloud:${cloudCards.length} opencv:${opencvCorners.length} improved:${improvedCount} api-bbox:${usedApiBoxCount} unknown:${unknownCount}`);
 
   return mergedCards;
 }
