@@ -518,6 +518,7 @@ interface CardDetailModalProps {
 function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
   const { cards } = useCardStore();
   const [isFlipped, setIsFlipped] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
 
@@ -550,7 +551,10 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
       else if (offset.y > SWIPE_THRESHOLD || velocity.y > VELOCITY_THRESHOLD) {
         onClose();
       }
-      // Vertical swipe up could show metadata (future)
+      // Vertical swipe up = show metadata
+      else if (offset.y < -SWIPE_THRESHOLD || velocity.y < -VELOCITY_THRESHOLD) {
+        setShowInfo(true);
+      }
 
       setDragX(0);
       setDragY(0);
@@ -558,21 +562,28 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
     [canFlip, isFlipped, onClose]
   );
 
-  // Close on escape key
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        if (showInfo) {
+          setShowInfo(false);
+        } else {
+          onClose();
+        }
       } else if (e.key === ' ' || e.key === 'f') {
         if (canFlip) {
           e.preventDefault();
           setIsFlipped(!isFlipped);
         }
+      } else if (e.key === 'i') {
+        e.preventDefault();
+        setShowInfo(!showInfo);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose, canFlip, isFlipped]);
+  }, [onClose, canFlip, isFlipped, showInfo]);
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col">
@@ -589,17 +600,32 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
         >
           ← CLOSE
         </button>
-        <button
-          onClick={onRescan}
-          className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
-          style={{
-            borderColor: 'var(--showxating-cyan)',
-            color: 'var(--showxating-cyan)',
-            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
-          }}
-        >
-          RESCAN
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowInfo(!showInfo)}
+            className={`px-3 py-1 text-xs tracking-wider uppercase border transition-colors ${
+              showInfo ? 'bg-[var(--showxating-gold)]' : ''
+            }`}
+            style={{
+              borderColor: showInfo ? 'var(--showxating-gold)' : 'var(--showxating-gold-dim)',
+              color: showInfo ? '#0a0a0f' : 'var(--showxating-gold)',
+              fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+            }}
+          >
+            INFO
+          </button>
+          <button
+            onClick={onRescan}
+            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
+            style={{
+              borderColor: 'var(--showxating-cyan)',
+              color: 'var(--showxating-cyan)',
+              fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+            }}
+          >
+            RESCAN
+          </button>
+        </div>
       </header>
 
       {/* Card image with swipe gestures */}
@@ -667,7 +693,238 @@ function CardDetailModal({ card, onClose, onRescan }: CardDetailModalProps) {
             ← SWIPE TO FLIP →
           </p>
         )}
+        <p
+          className="text-[10px] tracking-wider uppercase mt-1"
+          style={{ color: 'var(--showxating-gold-dim)', opacity: 0.6 }}
+        >
+          ↑ SWIPE UP FOR INFO
+        </p>
       </footer>
+
+      {/* Info Panel Overlay */}
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0, y: '100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="fixed inset-0 z-[110] bg-black overflow-y-auto"
+          >
+            <ScanInfoPanel
+              card={displayCard}
+              onClose={() => setShowInfo(false)}
+              cards={cards}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/**
+ * ScanInfoPanel - Card metadata panel for scan mode
+ * Styled consistently with showxating theme
+ */
+interface ScanInfoPanelProps {
+  card: Card;
+  onClose: () => void;
+  cards: Card[];
+}
+
+function ScanInfoPanel({ card, onClose, cards }: ScanInfoPanelProps) {
+  const displayName = card.ocr?.name || card.name || 'Unknown Card';
+
+  // Find related cards
+  const relatedCards = card.relatedCards
+    ? Object.values(card.relatedCards)
+        .map((filename) => cards.find((c) => c.filename === filename))
+        .filter((c): c is Card => c !== undefined)
+    : undefined;
+
+  return (
+    <div
+      className="min-h-screen"
+      style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
+    >
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-black border-b border-[var(--showxating-gold-dim)]">
+        <div className="flex items-center justify-between px-4 py-3">
+          <button
+            onClick={onClose}
+            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
+            style={{
+              borderColor: 'var(--showxating-gold-dim)',
+              color: 'var(--showxating-gold)',
+            }}
+          >
+            ← CLOSE
+          </button>
+          <div />
+        </div>
+        <div className="px-4 pb-3">
+          <h1
+            className="text-lg tracking-wider uppercase"
+            style={{ color: 'var(--showxating-gold)' }}
+          >
+            {displayName}
+          </h1>
+        </div>
+      </header>
+
+      {/* Content */}
+      <div className="p-4 space-y-6">
+        {/* Type & Spectral */}
+        <div className="flex flex-wrap gap-2">
+          <span
+            className="px-3 py-1 text-xs tracking-wider uppercase border"
+            style={{
+              backgroundColor: 'var(--showxating-gold)',
+              color: '#0a0a0f',
+              borderColor: 'var(--showxating-gold)',
+            }}
+          >
+            {card.type.toUpperCase()}
+          </span>
+          {card.side && (
+            <span
+              className="px-3 py-1 text-xs tracking-wider uppercase border"
+              style={{
+                borderColor: 'var(--showxating-gold-dim)',
+                color: 'var(--showxating-gold-dim)',
+              }}
+            >
+              {card.side.toUpperCase()}
+            </span>
+          )}
+          {card.ocr?.spectralType && (
+            <span
+              className="px-3 py-1 text-xs tracking-wider uppercase border"
+              style={{
+                borderColor: 'var(--showxating-cyan)',
+                color: 'var(--showxating-cyan)',
+              }}
+            >
+              SPECTRAL {card.ocr.spectralType}
+            </span>
+          )}
+        </div>
+
+        {/* Description */}
+        {card.ocr?.description && (
+          <div>
+            <h2
+              className="text-xs tracking-wider uppercase mb-2"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              Description
+            </h2>
+            <p style={{ color: '#c0c0d0' }} className="leading-relaxed text-sm">
+              {card.ocr.description}
+            </p>
+          </div>
+        )}
+
+        {/* Stats */}
+        {card.ocr?.stats && (
+          <div>
+            <h2
+              className="text-xs tracking-wider uppercase mb-2"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              Stats
+            </h2>
+            <div className="grid grid-cols-3 gap-2">
+              {Object.entries(card.ocr.stats)
+                .filter(([key, value]) => value !== null && value !== undefined && !['lightSideMass', 'lightSideRadHard', 'lightSideTherms', 'heavySideMass', 'heavySideRadHard', 'heavySideTherms'].includes(key))
+                .slice(0, 6)
+                .map(([key, value]) => (
+                  <div
+                    key={key}
+                    className="p-2 text-center border"
+                    style={{
+                      borderColor: 'var(--showxating-gold-dim)',
+                      backgroundColor: '#1a1a2f',
+                    }}
+                  >
+                    <div className="text-[10px] uppercase" style={{ color: 'var(--showxating-gold-dim)' }}>
+                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                    </div>
+                    <div className="text-sm font-bold" style={{ color: 'var(--showxating-gold)' }}>
+                      {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value)}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Ability */}
+        {card.ocr?.ability && (
+          <div>
+            <h2
+              className="text-xs tracking-wider uppercase mb-2"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              Ability
+            </h2>
+            <p
+              className="leading-relaxed p-3 border text-sm"
+              style={{
+                borderColor: 'var(--showxating-gold-dim)',
+                backgroundColor: '#1a1a2f',
+                color: '#c0c0d0',
+              }}
+            >
+              {card.ocr.ability}
+            </p>
+          </div>
+        )}
+
+        {/* Related Cards */}
+        {relatedCards && relatedCards.length > 0 && (
+          <div>
+            <h2
+              className="text-xs tracking-wider uppercase mb-2"
+              style={{ color: 'var(--showxating-gold-dim)' }}
+            >
+              Related Cards
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {relatedCards.map((related) => (
+                <span
+                  key={related.id}
+                  className="px-3 py-1 text-xs tracking-wider uppercase border"
+                  style={{
+                    borderColor: 'var(--showxating-gold-dim)',
+                    color: 'var(--showxating-gold-dim)',
+                  }}
+                >
+                  {related.ocr?.name || related.name || related.id}
+                  {related.side && ` (${related.side})`}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Report Issue */}
+        <div className="pt-4 border-t" style={{ borderColor: 'var(--showxating-gold-dim)' }}>
+          <a
+            href={`https://docs.google.com/forms/d/e/1FAIpQLSfG1ylpJXQVvn2Q3yEQQzEgD6e1nX-Tsgf6WxNVmaow1p2_kw/viewform?usp=pp_url&entry.325757878=${encodeURIComponent(displayName)}&entry.93108582=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-xs tracking-wider uppercase transition-colors"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Report Issue
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
