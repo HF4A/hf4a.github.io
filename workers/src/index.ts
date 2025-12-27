@@ -198,6 +198,36 @@ ${validNamesSection}
 Return ONLY valid JSON, no markdown.`;
 }
 
+/**
+ * Build a simple segmentation prompt - just detect card locations, no identification
+ */
+function buildSegmentPrompt(): string {
+  return `You are analyzing an image to find playing cards from a board game.
+
+Your task is ONLY to locate the cards - do NOT try to read or identify them.
+
+Return JSON:
+{
+  "gridRows": N,
+  "gridCols": M,
+  "cards": [
+    {
+      "bbox": [x1, y1, x2, y2],
+      "position": "row,col"
+    }
+  ]
+}
+
+Rules:
+- Count how many cards are visible
+- Determine the grid arrangement (e.g., 3x3, 2x2, 1x1)
+- For each card, return its bounding box as normalized [0-1] coordinates
+- position: "0,0" is top-left, "0,1" is top-middle, etc.
+- Cards are rectangular with colored banners at top
+- Return cards in reading order (left-to-right, top-to-bottom)
+- Return ONLY valid JSON, no markdown`;
+}
+
 const MODEL_MAP: Record<string, string> = {
   // GPT-4.1 family - RECOMMENDED (best accuracy + speed)
   'gpt41-mini': 'gpt-4.1-mini',
@@ -512,7 +542,134 @@ export default {
       }
     }
 
-    return jsonResponse({ error: 'Not found. Use POST /register or POST /scan' }, 404, corsHeaders);
+    // Segment endpoint - just detect card locations, no identification
+    if (url.pathname === '/segment') {
+      // Validate auth token
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return jsonResponse({
+          error: 'Missing or invalid Authorization header. Use Bearer token.'
+        }, 401, corsHeaders);
+      }
+
+      const token = authHeader.replace('Bearer ', '');
+      const tokenData = await env.HF4A_AUTH.get(`TOKEN:${token}`);
+
+      if (!tokenData) {
+        return jsonResponse({
+          error: 'Invalid or expired token. Please register your device.'
+        }, 401, corsHeaders);
+      }
+
+      try {
+        const body = await request.json() as ScanRequest;
+
+        if (!body.image) {
+          return jsonResponse({ error: 'Missing required field: image' }, 400, corsHeaders);
+        }
+
+        const model = env.DEFAULT_MODEL;
+        const isGpt4 = model.startsWith('gpt-4');
+
+        // Use simple segmentation prompt
+        const systemPrompt = buildSegmentPrompt();
+
+        const requestBody: Record<string, unknown> = {
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: body.image.startsWith('data:')
+                      ? body.image
+                      : `data:image/jpeg;base64,${body.image}`,
+                  },
+                },
+                {
+                  type: 'text',
+                  text: 'Find all the playing cards in this image and return their locations.',
+                },
+              ],
+            },
+          ],
+        };
+
+        if (isGpt4) {
+          requestBody.max_tokens = 1000;
+          requestBody.temperature = 0.1;
+        } else {
+          requestBody.max_completion_tokens = 2000;
+        }
+
+        const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!openaiResponse.ok) {
+          const errorText = await openaiResponse.text();
+          return jsonResponse({
+            success: false,
+            error: `OpenAI API error: ${openaiResponse.status}`,
+            latency_ms: Date.now() - startTime,
+          }, 502, corsHeaders);
+        }
+
+        const openaiResult = await openaiResponse.json() as {
+          choices: Array<{ message: { content: string | null } }>;
+          usage?: { prompt_tokens: number; completion_tokens: number };
+        };
+
+        const content = openaiResult.choices[0]?.message?.content;
+        if (!content) {
+          return jsonResponse({
+            success: false,
+            error: 'No content in response',
+            latency_ms: Date.now() - startTime,
+          }, 200, corsHeaders);
+        }
+
+        let parsed: { cards?: Array<{ bbox: number[]; position: string }>; gridRows?: number; gridCols?: number; error?: string };
+
+        try {
+          const jsonStr = content.replace(/```json\n?|\n?```/g, '').trim();
+          parsed = JSON.parse(jsonStr);
+        } catch (parseErr) {
+          parsed = { error: `Failed to parse: ${content.slice(0, 200)}` };
+        }
+
+        return jsonResponse({
+          success: !parsed.error && (parsed.cards?.length ?? 0) > 0,
+          cards: parsed.cards || [],
+          gridRows: parsed.gridRows,
+          gridCols: parsed.gridCols,
+          model_used: model,
+          tokens_used: openaiResult.usage ? {
+            input: openaiResult.usage.prompt_tokens,
+            output: openaiResult.usage.completion_tokens,
+          } : undefined,
+          latency_ms: Date.now() - startTime,
+          error: parsed.error,
+        }, 200, corsHeaders);
+
+      } catch (err) {
+        return jsonResponse({
+          success: false,
+          error: err instanceof Error ? err.message : 'Unknown error',
+          latency_ms: Date.now() - startTime,
+        }, 500, corsHeaders);
+      }
+    }
+
+    return jsonResponse({ error: 'Not found. Use POST /register, /scan, or /segment' }, 404, corsHeaders);
   },
 };
 
