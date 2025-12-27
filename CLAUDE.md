@@ -14,10 +14,22 @@
 - **Auth design**: See `docs/EVERGREEN-SPEC.md` → "Authentication: Invite Code Scheme"
 - **Rollback to local OCR**: `git checkout 59dfff3` (v0.3.9)
 
+## Versioning
+- **Display version**: `src/version.ts` → `APP_VERSION` (this is what users see)
+- **package.json version**: NOT displayed, only for npm
+- **MUST update `src/version.ts`** when releasing - includes changelog comments
+- Build hash is auto-generated from git commit
+
 ## Key Files
+- `src/version.ts` - **APP VERSION LIVES HERE** - update for every release
 - `vite.config.ts` - Build config, base URL must stay `/`
 - `src/types/card.ts` - Card type definitions with spreadsheet metadata
 - `scripts/import-spreadsheet.js` - Imports metadata from Google Sheets CSVs
+
+## Scan System Architecture
+- **Read first**: `docs/EVERGREEN-SPEC.md` → "Scan System Architecture"
+- **Critical principle**: API results are SOLE source of truth
+- OpenCV detection is ONLY a placeholder during API call - completely discarded when API returns
 
 ## Card Data
 - 370+ cards from High Frontier 4 All board game
