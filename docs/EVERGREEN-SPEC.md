@@ -350,14 +350,13 @@ Always prefer Phase A when available. API provides authoritative grid dimensions
 
 **Observation (2025-12-27):** API card **types** are 100% accurate, but **names** hallucinate ~50% of the time despite prompt engineering. Types are identified by colored header banner (visually distinct), names require OCR of small text.
 
-**Multi-Step Identification Flow:**
+**Current Implementation: Direct-to-Manual (v1)**
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
-│ STEP 1: Initial API Call                                                            │
+│ PHASE 4: CLOUD API CALL                                                             │
 │ - API returns N cards with {type, name, bbox, confidence}                           │
 │ - For each card, attempt findCardByName(name, type)                                 │
-│ - Track which cards matched vs failed                                               │
 └──────────────────────────────────────┬──────────────────────────────────────────────┘
                                        │
                     ┌──────────────────┴──────────────────┐
@@ -366,52 +365,61 @@ Always prefer Phase A when available. API provides authoritative grid dimensions
          ┌─────────────────────┐              ┌─────────────────────┐
          │ MATCHED             │              │ UNMATCHED           │
          │ - Display card      │              │ - Name not in DB    │
-         │ - Show confidence   │              │ - Type IS reliable  │
+         │   from catalog      │              │ - Type IS reliable  │
+         │ - Full card info    │              │ - Store apiType     │
          └─────────────────────┘              └──────────┬──────────┘
                                                          │
                                                          ▼
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│ STEP 2: Clarification API Call (per unmatched card)                                 │
-│ - Crop card region from original image using bbox                                   │
-│ - Send cropped image + constrained prompt:                                          │
-│   "This is a {type} card. The name MUST be one of: [list of {type} cards]"         │
-│ - API returns single best match from constrained list                               │
-└──────────────────────────────────────┬──────────────────────────────────────────────┘
-                                       │
-                    ┌──────────────────┴──────────────────┐
-                    │                                     │
-                    ▼                                     ▼
-         ┌─────────────────────┐              ┌─────────────────────┐
-         │ NOW MATCHED         │              │ STILL UNMATCHED     │
-         │ - Display card      │              │ - Show "Unknown     │
-         │ - Lower confidence  │              │   {Type}" tile      │
-         └─────────────────────┘              │ - Tap to manually   │
-                                              │   identify          │
+                                              ┌─────────────────────┐
+                                              │ "Unknown {Type}"    │
+                                              │ - Show cropped      │
+                                              │   card image        │
+                                              │ - Tap to identify   │
+                                              │   (type pre-filter) │
                                               └─────────────────────┘
 ```
 
 **"Unknown {Type}" Tile Behavior:**
-- Display: Cropped card image from scan with overlay text "Unknown Thruster" (etc.)
-- On tap: Opens card picker modal with type pre-filtered
+- Display: Cropped card image from scan with overlay "Unknown Thruster" (etc.)
+- On tap: Opens card picker modal with type pre-filtered (~24 options vs 370+)
 - User selects correct card → updates scan results
 - Correction logged for future model improvement (if telemetry tier permits)
-
-**API Cost Consideration:**
-- Step 2 calls are per-unmatched-card, potentially 1-9 additional calls
-- Use cheaper/faster model for Step 2 (gpt-4.1-nano: 2.5s, cheapest)
-- Crop tightly to reduce input tokens
-- Consider batching: send all unmatched crops in one call with numbered positions
-
-**Alternative: Skip Step 2**
-- Simpler implementation: go directly to "Unknown {Type}" state
-- Let user always manually identify failed matches
-- Trade-off: More user effort, but eliminates Step 2 API costs and latency
 
 **Implementation Notes:**
 - Store `apiReturnedType` on IdentifiedCard even when name doesn't match
 - `findCardByName()` should accept optional `type` filter parameter
-- Cropped images for Step 2 come from captured scan image, not live camera
-- Grid layout remains stable (from Step 1) even as individual cards resolve
+- Grid layout remains stable; only individual card content changes on manual ID
+- No additional API calls for unmatched cards (cost-efficient)
+
+### Future: Clarification API Call (Step 2)
+
+*Deferred - implement if manual correction rate is high*
+
+If telemetry shows users frequently manually correcting unmatched cards, consider adding an automated clarification step:
+
+```
+UNMATCHED card detected
+        │
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ STEP 2: Clarification API Call                                                      │
+│ - Crop card region from original image using bbox                                   │
+│ - Send cropped image + constrained prompt:                                          │
+│   "This is a {type} card. The name MUST be one of: [list of ~24 {type} cards]"     │
+│ - Use fast/cheap model (gpt-4.1-nano)                                               │
+│ - API returns single best match from constrained list                               │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Trigger criteria for implementation:**
+- Manual correction rate > 30% of scanned cards
+- Average cards per scan > 4 (batching becomes worthwhile)
+- User feedback requesting faster identification
+
+**Cost/latency considerations:**
+- Per-card calls: 1-9 additional calls × ~2.5s each
+- Batched approach: Single call with numbered crops, parse multi-card response
+- Budget: ~$0.001 per clarification call with nano model
 
 ### Diagnostics
 
