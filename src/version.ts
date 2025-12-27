@@ -41,7 +41,8 @@
 //   0.5.2 - Add detailed logging for card name matching diagnostics
 //   0.5.3 - Correction modal: pre-select type, show fronts only; diagnostics include grid info
 //   0.5.4 - Fix worker gridRows/gridCols parsing, add grid dimension logging
-export const APP_VERSION = '0.5.4';
+//   0.5.5 - Fix Mo/Li Heat Pipe relatedCards (was missing reverse side reference)
+export const APP_VERSION = '0.5.5';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

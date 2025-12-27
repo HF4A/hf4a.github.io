@@ -4859,7 +4859,10 @@
       "ability": null,
       "spectralType": "M"
     },
-    "imageDescription": "Molybdenum-lithium heat pipe radiator with high temperature capability."
+    "imageDescription": "Molybdenum-lithium heat pipe radiator with high temperature capability.",
+    "relatedCards": {
+      "black": "Radiator07-Black-TinDroplet.webp"
+    }
   },
   {
     "id": "radiator-07",
@@ -4874,7 +4877,7 @@
     },
     "imageDescription": "Drops of molten tin ejected into space cool before recovery, with a tin droplet generator, heat exchanger, pitot tube fluid collection, and centrifugal Sn collector.",
     "relatedCards": {
-      "white": "Radiator07-White-Mo:LiHeatPipe.png"
+      "white": "Radiator07-White-Mo-LiHeatPipe.webp"
     }
   },
   {
