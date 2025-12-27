@@ -3,6 +3,9 @@
  *
  * Accepts card images and identifies them using OpenAI Vision API (GPT-4.1-mini)
  * Authentication via invite code + device ID scheme
+ *
+ * Card names are dynamically fetched from https://hf4a.github.io/data/cards.json
+ * to ensure the prompt always has the current valid card list.
  */
 
 interface Env {
@@ -56,7 +59,103 @@ interface ScanResponse {
   error?: string;
 }
 
-const SYSTEM_PROMPT = `You are an expert at identifying cards from the board game "High Frontier 4 All" by Sierra Madre Games.
+// Card data from hf4a.github.io
+interface CardData {
+  id: string;
+  name: string;
+  type: string;
+  side?: string;
+  upgradeChain?: string[];
+}
+
+// Cache for card names (refreshed every 5 minutes)
+let cardNamesCache: { byType: Record<string, string[]>; types: string[]; fetchedAt: number } | null = null;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+/**
+ * Fetch card data from production site and extract front-side names grouped by type
+ */
+async function getCardNames(): Promise<{ byType: Record<string, string[]>; types: string[] }> {
+  // Return cached data if fresh
+  if (cardNamesCache && (Date.now() - cardNamesCache.fetchedAt) < CACHE_TTL_MS) {
+    return { byType: cardNamesCache.byType, types: cardNamesCache.types };
+  }
+
+  try {
+    const response = await fetch('https://hf4a.github.io/data/cards.json', {
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch cards.json:', response.status);
+      // Return cached data even if stale, or empty if no cache
+      if (cardNamesCache) return { byType: cardNamesCache.byType, types: cardNamesCache.types };
+      return { byType: {}, types: [] };
+    }
+
+    const cards: CardData[] = await response.json();
+
+    // Group names by type, front sides only
+    // Front side = where card.side matches upgradeChain[0] (the base/unpromoted side)
+    const byType: Record<string, Set<string>> = {};
+
+    for (const card of cards) {
+      if (!card.type || !card.name) continue;
+
+      // Determine if this is a front (base) side
+      // Cards with upgradeChain: front side is upgradeChain[0]
+      // Cards without upgradeChain: include them (single-sided cards)
+      const isFrontSide = !card.upgradeChain ||
+        card.upgradeChain.length === 0 ||
+        card.side === card.upgradeChain[0];
+
+      if (isFrontSide) {
+        if (!byType[card.type]) byType[card.type] = new Set();
+        byType[card.type].add(card.name);
+      }
+    }
+
+    // Convert Sets to sorted arrays
+    const result: Record<string, string[]> = {};
+    const types = Object.keys(byType).sort();
+
+    for (const type of types) {
+      result[type] = [...byType[type]].sort();
+    }
+
+    // Update cache
+    cardNamesCache = { byType: result, types, fetchedAt: Date.now() };
+    console.log(`Card names cache refreshed: ${Object.values(result).flat().length} cards across ${types.length} types`);
+
+    return { byType: result, types };
+  } catch (err) {
+    console.error('Error fetching card names:', err);
+    if (cardNamesCache) return { byType: cardNamesCache.byType, types: cardNamesCache.types };
+    return { byType: {}, types: [] };
+  }
+}
+
+/**
+ * Build the system prompt dynamically with current card names
+ */
+async function buildSystemPrompt(): Promise<string> {
+  const { byType, types } = await getCardNames();
+
+  // Build the valid names section
+  let validNamesSection = '';
+  if (types.length > 0) {
+    validNamesSection = '\nVALID CARD NAMES (you MUST use one of these exact names):\n\n';
+    for (const type of types) {
+      const names = byType[type];
+      if (names && names.length > 0) {
+        validNamesSection += `${type}: ${names.join(', ')}\n\n`;
+      }
+    }
+  }
+
+  const typesList = types.length > 0 ? types.join('|') : 'thruster|robonaut|refinery|reactor|radiator|generator|crew|freighter|bernal|colonist|gw-thruster';
+
+  return `You are an expert at identifying cards from the board game "High Frontier 4 All" by Sierra Madre Games.
 
 When shown an image of a card (or multiple cards), identify each card and return JSON:
 
@@ -65,7 +164,7 @@ When shown an image of a card (or multiple cards), identify each card and return
   "gridCols": 3,
   "cards": [
     {
-      "card_type": "thruster|robonaut|refinery|reactor|radiator|generator|crew|freighter|bernal|colonist|gw-thruster",
+      "card_type": "${typesList}",
       "card_name": "exact name from the VALID NAMES list below",
       "side": "white|black|blue|gold|purple",
       "confidence": 0.0-1.0,
@@ -73,21 +172,7 @@ When shown an image of a card (or multiple cards), identify each card and return
     }
   ]
 }
-
-VALID CARD NAMES (you MUST use one of these exact names):
-
-thruster: Ablative Nozzle, Ablative Plate, Colliding Beam H-B Fusion, De Laval Nozzle, Dual-Stage 4-Grid, Dumbo, Electric Sail, Hall Effect, Ion Drive, MPD T-wave, Mag Sail, Magnetic Nozzle, Mass Driver, Metastable Helium, Monatomic Plug Nozzle, Photon Heliogyro, Photon Kite Sail, Ponderomotive VASIMR, Pulsed Inductive, Pulsed Plasmoid, Re Solar Moth, Timberwind, Vortex Confined Nozzle, n-6Li Microfission
-
-generator: AMTEC Thermoelectric, Brayton Turbine, Buckyball C60 Photovoltaic, Cascade Photovoltaic, Cascade Thermoacoustic, Casimir Battery, Catalyzed Fission Scintillator, Diamonoid Electrodynamic Tether, Dusty Plasma MHD, Ericsson Engine, Flywheel Compulsator, Granular Rainbow Corral, H2-O2 Fuel Cell, In-core Thermionic, JTEC H2 Thermoelectric, MHD Open-Cycle, Magnetoshell Plasma Parachute, Marx Capacitor Bank, Microbial Fuel Cell, Nanocomposite Thermoelectric, Nuclear-pumped Excimer Flashlamp, O'Meara LSP Paralens, Optoelectric Nuclear Battery, Palmer LSP Aerosol Lens, Photon Tether Rectenna, Radioisotope Stirling, Rankine MHD, Rankine Multiphase, Rankine Solar Dynamic, Solar Stirling, Superconducting Adductor, Thermo-Photovoltaic, Triggered Decay Nuclear Battery, Z-pinch Microfission
-
-reactor: 3He-D Fusion Mirror Cell, Antimatter GDM, Cermet NERVA Fission, D-D Fusion Magneto-Inertial, D-T Fusion Tokamak, D-T Gun Fusion, Fission-augmented D-T Inertial Fusion, Free Radical Hydrogen Trap, H-6Li Fusor, H-B Fusion Reciprocating Plasmoid, Lyman Alpha Trap, Macron Blowpipe Fusion, Metallic Hydrogen, Mini-Mag RF Paul Trap, Pebble Bed Fission, Penning Trap, Positronium Bottle, Project Orion, Project Valkyrie, Pulsed NTR Fission, Rubbia Thin Film Fission Hohlraum, Supercritical Water Fission, Ultracold Neutrons, VCR Light Bulb Fission
-
-radiator: ANDR/In Dream Pipe, Bubble Membrane, Buckytube Filament, Curie Point, Dielectric X-ray Window, ETHER Charged Dust, Electrostatic Membrane, Flux-pinned Superthermal, Graphene Crystal X-ray Mirror, Hula-Hoop, Li Heatsink Fountain, Magnetocaloric Refrigerator, Marangoni Flow, Microtube Array, Mo/Li Heat Pipe, Nuclear Fuel Spin Polarizer, Pulsating Heat Pipe, Qu Tube, SS/NaK Pumped Loop, Salt-cooled Reflux Tube, Steel/Pb-Bi Pumped Loop, Thermochemical Heatsink Fountain, Ti/K Heat Pipe, Tin Droplet
-
-refinery: Atmospheric Scoop, Atomic Layer Deposition, Basalt Fiber Spinning, Biophytolytic Algal Farm, CVD Molding, Carbo-Chlorination, Carbonyl Volatilization, Electroforming, Femtochemistry, Fluidized Bed, Foamglass Sintering, Froth Flotation, ISRU Sabatier, Ilmenite Semiconductor Film, Impact Mold Sinter, In-Situ Leaching, Ionosphere Lasing, Laser-heated Pedestal Growth, Magma Electrolysis, Solar Carbotherm, Solid Flame, Supercritical Drying, Termite Nest, Von Neumann Santa Claus Machine
-
-robonaut: Ablative Laser, Blackbody-pumped Laser, Cat Fusion Z-pinch Torch, D-D Inertial Fusion, Electrophoretic Sandworm, Fissile Aerosol Laser, Flywheel Tractor, Free Electron Laser, H-B Cat Inertial, Helical Railgun, Kuck Mosquito, Lorentz-Propelled Microprobe, MET Steamer, MITEE Arcjet, MagBeam, Nanobot, Neutral Beam, Nuclear Drill, Phase-Locked Diode Laser, Quantum Cascade Laser, Rock Splitter, Solar-pumped MHD Exciplex Laser, Tungsten Resistojet, Wakefield e-beam
-
+${validNamesSection}
 Rules:
 - gridRows/gridCols: the arrangement of cards in the image (e.g., 3x3 grid = 3 rows, 3 cols). Set to 1x1 for single card.
 - card_type: identified by colored banner at top of card (orange=thruster, red=generator, purple=reactor, blue=radiator, brown=refinery, magenta=robonaut)
@@ -97,6 +182,7 @@ Rules:
 - bbox: normalized coordinates [0-1] for top-left (x1,y1) and bottom-right (x2,y2) of each card
 - If you cannot match a card to a valid name, use your best guess from the list
 - Return ONLY valid JSON, no markdown or explanation`;
+}
 
 const MODEL_MAP: Record<string, string> = {
   // GPT-4.1 family - RECOMMENDED (best accuracy + speed)
@@ -289,11 +375,14 @@ export default {
         // Determine if GPT-4.x or GPT-5 (different API params)
         const isGpt4 = model.startsWith('gpt-4');
 
+        // Build system prompt with dynamic card names
+        const systemPrompt = await buildSystemPrompt();
+
         // Build request body based on model family
         const requestBody: Record<string, unknown> = {
           model,
           messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'system', content: systemPrompt },
             {
               role: 'user',
               content: [
