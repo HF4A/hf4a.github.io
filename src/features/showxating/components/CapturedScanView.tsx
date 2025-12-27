@@ -18,6 +18,7 @@ import { log } from '../../../store/logsStore';
 import { GridResultsView } from './GridResultsView';
 import { CardInfoPanel } from '../../../components/CardInfoPanel';
 import { ApiLogsModal } from './ApiLogsModal';
+import { submitFeedbackReport, isAvailable as isFeedbackAvailable } from '../../../services/feedbackService';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
@@ -265,6 +266,8 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
       {correctionData && scan && (
         <CorrectionModal
           identifiedCard={correctionData.card}
+          scanId={scan.id}
+          cardIndex={correctionData.cardIndex}
           scanImageDataUrl={scan.imageDataUrl}
           onSelect={(cardId) =>
             handleCorrectionSelect(cardId, correctionData.cardIndex, correctionData.card)
@@ -298,16 +301,9 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
         onClick={() => setShowApiLogs(true)}
         className="absolute top-4 left-4 bg-black/70 px-3 py-1.5 rounded flex flex-col gap-0.5 border border-transparent hover:border-[var(--showxating-cyan)] transition-colors cursor-pointer text-left"
       >
-        <span className="hud-text text-xs">
-          {scan.cards.length > 0
-            ? `${scan.cards.length} CARD${scan.cards.length > 1 ? 'S' : ''} DETECTED`
-            : 'NO CARDS DETECTED'}
+        <span className="hud-text hud-text-dim text-[10px]">
+          SCAN: {scan.apiCardCount ?? scan.cards.length} OBJECT{(scan.apiCardCount ?? scan.cards.length) !== 1 ? 'S' : ''}
         </span>
-        {scan.apiCardCount !== undefined && scan.apiCardCount > 0 && (
-          <span className="hud-text hud-text-dim text-[10px]">
-            SCAN: {scan.apiCardCount} OBJECT{scan.apiCardCount > 1 ? 'S' : ''}
-          </span>
-        )}
         <span className="hud-text text-[8px]" style={{ color: 'var(--showxating-cyan)' }}>
           TAP FOR LOGS
         </span>
@@ -800,6 +796,8 @@ function ScanInfoPanel({ card, cards }: ScanInfoPanelProps) {
  */
 interface CorrectionModalProps {
   identifiedCard: IdentifiedCard;
+  scanId: string;
+  cardIndex: number;
   scanImageDataUrl: string;
   onSelect: (cardId: string) => void;
   onClose: () => void;
@@ -807,6 +805,8 @@ interface CorrectionModalProps {
 
 function CorrectionModal({
   identifiedCard,
+  scanId,
+  cardIndex,
   scanImageDataUrl,
   onSelect,
   onClose,
@@ -819,6 +819,8 @@ function CorrectionModal({
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<CardType | 'all'>('all');
   const [typeInferred, setTypeInferred] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [selectedCorrectionId, setSelectedCorrectionId] = useState<string | null>(null);
   const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
 
   // Pre-select type filter from API-returned type (100% accurate)
@@ -959,6 +961,7 @@ function CorrectionModal({
       if (lastTapRef.current?.cardId === cardId && now - lastTapRef.current.time < 300) {
         // Double-tap - select this card
         log.correct(`Manual correction: selected ${cardId}`);
+        setSelectedCorrectionId(cardId);
         onSelect(cardId);
       } else {
         lastTapRef.current = { cardId, time: now };
@@ -1014,7 +1017,21 @@ function CorrectionModal({
         >
           IDENTIFY CARD
         </span>
-        <div style={{ width: 70 }} /> {/* Spacer for centering */}
+        {isFeedbackAvailable() ? (
+          <button
+            onClick={() => setShowReportModal(true)}
+            className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors"
+            style={{
+              borderColor: 'var(--showxating-cyan)',
+              color: 'var(--showxating-cyan)',
+              fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+            }}
+          >
+            REPORT
+          </button>
+        ) : (
+          <div style={{ width: 70 }} />
+        )}
       </header>
 
       {/* Two-panel layout */}
@@ -1229,6 +1246,277 @@ function CorrectionModal({
           </div>
         </div>
       </div>
+
+      {/* Report Issue Modal */}
+      <AnimatePresence>
+        {showReportModal && (
+          <ReportIssueModal
+            identifiedCard={identifiedCard}
+            scanId={scanId}
+            cardIndex={cardIndex}
+            croppedImage={croppedImage}
+            correctedCardId={selectedCorrectionId}
+            onClose={() => setShowReportModal(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+/**
+ * ReportIssueModal - Submit feedback about a card identification issue
+ */
+interface ReportIssueModalProps {
+  identifiedCard: IdentifiedCard;
+  scanId: string;
+  cardIndex: number;
+  croppedImage: string | null;
+  correctedCardId: string | null;
+  onClose: () => void;
+}
+
+function ReportIssueModal({
+  identifiedCard,
+  scanId,
+  cardIndex,
+  croppedImage,
+  correctedCardId,
+  onClose,
+}: ReportIssueModalProps) {
+  const { cards: catalogCards } = useCardStore();
+  const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Get card names for display
+  const originalCard = catalogCards.find((c) => c.id === identifiedCard.cardId);
+  const correctedCard = correctedCardId ? catalogCards.find((c) => c.id === correctedCardId) : null;
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage(null);
+
+    try {
+      const result = await submitFeedbackReport({
+        type: 'correction_report',
+        scanId,
+        cardIndex,
+        apiReturnedType: identifiedCard.apiReturnedType,
+        extractedText: identifiedCard.extractedText,
+        computedHash: identifiedCard.computedHash,
+        originalCardId: identifiedCard.cardId === 'unknown' ? undefined : identifiedCard.cardId,
+        originalConfidence: identifiedCard.confidence,
+        correctedCardId: correctedCardId || undefined,
+        topMatches: identifiedCard.topMatches,
+        userComment: comment.trim() || undefined,
+        croppedImage: croppedImage || undefined,
+      });
+
+      if (result.success) {
+        setSubmitStatus('success');
+        // Auto-close after brief success message
+        setTimeout(() => onClose(), 1500);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(result.error || 'Failed to submit report');
+      }
+    } catch (err) {
+      setSubmitStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Network error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[110] bg-black/95 flex flex-col"
+    >
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 py-3 border-b border-[var(--showxating-gold-dim)]">
+        <button
+          onClick={onClose}
+          disabled={isSubmitting}
+          className="px-3 py-1 text-xs tracking-wider uppercase border transition-colors disabled:opacity-50"
+          style={{
+            borderColor: 'var(--showxating-gold-dim)',
+            color: 'var(--showxating-gold)',
+            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          }}
+        >
+          ← CANCEL
+        </button>
+        <span
+          className="text-xs tracking-wider uppercase"
+          style={{
+            color: 'var(--showxating-gold)',
+            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          }}
+        >
+          REPORT AN ISSUE
+        </span>
+        <div style={{ width: 70 }} />
+      </header>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto p-4" style={{ touchAction: 'pan-y' }}>
+        {/* Status messages */}
+        {submitStatus === 'success' && (
+          <div className="mb-4 p-3 rounded border border-[var(--showxating-cyan)] bg-[var(--showxating-cyan)]/10">
+            <span
+              className="text-xs tracking-wider uppercase"
+              style={{ color: 'var(--showxating-cyan)' }}
+            >
+              ✓ REPORT SUBMITTED - THANK YOU!
+            </span>
+          </div>
+        )}
+        {submitStatus === 'error' && (
+          <div className="mb-4 p-3 rounded border border-red-500 bg-red-500/10">
+            <span className="text-xs tracking-wider uppercase text-red-400">
+              ERROR: {errorMessage}
+            </span>
+          </div>
+        )}
+
+        {/* Scanned image */}
+        <div className="mb-4">
+          <p
+            className="text-[10px] tracking-wider uppercase mb-2"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            WHAT THE SCANNER SAW:
+          </p>
+          {croppedImage ? (
+            <div
+              className="w-32 h-44 rounded overflow-hidden border mx-auto"
+              style={{ borderColor: 'var(--showxating-gold-dim)' }}
+            >
+              <img
+                src={croppedImage}
+                alt="Scanned region"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div
+              className="w-32 h-44 rounded border mx-auto flex items-center justify-center"
+              style={{ borderColor: 'var(--showxating-gold-dim)' }}
+            >
+              <span className="hud-text hud-text-dim text-[10px]">NO IMAGE</span>
+            </div>
+          )}
+        </div>
+
+        {/* Detection details */}
+        <div className="space-y-3 mb-4">
+          {identifiedCard.apiReturnedType && (
+            <div className="flex justify-between items-center">
+              <span
+                className="text-[10px] tracking-wider uppercase"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                API DETECTED:
+              </span>
+              <span
+                className="text-xs tracking-wider uppercase"
+                style={{ color: 'var(--showxating-gold)' }}
+              >
+                {identifiedCard.apiReturnedType.toUpperCase()}
+              </span>
+            </div>
+          )}
+
+          {originalCard && identifiedCard.cardId !== 'unknown' && (
+            <div className="flex justify-between items-center">
+              <span
+                className="text-[10px] tracking-wider uppercase"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                ORIGINAL MATCH:
+              </span>
+              <span
+                className="text-xs tracking-wider uppercase"
+                style={{ color: 'var(--showxating-gold)' }}
+              >
+                {originalCard.ocr?.name || originalCard.name} ({Math.round(identifiedCard.confidence * 100)}%)
+              </span>
+            </div>
+          )}
+
+          {correctedCard && (
+            <div className="flex justify-between items-center">
+              <span
+                className="text-[10px] tracking-wider uppercase"
+                style={{ color: 'var(--showxating-gold-dim)' }}
+              >
+                YOUR CORRECTION:
+              </span>
+              <span
+                className="text-xs tracking-wider uppercase"
+                style={{ color: 'var(--showxating-cyan)' }}
+              >
+                {correctedCard.ocr?.name || correctedCard.name}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Comment field */}
+        <div className="mb-4">
+          <p
+            className="text-[10px] tracking-wider uppercase mb-2"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            WHAT WENT WRONG? (OPTIONAL)
+          </p>
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value.slice(0, 500))}
+            placeholder="e.g., The card name was hallucinated, it said 'Fissioned Engine' but that doesn't exist..."
+            rows={4}
+            className="w-full px-3 py-2 bg-black/50 border rounded text-sm resize-none"
+            style={{
+              borderColor: 'var(--showxating-gold-dim)',
+              color: 'var(--showxating-gold)',
+              fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+              fontSize: '16px', // Prevents iOS zoom
+            }}
+            disabled={isSubmitting}
+          />
+          <p
+            className="text-[10px] tracking-wider uppercase mt-1 text-right"
+            style={{ color: 'var(--showxating-gold-dim)' }}
+          >
+            {comment.length}/500
+          </p>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="px-4 py-3 border-t border-[var(--showxating-gold-dim)]">
+        <button
+          onClick={handleSubmit}
+          disabled={isSubmitting || submitStatus === 'success'}
+          className="w-full py-3 rounded border transition-colors disabled:opacity-50"
+          style={{
+            borderColor: 'var(--showxating-cyan)',
+            backgroundColor: isSubmitting ? 'transparent' : 'var(--showxating-cyan)',
+            color: isSubmitting ? 'var(--showxating-cyan)' : '#0a0a0f',
+            fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+          }}
+        >
+          <span className="text-xs tracking-wider uppercase">
+            {isSubmitting ? 'SUBMITTING...' : submitStatus === 'success' ? 'SUBMITTED!' : 'SUBMIT REPORT'}
+          </span>
+        </button>
+      </footer>
+    </motion.div>
   );
 }

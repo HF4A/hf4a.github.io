@@ -18,5 +18,12 @@ AUTH_SALT = "hf4a-salt-v1"
 binding = "HF4A_AUTH"
 id = "69e83e90df374e95aabc4b6564d28f29"
 
+# R2 bucket for feedback/diagnostics storage
+# Enable R2 in Cloudflare Dashboard first, then create bucket:
+#   wrangler r2 bucket create hf4a-feedback
+[[r2_buckets]]
+binding = "HF4A_FEEDBACK"
+bucket_name = "hf4a-feedback"
+
 [observability]
 enabled = true

@@ -5,7 +5,8 @@ import {
   CARD_TYPE_LABELS,
 } from '../store/settingsStore';
 import { useLogsStore } from '../store/logsStore';
-import { shareDiagnostics } from '../features/showxating/services/exportDiagnostics';
+import { shareDiagnostics, exportDiagnosticsZip } from '../features/showxating/services/exportDiagnostics';
+import { uploadDiagnostics, isAvailable as isFeedbackAvailable } from '../services/feedbackService';
 import { useScanSlotsStore } from '../features/showxating/store/showxatingStore';
 import { useCorrectionsStore } from '../features/showxating/store/correctionsStore';
 import { APP_VERSION, BUILD_DATE } from '../version';
@@ -26,6 +27,7 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showCardTypes, setShowCardTypes] = useState(false);
   const [showLogs, setShowLogs] = useState(false);
+  const [showDiagnosticsModal, setShowDiagnosticsModal] = useState(false);
 
   const handleFactoryReset = () => {
     localStorage.clear();
@@ -35,7 +37,17 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
   const slotOrder = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'] as const;
   const scansCount = slotOrder.filter((id) => scanSlots[id] !== null).length;
 
-  const handleSendDiagnostics = async () => {
+  const handleSendDiagnostics = () => {
+    // Show modal if feedback service is available, otherwise fall back to share
+    if (isFeedbackAvailable()) {
+      setShowDiagnosticsModal(true);
+    } else {
+      // Direct share/download when not authenticated
+      handleDirectShare();
+    }
+  };
+
+  const handleDirectShare = async () => {
     setIsExporting(true);
     try {
       await shareDiagnostics();
@@ -249,6 +261,15 @@ export function SysPanel({ isOpen, onClose }: SysPanelProps) {
 
       {/* Logs Viewer */}
       {showLogs && <LogViewer onClose={() => setShowLogs(false)} />}
+
+      {/* Diagnostics Upload Modal */}
+      {showDiagnosticsModal && (
+        <DiagnosticsUploadModal
+          onClose={() => setShowDiagnosticsModal(false)}
+          scansCount={scansCount}
+          correctionsCount={correctionsCount}
+        />
+      )}
     </>
   );
 }
@@ -411,6 +432,164 @@ function LogViewer({ onClose }: LogViewerProps) {
           style={{ color: '#505060', fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
         >
           {logs.length} ENTRIES • MAX 100
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface DiagnosticsUploadModalProps {
+  onClose: () => void;
+  scansCount: number;
+  correctionsCount: number;
+}
+
+function DiagnosticsUploadModal({ onClose, scansCount, correctionsCount }: DiagnosticsUploadModalProps) {
+  const [comment, setComment] = useState('');
+  const [status, setStatus] = useState<'idle' | 'uploading' | 'success' | 'error' | 'sharing'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleUpload = async () => {
+    setStatus('uploading');
+    setErrorMessage(null);
+
+    try {
+      const zipBlob = await exportDiagnosticsZip();
+      const result = await uploadDiagnostics(zipBlob, comment.trim() || undefined);
+
+      if (result.success) {
+        setStatus('success');
+        // Auto-close after brief success message
+        setTimeout(() => onClose(), 2000);
+      } else {
+        // Upload failed, try share fallback
+        console.warn('[DiagnosticsUpload] Upload failed, falling back to share:', result.error);
+        setStatus('sharing');
+        await shareDiagnostics();
+        onClose();
+      }
+    } catch (err) {
+      console.error('[DiagnosticsUpload] Error:', err);
+      setStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Unknown error');
+    }
+  };
+
+  const handleFallbackShare = async () => {
+    setStatus('sharing');
+    try {
+      await shareDiagnostics();
+      onClose();
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Share failed');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/90" onClick={onClose} />
+      <div
+        className="relative bg-[#0a0a0f] border border-[#d4a84b]/50 rounded-lg max-w-sm w-full"
+        style={{ fontFamily: "'Eurostile', 'Bank Gothic', sans-serif" }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[#d4a84b]/30">
+          <h3 className="text-sm tracking-wider uppercase" style={{ color: '#d4a84b' }}>
+            SEND DIAGNOSTICS
+          </h3>
+          <button
+            onClick={onClose}
+            disabled={status === 'uploading'}
+            className="text-xs tracking-wider uppercase disabled:opacity-50"
+            style={{ color: '#a08040' }}
+          >
+            CLOSE
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-4 space-y-4">
+          {/* Status messages */}
+          {status === 'success' && (
+            <div className="p-3 rounded border border-[#00d4ff] bg-[#00d4ff]/10">
+              <span className="text-xs tracking-wider uppercase" style={{ color: '#00d4ff' }}>
+                UPLOADED SUCCESSFULLY - THANK YOU!
+              </span>
+            </div>
+          )}
+          {status === 'error' && (
+            <div className="p-3 rounded border border-red-500 bg-red-500/10">
+              <span className="text-xs tracking-wider uppercase text-red-400">
+                ERROR: {errorMessage}
+              </span>
+            </div>
+          )}
+
+          {/* Summary */}
+          <div className="space-y-2 text-xs" style={{ color: '#a08040' }}>
+            <div className="flex justify-between">
+              <span>SCANS</span>
+              <span style={{ color: '#d4a84b' }}>{scansCount}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>CORRECTIONS</span>
+              <span style={{ color: '#d4a84b' }}>{correctionsCount}</span>
+            </div>
+          </div>
+
+          {/* Comment field */}
+          <div>
+            <label className="block text-[10px] tracking-wider uppercase mb-2" style={{ color: '#a08040' }}>
+              NOTES (OPTIONAL)
+            </label>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value.slice(0, 500))}
+              placeholder="Any context about what you were testing, issues encountered..."
+              rows={3}
+              className="w-full px-3 py-2 bg-black/50 border rounded text-sm resize-none"
+              style={{
+                borderColor: '#d4a84b50',
+                color: '#d4a84b',
+                fontFamily: "'Eurostile', 'Bank Gothic', sans-serif",
+                fontSize: '14px',
+              }}
+              disabled={status !== 'idle'}
+            />
+            <p className="text-[10px] tracking-wider uppercase mt-1 text-right" style={{ color: '#707080' }}>
+              {comment.length}/500
+            </p>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-4 py-3 border-t border-[#d4a84b]/30 space-y-2">
+          <button
+            onClick={handleUpload}
+            disabled={status !== 'idle'}
+            className="w-full py-2 rounded border transition-colors disabled:opacity-50"
+            style={{
+              borderColor: '#00d4ff',
+              backgroundColor: status === 'idle' ? '#00d4ff' : 'transparent',
+              color: status === 'idle' ? '#0a0a0f' : '#00d4ff',
+            }}
+          >
+            <span className="text-xs tracking-wider uppercase">
+              {status === 'uploading' ? 'UPLOADING...' :
+               status === 'sharing' ? 'OPENING SHARE...' :
+               status === 'success' ? 'UPLOADED!' : 'UPLOAD TO SERVER'}
+            </span>
+          </button>
+          {status === 'error' && (
+            <button
+              onClick={handleFallbackShare}
+              className="w-full py-2 rounded border transition-colors hover:bg-[#d4a84b]/10"
+              style={{ borderColor: '#d4a84b50', color: '#a08040' }}
+            >
+              <span className="text-xs tracking-wider uppercase">SHARE VIA DEVICE</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

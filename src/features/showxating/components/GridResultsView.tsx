@@ -190,12 +190,13 @@ export function GridResultsView({
   }, [scan.cards]);
 
   return (
-    <div className="w-full h-full bg-black p-2 overflow-auto">
+    <div className="w-full h-full bg-black p-2 overflow-auto flex items-center justify-center">
       <motion.div
-        className="grid gap-2 w-full h-full"
+        className="grid gap-2 w-full"
         style={{
           gridTemplateColumns: `repeat(${gridDims.cols}, 1fr)`,
-          gridTemplateRows: `repeat(${gridDims.rows}, 1fr)`,
+          // Use auto rows to respect card aspect ratio instead of stretching to fill
+          gridTemplateRows: `repeat(${gridDims.rows}, auto)`,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -319,7 +320,7 @@ function GridCellView({
   if (cell.type === 'empty') {
     return (
       <div
-        className={`w-full h-full rounded-lg border border-dashed flex flex-col items-center justify-center ${
+        className={`w-full rounded-lg border border-dashed flex flex-col items-center justify-center ${
           onOpenEmptyCorrection ? 'cursor-pointer hover:border-[var(--showxating-gold)]' : ''
         }`}
         style={{
@@ -350,7 +351,7 @@ function GridCellView({
 
     return (
       <div
-        className="w-full h-full rounded-lg border-2 overflow-hidden cursor-pointer flex flex-col items-center justify-center bg-black/50 relative"
+        className="w-full rounded-lg border-2 overflow-hidden cursor-pointer flex flex-col items-center justify-center bg-black/50 relative"
         style={{
           aspectRatio: '2/3',
           borderColor: 'var(--showxating-gold)',
@@ -401,7 +402,7 @@ function GridCellView({
 
   return (
     <div
-      className="relative w-full h-full rounded-lg border-2 overflow-hidden cursor-pointer"
+      className="relative w-full rounded-lg border-2 overflow-hidden cursor-pointer"
       style={{
         aspectRatio: '2/3',
         borderColor: card.showingOpposite ? 'var(--showxating-cyan)' : 'var(--showxating-gold)',

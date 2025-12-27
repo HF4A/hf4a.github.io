@@ -13,8 +13,16 @@ interface Env {
   ALLOWED_ORIGINS: string;
   DEFAULT_MODEL: string;
   AUTH_SALT: string;
+  ADMIN_TOKEN?: string;  // Secret for admin access to feedback
   HF4A_AUTH: KVNamespace;
+  HF4A_FEEDBACK?: R2Bucket;  // Optional until R2 is enabled
 }
+
+// Rate limits per invite code tier (submissions per day)
+const RATE_LIMITS: Record<string, number> = {
+  'ROSS2024': 100,
+  'DEFAULT': 10,
+};
 
 interface RegisterRequest {
   inviteCode: string;
@@ -32,6 +40,34 @@ interface TokenData {
   inviteCode: string;
   deviceId: string;
   createdAt: number;
+}
+
+// Feedback report from correction flow
+interface FeedbackReport {
+  type: 'correction_report';
+  scanId: string;
+  cardIndex: number;
+  apiReturnedType?: string;
+  extractedText?: string;
+  computedHash?: string;
+  originalCardId?: string;
+  originalConfidence?: number;
+  correctedCardId?: string;
+  topMatches?: Array<{ cardId: string; distance: number }>;
+  userComment?: string;
+  croppedImage?: string;  // Base64 data URL
+  metadata: {
+    appVersion: string;
+    buildHash?: string;
+    platform?: string;
+    userAgent?: string;
+  };
+}
+
+// Diagnostics upload
+interface DiagnosticsUpload {
+  comment?: string;
+  metadata?: Record<string, unknown>;
 }
 
 interface ScanRequest {
@@ -671,7 +707,289 @@ export default {
       }
     }
 
-    return jsonResponse({ error: 'Not found. Use POST /register, /scan, or /segment' }, 404, corsHeaders);
+    // ========== FEEDBACK ENDPOINTS ==========
+
+    // POST /feedback/report - Submit correction feedback
+    if (url.pathname === '/feedback/report') {
+      // Validate auth token
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return jsonResponse({ error: 'Missing Authorization header' }, 401, corsHeaders);
+      }
+
+      const token = authHeader.replace('Bearer ', '');
+      const tokenDataRaw = await env.HF4A_AUTH.get(`TOKEN:${token}`);
+      if (!tokenDataRaw) {
+        return jsonResponse({ error: 'Invalid token' }, 401, corsHeaders);
+      }
+
+      const tokenData: TokenData = JSON.parse(tokenDataRaw);
+
+      // Check rate limit
+      const today = new Date().toISOString().split('T')[0];
+      const rateKey = `RATE:${tokenData.inviteCode}:${today}`;
+      const currentCount = parseInt(await env.HF4A_AUTH.get(rateKey) || '0');
+      const limit = RATE_LIMITS[tokenData.inviteCode] || RATE_LIMITS['DEFAULT'];
+
+      if (currentCount >= limit) {
+        return jsonResponse({
+          error: 'Rate limit exceeded',
+          limit,
+          resetAt: `${today}T24:00:00Z`
+        }, 429, corsHeaders);
+      }
+
+      // Check if R2 is available
+      if (!env.HF4A_FEEDBACK) {
+        return jsonResponse({
+          error: 'Feedback storage not configured. Enable R2 in Cloudflare dashboard.'
+        }, 503, corsHeaders);
+      }
+
+      try {
+        const body = await request.json() as FeedbackReport;
+
+        // Generate feedback ID
+        const feedbackId = `fb-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const month = new Date().toISOString().slice(0, 7); // YYYY-MM
+
+        // Store feedback in R2
+        const feedbackData = {
+          ...body,
+          feedbackId,
+          inviteCode: tokenData.inviteCode,
+          deviceId: tokenData.deviceId,
+          submittedAt: new Date().toISOString(),
+        };
+
+        await env.HF4A_FEEDBACK.put(
+          `reports/${month}/${feedbackId}.json`,
+          JSON.stringify(feedbackData, null, 2),
+          {
+            customMetadata: {
+              inviteCode: tokenData.inviteCode,
+              apiReturnedType: body.apiReturnedType || '',
+              hasImage: body.croppedImage ? 'true' : 'false',
+            }
+          }
+        );
+
+        // Increment rate limit counter (expires after 24h)
+        await env.HF4A_AUTH.put(rateKey, String(currentCount + 1), {
+          expirationTtl: 86400
+        });
+
+        return jsonResponse({
+          success: true,
+          feedbackId,
+          message: 'Report submitted'
+        }, 200, corsHeaders);
+
+      } catch (err) {
+        console.error('Feedback report error:', err);
+        return jsonResponse({
+          error: err instanceof Error ? err.message : 'Failed to submit report'
+        }, 500, corsHeaders);
+      }
+    }
+
+    // POST /feedback/diagnostics - Upload diagnostics ZIP
+    if (url.pathname === '/feedback/diagnostics') {
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return jsonResponse({ error: 'Missing Authorization header' }, 401, corsHeaders);
+      }
+
+      const token = authHeader.replace('Bearer ', '');
+      const tokenDataRaw = await env.HF4A_AUTH.get(`TOKEN:${token}`);
+      if (!tokenDataRaw) {
+        return jsonResponse({ error: 'Invalid token' }, 401, corsHeaders);
+      }
+
+      const tokenData: TokenData = JSON.parse(tokenDataRaw);
+
+      // Check rate limit (same as reports)
+      const today = new Date().toISOString().split('T')[0];
+      const rateKey = `RATE:${tokenData.inviteCode}:${today}`;
+      const currentCount = parseInt(await env.HF4A_AUTH.get(rateKey) || '0');
+      const limit = RATE_LIMITS[tokenData.inviteCode] || RATE_LIMITS['DEFAULT'];
+
+      if (currentCount >= limit) {
+        return jsonResponse({ error: 'Rate limit exceeded', limit }, 429, corsHeaders);
+      }
+
+      if (!env.HF4A_FEEDBACK) {
+        return jsonResponse({
+          error: 'Feedback storage not configured'
+        }, 503, corsHeaders);
+      }
+
+      try {
+        const contentType = request.headers.get('Content-Type') || '';
+
+        let zipData: ArrayBuffer;
+        let comment = '';
+
+        if (contentType.includes('multipart/form-data')) {
+          const formData = await request.formData();
+          const file = formData.get('file') as File | null;
+          comment = (formData.get('comment') as string) || '';
+
+          if (!file) {
+            return jsonResponse({ error: 'No file in form data' }, 400, corsHeaders);
+          }
+          zipData = await file.arrayBuffer();
+        } else {
+          // Assume raw binary
+          zipData = await request.arrayBuffer();
+        }
+
+        const feedbackId = `diag-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const month = new Date().toISOString().slice(0, 7);
+
+        await env.HF4A_FEEDBACK.put(
+          `diagnostics/${month}/${feedbackId}.zip`,
+          zipData,
+          {
+            customMetadata: {
+              inviteCode: tokenData.inviteCode,
+              comment: comment.slice(0, 500),
+              size: String(zipData.byteLength),
+              submittedAt: new Date().toISOString(),
+            }
+          }
+        );
+
+        await env.HF4A_AUTH.put(rateKey, String(currentCount + 1), {
+          expirationTtl: 86400
+        });
+
+        return jsonResponse({
+          success: true,
+          feedbackId,
+          size: zipData.byteLength
+        }, 200, corsHeaders);
+
+      } catch (err) {
+        console.error('Diagnostics upload error:', err);
+        return jsonResponse({
+          error: err instanceof Error ? err.message : 'Upload failed'
+        }, 500, corsHeaders);
+      }
+    }
+
+    // GET /feedback/list - Admin only: list feedback items
+    if (url.pathname === '/feedback/list' && request.method === 'GET') {
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return jsonResponse({ error: 'Missing Authorization' }, 401, corsHeaders);
+      }
+
+      const token = authHeader.replace('Bearer ', '');
+      if (token !== env.ADMIN_TOKEN) {
+        return jsonResponse({ error: 'Admin access required' }, 403, corsHeaders);
+      }
+
+      if (!env.HF4A_FEEDBACK) {
+        return jsonResponse({ error: 'R2 not configured' }, 503, corsHeaders);
+      }
+
+      try {
+        const type = url.searchParams.get('type') || 'all';
+        const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 100);
+        const cursor = url.searchParams.get('cursor') || undefined;
+
+        const prefix = type === 'report' ? 'reports/' :
+                       type === 'diagnostics' ? 'diagnostics/' : '';
+
+        const listed = await env.HF4A_FEEDBACK.list({
+          prefix,
+          limit,
+          cursor,
+        });
+
+        const items = listed.objects.map(obj => ({
+          key: obj.key,
+          size: obj.size,
+          uploaded: obj.uploaded.toISOString(),
+          ...obj.customMetadata,
+        }));
+
+        return jsonResponse({
+          items,
+          cursor: listed.truncated ? listed.cursor : null,
+          count: items.length,
+        }, 200, corsHeaders);
+
+      } catch (err) {
+        return jsonResponse({
+          error: err instanceof Error ? err.message : 'List failed'
+        }, 500, corsHeaders);
+      }
+    }
+
+    // GET /feedback/:id - Admin only: get specific feedback
+    if (url.pathname.startsWith('/feedback/') && request.method === 'GET') {
+      const feedbackId = url.pathname.split('/feedback/')[1];
+      if (!feedbackId || feedbackId === 'list') {
+        return jsonResponse({ error: 'Invalid feedback ID' }, 400, corsHeaders);
+      }
+
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return jsonResponse({ error: 'Missing Authorization' }, 401, corsHeaders);
+      }
+
+      const token = authHeader.replace('Bearer ', '');
+      if (token !== env.ADMIN_TOKEN) {
+        return jsonResponse({ error: 'Admin access required' }, 403, corsHeaders);
+      }
+
+      if (!env.HF4A_FEEDBACK) {
+        return jsonResponse({ error: 'R2 not configured' }, 503, corsHeaders);
+      }
+
+      try {
+        // Try to find the object (could be in reports/ or diagnostics/)
+        let obj = await env.HF4A_FEEDBACK.get(`reports/${feedbackId.slice(3, 10)}/${feedbackId}.json`);
+        let contentType = 'application/json';
+
+        if (!obj && feedbackId.startsWith('diag-')) {
+          obj = await env.HF4A_FEEDBACK.get(`diagnostics/${feedbackId.slice(5, 12)}/${feedbackId}.zip`);
+          contentType = 'application/zip';
+        }
+
+        if (!obj) {
+          // Search for it
+          const prefix = feedbackId.startsWith('diag-') ? 'diagnostics/' : 'reports/';
+          const listed = await env.HF4A_FEEDBACK.list({ prefix, limit: 1000 });
+          const match = listed.objects.find(o => o.key.includes(feedbackId));
+          if (match) {
+            obj = await env.HF4A_FEEDBACK.get(match.key);
+            contentType = match.key.endsWith('.zip') ? 'application/zip' : 'application/json';
+          }
+        }
+
+        if (!obj) {
+          return jsonResponse({ error: 'Feedback not found' }, 404, corsHeaders);
+        }
+
+        return new Response(obj.body, {
+          status: 200,
+          headers: {
+            'Content-Type': contentType,
+            ...corsHeaders,
+          }
+        });
+
+      } catch (err) {
+        return jsonResponse({
+          error: err instanceof Error ? err.message : 'Fetch failed'
+        }, 500, corsHeaders);
+      }
+    }
+
+    return jsonResponse({ error: 'Not found. Use POST /register, /scan, /segment, or /feedback/*' }, 404, corsHeaders);
   },
 };
 
