@@ -65,24 +65,37 @@ When shown an image of a card (or multiple cards), identify each card and return
   "gridCols": 3,
   "cards": [
     {
-      "card_type": "crew|thruster|robonaut|refinery|reactor|radiator|generator|freighter|bernal|colonist|patent|event|factory|support",
-      "card_name": "exact name as printed on the card",
+      "card_type": "thruster|robonaut|refinery|reactor|radiator|generator|crew|freighter|bernal|colonist|gw-thruster",
+      "card_name": "exact name from the VALID NAMES list below",
       "side": "white|black|blue|gold|purple",
       "confidence": 0.0-1.0,
-      "ocr_text": "key text visible on the card",
       "bbox": [x1, y1, x2, y2]
     }
   ]
 }
 
+VALID CARD NAMES (you MUST use one of these exact names):
+
+thruster: Ablative Nozzle, Ablative Plate, Colliding Beam H-B Fusion, De Laval Nozzle, Dual-Stage 4-Grid, Dumbo, Electric Sail, Hall Effect, Ion Drive, MPD T-wave, Mag Sail, Magnetic Nozzle, Mass Driver, Metastable Helium, Monatomic Plug Nozzle, Photon Heliogyro, Photon Kite Sail, Ponderomotive VASIMR, Pulsed Inductive, Pulsed Plasmoid, Re Solar Moth, Timberwind, Vortex Confined Nozzle, n-6Li Microfission
+
+generator: AMTEC Thermoelectric, Brayton Turbine, Buckyball C60 Photovoltaic, Cascade Photovoltaic, Cascade Thermoacoustic, Casimir Battery, Catalyzed Fission Scintillator, Diamonoid Electrodynamic Tether, Dusty Plasma MHD, Ericsson Engine, Flywheel Compulsator, Granular Rainbow Corral, H2-O2 Fuel Cell, In-core Thermionic, JTEC H2 Thermoelectric, MHD Open-Cycle, Magnetoshell Plasma Parachute, Marx Capacitor Bank, Microbial Fuel Cell, Nanocomposite Thermoelectric, Nuclear-pumped Excimer Flashlamp, O'Meara LSP Paralens, Optoelectric Nuclear Battery, Palmer LSP Aerosol Lens, Photon Tether Rectenna, Radioisotope Stirling, Rankine MHD, Rankine Multiphase, Rankine Solar Dynamic, Solar Stirling, Superconducting Adductor, Thermo-Photovoltaic, Triggered Decay Nuclear Battery, Z-pinch Microfission
+
+reactor: 3He-D Fusion Mirror Cell, Antimatter GDM, Cermet NERVA Fission, D-D Fusion Magneto-Inertial, D-T Fusion Tokamak, D-T Gun Fusion, Fission-augmented D-T Inertial Fusion, Free Radical Hydrogen Trap, H-6Li Fusor, H-B Fusion Reciprocating Plasmoid, Lyman Alpha Trap, Macron Blowpipe Fusion, Metallic Hydrogen, Mini-Mag RF Paul Trap, Pebble Bed Fission, Penning Trap, Positronium Bottle, Project Orion, Project Valkyrie, Pulsed NTR Fission, Rubbia Thin Film Fission Hohlraum, Supercritical Water Fission, Ultracold Neutrons, VCR Light Bulb Fission
+
+radiator: ANDR/In Dream Pipe, Bubble Membrane, Buckytube Filament, Curie Point, Dielectric X-ray Window, ETHER Charged Dust, Electrostatic Membrane, Flux-pinned Superthermal, Graphene Crystal X-ray Mirror, Hula-Hoop, Li Heatsink Fountain, Magnetocaloric Refrigerator, Marangoni Flow, Microtube Array, Mo/Li Heat Pipe, Nuclear Fuel Spin Polarizer, Pulsating Heat Pipe, Qu Tube, SS/NaK Pumped Loop, Salt-cooled Reflux Tube, Steel/Pb-Bi Pumped Loop, Thermochemical Heatsink Fountain, Ti/K Heat Pipe, Tin Droplet
+
+refinery: Atmospheric Scoop, Atomic Layer Deposition, Basalt Fiber Spinning, Biophytolytic Algal Farm, CVD Molding, Carbo-Chlorination, Carbonyl Volatilization, Electroforming, Femtochemistry, Fluidized Bed, Foamglass Sintering, Froth Flotation, ISRU Sabatier, Ilmenite Semiconductor Film, Impact Mold Sinter, In-Situ Leaching, Ionosphere Lasing, Laser-heated Pedestal Growth, Magma Electrolysis, Solar Carbotherm, Solid Flame, Supercritical Drying, Termite Nest, Von Neumann Santa Claus Machine
+
+robonaut: Ablative Laser, Blackbody-pumped Laser, Cat Fusion Z-pinch Torch, D-D Inertial Fusion, Electrophoretic Sandworm, Fissile Aerosol Laser, Flywheel Tractor, Free Electron Laser, H-B Cat Inertial, Helical Railgun, Kuck Mosquito, Lorentz-Propelled Microprobe, MET Steamer, MITEE Arcjet, MagBeam, Nanobot, Neutral Beam, Nuclear Drill, Phase-Locked Diode Laser, Quantum Cascade Laser, Rock Splitter, Solar-pumped MHD Exciplex Laser, Tungsten Resistojet, Wakefield e-beam
+
 Rules:
 - gridRows/gridCols: the arrangement of cards in the image (e.g., 3x3 grid = 3 rows, 3 cols). Set to 1x1 for single card.
-- card_type must be one of the listed types (appears in colored banner at top)
-- card_name is the unique name printed at the BOTTOM of the card (NOT the type). Examples: "Solar Moth", "Ericsson Engine", "Penning Trap"
-- side refers to the card's BACK color (white, black, blue, gold, or purple). The colored banner at top indicates card_type, not side. Most tech cards are white-backed.
-- confidence: 1.0 = certain, 0.5 = unsure, below 0.3 = guess
-- bbox: normalized coordinates [0-1] for top-left (x1,y1) and bottom-right (x2,y2) of each card in the image
-- If no cards visible or not HF4A cards, return {"cards": [], "error": "no cards detected"}
+- card_type: identified by colored banner at top of card (orange=thruster, red=generator, purple=reactor, blue=radiator, brown=refinery, magenta=robonaut)
+- card_name: MUST be one of the valid names listed above. The name is printed at the BOTTOM of the card.
+- side: the card's BACK color (white, black, blue, gold, or purple). Most tech cards are white-backed.
+- confidence: 1.0 = certain match to valid name, 0.5 = unsure, below 0.3 = guess
+- bbox: normalized coordinates [0-1] for top-left (x1,y1) and bottom-right (x2,y2) of each card
+- If you cannot match a card to a valid name, use your best guess from the list
 - Return ONLY valid JSON, no markdown or explanation`;
 
 const MODEL_MAP: Record<string, string> = {
