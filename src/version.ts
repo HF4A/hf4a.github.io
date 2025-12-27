@@ -46,7 +46,8 @@
 //   0.5.7 - Add swipe-up for card info in scan mode (matches catalog behavior)
 //   0.5.8 - Extract shared CardInfoPanel, remove redundant CLOSE buttons from info panels
 //   0.5.9 - Fix: API results are source of truth (no longer drops cards that OpenCV misses)
-export const APP_VERSION = '0.5.9';
+//   0.5.10 - UX improvements: remove FRONT/BACK tags, API logs modal, empty cell click to add card
+export const APP_VERSION = '0.5.10';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

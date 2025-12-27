@@ -17,6 +17,7 @@ import { useSettingsStore, ALL_CARD_TYPES, CARD_TYPE_LABELS } from '../../../sto
 import { log } from '../../../store/logsStore';
 import { GridResultsView } from './GridResultsView';
 import { CardInfoPanel } from '../../../components/CardInfoPanel';
+import { ApiLogsModal } from './ApiLogsModal';
 import Fuse from 'fuse.js';
 import type { Card, CardType } from '../../../types/card';
 
@@ -44,6 +45,7 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
     cardIndex: number;
   } | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showApiLogs, setShowApiLogs] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -106,15 +108,29 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
       // Update the card in the scan slot
       const catalogCard = cards.find((c) => c.id === selectedCardId);
       if (catalogCard) {
-        // Update the identified card with the correction
         const updatedCards = [...scan.cards];
-        updatedCards[cardIndex] = {
-          ...identifiedCard,
-          cardId: selectedCardId,
-          filename: catalogCard.filename,
-          side: catalogCard.side ?? null,
-          confidence: 1.0, // User-verified
-        };
+
+        if (cardIndex === -1) {
+          // Adding a new card to an empty cell
+          const newCard: IdentifiedCard = {
+            ...identifiedCard,
+            cardId: selectedCardId,
+            filename: catalogCard.filename,
+            side: catalogCard.side ?? null,
+            confidence: 1.0, // User-verified
+          };
+          updatedCards.push(newCard);
+          log.correct(`Manual add: added ${selectedCardId} to empty cell`);
+        } else {
+          // Update existing card with the correction
+          updatedCards[cardIndex] = {
+            ...identifiedCard,
+            cardId: selectedCardId,
+            filename: catalogCard.filename,
+            side: catalogCard.side ?? null,
+            confidence: 1.0, // User-verified
+          };
+        }
 
         // Update the scan slot
         useShowxatingStore.getState().scanSlots[slotId] = {
@@ -122,7 +138,8 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
           cards: updatedCards,
         };
         // Force re-render by calling updateCardFlip with current state
-        updateCardFlip(slotId, cardIndex, identifiedCard.showingOpposite);
+        const targetIndex = cardIndex === -1 ? updatedCards.length - 1 : cardIndex;
+        updateCardFlip(slotId, targetIndex, identifiedCard.showingOpposite);
       }
 
       setCorrectionData(null);
@@ -220,6 +237,10 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
               onOpenCorrection={(card, cardIndex) => {
                 setCorrectionData({ card, cardIndex });
               }}
+              onOpenEmptyCorrection={(estimatedCard) => {
+                // For empty cells, use a special cardIndex (-1) to indicate adding a new card
+                setCorrectionData({ card: estimatedCard, cardIndex: -1 });
+              }}
             />
           </motion.div>
         )}
@@ -272,8 +293,11 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
         </button>
       )}
 
-      {/* Info badge */}
-      <div className="absolute top-4 left-4 bg-black/70 px-3 py-1.5 rounded flex flex-col gap-0.5">
+      {/* Info badge - clickable to show API logs */}
+      <button
+        onClick={() => setShowApiLogs(true)}
+        className="absolute top-4 left-4 bg-black/70 px-3 py-1.5 rounded flex flex-col gap-0.5 border border-transparent hover:border-[var(--showxating-cyan)] transition-colors cursor-pointer text-left"
+      >
         <span className="hud-text text-xs">
           {scan.cards.length > 0
             ? `${scan.cards.length} CARD${scan.cards.length > 1 ? 'S' : ''} DETECTED`
@@ -284,7 +308,15 @@ export function CapturedScanView({ slotId }: CapturedScanViewProps) {
             SCAN: {scan.apiCardCount} OBJECT{scan.apiCardCount > 1 ? 'S' : ''}
           </span>
         )}
-      </div>
+        <span className="hud-text text-[8px]" style={{ color: 'var(--showxating-cyan)' }}>
+          TAP FOR LOGS
+        </span>
+      </button>
+
+      {/* API Logs Modal */}
+      <AnimatePresence>
+        {showApiLogs && <ApiLogsModal onClose={() => setShowApiLogs(false)} />}
+      </AnimatePresence>
     </div>
   );
 }

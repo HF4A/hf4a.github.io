@@ -230,15 +230,59 @@ export function determineGridDimensions(
 /**
  * Build a complete grid cell mapping from bboxes
  * Returns a Map of cellKey -> bbox index
+ *
+ * If explicit dimensions provided, use fixed grid assignment (divide space evenly).
+ * Otherwise, infer grid from bbox positions.
  */
-export function buildGridCellMap(bboxes: Point[][]): Map<string, number> {
+export function buildGridCellMap(
+  bboxes: Point[][],
+  explicitRows?: number,
+  explicitCols?: number
+): Map<string, number> {
   if (bboxes.length === 0) return new Map();
 
   const centers = bboxes.map(getCenter);
+  const cellMap = new Map<string, number>();
+
+  // If explicit dimensions provided, use fixed grid assignment
+  if (explicitRows && explicitCols && explicitRows > 0 && explicitCols > 0) {
+    // Find bounding box of all centers
+    const allX = centers.map(c => c.x);
+    const allY = centers.map(c => c.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    // Add padding to avoid edge cases
+    const padX = (maxX - minX) * 0.1 || 50;
+    const padY = (maxY - minY) * 0.1 || 50;
+    const gridMinX = minX - padX;
+    const gridMaxX = maxX + padX;
+    const gridMinY = minY - padY;
+    const gridMaxY = maxY + padY;
+
+    const cellWidth = (gridMaxX - gridMinX) / explicitCols;
+    const cellHeight = (gridMaxY - gridMinY) / explicitRows;
+
+    bboxes.forEach((_, index) => {
+      const center = centers[index];
+      const col = Math.min(Math.floor((center.x - gridMinX) / cellWidth), explicitCols - 1);
+      const row = Math.min(Math.floor((center.y - gridMinY) / cellHeight), explicitRows - 1);
+      const key = cellKey({ row, col });
+
+      // Only set if not already occupied (first card wins)
+      if (!cellMap.has(key)) {
+        cellMap.set(key, index);
+      }
+    });
+
+    return cellMap;
+  }
+
+  // Fallback: infer grid from bbox positions
   const avgSize = getAverageSize(bboxes);
   const grid = detectGridStructure(centers, avgSize);
-
-  const cellMap = new Map<string, number>();
 
   bboxes.forEach((_, index) => {
     const cell = assignToGridCell(centers[index], grid);

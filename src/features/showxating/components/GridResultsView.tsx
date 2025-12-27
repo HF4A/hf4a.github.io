@@ -34,6 +34,7 @@ interface GridResultsViewProps {
   onCardFlip: (cardIndex: number, showingOpposite: boolean) => void;
   onOpenDetail: (card: Card, identifiedCard: IdentifiedCard, cardIndex: number) => void;
   onOpenCorrection: (card: IdentifiedCard, cardIndex: number) => void;
+  onOpenEmptyCorrection?: (estimatedCard: IdentifiedCard) => void;
 }
 
 export function GridResultsView({
@@ -42,6 +43,7 @@ export function GridResultsView({
   onCardFlip,
   onOpenDetail,
   onOpenCorrection,
+  onOpenEmptyCorrection,
 }: GridResultsViewProps) {
   const { cards: catalogCards } = useCardStore();
   const { setGridDimensions } = useShowxatingStore();
@@ -85,9 +87,14 @@ export function GridResultsView({
     const { rows, cols } = gridDims;
     const allKeys = getAllCellKeys(rows, cols);
 
-    // Build map of cell key -> card index
+    // Build map of cell key -> card index using explicit dimensions
     const bboxes = scan.cards.map(c => c.corners);
-    const cellToCardIndex = buildGridCellMap(bboxes);
+    const cellToCardIndex = buildGridCellMap(bboxes, rows, cols);
+    console.log('[GridResultsView] Grid mapping:', {
+      rows, cols,
+      cardCount: scan.cards.length,
+      mappedCells: Array.from(cellToCardIndex.entries())
+    });
 
     // Create reverse map: cardIndex -> cellKey
     const cardIndexToCell = new Map<number, string>();
@@ -204,6 +211,8 @@ export function GridResultsView({
             >
               <GridCellView
                 cell={cell}
+                gridDims={gridDims}
+                imageSize={{ width: scan.imageWidth || 720, height: scan.imageHeight || 1280 }}
                 onFlip={() => {
                   const cardIndex = getCardIndex(cell);
                   if (cardIndex >= 0 && cell.card) {
@@ -222,6 +231,30 @@ export function GridResultsView({
                     onOpenCorrection(cell.card, cardIndex);
                   }
                 }}
+                onOpenEmptyCorrection={onOpenEmptyCorrection ? () => {
+                  // Create a placeholder card with estimated corners based on grid position
+                  const { rows, cols } = gridDims;
+                  const cellWidth = (scan.imageWidth || 720) / cols;
+                  const cellHeight = (scan.imageHeight || 1280) / rows;
+                  const x = cell.col * cellWidth;
+                  const y = cell.row * cellHeight;
+
+                  const estimatedCard: IdentifiedCard = {
+                    cardId: 'unknown',
+                    filename: '',
+                    side: null,
+                    confidence: 0,
+                    corners: [
+                      { x, y },
+                      { x: x + cellWidth, y },
+                      { x: x + cellWidth, y: y + cellHeight },
+                      { x, y: y + cellHeight },
+                    ],
+                    showingOpposite: false,
+                    extractedText: `Empty cell at row ${cell.row + 1}, col ${cell.col + 1}`,
+                  };
+                  onOpenEmptyCorrection(estimatedCard);
+                } : undefined}
               />
             </motion.div>
           ))}
@@ -233,19 +266,38 @@ export function GridResultsView({
 
 interface GridCellViewProps {
   cell: GridCell;
+  gridDims: { rows: number; cols: number };
+  imageSize: { width: number; height: number };
   onFlip: () => void;
   onOpenDetail: () => void;
   onOpenCorrection: () => void;
+  onOpenEmptyCorrection?: () => void;
 }
 
-function GridCellView({ cell, onFlip, onOpenDetail, onOpenCorrection }: GridCellViewProps) {
+function GridCellView({
+  cell,
+  // gridDims and imageSize passed for potential future use (e.g., calculating estimated corners)
+  gridDims: _gridDims,
+  imageSize: _imageSize,
+  onFlip,
+  onOpenDetail,
+  onOpenCorrection,
+  onOpenEmptyCorrection,
+}: GridCellViewProps) {
+  // Note: gridDims and imageSize are used by the parent component to calculate
+  // estimated corners for empty cells - they're passed here for interface consistency
+  void _gridDims;
+  void _imageSize;
   const lastTapRef = useRef<number>(0);
 
   // Handle tap - single tap flips, double tap opens detail
   const handleTap = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
 
-    if (cell.type === 'empty') return;
+    if (cell.type === 'empty') {
+      onOpenEmptyCorrection?.();
+      return;
+    }
     if (cell.type === 'unidentified') {
       onOpenCorrection();
       return;
@@ -261,20 +313,29 @@ function GridCellView({ cell, onFlip, onOpenDetail, onOpenCorrection }: GridCell
       lastTapRef.current = now;
       onFlip();
     }
-  }, [cell.type, onFlip, onOpenDetail, onOpenCorrection]);
+  }, [cell.type, onFlip, onOpenDetail, onOpenCorrection, onOpenEmptyCorrection]);
 
-  // Empty cell
+  // Empty cell - clickable if handler provided
   if (cell.type === 'empty') {
     return (
       <div
-        className="w-full h-full rounded-lg border border-dashed flex items-center justify-center"
+        className={`w-full h-full rounded-lg border border-dashed flex flex-col items-center justify-center ${
+          onOpenEmptyCorrection ? 'cursor-pointer hover:border-[var(--showxating-gold)]' : ''
+        }`}
         style={{
           aspectRatio: '2/3',
           borderColor: 'var(--showxating-gold-dim)',
-          opacity: 0.3,
+          opacity: onOpenEmptyCorrection ? 0.5 : 0.3,
         }}
+        onClick={handleTap}
+        onTouchEnd={handleTap}
       >
         <span className="hud-text hud-text-dim text-[10px]">EMPTY</span>
+        {onOpenEmptyCorrection && (
+          <span className="hud-text text-[8px] mt-1" style={{ color: 'var(--showxating-gold)' }}>
+            TAP TO ADD
+          </span>
+        )}
       </div>
     );
   }
@@ -348,13 +409,6 @@ function GridCellView({ cell, onFlip, onOpenDetail, onOpenCorrection }: GridCell
         className="w-full h-full object-cover"
         draggable={false}
       />
-
-      {/* Side indicator */}
-      <div className="absolute top-1 left-1 bg-black/70 px-1.5 py-0.5 rounded text-[10px]">
-        <span className="hud-text hud-text-dim">
-          {card.showingOpposite ? 'BACK' : 'FRONT'}
-        </span>
-      </div>
 
       {/* Confidence badge - only if < 70% */}
       {showConfidence && (

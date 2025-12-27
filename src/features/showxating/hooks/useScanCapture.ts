@@ -19,6 +19,7 @@ import { cloudScanner } from '../../../services/cloudScanner';
 import { authService } from '../../../services/authService';
 import { getCardMatcher } from '../services/cardMatcher';
 import { detectAllCards, detectCardQuadrilateral } from '../services/visionPipeline';
+import { log } from '../../../store/logsStore';
 import type { Card } from '../../../types/card';
 
 /**
@@ -410,6 +411,26 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
       console.log('[useScanCapture] API returned', response.cards.length, 'cards:');
       response.cards.forEach((c, i) => {
         console.log(`  [${i}] type="${c.card_type}" name="${c.card_name}" side="${c.side}" conf=${c.confidence}`);
+      });
+
+      // Store API response in logs for diagnostic modal
+      log.scan(`API scan: ${response.cards.length} cards, grid ${response.gridRows}x${response.gridCols}`, {
+        apiResponse: {
+          success: response.success,
+          cardCount: response.cards.length,
+          cards: response.cards.map(c => ({
+            type: c.card_type,
+            name: c.card_name,
+            side: c.side,
+            confidence: c.confidence,
+            bbox: c.bbox,
+          })),
+          gridRows: response.gridRows,
+          gridCols: response.gridCols,
+          model: response.model_used,
+          tokens: response.tokens_used,
+          latency: response.latency_ms,
+        }
       });
 
       // Map API results to IdentifiedCard format
