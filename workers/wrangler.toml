@@ -19,13 +19,9 @@ binding = "HF4A_AUTH"
 id = "69e83e90df374e95aabc4b6564d28f29"
 
 # R2 bucket for feedback/diagnostics storage
-# Enable R2 in Cloudflare Dashboard first, then:
-#   1. wrangler r2 bucket create hf4a-feedback
-#   2. Uncomment the binding below
-#   3. wrangler deploy
-# [[r2_buckets]]
-# binding = "HF4A_FEEDBACK"
-# bucket_name = "hf4a-feedback"
+[[r2_buckets]]
+binding = "HF4A_FEEDBACK"
+bucket_name = "hf4a-feedback"
 
 [observability]
 enabled = true
