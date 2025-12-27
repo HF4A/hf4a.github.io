@@ -35,6 +35,10 @@ export interface ScanDiagnostics {
   imageWidth?: number;
   imageHeight?: number;
   cardsCount: number;
+  opencvCardCount?: number;
+  apiCardCount?: number;
+  gridRows?: number;
+  gridCols?: number;
   cards: CardDiagnostics[];
 }
 
@@ -77,6 +81,10 @@ function formatScanDiagnostics(scan: CapturedScan): ScanDiagnostics {
     imageWidth: scan.imageWidth,
     imageHeight: scan.imageHeight,
     cardsCount: scan.cards.length,
+    opencvCardCount: scan.opencvCardCount,
+    apiCardCount: scan.apiCardCount,
+    gridRows: scan.gridRows,
+    gridCols: scan.gridCols,
     cards: scan.cards.map(formatCardDiagnostics),
   };
 }

@@ -39,7 +39,9 @@
 //   0.5.0 - Replace photo+overlay with NxM grid of card images
 //   0.5.1 - Fix grid dimensions: pass API gridRows/gridCols through data flow
 //   0.5.2 - Add detailed logging for card name matching diagnostics
-export const APP_VERSION = '0.5.2';
+//   0.5.3 - Correction modal: pre-select type, show fronts only; diagnostics include grid info
+//   0.5.4 - Fix worker gridRows/gridCols parsing, add grid dimension logging
+export const APP_VERSION = '0.5.4';
 export const BUILD_DATE = '2025-12-26';
 
 // Build hash injected at build time by Vite (see vite.config.ts)

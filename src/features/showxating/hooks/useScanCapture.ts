@@ -448,6 +448,7 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
       }
 
       console.log('[useScanCapture] Cloud scan identified', identifiedCards.length, 'cards, grid:', response.gridRows, 'x', response.gridCols);
+      console.log('[useScanCapture] API response raw grid:', { gridRows: response.gridRows, gridCols: response.gridCols });
       return {
         cards: identifiedCards,
         gridRows: response.gridRows,
@@ -589,6 +590,7 @@ export function useScanCapture({ videoRef }: UseScanCaptureOptions) {
               // Cloud API bboxes are unreliable - use OpenCV corners instead
               const mergedCards = mergeCloudWithOpenCV(cloudResult.cards, opencvCorners, defaultScanResult);
               console.log('[useScanCapture] Cloud identified', cloudResult.cards.length, 'cards, merged with', opencvCorners.length, 'OpenCV bboxes');
+              console.log('[useScanCapture] Storing grid dimensions:', { rows: cloudResult.gridRows, cols: cloudResult.gridCols });
               updateScanCards(
                 scanId,
                 mergedCards,

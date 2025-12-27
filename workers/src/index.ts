@@ -357,7 +357,7 @@ export default {
             error: `No content in response. Raw: ${JSON.stringify(openaiResult.choices[0]).slice(0, 300)}`,
           } as ScanResponse, 200, corsHeaders);
         }
-        let parsed: { cards?: CardResult[]; error?: string };
+        let parsed: { cards?: CardResult[]; gridRows?: number; gridCols?: number; error?: string };
 
         try {
           // Handle potential markdown code blocks

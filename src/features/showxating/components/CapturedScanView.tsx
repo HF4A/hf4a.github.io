@@ -701,7 +701,23 @@ function CorrectionModal({
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<CardType | 'all'>('all');
+  const [typeInferred, setTypeInferred] = useState(false);
   const lastTapRef = useRef<{ cardId: string; time: number } | null>(null);
+
+  // Infer type from extractedText and pre-select filter
+  useEffect(() => {
+    if (typeInferred || !identifiedCard.extractedText) return;
+
+    const text = identifiedCard.extractedText.toLowerCase();
+    // Try to find a type at the start (format: "type: name" or just "type")
+    const typeMatch = text.match(/^(crew|thruster|robonaut|refinery|reactor|radiator|generator|freighter|bernal|colonist|patent|event|factory|support)/);
+    if (typeMatch) {
+      const inferredType = typeMatch[1] as CardType;
+      console.log('[CorrectionModal] Inferred type from text:', inferredType);
+      setSelectedType(inferredType);
+      setTypeInferred(true);
+    }
+  }, [identifiedCard.extractedText, typeInferred]);
 
   // Crop the bounding box from the scan image
   // Use existing extractedText from cloud API instead of running secondary OCR
@@ -771,9 +787,17 @@ function CorrectionModal({
       const results = fuse.search(searchQuery).slice(0, 50);
       setCandidates(results.map((r) => ({ card: r.item, distance: distanceMap.get(r.item.id) })));
     } else if (selectedType !== 'all') {
-      // Show ALL cards of the selected type, sorted by hash distance
+      // Show cards of the selected type, fronts only (first occurrence of each ID)
+      // This avoids showing both white and black sides of the same card
+      const seenIds = new Set<string>();
       const typeCards = catalogCards
         .filter((c) => c.type === selectedType)
+        .filter((c) => {
+          // Prefer white side (front), skip duplicates
+          if (seenIds.has(c.id)) return false;
+          seenIds.add(c.id);
+          return true;
+        })
         .map((card) => ({ card, distance: distanceMap.get(card.id) }))
         .sort((a, b) => {
           // Cards with distance come first (sorted by distance ascending)
